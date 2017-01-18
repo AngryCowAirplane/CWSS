@@ -39,6 +39,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RijndaelEncryptDecrypt, Version=1.0.0.24384, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RijndaelEncryptDecrypt.1.0.0.24384\lib\net40\RijndaelEncryptDecrypt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -59,7 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\DataObject.cs" />
+    <Compile Include="Data\BaseData.cs" />
     <Compile Include="Data\Log.cs" />
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -75,7 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\BaseData.cs" />
+    <Compile Include="Data\DataBase.cs" />
     <Compile Include="Data\Item.cs" />
     <Compile Include="Data\Message.cs" />
     <Compile Include="Data\User.cs" />
