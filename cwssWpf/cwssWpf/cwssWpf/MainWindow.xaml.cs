@@ -59,6 +59,9 @@ namespace cwssWpf
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
+            // TODO:
+            // validate input in tbUserId
+            // if valid checkIn()
             checkIn();
         }
 
