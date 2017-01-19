@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Title="NewUser" Height="300" Width="300">
+        Title="NewUser" Height="261.757" Width="300">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="Label0" Grid.Column="0" Grid.Row="0" Height="23" Margin="5,5,5,5" Content="Label" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label x:Name="Label1" Grid.Column="0" Grid.Row="1" Height="23" Margin="5,5,5,5" Content="Label" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label x:Name="Label2" Grid.Column="0" Grid.Row="2" Height="23" Margin="5,5,5,5" Content="Label" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label x:Name="Label3" Grid.Column="0" Grid.Row="3" Height="23" Margin="5,5,5,5" Content="Label" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label x:Name="Label4" Grid.Column="0" Grid.Row="4" Height="23" Margin="5,5,5,5" Content="Label" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+
+        <TextBox x:Name="textBox0" Grid.Column="1" Grid.Row="0" Height="23" Margin="5,5,5,5"  Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="textBox1" Grid.Column="1" Grid.Row="1" Height="23" Margin="5,5,5,5"  Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="textBox2" Grid.Column="1" Grid.Row="2" Height="23" Margin="5,5,5,5"  Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="textBox3" Grid.Column="1" Grid.Row="3" Height="23" Margin="5,5,5,5"  Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="textBox4" Grid.Column="1" Grid.Row="4" Height="23" Margin="5,5,5,5"  Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+        <Button x:Name="Button0" Grid.Column="0" Grid.Row="6" Height="20" Margin="5,5,5,5" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Stretch"></Button>
+        <Button x:Name="Button1" Grid.Column="1" Grid.Row="6" Height="20" Margin="5,5,5,5" Content="Submit" VerticalAlignment="Center" HorizontalAlignment="Stretch"></Button>
     </Grid>
 </Window>

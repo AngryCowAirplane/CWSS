@@ -19,9 +19,19 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class NewUser : Window
     {
+        // TODO:
+        // Rename all objects in the window editor and set appropriate label text
+
         public NewUser()
         {
             InitializeComponent();
         }
+
+        // TODO:
+        // Event for cancel button click
+        // -- window.close()
+        // Event for submit button click
+        // -- call below function
+        // Function for checking values and calling DB.AddUser with correct infos
     }
 }

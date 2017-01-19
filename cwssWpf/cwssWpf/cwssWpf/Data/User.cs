@@ -8,21 +8,29 @@ namespace cwssWpf.Data
 {
     public class User
     {
-        private int userId;
-        private string userName;
-        private UserType userType;
-        private List<Item> Items;
+        public int UserId;
+        public string UserName;
+        public string Password;
+        public string Email;
+        public string PhoneNumber;
+        public UserType UserType;
+        public bool CanClimb;
+        public List<int> Items;
 
         public User()
         {
-
+            Items = new List<int>();
         }
 
-        public bool AddItem()
+        public bool AddItem(Item item)
         {
-            var newItem = new Item();
-            Items.Add(newItem);
+            Items.Add(item.ItemId);
             return true;
+        }
+
+        public bool CheckWaiver()
+        {
+            return false;
         }
     }
 

@@ -8,5 +8,10 @@ namespace cwssWpf.Data
 {
     public class Message
     {
+        public int MessageId;
+        public int SenderId;
+        public int RecipientId = -1;        // -1 To All?
+        public DateTime TimeStamp;
+        public DateTime ExpireDate;
     }
 }

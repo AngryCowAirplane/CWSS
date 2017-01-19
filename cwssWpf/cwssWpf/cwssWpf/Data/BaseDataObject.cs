@@ -9,20 +9,26 @@ namespace cwssWpf.Data
     // Essentially the main tables in the database
     // the individual classes(user, item, message, etc..) will be the lines (data members, columns..)
 
-    public class BaseData
+    public class BaseDataObject
     {
         public List<User> Users = new List<User>();
         public List<Item> Items = new List<Item>();
         public List<Message> Messages = new List<Message>();
-        public List<Log> Logs = new List<Log>();
+        public List<DailyLogTag> DailyLogs = new List<DailyLogTag>();
 
-        public BaseData()
+        public BaseDataObject()
         {
 
         }
 
-        public bool AddUser()
+        public bool AddUser(User user)
         {
+            // TODO:
+            // If no user.UserId, assign one not in Users
+            // Else Check if user.UserId already exists in Users
+
+
+            Users.Add(user);
             return true;
         }
 

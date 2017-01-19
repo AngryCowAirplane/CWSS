@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace cwssWpf.Data
 {
+    // Item that can be checked out by a patron / user
     public class Item
     {
+        public int ItemId;
+        public string Name;
+        public bool Available;
     }
 }

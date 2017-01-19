@@ -19,9 +19,14 @@ namespace cwssWpf.Data
 
     public static class DataBase
     {
-        public static BaseData Data = new BaseData();
+        public static BaseDataObject Data = new BaseDataObject();
 
-        private static string SavePath = @"C:\test";
+        // TODO:
+        // replace static path with application current directory stuff
+        public static string SavePath = @"C:\";
+        public static string DbFileName = @"CwssDataBase.cwdb";
+
+        // encryption keys
         private static string passPhrase = "70392DE7-5FB4-4520-A9A6-3CD231E181C0";
         private static string saltValue = "09290C9F-1B71-4A0E-92C9-51E03E6868D3";
 
@@ -29,10 +34,12 @@ namespace cwssWpf.Data
         {
             var success = loadFromFile();
 
+            // TODO:
             // replace true with tempLog flag
             if (true)
             {
-                //Do Add Temp Log Stuff
+                // TODO:
+                // Add Temp Log Stuff
             }
 
             return success;
@@ -40,10 +47,12 @@ namespace cwssWpf.Data
 
         public static bool Save()
         {
+            // TODO:
             // replace true with tempLog flag
             if (true)
             {
-                //Do Add Temp Log Stuff
+                // TODO:
+                // Add Temp Log Stuff
             }
 
             var success = saveToFile();
@@ -53,10 +62,11 @@ namespace cwssWpf.Data
 
         private static bool loadFromFile()
         {
-            // If File Exists
-            var data = File.ReadAllText(SavePath + @"\CwssDataBase.json");
-            RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(data, passPhrase, saltValue, "SHA1");
-            Data = JsonConvert.DeserializeObject<BaseData>(data);
+            // TODO:
+            // If File Exists Checks and suff
+            var data = File.ReadAllText(SavePath + DbFileName);
+            var decryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(data, passPhrase, saltValue, "SHA1");
+            Data = JsonConvert.DeserializeObject<BaseDataObject>(decryptedData);
 
             return true;
         }
@@ -64,8 +74,8 @@ namespace cwssWpf.Data
         private static bool saveToFile()
         {
             var data = JsonConvert.SerializeObject(Data);
-            RijndaelEncryptDecrypt.EncryptDecryptUtils.Encrypt(data, passPhrase, saltValue, "SHA1");
-            File.WriteAllText(SavePath + @"\CwssDataBase.json", data);
+            var encryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Encrypt(data, passPhrase, saltValue, "SHA1");
+            File.WriteAllText(SavePath + DbFileName, encryptedData);
 
             return true;
         }
