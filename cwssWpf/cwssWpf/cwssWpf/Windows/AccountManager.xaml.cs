@@ -1,4 +1,5 @@
-﻿using cwssWpf.DataBase;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,17 @@ namespace cwssWpf.Windows
         public AccountManager()
         {
             InitializeComponent();
-            this.listView.ItemsSource = Db.dataBase.Users;
+            listView.ItemsSource = Db.dataBase.Users;
+            listBox.ItemsSource = (Enum.GetValues(typeof(UserType)).Cast<UserType>().ToList());
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            var user = (User)listView.SelectedItem;
+            var type = (UserType)listBox.SelectedItem;
+
+            user.UserType = type;
+            listView.Items.Refresh();
         }
     }
 }
