@@ -185,7 +185,8 @@ namespace cwssWpf
 
         private void menuAccounts_Click(object sender, RoutedEventArgs e)
         {
-
+            var test = new AccountManager();
+            test.Show();
         }
     }
 }

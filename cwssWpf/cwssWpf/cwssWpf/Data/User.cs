@@ -35,6 +35,8 @@ namespace cwssWpf.Data
         {
             return false;
         }
+
+
     }
 
     public enum UserType
