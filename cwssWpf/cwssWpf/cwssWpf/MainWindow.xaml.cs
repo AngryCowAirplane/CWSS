@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,9 +41,10 @@ namespace cwssWpf
 
         public MainWindow()
         {
-            InitializeComponent();
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
+            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(Environment.CurrentDirectory, "AppData"));
 
+            InitializeComponent();
+            
             // Other Loading/Initializing done here between Status texts
             StatusText.Text = "Loading...";
 

@@ -1,4 +1,5 @@
 ﻿using cwssWpf.Data;
+using cwssWpf.Migrations;
 using MySql.Data.Entity;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace cwssWpf
 
         public Context() : base()
         {
-
+            //Database.SetInitializer<Context>(null);
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
         }
     }
 }
