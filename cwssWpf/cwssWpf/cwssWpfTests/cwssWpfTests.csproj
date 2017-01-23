@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="DataBaseTests\BasicCreateSaveLoadDb.cs" />
     <Compile Include="DataBaseTests\EntityDbTest.cs" />
+    <Compile Include="DataBaseTests\TestReporting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

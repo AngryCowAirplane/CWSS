@@ -48,13 +48,13 @@ namespace cwssWpf
             // Other Loading/Initializing done here between Status texts
             StatusText.Text = "Loading...";
 
-            //DataBase.Load();
-            //Logger.Initialize();
+            _DataBase.Load();
+            Logger.Initialize();
 
-            Db.dataBase = new Context();
-            Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
+            //Db.dataBase = new Context();
+            //Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
 
-            if (Db.dataBase.Users.Count() == 0)
+            if(Db.dataBase.Users.Count < 1)
                 Db.AddUser(DefaultAdminId, UserType.Admin, DefaultAdminPassword, true, "Admin", "admin@admin.com","");
 
             StatusText.Text = "Ready";
@@ -103,22 +103,21 @@ namespace cwssWpf
 
         private bool tryCheckinUser()
         {
-            try
-            {
-                var loginId = int.Parse(tbLoginId.Text);
+            var loginId = int.Parse(tbLoginId.Text);
 
-                var findUser = Db.GetUser(loginId);
+            var findUser = Db.GetUser(loginId);
 
-                if(findUser != null)
-                    MessageBox.Show("User Found: " + findUser.UserName);
-            }
-            catch
-            {
+            if(findUser != null)
+                MessageBox.Show("User Found: " + findUser.UserName);
+            else
                 MessageBox.Show("User Not Found!");
-                return false;
-            }
 
             return true;
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -18,12 +18,12 @@ namespace cwssWpfTests.DataBaseTests
         [TestMethod()]
         public void _EntityDbTest()
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
-            Db.dataBase = new Context();
-            foreach (var item in Db.dataBase.Users)
-            {
-                Console.WriteLine(item.UserName);
-            }
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
+            //Db.dataBase = new Context();
+            //foreach (var item in Db.dataBase.Users)
+            //{
+            //    Console.WriteLine(item.UserName);
+            //}
         }
     }
 }

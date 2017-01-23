@@ -21,6 +21,11 @@ namespace cwssWpf.Data
 
         }
 
+        public void SaveChanges()
+        {
+
+        }
+
         public bool AddUser(User user)
         {
             // TODO:

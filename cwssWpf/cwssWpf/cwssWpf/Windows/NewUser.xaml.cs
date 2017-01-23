@@ -1,4 +1,6 @@
-﻿using System;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +27,17 @@ namespace cwssWpf.Windows
         public NewUser()
         {
             InitializeComponent();
+        }
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            Db.AddUser(tbIdNumber.Text, UserType.Patron, tbPassword.Text, true, tbFirstName.Text + " " + tbLastName.Text, tbEmail.Text, "");
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         // TODO:
