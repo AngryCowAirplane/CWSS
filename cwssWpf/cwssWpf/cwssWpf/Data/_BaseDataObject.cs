@@ -29,8 +29,8 @@ namespace cwssWpf.Data
         public bool AddUser(User user)
         {
             // TODO:
-            // If no user.UserId, assign one not in Users
-            // Else Check if user.UserId already exists in Users
+            // If no user.LoginId, assign one not in Users
+            // Else Check if user.LoginId already exists in Users
 
 
             Users.Add(user);

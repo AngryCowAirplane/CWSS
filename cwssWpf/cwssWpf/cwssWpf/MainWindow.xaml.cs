@@ -48,7 +48,7 @@ namespace cwssWpf
             // Other Loading/Initializing done here between Status texts
             StatusText.Text = "Loading...";
 
-            _DataBase.Load();
+            Db.Initialize();
             Logger.Initialize();
 
             //Db.dataBase = new Context();
@@ -105,10 +105,35 @@ namespace cwssWpf
         {
             var loginId = int.Parse(tbLoginId.Text);
 
-            var findUser = Db.GetUser(loginId);
+            var user = Db.GetUser(loginId);
 
-            if(findUser != null)
-                MessageBox.Show("User Found: " + findUser.UserName);
+            if(user != null)
+            {
+                if(user.CanClimb)
+                {
+                    if(!user.CheckedIn)
+                    {
+                        user.TimeStamp = DateTime.Now;
+                        user.CheckedIn = true;
+                        var message = user.UserName + " Checked In @" + user.TimeStamp.ToShortTimeString();
+                        MessageBox.Show(message);
+                        Logger.Log(user.UserId, LogType.CheckIn, message);
+                    }
+                    else
+                    {
+                        var length = DateTime.Now - user.TimeStamp;
+                        user.TimeStamp = DateTime.Now;
+                        user.CheckedIn = false;
+                        var message = user.UserName + " Checked Out @" + user.TimeStamp.ToShortTimeString() + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                        MessageBox.Show(message);
+                        Logger.Log(user.UserId, LogType.CheckOut, message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Climbing Priveleges Revoked");
+                }
+            }
             else
                 MessageBox.Show("User Not Found!");
 

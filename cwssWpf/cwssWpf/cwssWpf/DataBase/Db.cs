@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace cwssWpf.DataBase
 {
@@ -44,6 +45,10 @@ namespace cwssWpf.DataBase
 
                     dataBase.SaveChanges();
                 }
+                else
+                {
+                    MessageBox.Show("User Already Exists.");
+                }
             }
             catch
             {
@@ -68,6 +73,12 @@ namespace cwssWpf.DataBase
         }
 
 
+
+        public static void Initialize()
+        {
+            _DataBase.Load();
+            dataBase = _DataBase.Data;
+        }
 
 
         //----------------------------------------------------------------------------

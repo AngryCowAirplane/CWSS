@@ -17,7 +17,10 @@ namespace cwssWpfTests.DataBaseTests
         public void _TestReporting()
         {
             _DataBase.Load();
+            Logger.Initialize();
+
             Report.ListUsers();
+            Report.ListLogs();
         }
     }
 }

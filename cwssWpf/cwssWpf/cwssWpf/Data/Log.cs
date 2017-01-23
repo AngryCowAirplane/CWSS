@@ -8,13 +8,14 @@ namespace cwssWpf.Data
 {
     public static class Logger
     {
-        private static DailyLog todaysLog;
+        public static DailyLog todaysLog;
 
         public static void Initialize()
         {
             // TODO:
             // Check for current daily log in file system
             // if no log found, create new daily log
+            todaysLog = new DailyLog();
         }
 
         public static void Log(int userId, LogType type, string comment = "")
@@ -58,6 +59,12 @@ namespace cwssWpf.Data
         public int DailyLogId;
         public DateTime LogDate;
         public List<Log> Logs;
+
+        public DailyLog()
+        {
+            Logs = new List<Log>();
+            LogDate = DateTime.Now;
+        }
     }
 
     // Log everyday actions of users
@@ -67,6 +74,13 @@ namespace cwssWpf.Data
         public DateTime TimeStamp;
         public LogType Action;
         public string Comment;
+
+        public string PrintLog()
+        {
+            var logData = (TimeStamp.ToShortDateString() + " " + TimeStamp.ToShortTimeString() + " - " + Action.ToString() + ": " + Comment);
+            Console.WriteLine(logData);
+            return logData;
+        }
     }
 
     // Could expand to track employee actions

@@ -16,6 +16,8 @@ namespace cwssWpf.Data
         public string PhoneNumber { get; set; }
         public UserType UserType { get; set; }
         public bool CanClimb { get; set; }
+        public bool CheckedIn { get; set; }
+        public DateTime TimeStamp { get; set; }
         public List<int> Items;
 
         public User()

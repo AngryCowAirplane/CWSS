@@ -1,4 +1,5 @@
-﻿using cwssWpf.DataBase;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,5 +24,20 @@ namespace cwssWpf.Reports
                 }
             }
         }
+
+        public static void ListLogs(string path = "")
+        {
+            if (string.IsNullOrEmpty(path))
+                path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(Path.Combine(path, "Logs.txt")))
+            {
+                foreach (var log in Logger.todaysLog.Logs)
+                {
+                    file.WriteLine(log.PrintLog());
+                }
+            }
+        }
     }
 }
+

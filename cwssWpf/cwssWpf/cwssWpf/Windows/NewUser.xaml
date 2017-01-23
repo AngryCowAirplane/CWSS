@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
-        Title="Create New User" Height="261.757" Width="431.991">
-    <Grid>
+        Title="Create New User" Height="260" Width="430">
+    <Grid Margin="0,0,0,14">
         <Grid.Background>
             <SolidColorBrush Color="AliceBlue"></SolidColorBrush>
         </Grid.Background>
@@ -23,7 +23,7 @@
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+
         </Grid.RowDefinitions>
 
         <Label x:Name="Label0" Grid.Column="0" Grid.Row="0" Height="23" Margin="5,5,5,5" Content="First Name" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
@@ -40,7 +40,7 @@
         <TextBox x:Name="tbIdNumber" Grid.Column="1" Grid.Row="4" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
         <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="5" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
 
-        <Button x:Name="btnCancel" Grid.Column="0" Grid.Row="6" Height="20" Margin="5,5,5,5" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnCancel_Click"></Button>
-        <Button x:Name="btnSubmit" Grid.Column="1" Grid.Row="6" Height="20" Margin="5,5,5,5" Content="Submit" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnSubmit_Click"></Button>
+        <Button x:Name="btnCancel" Grid.Column="0" Grid.Row="6" Height="20" Margin="5,5,5,5" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnCancel_Click" Background="CornflowerBlue"></Button>
+        <Button x:Name="btnSubmit" Grid.Column="1" Grid.Row="6" Height="20" Margin="5,5,5,5" Content="Submit" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnSubmit_Click" Background="CornflowerBlue"></Button>
     </Grid>
 </Window>
