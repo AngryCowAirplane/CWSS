@@ -39,8 +39,9 @@ namespace cwssWpf.Windows
         {
             var loginId = int.Parse(tbUserId.Text);
             var user = Db.GetUser(loginId);
-            if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Text == user.Password))
+            if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
             {
+                mainWindow.CurrentUser = user;
                 mainWindow.MainMenu.Background = Brushes.Crimson;
                 mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
                 if ((int)user.UserType > 1)

@@ -34,7 +34,7 @@ namespace cwssWpf.Windows
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            Db.AddUser(tbIdNumber.Text, UserType.Patron, tbPassword.Text, true, tbFirstName.Text + " " + tbLastName.Text, tbEmail.Text, "");
+            Db.AddUser(tbIdNumber.Text, UserType.Patron, tbPassword.Password, true, tbFirstName.Text + " " + tbLastName.Text, tbEmail.Text, "");
             this.Close();
         }
 

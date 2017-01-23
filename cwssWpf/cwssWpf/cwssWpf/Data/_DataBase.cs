@@ -42,7 +42,7 @@ namespace cwssWpf.Data
             return success;
         }
 
-        public static bool Save()
+        public static bool Save(string path = "")
         {
             // TODO:
             // replace true with tempLog flag
@@ -52,14 +52,16 @@ namespace cwssWpf.Data
                 // Add Temp Log Stuff
             }
 
-            var success = saveToFile();
+            var success = saveToFile(path);
 
             return success;
         }
 
-        private static bool loadFromFile()
+        private static bool loadFromFile(string path = "")
         {
-            if(File.Exists(dbPath))
+            if (string.IsNullOrEmpty(path))
+                path = dbPath;
+            if(File.Exists(path))
             {
                 var data = File.ReadAllText(dbPath);
                 var decryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(data, passPhrase, saltValue, "SHA1");
@@ -69,11 +71,13 @@ namespace cwssWpf.Data
             return true;
         }
 
-        private static bool saveToFile()
+        private static bool saveToFile(string path = "")
         {
+            if (string.IsNullOrEmpty(path))
+                path = dbPath;
             var data = JsonConvert.SerializeObject(Data);
             var encryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Encrypt(data, passPhrase, saltValue, "SHA1");
-            File.WriteAllText(dbPath, encryptedData);
+            File.WriteAllText(path, encryptedData);
 
             return true;
         }

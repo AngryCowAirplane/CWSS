@@ -38,19 +38,22 @@ namespace cwssWpf
         // regular DB querying.
         public int DefaultAdminId = 12345;
         public string DefaultAdminPassword = "abc123";
+        public User CurrentUser = null;
 
         public MainWindow()
         {
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(Environment.CurrentDirectory, "AppData"));
-
             InitializeComponent();
             
             // Other Loading/Initializing done here between Status texts
             StatusText.Text = "Loading...";
+            menuLogOut_Click(this, null); // Hide Menus
 
+            //--use custom DB
             Db.Initialize();
             Logger.Initialize();
-
+            
+            //--use entity framework DB
             //Db.dataBase = new Context();
             //Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
 
@@ -136,11 +139,6 @@ namespace cwssWpf
             return true;
         }
 
-        private void Window_Initialized(object sender, EventArgs e)
-        {
-
-        }
-
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -152,6 +150,42 @@ namespace cwssWpf
             EmployeeMenu.Visibility = Visibility.Hidden;
             ManagerMenu.Visibility = Visibility.Hidden;
             AdminMenu.Visibility = Visibility.Hidden;
+            CurrentUser = null;
+        }
+
+        private void menuWaiver_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuMessageSystem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuCalendar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuReports_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuListServ_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuManageUsers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuAccounts_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

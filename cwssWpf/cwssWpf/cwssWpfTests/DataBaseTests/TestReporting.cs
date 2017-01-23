@@ -16,7 +16,7 @@ namespace cwssWpfTests.DataBaseTests
         [TestMethod()]
         public void _TestReporting()
         {
-            _DataBase.Load();
+            _DataBase.Load(@"C:\cwssDataBase.cwdb");
             Logger.Initialize();
 
             Report.ListUsers();

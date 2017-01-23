@@ -37,8 +37,8 @@
 
         <TextBox x:Name="tbFirstName" Grid.Column="1" Grid.Row="0" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
         <TextBox x:Name="tbLastName" Grid.Column="1" Grid.Row="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-        <TextBox x:Name="tbPassword" Grid.Column="1" Grid.Row="2" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-        <TextBox x:Name="tbPassword2" Grid.Column="1" Grid.Row="3" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="2" Height="23" Margin="5,5,5,5"  VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <PasswordBox x:Name="tbPassword2" Grid.Column="1" Grid.Row="3" Height="23" Margin="5,5,5,5"  VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
         <TextBox x:Name="tbIdNumber" Grid.Column="1" Grid.Row="4" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
         <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="5" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
 
