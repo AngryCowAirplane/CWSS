@@ -155,7 +155,8 @@ namespace cwssWpf
 
         private void menuWaiver_Click(object sender, RoutedEventArgs e)
         {
-
+            var waiver = new Waiver();
+            waiver.Show();
         }
 
         private void menuMessageSystem_Click(object sender, RoutedEventArgs e)
