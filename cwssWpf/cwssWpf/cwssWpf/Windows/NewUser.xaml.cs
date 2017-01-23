@@ -24,9 +24,12 @@ namespace cwssWpf.Windows
         // TODO:
         // Rename all objects in the window editor and set appropriate label text
 
-        public NewUser()
+        public NewUser(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.Left = mainWindow.Left + 50;
+            this.Top = mainWindow.Top + 50;
+            FocusManager.SetFocusedElement(this, tbFirstName);
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)

@@ -20,18 +20,15 @@ namespace cwssWpf.Data
     public static class _DataBase
     {
         public static _BaseDataObject Data = new _BaseDataObject();
-
-        // TODO:
-        // replace static path with application current directory stuff
-        public static string SavePath = @"C:\";
-        public static string DbFileName = @"CwssDataBase.cwdb";
+        private static string dbPath;
 
         // encryption keys
         private static string passPhrase = "70392DE7-5FB4-4520-A9A6-3CD231E181C0";
         private static string saltValue = "09290C9F-1B71-4A0E-92C9-51E03E6868D3";
 
-        public static bool Load()
+        public static bool Load(string path)
         {
+            dbPath = path;
             var success = loadFromFile();
 
             // TODO:
@@ -62,9 +59,9 @@ namespace cwssWpf.Data
 
         private static bool loadFromFile()
         {
-            if(File.Exists(SavePath + DbFileName))
+            if(File.Exists(dbPath))
             {
-                var data = File.ReadAllText(SavePath + DbFileName);
+                var data = File.ReadAllText(dbPath);
                 var decryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(data, passPhrase, saltValue, "SHA1");
                 Data = JsonConvert.DeserializeObject<_BaseDataObject>(decryptedData);
             }
@@ -76,7 +73,7 @@ namespace cwssWpf.Data
         {
             var data = JsonConvert.SerializeObject(Data);
             var encryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Encrypt(data, passPhrase, saltValue, "SHA1");
-            File.WriteAllText(SavePath + DbFileName, encryptedData);
+            File.WriteAllText(dbPath, encryptedData);
 
             return true;
         }

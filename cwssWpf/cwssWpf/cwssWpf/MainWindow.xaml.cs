@@ -57,24 +57,22 @@ namespace cwssWpf
             if(Db.dataBase.Users.Count < 1)
                 Db.AddUser(DefaultAdminId, UserType.Admin, DefaultAdminPassword, true, "Admin", "admin@admin.com","");
 
+            FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
         }
 
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
-            var newUserForm = new NewUser();
-            newUserForm.Show();
+            var newUser = new NewUser(this);
+            newUser.Show();
             // TODO:
             // Show Appropriate message in status bar
         }
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
         {
-            // TODO:
-            // Create Employee Login Window
-            // Show Window()
-            // Do All Logic Checking in the Employee Login Window
-            // Nothing Else goes in this function
+            var login = new Login(this);
+            login.Show();
         }
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
@@ -104,9 +102,7 @@ namespace cwssWpf
         private bool tryCheckinUser()
         {
             var loginId = int.Parse(tbLoginId.Text);
-
             var user = Db.GetUser(loginId);
-
             if(user != null)
             {
                 if(user.CanClimb)
@@ -143,6 +139,19 @@ namespace cwssWpf
         private void Window_Initialized(object sender, EventArgs e)
         {
 
+        }
+
+        private void menuExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void menuLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            MainMenu.Background = Brushes.CornflowerBlue;
+            EmployeeMenu.Visibility = Visibility.Hidden;
+            ManagerMenu.Visibility = Visibility.Hidden;
+            AdminMenu.Visibility = Visibility.Hidden;
         }
     }
 }

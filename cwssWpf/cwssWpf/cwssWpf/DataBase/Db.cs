@@ -76,7 +76,8 @@ namespace cwssWpf.DataBase
 
         public static void Initialize()
         {
-            _DataBase.Load();
+            var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CwssDataBase.cwdb");
+            _DataBase.Load(dbPath);
             dataBase = _DataBase.Data;
         }
 

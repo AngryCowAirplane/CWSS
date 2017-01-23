@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,39 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Login : Window
     {
-        public Login()
+        MainWindow mainWindow;
+        public Login(MainWindow sender)
         {
+            mainWindow = sender;
             InitializeComponent();
+            this.Left = mainWindow.Left + 50;
+            this.Top = mainWindow.Top + 50;
+            FocusManager.SetFocusedElement(this, tbUserId);
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            var loginId = int.Parse(tbUserId.Text);
+            var user = Db.GetUser(loginId);
+            if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Text == user.Password))
+            {
+                mainWindow.MainMenu.Background = Brushes.Crimson;
+                mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
+                if ((int)user.UserType > 1)
+                    mainWindow.ManagerMenu.Visibility = Visibility.Visible;
+                if ((int)user.UserType > 2)
+                    mainWindow.AdminMenu.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show("Invalid Login");
+            }
+            this.Close();
         }
     }
 }
