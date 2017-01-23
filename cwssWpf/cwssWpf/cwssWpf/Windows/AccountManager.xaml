@@ -12,7 +12,7 @@
             <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <ListView x:Name="listView" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
+        <ListView x:Name="lvUsers" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
@@ -28,7 +28,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListBox x:Name="listBox" Grid.Row="1" Margin="10,2,2,2" HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="100"/>
+        <ListBox x:Name="lbTypes" Grid.Row="1" Margin="10,2,2,2" HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="100"/>
         <Button x:Name="btnUpdate" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top" Content="Update" Width="50" Height="20" Click="btnUpdate_Click"></Button>
     </Grid>
 </Window>

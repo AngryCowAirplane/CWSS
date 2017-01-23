@@ -24,17 +24,17 @@ namespace cwssWpf.Windows
         public AccountManager()
         {
             InitializeComponent();
-            listView.ItemsSource = Db.dataBase.Users;
-            listBox.ItemsSource = (Enum.GetValues(typeof(UserType)).Cast<UserType>().ToList());
+            lvUsers.ItemsSource = Db.dataBase.Users;
+            lbTypes.ItemsSource = (Enum.GetValues(typeof(UserType)).Cast<UserType>().ToList());
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            var user = (User)listView.SelectedItem;
-            var type = (UserType)listBox.SelectedItem;
+            var user = (User)lvUsers.SelectedItem;
+            var type = (UserType)lbTypes.SelectedItem;
 
             user.UserType = type;
-            listView.Items.Refresh();
+            lvUsers.Items.Refresh();
         }
     }
 }
