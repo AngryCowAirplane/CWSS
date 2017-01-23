@@ -8,13 +8,14 @@ namespace cwssWpf.Data
 {
     public class User
     {
-        public int UserId;
-        public string UserName;
-        public string Password;
-        public string Email;
-        public string PhoneNumber;
-        public UserType UserType;
-        public bool CanClimb;
+        public int UserId { get; set; }
+        public int LoginId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public UserType UserType { get; set; }
+        public bool CanClimb { get; set; }
         public List<int> Items;
 
         public User()

@@ -9,14 +9,14 @@ namespace cwssWpf.Data
     // Essentially the main tables in the database
     // the individual classes(user, item, message, etc..) will be the lines (data members, columns..)
 
-    public class BaseDataObject
+    public class _BaseDataObject
     {
         public List<User> Users = new List<User>();
         public List<Item> Items = new List<Item>();
         public List<Message> Messages = new List<Message>();
         public List<DailyLogTag> DailyLogs = new List<DailyLogTag>();
 
-        public BaseDataObject()
+        public _BaseDataObject()
         {
 
         }

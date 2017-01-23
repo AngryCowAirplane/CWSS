@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using cwssWpf.Data;
 using System.IO;
 
-namespace cwssWpf.Tests
+namespace cwssWpf.DataBaseTests
 {
     [TestClass()]
     public class BasicCreateSaveLoadDb
@@ -16,23 +16,23 @@ namespace cwssWpf.Tests
         [TestMethod]
         public void _BasicCreateSaveLoadDb()
         {
-            DataBase.Data = new BaseDataObject();
+            _DataBase.Data = new _BaseDataObject();
 
             var user = new User();
             user.UserId = 1023542;
             user.UserName = "Derek";
             user.UserType = UserType.Admin;
-            DataBase.Data.AddUser(user);
-            Assert.IsTrue(DataBase.Data.Users.Count > 0);
+            _DataBase.Data.AddUser(user);
+            Assert.IsTrue(_DataBase.Data.Users.Count > 0);
 
-            DataBase.Save();
-            Assert.IsTrue(File.Exists(DataBase.SavePath + DataBase.DbFileName));
+            _DataBase.Save();
+            Assert.IsTrue(File.Exists(_DataBase.SavePath + _DataBase.DbFileName));
 
-            DataBase.Data = new Data.BaseDataObject();
-            Assert.IsTrue(DataBase.Data.Users.Count == 0);
+            _DataBase.Data = new Data._BaseDataObject();
+            Assert.IsTrue(_DataBase.Data.Users.Count == 0);
 
-            DataBase.Load();
-            Assert.IsTrue(DataBase.Data.Users.Count > 0);
+            _DataBase.Load();
+            Assert.IsTrue(_DataBase.Data.Users.Count > 0);
         }
     }
 }

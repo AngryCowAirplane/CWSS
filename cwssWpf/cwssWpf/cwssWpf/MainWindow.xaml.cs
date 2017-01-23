@@ -1,7 +1,11 @@
 ﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
+using cwssWpf.Migrations;
 using cwssWpf.Windows;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +24,11 @@ namespace cwssWpf
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+    // mySQL infos
+    // add name="DefaultConnection" providerName="MySql.Data.MySqlClient" connectionString="Server=localhost;Database=cwss;Uid=root;Pwd=9087intxJON" />
+
     public partial class MainWindow : Window
     {
         // TODO:
@@ -32,11 +41,20 @@ namespace cwssWpf
         public MainWindow()
         {
             InitializeComponent();
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
 
             // Other Loading/Initializing done here between Status texts
             StatusText.Text = "Loading...";
-            DataBase.Load();
-            Logger.Initialize();
+
+            //DataBase.Load();
+            //Logger.Initialize();
+
+            Db.dataBase = new Context();
+            Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
+
+            if (Db.dataBase.Users.Count() == 0)
+                Db.AddUser(DefaultAdminId, UserType.Admin, DefaultAdminPassword, true, "Admin", "admin@admin.com","");
+
             StatusText.Text = "Ready";
         }
 
@@ -82,9 +100,9 @@ namespace cwssWpf
         {
             try
             {
-                var userId = int.Parse(tbUserId.Text);
+                var loginId = int.Parse(tbLoginId.Text);
 
-                var findUser = DataBase.Data.Users.Where(user => user.UserId == userId).First();
+                var findUser = Db.GetUser(loginId);
 
                 if(findUser != null)
                     MessageBox.Show("User Found: " + findUser.UserName);

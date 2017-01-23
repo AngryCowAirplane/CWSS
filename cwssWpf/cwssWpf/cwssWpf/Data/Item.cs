@@ -9,8 +9,8 @@ namespace cwssWpf.Data
     // Item that can be checked out by a patron / user
     public class Item
     {
-        public int ItemId;
-        public string Name;
-        public bool Available;
+        public int ItemId { get; set; }
+        public string Name { get; set; }
+        //public bool Available { get; set; }
     }
 }

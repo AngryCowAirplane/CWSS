@@ -17,9 +17,9 @@ namespace cwssWpf.Data
     // Possible Expansion
     // -keep multiple database files as they are written as backups
 
-    public static class DataBase
+    public static class _DataBase
     {
-        public static BaseDataObject Data = new BaseDataObject();
+        public static _BaseDataObject Data = new _BaseDataObject();
 
         // TODO:
         // replace static path with application current directory stuff
@@ -66,7 +66,7 @@ namespace cwssWpf.Data
             // If File Exists Checks and suff
             var data = File.ReadAllText(SavePath + DbFileName);
             var decryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(data, passPhrase, saltValue, "SHA1");
-            Data = JsonConvert.DeserializeObject<BaseDataObject>(decryptedData);
+            Data = JsonConvert.DeserializeObject<_BaseDataObject>(decryptedData);
 
             return true;
         }
