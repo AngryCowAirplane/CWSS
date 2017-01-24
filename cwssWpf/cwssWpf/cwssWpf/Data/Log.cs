@@ -132,5 +132,6 @@ namespace cwssWpf.Data
         CheckOut = 1,
         LogIn = 2,
         LogOut = 3,
+        Error = 4
     }
 }

@@ -1,4 +1,5 @@
-﻿using cwssWpf.DataBase;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,9 +49,14 @@ namespace cwssWpf.Windows
                     mainWindow.ManagerMenu.Visibility = Visibility.Visible;
                 if ((int)user.UserType > 2)
                     mainWindow.AdminMenu.Visibility = Visibility.Visible;
+
+                var message = user.UserName + " logged in @" + DateTime.Now.ToShortTimeString(); 
+                Logger.Log(user.UserId, LogType.LogIn, message);
             }
             else
             {
+                var message = "Failed Login by " + loginId + " @" + DateTime.Now.ToShortTimeString();
+                Logger.Log(loginId, LogType.Error, message);
                 MessageBox.Show("Invalid Login");
             }
             this.Close();

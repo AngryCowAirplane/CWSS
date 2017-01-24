@@ -28,7 +28,7 @@ namespace cwssWpf
     /// 
 
     // mySQL infos
-    // add name="DefaultConnection" providerName="MySql.Data.MySqlClient" connectionString="Server=localhost;Database=cwss;Uid=root;Pwd=9087intxJON" />
+    // add name="DefaultConnection" providerName="MySql.Data.MySqlClient" connectionString="Server=localhost;Database=cwss;Uid=admin;Pwd=admin" />
 
     public partial class MainWindow : Window
     {
@@ -136,7 +136,11 @@ namespace cwssWpf
                 }
             }
             else
+            {
+                var message = "Failed checkin by " + loginId + " @" + DateTime.Now.ToShortTimeString();
+                Logger.Log(loginId, LogType.Error, message);
                 MessageBox.Show("User Not Found!");
+            }
 
             return true;
         }
@@ -152,6 +156,13 @@ namespace cwssWpf
             EmployeeMenu.Visibility = Visibility.Hidden;
             ManagerMenu.Visibility = Visibility.Hidden;
             AdminMenu.Visibility = Visibility.Hidden;
+
+            if(CurrentUser!=null)
+            {
+                var message = CurrentUser.UserName + " logged off @" + DateTime.Now.ToShortTimeString();
+                Logger.Log(CurrentUser.UserId, LogType.LogOut, message);
+            }
+
             CurrentUser = null;
         }
 
