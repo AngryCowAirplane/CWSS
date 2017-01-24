@@ -7,15 +7,30 @@
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         Background="AliceBlue"
-        Title="LogView" Height="400" Width="600">
+        Title="LogView" Height="400" Width="750">
     <Grid>
-        <Grid.ColumnDefinitions>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <ListView x:Name="lvLogs" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="Log Date Range:" FontSize="20" HorizontalAlignment="Right" Margin="5,0,5,0"/>
+        <DatePicker x:Name="dpFrom" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <DatePicker x:Name="dpTo" Grid.Row="0" Grid.Column="2" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <!--<Label Grid.Row="0" Grid.Column="3" Content="Log Type Filter:" FontSize="20" HorizontalAlignment="Right" Margin="5,0,5,0"/>-->
+        <TextBox x:Name="tbSearch" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5"/>
+
+        <ListView x:Name="lvLogs" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5"/>
+        <ListBox x:Name="lbFilters" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <Button x:Name="btnSave" Content="Save To File" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Click="btnSave_Click"/>
+        <Button x:Name="btnClose" Content="Close" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Click="btnClose_Click"/>
     </Grid>
 </Window>

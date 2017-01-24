@@ -58,6 +58,29 @@ namespace cwssWpf.Data
             return todaysLog;
         }
 
+        public static DailyLog GetLog(DateTime date)
+        {
+            var log = new DailyLog();
+
+            var logBasePath = Path.Combine(Environment.CurrentDirectory, "AppData", "Logs");
+            var yearPath = Path.Combine(logBasePath, date.Year.ToString());
+            var monthPath = Path.Combine(yearPath, date.Month.ToString());
+            var day = date.ToShortDateString().Replace('/', '_');
+            var logPath = Path.Combine(monthPath, (day + ".cwlog"));
+
+            if (File.Exists(logPath))
+            {
+                var logString = File.ReadAllText(logPath);
+                log = JsonConvert.DeserializeObject<DailyLog>(Helpers.DecryptString(logString));
+            }
+            else
+            {
+                log = null;
+            }
+
+            return log;
+        }
+
         private static bool LoadLog()
         {
             if (File.Exists(todaysLogTag.SaveLocation))
@@ -133,6 +156,15 @@ namespace cwssWpf.Data
         CheckOut = 1,
         LogIn = 2,
         LogOut = 3,
-        Error = 4
+        AddUser = 4,
+        DeleteUser = 5,
+        EditUser = 6,
+        Calendar = 7,
+        Message = 8,
+        Certification = 9,
+        Waiver = 10,
+        DataBase = 11,
+        Other = 12,
+        Error = 13
     }
 }
