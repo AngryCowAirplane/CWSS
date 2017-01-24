@@ -99,6 +99,7 @@
     <Compile Include="DataBase\Db.cs" />
     <Compile Include="Data\_BaseDataObject.cs" />
     <Compile Include="Data\Log.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Migrations\201701230205324_InitialCreate.cs" />
     <Compile Include="Migrations\201701230205324_InitialCreate.Designer.cs">
       <DependentUpon>201701230205324_InitialCreate.cs</DependentUpon>

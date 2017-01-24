@@ -1,4 +1,5 @@
-﻿using cwssWpf.DataBase;
+﻿using cwssWpf;
+using cwssWpf.DataBase;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace cwssWpf.Data
             if (File.Exists(todaysLogTag.SaveLocation))
             {
                 var logString = File.ReadAllText(todaysLogTag.SaveLocation);
-                todaysLog = JsonConvert.DeserializeObject<DailyLog>(logString);
+                todaysLog = JsonConvert.DeserializeObject<DailyLog>(Helpers.DecryptString(logString));
             }
             else
             {
@@ -79,7 +80,7 @@ namespace cwssWpf.Data
             todaysLog.LogDate = DateTime.Now.Date;
 
             var logString = JsonConvert.SerializeObject(todaysLog);
-            File.WriteAllText(todaysLogTag.SaveLocation, logString);
+            File.WriteAllText(todaysLogTag.SaveLocation, Helpers.EncryptString(logString));
 
             if (!Db.dataBase.DailyLogs.Contains(todaysLogTag))
                 Db.dataBase.DailyLogs.Add(todaysLogTag);

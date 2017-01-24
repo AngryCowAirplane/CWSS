@@ -22,10 +22,6 @@ namespace cwssWpf.Data
         public static _BaseDataObject Data = new _BaseDataObject();
         private static string dbPath;
 
-        // encryption keys
-        private static string passPhrase = "70392DE7-5FB4-4520-A9A6-3CD231E181C0";
-        private static string saltValue = "09290C9F-1B71-4A0E-92C9-51E03E6868D3";
-
         public static bool Load(string path)
         {
             dbPath = path;
@@ -64,7 +60,7 @@ namespace cwssWpf.Data
             if(File.Exists(path))
             {
                 var data = File.ReadAllText(dbPath);
-                var decryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(data, passPhrase, saltValue, "SHA1");
+                var decryptedData = Helpers.DecryptString(data);
                 Data = JsonConvert.DeserializeObject<_BaseDataObject>(decryptedData);
             }
 
@@ -76,7 +72,7 @@ namespace cwssWpf.Data
             if (string.IsNullOrEmpty(path))
                 path = dbPath;
             var data = JsonConvert.SerializeObject(Data);
-            var encryptedData = RijndaelEncryptDecrypt.EncryptDecryptUtils.Encrypt(data, passPhrase, saltValue, "SHA1");
+            var encryptedData = Helpers.EncryptString(data);
             File.WriteAllText(path, encryptedData);
 
             return true;
