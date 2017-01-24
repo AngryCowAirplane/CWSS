@@ -18,6 +18,7 @@ namespace cwssWpf
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             _DataBase.Save();
+            Logger.SaveLog();
         }
     }
 }

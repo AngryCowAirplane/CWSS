@@ -1,5 +1,8 @@
-﻿using System;
+﻿using cwssWpf.DataBase;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +12,30 @@ namespace cwssWpf.Data
     public static class Logger
     {
         public static DailyLog todaysLog;
+        public static DailyLogTag todaysLogTag;
 
         public static void Initialize()
         {
-            // TODO:
-            // Check for current daily log in file system
-            // if no log found, create new daily log
             todaysLog = new DailyLog();
+            todaysLogTag = new DailyLogTag();
+            initializeLogDirectory();
+            LoadLog();
+        }
+
+        private static void initializeLogDirectory()
+        {
+            var logBasePath = Path.Combine(Environment.CurrentDirectory, "AppData", "Logs");
+            var yearPath = Path.Combine(logBasePath, DateTime.Now.Year.ToString());
+            var monthPath = Path.Combine(yearPath, DateTime.Now.Month.ToString());
+            var day = DateTime.Now.ToShortDateString().Replace('/', '_');
+            var todaysLogPath = Path.Combine(monthPath, (day + ".cwlog"));
+
+            if(!Directory.Exists(yearPath))
+                Directory.CreateDirectory(yearPath);
+            if (!Directory.Exists(monthPath))
+                Directory.CreateDirectory(monthPath);
+
+            todaysLogTag.SaveLocation = todaysLogPath;
         }
 
         public static void Log(int userId, LogType type, string comment = "")
@@ -32,15 +52,32 @@ namespace cwssWpf.Data
             todaysLog.Logs.Add(log);
         }
 
+        public static bool LoadLog()
+        {
+            if (File.Exists(todaysLogTag.SaveLocation))
+            {
+                var logString = File.ReadAllText(todaysLogTag.SaveLocation);
+                todaysLog = JsonConvert.DeserializeObject<DailyLog>(logString);
+            }
+            else
+            {
+                todaysLog = new DailyLog();
+                todaysLog.LogDate = DateTime.Now;
+            }
+
+            todaysLogTag.LogDate = todaysLog.LogDate;
+            return true;
+        }
+
         public static bool SaveLog()
         {
             todaysLog.LogDate = DateTime.Now.Date;
 
-            // TODO:
-            // create new DailyLogTag
-            // generate save location based on logdate (probably should be a seperate function)
-            // save to file
-            // add tag to Database
+            var logString = JsonConvert.SerializeObject(todaysLog);
+            File.WriteAllText(todaysLogTag.SaveLocation, logString);
+
+            if (!Db.dataBase.DailyLogs.Contains(todaysLogTag))
+                Db.dataBase.DailyLogs.Add(todaysLogTag);
 
             return true;
         }
