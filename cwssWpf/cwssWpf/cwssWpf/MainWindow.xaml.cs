@@ -124,9 +124,10 @@ namespace cwssWpf
                         var length = DateTime.Now - user.TimeStamp;
                         user.TimeStamp = DateTime.Now;
                         user.CheckedIn = false;
-                        var message = user.UserName + " Checked Out @" + user.TimeStamp.ToShortTimeString() + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
-                        MessageBox.Show(message);
+                        var message = user.UserName + " Checked Out @" + user.TimeStamp.ToShortTimeString();
                         Logger.Log(user.UserId, LogType.CheckOut, message);
+                        message = user.UserName + " Checked Out @" + user.TimeStamp.ToShortTimeString() + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                        MessageBox.Show(message);
                     }
                 }
                 else
@@ -199,6 +200,12 @@ namespace cwssWpf
         private void menuSettings_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void menuViewLog_Click(object sender, RoutedEventArgs e)
+        {
+            var logView = new LogView();
+            logView.Show();
         }
     }
 }

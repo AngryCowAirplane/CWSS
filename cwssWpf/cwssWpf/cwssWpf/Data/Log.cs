@@ -11,8 +11,8 @@ namespace cwssWpf.Data
 {
     public static class Logger
     {
-        public static DailyLog todaysLog;
-        public static DailyLogTag todaysLogTag;
+        private static DailyLog todaysLog;
+        private static DailyLogTag todaysLogTag;
 
         public static void Initialize()
         {
@@ -52,7 +52,12 @@ namespace cwssWpf.Data
             todaysLog.Logs.Add(log);
         }
 
-        public static bool LoadLog()
+        public static DailyLog GetTodaysLog()
+        {
+            return todaysLog;
+        }
+
+        private static bool LoadLog()
         {
             if (File.Exists(todaysLogTag.SaveLocation))
             {
@@ -112,9 +117,9 @@ namespace cwssWpf.Data
         public LogType Action;
         public string Comment;
 
-        public string PrintLog()
+        public override string ToString()
         {
-            var logData = (TimeStamp.ToShortDateString() + " " + TimeStamp.ToShortTimeString() + " - " + Action.ToString() + ": " + Comment);
+            var logData = (TimeStamp.ToShortDateString() + " " + TimeStamp.ToShortTimeString() + " (" + Action.ToString() + ") - " + Comment);
             Console.WriteLine(logData);
             return logData;
         }

@@ -42,6 +42,7 @@
                 </MenuItem>
                 <MenuItem Header= "_Admin" Visibility="Visible" Name="AdminMenu">
                     <MenuItem Header="_Accounts" Name="menuAccounts" Click="menuAccounts_Click"></MenuItem>
+                    <MenuItem Header="_View Log" Name="menuViewLog" Click="menuViewLog_Click"></MenuItem>
                     <MenuItem Header="_Settings" Name="menuSettings" Click="menuSettings_Click"></MenuItem>
                 </MenuItem>
             </Menu>

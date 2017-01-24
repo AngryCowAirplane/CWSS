@@ -32,9 +32,9 @@ namespace cwssWpf.Reports
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(Path.Combine(path, "Logs.txt")))
             {
-                foreach (var log in Logger.todaysLog.Logs)
+                foreach (var log in Logger.GetTodaysLog().Logs)
                 {
-                    file.WriteLine(log.PrintLog());
+                    file.WriteLine(log);
                 }
             }
         }
