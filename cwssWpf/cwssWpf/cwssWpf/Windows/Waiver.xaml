@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Title="Waiver" Height="650" Width="650">
+        WindowStyle="None"
+        Title="Waiver" Height="600" Width="800">
     <Grid>
-        <WebBrowser x:Name="webBrowser" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+        <WebBrowser x:Name="webBrowser" Grid.Row="0" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch"/>
+        <Button x:Name="btnSignForm" Content="Sign Form" Grid.Row="1" HorizontalAlignment="Center" Margin="4,4,4,4" VerticalAlignment="Center" Click="btnSignForm_Click"/>
     </Grid>
 </Window>

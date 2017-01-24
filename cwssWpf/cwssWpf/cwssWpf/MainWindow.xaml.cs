@@ -36,8 +36,8 @@ namespace cwssWpf
         // find appropriate place and functionality for default admin user/password if DB is lost
         // need the ability for the admin to change this immediately so this no longer is accepted from
         // regular DB querying.
-        public int DefaultAdminId = 12345;
-        public string DefaultAdminPassword = "abc123";
+        private int DefaultAdminId = 12345;
+        private string DefaultAdminPassword = "abc123";
         public User CurrentUser = null;
 
         public MainWindow()
@@ -187,8 +187,8 @@ namespace cwssWpf
 
         private void menuAccounts_Click(object sender, RoutedEventArgs e)
         {
-            var test = new AccountManager();
-            test.Show();
+            var accountManager = new AccountManager();
+            accountManager.Show();
         }
 
         private void menuStore_Click(object sender, RoutedEventArgs e)
