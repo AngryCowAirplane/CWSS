@@ -190,5 +190,15 @@ namespace cwssWpf
             var test = new AccountManager();
             test.Show();
         }
+
+        private void menuStore_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuSettings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
