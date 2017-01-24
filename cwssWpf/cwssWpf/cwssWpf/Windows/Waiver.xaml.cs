@@ -21,6 +21,7 @@ namespace cwssWpf.Windows
     {
         public Waiver()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             var waiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CW Acknowledgement of Risk and Sign-In Sheet.pdf");
 
             InitializeComponent();

@@ -24,7 +24,7 @@ namespace cwssWpf.Windows
         // TODO:
         // Rename all objects in the window editor and set appropriate label text
 
-        public NewUser(MainWindow mainWindow)
+        public NewUser(Window mainWindow)
         {
             InitializeComponent();
             this.Left = mainWindow.Left + 50;
