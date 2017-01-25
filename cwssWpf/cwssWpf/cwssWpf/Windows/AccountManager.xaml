@@ -44,7 +44,7 @@
         </ListView>
         
         <Button x:Name="btnUpdate" Grid.Row="2" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Update" Width="50" Height="20" Click="btnUpdate_Click"></Button>
-        <Button x:Name="btnInfo" Grid.Row="2" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Info" Width="50" Height="20" Click="btnInfo_Click"></Button>
+        <Button x:Name="btnInfo" Grid.Row="2" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Refresh" Width="50" Height="20" Click="btnInfo_Click"></Button>
         <Button x:Name="btnDelete" Grid.Row="2" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Delete" Width="50" Height="20" Click="btnDelete_Click"></Button>
 
         <Button x:Name="btnAdd" Grid.Row="2" Grid.Column="2" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Add User" Width="80" Height="20" Click="btnAdd_Click"></Button>

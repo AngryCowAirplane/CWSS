@@ -37,7 +37,6 @@
                 </MenuItem>
                 <MenuItem Header= "_Manager" Visibility="Visible" Name="ManagerMenu">
                     <MenuItem Header="_Reports" Name="menuReports" Click="menuReports_Click"></MenuItem>
-                    <MenuItem Header="_List Serv" Name="menuListServ" Click="menuListServ_Click"></MenuItem>
                     <MenuItem Header="_Manage Users" Name="menuManageUsers" Click="menuManageUsers_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header= "_Admin" Visibility="Visible" Name="AdminMenu">

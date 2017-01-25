@@ -23,9 +23,57 @@ namespace cwssWpf.Windows
         public UserManager()
         {
             InitializeComponent();
-            dataGrid.ItemsSource = Db.dataBase.Users;
+            dataGrid.AutoGenerateColumns = false;
             dataGrid.CanUserAddRows = false;
-            dataGrid.IsReadOnly = true;
+            dataGrid.ItemsSource = Db.dataBase.Users;
+
+            setupColumns();
+        }
+
+        private void setupColumns()
+        {
+            var textColumn = new DataGridTextColumn();
+            textColumn.Header = "First Name";
+            textColumn.Binding = new Binding("Info.FirstName");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "Last Name";
+            textColumn.Binding = new Binding("Info.LastName");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "User Id";
+            textColumn.Binding = new Binding("LoginId");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+
+            var hyperColumn = new DataGridHyperlinkColumn();
+            hyperColumn.Header = "Email";
+            hyperColumn.Binding = new Binding("Info.Email");
+            hyperColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(hyperColumn);
+
+            var cbColumn = new DataGridCheckBoxColumn();
+            cbColumn.Header = "CanClimb";
+            cbColumn.Binding = new Binding("CanClimb");
+            dataGrid.Columns.Add(cbColumn);
+        }
+
+        private void menuSave_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid.CommitEdit();
+            dataGrid.CommitEdit();
+            this.Close();
+        }
+
+        private void menuCancel_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid.CancelEdit();
+            dataGrid.CancelEdit();
+            this.Close();
         }
     }
 }

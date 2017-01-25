@@ -132,7 +132,7 @@ namespace cwssWpf
                 }
                 else
                 {
-                    MessageBox.Show("Climbing Priveleges Revoked");
+                    MessageBox.Show("CheckIn Not Allowed");
                 }
             }
             else

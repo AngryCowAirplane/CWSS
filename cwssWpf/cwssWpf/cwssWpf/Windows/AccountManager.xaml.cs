@@ -79,7 +79,7 @@ namespace cwssWpf.Windows
 
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            lvUsers.Items.Refresh();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -91,6 +91,7 @@ namespace cwssWpf.Windows
         {
             var user = new NewUser(this);
             user.Show();
+            lvUsers.ItemsSource = null;
             lvUsers.ItemsSource = Db.dataBase.Users;
             lvUsers.Items.Refresh();
             tbSearch_Changed(this, null);

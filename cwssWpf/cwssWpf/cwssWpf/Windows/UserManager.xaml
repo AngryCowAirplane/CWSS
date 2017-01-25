@@ -7,9 +7,27 @@
         mc:Ignorable="d"
         Background="AliceBlue"
         WindowStyle="ToolWindow"
-        Title="UserManager" Height="600" Width="800">
+        Title="User Manager" Height="600" Width="800">
     <Grid>
-        <DataGrid x:Name="dataGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Background="CornflowerBlue" Name="MainMenu">
+                <MenuItem Header="File">
+                    <MenuItem Header= "_Print" Name="menuPrint"></MenuItem>
+                    <MenuItem Header= ""></MenuItem>
+                    <MenuItem Header= "_Save / Exit" Name="menuSave" Click="menuSave_Click"></MenuItem>
+                    <MenuItem Header= "_Cancel / Exit" Name="menuCancel" Click="menuCancel_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header= "Columns">
+                </MenuItem>
+            </Menu>
+            <StackPanel></StackPanel>
+        </DockPanel>
 
+        <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5"></DataGrid>
     </Grid>
 </Window>
