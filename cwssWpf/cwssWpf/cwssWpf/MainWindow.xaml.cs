@@ -63,7 +63,7 @@ namespace cwssWpf
 
             FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
-            MiddleText.Text = "User Name";
+            //MiddleText.Text = "User Name";
             updateClimberStats();
         }
 

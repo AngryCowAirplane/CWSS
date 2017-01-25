@@ -42,11 +42,21 @@ namespace cwssWpf.Windows
                 tbPhone, cbGender
                 );
 
-            if(success)
+            if (success)
             {
                 Logger.Log(MainWindow.CurrentUser.UserId, LogType.AddUser,
                     MainWindow.CurrentUser.GetName() + " Added User: " +
                     tbFirstName.Text + " " + tbLastName.Text);
+            }
+            else
+            {
+                Logger.Log(MainWindow.CurrentUser.UserId, LogType.Error,
+                    MainWindow.CurrentUser.GetName() + " Failed Add User: " +
+                    tbFirstName.Text + " " + tbLastName.Text);
+
+                // TODO:
+                // Give feedback on why failed
+                MessageBox.Show("Add User Failed");
             }
 
             this.Close();
