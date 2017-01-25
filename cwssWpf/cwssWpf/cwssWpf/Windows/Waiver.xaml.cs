@@ -31,6 +31,7 @@ namespace cwssWpf.Windows
 
         private void btnSignForm_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = true;
             this.Close();
         }
     }

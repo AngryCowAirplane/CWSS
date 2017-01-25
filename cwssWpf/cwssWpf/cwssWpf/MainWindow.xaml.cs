@@ -63,6 +63,8 @@ namespace cwssWpf
 
             FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
+            MiddleText.Text = "User Name";
+            updateClimberStats();
         }
 
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
@@ -85,6 +87,7 @@ namespace cwssWpf
             // validate input in tbUserId
             // if valid checkIn()
             checkIn();
+            updateClimberStats();
         }
 
         // TODO:
@@ -109,7 +112,10 @@ namespace cwssWpf
             var user = Db.GetUser(loginId);
             if(user != null)
             {
-                if(user.HasWaiver() && user.CanClimb)
+                var hasWaiver = user.HasWaiver();
+                var canClimb = user.CanClimb;
+
+                if(hasWaiver && canClimb)
                 {
                     if(!user.CheckedIn)
                     {
@@ -132,7 +138,32 @@ namespace cwssWpf
                 }
                 else
                 {
-                    MessageBox.Show("CheckIn Not Allowed");
+                    // TODO:
+                    // FIND BETTER WAY TO RESOLVE THIS SHIT
+                    if(!hasWaiver)
+                    {
+                        var waiver = new Waiver();
+                        var signedWaiver = waiver.ShowDialog();
+                        if((bool)signedWaiver)
+                        {
+                            var waiverDoc = new Document();
+                            waiverDoc.DocumentType = DocType.Waiver;
+                            waiverDoc.Date = DateTime.Now;
+                            waiverDoc.Expires = DateTime.Now + TimeSpan.FromDays(90);
+                            waiverDoc.FileLocation = "not yet implemented";
+                            waiverDoc.UserId = user.LoginId;
+
+                            user.Documents.Add(waiverDoc);
+                            tryCheckinUser();
+                        }
+                        else
+                            MessageBox.Show("Waiver Missing / Required!");
+                    }
+                    if(!canClimb)
+                    {
+                        MessageBox.Show("Climbing Priveleges Revoked");
+                        // Show better reason, have Comment variable in User Table?
+                    }
                 }
             }
             else
@@ -219,6 +250,11 @@ namespace cwssWpf
         {
             var logView = new LogView();
             logView.Show();
+        }
+
+        private void updateClimberStats()
+        {
+            StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
         }
     }
 }

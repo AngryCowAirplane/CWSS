@@ -10,23 +10,16 @@ namespace cwssWpf.Data
     {
         public int DocumentId;
         public int UserId;
-        public Type DocumentType;
-    }
-
-    public class WaiverDoc : Document
-    {
+        public DocType DocumentType;
         public DateTime Date { get; set; }
         public DateTime Expires { get; set; }
         public string FileLocation { get; set; }
     }
 
-    public class BelayCert : Document
+    public enum DocType
     {
-        // ??
-    }
-
-    public class TrainerCert : Document
-    {
-        // ??
+        Waiver = 0,
+        BelayCert = 1,
+        TrainerCert = 2
     }
 }

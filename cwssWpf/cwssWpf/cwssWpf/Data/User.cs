@@ -34,11 +34,12 @@ namespace cwssWpf.Data
         {
             try
             {
-                var waiver = (WaiverDoc)Documents.Where(t => t.DocumentType == typeof(WaiverDoc));
+                var waivers = Documents.Where(t => t.DocumentType == DocType.Waiver);
+                var waiver = waivers.Where(t=>t.UserId == LoginId).First();
                 if (waiver.Expires > DateTime.Now)
                     return true;
             }
-            catch
+            catch (Exception e)
             {
                 // TODO:
                 // throw exception up instead of MessageBox
