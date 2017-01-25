@@ -20,7 +20,7 @@ namespace cwssWpf.Reports
             {
                 foreach (var user in Db.dataBase.Users)
                 {
-                    file.WriteLine(user.UserName + " - " + user.UserType.ToString());
+                    file.WriteLine(user.GetName() + " - " + user.UserType.ToString());
                 }
             }
         }

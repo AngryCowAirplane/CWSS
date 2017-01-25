@@ -53,9 +53,9 @@ namespace cwssWpf.Windows
         private void tbSearch_Changed(object sencer, RoutedEventArgs e)
         {
             lvUsers.ItemsSource = Db.dataBase.Users.Where(data => 
-                data.UserName.ToLower().Contains(tbSearch.Text.ToLower()) ||
+                data.GetName().ToLower().Contains(tbSearch.Text.ToLower()) ||
                 data.UserType.ToString().ToLower().Contains(tbSearch.Text.ToLower()) ||
-                data.Email.ToLower().Contains(tbSearch.Text.ToLower()) ||
+                data.Info.Email.ToLower().Contains(tbSearch.Text.ToLower()) ||
                 data.LoginId.ToString().Contains(tbSearch.Text)
                 );
 

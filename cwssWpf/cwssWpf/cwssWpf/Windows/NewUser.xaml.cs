@@ -29,12 +29,18 @@ namespace cwssWpf.Windows
             InitializeComponent();
             this.Left = mainWindow.Left + 50;
             this.Top = mainWindow.Top + 50;
+            cbGender.ItemsSource = (Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList());
             FocusManager.SetFocusedElement(this, tbFirstName);
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            Db.AddUser(tbIdNumber.Text, UserType.Patron, tbPassword.Password, true, tbFirstName.Text + " " + tbLastName.Text, tbEmail.Text, "");
+            var success = Db.AddUser(
+                tbFirstName, tbLastName,
+                tbIdNumber, tbPassword, tbPassword2,
+                tbEmail, tbAddress, tbCity, tbState, tbZip,
+                tbPhone, cbGender
+                );
             this.Close();
         }
 

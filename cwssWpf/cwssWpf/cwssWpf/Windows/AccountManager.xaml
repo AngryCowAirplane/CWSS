@@ -28,14 +28,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <TextBlock Text="{Binding UserName}" FontWeight="Medium"/>
+                        <TextBlock Text="{Binding Info.FirstName}" FontWeight="Medium"/>
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="{Binding Info.LastName}" FontWeight="Medium"/>
                         <TextBlock Text=", "/>
                         <TextBlock Text="{Binding UserType}" FontWeight="ExtraBold"/>
                         <TextBlock Text=" ("/>
                         <TextBlock Text="{Binding LoginId}" FontWeight="Regular"/>
                         <TextBlock Text=") "/>
                         <TextBlock Text=" - "/>
-                        <TextBlock Text="{Binding Email}" FontWeight="Regular"/>
+                        <TextBlock Text="{Binding Info.Email}" FontWeight="Regular"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

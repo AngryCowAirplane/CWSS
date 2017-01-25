@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace cwssWpf.DataBase
 {
@@ -25,24 +26,38 @@ namespace cwssWpf.DataBase
             }
         }
 
-        public static bool AddUser(int loginId, UserType userType, string password, bool canClimb = true, string userName = "", string email = "", string phone = "")
+        public static bool AddUser(string firstName, string LastName, int userId, string password1, string password2,
+            string email, string address, string city, string state, int zip, string phone, GenderType gender, UserType userType = UserType.Patron)
         {
             try
             {
-                var findUser = Db.GetUser(loginId);
+                var findUser = Db.GetUser(userId);
                 if (findUser == null)
                 {
                     var user = new User();
-                    user.CanClimb = canClimb;
-                    user.Email = email;
-                    user.Password = password;
-                    user.PhoneNumber = phone;
-                    user.UserName = userName;
-                    user.LoginId = loginId;
+                    user.Info.FirstName = firstName;
+                    user.Info.LastName = LastName;
+                    user.LoginId = userId;
+
+                    if (password1 == password2)
+                        user.Password = password1;
+                    else
+                        throw new Exception("Password Mismatch");
+
+                    user.Info.Email = email;
+                    user.Info.Address = address;
+                    user.Info.City = city;
+                    user.Info.State = state;
+                    user.Info.Zip = zip.ToString();
+                    user.Info.Phone = phone;
+                    user.Info.Gender = gender;
+
+                    user.CheckedIn = false;
+                    user.CanClimb = true;
+                    user.TimeStamp = DateTime.MinValue;
                     user.UserType = userType;
 
                     dataBase.Users.Add(user);
-
                     dataBase.SaveChanges();
                 }
                 else
@@ -58,12 +73,15 @@ namespace cwssWpf.DataBase
             return true;
         }
 
-        public static bool AddUser(string loginId, UserType userType, string password, bool canClimb = true, string userName = "", string email = "", string phone = "")
+        public static bool AddUser(string firstName, string LastName, string userId, string password1, string password2,
+            string email, string address, string city, string state, string zip, string phone, GenderType gender)
         {
             try
             {
-                var Id = int.Parse(loginId);
-                AddUser(Id, userType, password, canClimb, userName, email, phone);
+                var Id = int.Parse(userId);
+                var Zip = int.Parse(zip);
+
+                AddUser(firstName, LastName, Id, password1, password2, email, address, city, state, Zip, phone, gender);
             }
             catch
             {
@@ -72,7 +90,35 @@ namespace cwssWpf.DataBase
             return true;
         }
 
+        public static bool AddUser(TextBox firstName, TextBox LastName, TextBox userId, PasswordBox password1, PasswordBox password2,
+            TextBox email, TextBox address, TextBox city, TextBox state, TextBox zip, TextBox phone, ComboBox gender)
+        {
+            return AddUser(
+                firstName.Text, LastName.Text,
+                userId.Text, password1.Password, password2.Password,
+                email.Text, address.Text, city.Text, state.Text, zip.Text,
+                phone.Text, (GenderType)gender.SelectedItem
+                );
+        }
 
+        public static bool AddUser(User user)
+        {
+            try
+            {
+                dataBase.Users.Add(user);
+                dataBase.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static void AddDefaultAdminUser(int DefaultAdminId, string DefaultAdminPassword)
+        {
+            AddUser("Admin", "User", DefaultAdminId, DefaultAdminPassword, DefaultAdminPassword, "admin@admin.com", "local admin", "noCity", "ZZ", 12345, "123-456-7890", GenderType.Female, UserType.Admin);
+        }
 
         public static void Initialize()
         {

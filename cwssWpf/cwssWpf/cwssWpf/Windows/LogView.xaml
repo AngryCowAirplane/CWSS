@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         Background="AliceBlue"
-        Title="LogView" Height="400" Width="750">
+        Title="Log Viewer" Height="400" Width="750">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>

@@ -144,7 +144,7 @@ namespace cwssWpf.Data
         public override string ToString()
         {
             var logData = (TimeStamp.ToShortDateString() + " " + TimeStamp.ToShortTimeString() + " (" + Action.ToString() + ") - " + Comment);
-            Console.WriteLine(logData);
+            //Console.WriteLine(logData);
             return logData;
         }
     }

@@ -50,7 +50,7 @@ namespace cwssWpf.Windows
                 if ((int)user.UserType > 2)
                     mainWindow.AdminMenu.Visibility = Visibility.Visible;
 
-                var message = user.UserName + " logged in @" + DateTime.Now.ToShortTimeString(); 
+                var message = user.GetName() + " logged in @" + DateTime.Now.ToShortTimeString(); 
                 Logger.Log(user.UserId, LogType.LogIn, message);
             }
             else

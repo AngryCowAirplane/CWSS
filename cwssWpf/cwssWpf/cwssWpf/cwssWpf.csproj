@@ -97,6 +97,7 @@
     </ApplicationDefinition>
     <Compile Include="DataBase\DbContext.cs" />
     <Compile Include="DataBase\Db.cs" />
+    <Compile Include="Data\Document.cs" />
     <Compile Include="Data\_BaseDataObject.cs" />
     <Compile Include="Data\Log.cs" />
     <Compile Include="Helpers.cs" />
@@ -120,6 +121,12 @@
     </Compile>
     <Compile Include="Windows\NewUser.xaml.cs">
       <DependentUpon>NewUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\UserManager.xaml.cs">
+      <DependentUpon>UserManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Waiver.xaml.cs">
       <DependentUpon>Waiver.xaml</DependentUpon>
@@ -157,6 +164,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\NewUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

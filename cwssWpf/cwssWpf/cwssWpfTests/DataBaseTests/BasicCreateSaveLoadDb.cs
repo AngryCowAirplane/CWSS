@@ -21,7 +21,7 @@ namespace cwssWpf.DataBaseTests
 
             var user = new User();
             user.UserId = 1023542;
-            user.UserName = "Derek";
+            user.Info.FirstName = "Derek";
             user.UserType = UserType.Admin;
             _DataBase.Data.AddUser(user);
             Assert.IsTrue(_DataBase.Data.Users.Count > 0);

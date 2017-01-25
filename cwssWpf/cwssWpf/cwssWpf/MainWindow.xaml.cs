@@ -53,13 +53,13 @@ namespace cwssWpf
             //--use custom DB
             Db.Initialize();
             Logger.Initialize();
-            
+
             //--use entity framework DB
             //Db.dataBase = new Context();
             //Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
 
-            if(Db.dataBase.Users.Count < 1)
-                Db.AddUser(DefaultAdminId, UserType.Admin, DefaultAdminPassword, true, "Admin", "admin@admin.com","");
+            if (Db.dataBase.Users.Count < 1)
+                Db.AddDefaultAdminUser(DefaultAdminId, DefaultAdminPassword);
 
             FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
@@ -109,13 +109,13 @@ namespace cwssWpf
             var user = Db.GetUser(loginId);
             if(user != null)
             {
-                if(user.CanClimb)
+                if(user.HasWaiver() && user.CanClimb)
                 {
                     if(!user.CheckedIn)
                     {
                         user.TimeStamp = DateTime.Now;
                         user.CheckedIn = true;
-                        var message = user.UserName + " Checked In @" + user.TimeStamp.ToShortTimeString();
+                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In @" + user.TimeStamp.ToShortTimeString();
                         MessageBox.Show(message);
                         Logger.Log(user.UserId, LogType.CheckIn, message);
                     }
@@ -124,9 +124,9 @@ namespace cwssWpf
                         var length = DateTime.Now - user.TimeStamp;
                         user.TimeStamp = DateTime.Now;
                         user.CheckedIn = false;
-                        var message = user.UserName + " Checked Out @" + user.TimeStamp.ToShortTimeString();
+                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked Out @" + user.TimeStamp.ToShortTimeString();
                         Logger.Log(user.UserId, LogType.CheckOut, message);
-                        message = user.UserName + " Checked Out @" + user.TimeStamp.ToShortTimeString() + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                        message = user.Info.FirstName + " " + user.Info.LastName + " Checked Out @" + user.TimeStamp.ToShortTimeString() + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
                         MessageBox.Show(message);
                     }
                 }
@@ -159,7 +159,7 @@ namespace cwssWpf
 
             if(CurrentUser!=null)
             {
-                var message = CurrentUser.UserName + " logged off @" + DateTime.Now.ToShortTimeString();
+                var message = CurrentUser.GetName() + " logged off @" + DateTime.Now.ToShortTimeString();
                 Logger.Log(CurrentUser.UserId, LogType.LogOut, message);
             }
 
@@ -194,7 +194,8 @@ namespace cwssWpf
 
         private void menuManageUsers_Click(object sender, RoutedEventArgs e)
         {
-
+            var userManager = new UserManager();
+            userManager.Show();
         }
 
         private void menuAccounts_Click(object sender, RoutedEventArgs e)
@@ -210,7 +211,8 @@ namespace cwssWpf
 
         private void menuSettings_Click(object sender, RoutedEventArgs e)
         {
-
+            var settings = new Settings();
+            settings.Show();
         }
 
         private void menuViewLog_Click(object sender, RoutedEventArgs e)
