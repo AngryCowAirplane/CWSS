@@ -38,7 +38,7 @@ namespace cwssWpf
         // regular DB querying.
         private int DefaultAdminId = 12345;
         private string DefaultAdminPassword = "abc123";
-        public User CurrentUser = null;
+        public static User CurrentUser = null;
 
         public MainWindow()
         {
@@ -121,7 +121,7 @@ namespace cwssWpf
                     {
                         user.TimeStamp = DateTime.Now;
                         user.CheckedIn = true;
-                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In @" + user.TimeStamp.ToShortTimeString();
+                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
                         MessageBox.Show(message);
                         Logger.Log(user.UserId, LogType.CheckIn, message);
                     }
@@ -130,9 +130,9 @@ namespace cwssWpf
                         var length = DateTime.Now - user.TimeStamp;
                         user.TimeStamp = DateTime.Now;
                         user.CheckedIn = false;
-                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked Out @" + user.TimeStamp.ToShortTimeString();
+                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked Out.";
                         Logger.Log(user.UserId, LogType.CheckOut, message);
-                        message = user.Info.FirstName + " " + user.Info.LastName + " Checked Out @" + user.TimeStamp.ToShortTimeString() + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                        message = user.Info.FirstName + " " + user.Info.LastName + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
                         MessageBox.Show(message);
                     }
                 }
@@ -154,6 +154,8 @@ namespace cwssWpf
                             waiverDoc.UserId = user.LoginId;
 
                             user.Documents.Add(waiverDoc);
+                            Logger.Log(user.LoginId, LogType.Waiver, user.GetName() + " Signed Waiver.");
+
                             tryCheckinUser();
                         }
                         else
@@ -168,7 +170,7 @@ namespace cwssWpf
             }
             else
             {
-                var message = "Failed checkin by " + loginId + " @" + DateTime.Now.ToShortTimeString();
+                var message = "Failed Checkin By " + loginId;
                 Logger.Log(loginId, LogType.Error, message);
                 MessageBox.Show("User Not Found!");
             }
@@ -190,7 +192,7 @@ namespace cwssWpf
 
             if(CurrentUser!=null)
             {
-                var message = CurrentUser.GetName() + " logged off @" + DateTime.Now.ToShortTimeString();
+                var message = CurrentUser.GetName() + " Logged Off";
                 Logger.Log(CurrentUser.UserId, LogType.LogOut, message);
             }
 

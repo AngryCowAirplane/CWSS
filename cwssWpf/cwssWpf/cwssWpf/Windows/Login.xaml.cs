@@ -42,7 +42,7 @@ namespace cwssWpf.Windows
             var user = Db.GetUser(loginId);
             if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
             {
-                mainWindow.CurrentUser = user;
+                MainWindow.CurrentUser = user;
                 mainWindow.MainMenu.Background = Brushes.Crimson;
                 mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
                 if ((int)user.UserType > 1)
@@ -50,12 +50,12 @@ namespace cwssWpf.Windows
                 if ((int)user.UserType > 2)
                     mainWindow.AdminMenu.Visibility = Visibility.Visible;
 
-                var message = user.GetName() + " logged in @" + DateTime.Now.ToShortTimeString(); 
+                var message = user.GetName() + " Logged In"; 
                 Logger.Log(user.UserId, LogType.LogIn, message);
             }
             else
             {
-                var message = "Failed Login by " + loginId + " @" + DateTime.Now.ToShortTimeString();
+                var message = "Failed Login By " + loginId;
                 Logger.Log(loginId, LogType.Error, message);
                 MessageBox.Show("Invalid Login");
             }

@@ -41,6 +41,14 @@ namespace cwssWpf.Windows
                 tbEmail, tbAddress, tbCity, tbState, tbZip,
                 tbPhone, cbGender
                 );
+
+            if(success)
+            {
+                Logger.Log(MainWindow.CurrentUser.UserId, LogType.AddUser,
+                    MainWindow.CurrentUser.GetName() + " Added User: " +
+                    tbFirstName.Text + " " + tbLastName.Text);
+            }
+
             this.Close();
         }
 

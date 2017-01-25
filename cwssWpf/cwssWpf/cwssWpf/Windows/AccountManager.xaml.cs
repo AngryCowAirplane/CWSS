@@ -36,6 +36,9 @@ namespace cwssWpf.Windows
             var user = (User)lvUsers.SelectedItem;
             var type = (UserType)lbTypes.SelectedItem;
 
+            if(type != user.UserType)
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.EditUser, user.UserType.ToString() + ", " + user.GetName() + " (" + user.LoginId + ") Was Updated To " + type.ToString());
+
             user.UserType = type;
             lvUsers.Items.Refresh();
         }
@@ -69,7 +72,11 @@ namespace cwssWpf.Windows
             confirm.ShowDialog();
 
             if (confirm.Confirmed)
-                Db.dataBase.Users.Remove((User)lvUsers.SelectedItem);
+            {
+                var user = (User)lvUsers.SelectedItem;
+                Db.dataBase.Users.Remove(user);
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.DeleteUser, user.UserType.ToString() + ", " + user.GetName() + " (" + user.LoginId + ") Was Deleted"); 
+            }
 
             lvUsers.ItemsSource = Db.dataBase.Users;
             lvUsers.Items.Refresh();
