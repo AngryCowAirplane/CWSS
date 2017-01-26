@@ -54,6 +54,61 @@ namespace cwssWpf.Data
             return Info.FirstName + " " + Info.LastName;
         }
 
+        public bool GetCheckedIn()
+        {
+            return CheckedIn;
+        }
+
+        public bool CheckOut()
+        {
+            if (CheckedIn)
+            {
+                TimeStamp = DateTime.Now;
+                var length = DateTime.Now - TimeStamp;
+                var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
+                Logger.Log(UserId, LogType.CheckOut, message);
+                message = Info.FirstName + " " + Info.LastName + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                MessageBox.Show(message);
+                CheckedIn = false;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool CheckIn()
+        {
+            if (!CheckedIn)
+            {
+                TimeStamp = DateTime.Now;
+                var message = Info.FirstName + " " + Info.LastName + " Checked In.";
+                MessageBox.Show(message);
+                Logger.Log(UserId, LogType.CheckIn, message);
+                CheckedIn = true;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool AddWaiver()
+        {
+            var waiverDoc = new Document();
+            waiverDoc.DocumentType = DocType.Waiver;
+            waiverDoc.Date = DateTime.Now;
+            waiverDoc.Expires = DateTime.Now + TimeSpan.FromDays(90);
+            waiverDoc.FileLocation = "not yet implemented";
+            waiverDoc.UserId = LoginId;
+
+            Documents.Add(waiverDoc);
+            Logger.Log(LoginId, LogType.Waiver, GetName() + " Signed Waiver.");
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return (GetName() + " (" + LoginId + ")");
+        }
     }
 
     public class PersonalInfo

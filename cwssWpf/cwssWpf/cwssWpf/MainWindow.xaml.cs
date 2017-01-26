@@ -64,7 +64,7 @@ namespace cwssWpf
             FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
             //MiddleText.Text = "User Name";
-            updateClimberStats();
+            UpdateClimberStats();
         }
 
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
@@ -87,7 +87,7 @@ namespace cwssWpf
             // validate input in tbUserId
             // if valid checkIn()
             checkIn();
-            updateClimberStats();
+            UpdateClimberStats();
         }
 
         // TODO:
@@ -118,23 +118,9 @@ namespace cwssWpf
                 if(hasWaiver && canClimb)
                 {
                     if(!user.CheckedIn)
-                    {
-                        user.TimeStamp = DateTime.Now;
-                        user.CheckedIn = true;
-                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
-                        MessageBox.Show(message);
-                        Logger.Log(user.UserId, LogType.CheckIn, message);
-                    }
+                        user.CheckIn();
                     else
-                    {
-                        var length = DateTime.Now - user.TimeStamp;
-                        user.TimeStamp = DateTime.Now;
-                        user.CheckedIn = false;
-                        var message = user.Info.FirstName + " " + user.Info.LastName + " Checked Out.";
-                        Logger.Log(user.UserId, LogType.CheckOut, message);
-                        message = user.Info.FirstName + " " + user.Info.LastName + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
-                        MessageBox.Show(message);
-                    }
+                        user.CheckOut();
                 }
                 else
                 {
@@ -146,16 +132,7 @@ namespace cwssWpf
                         var signedWaiver = waiver.ShowDialog();
                         if((bool)signedWaiver)
                         {
-                            var waiverDoc = new Document();
-                            waiverDoc.DocumentType = DocType.Waiver;
-                            waiverDoc.Date = DateTime.Now;
-                            waiverDoc.Expires = DateTime.Now + TimeSpan.FromDays(90);
-                            waiverDoc.FileLocation = "not yet implemented";
-                            waiverDoc.UserId = user.LoginId;
-
-                            user.Documents.Add(waiverDoc);
-                            Logger.Log(user.LoginId, LogType.Waiver, user.GetName() + " Signed Waiver.");
-
+                            user.AddWaiver();
                             tryCheckinUser();
                         }
                         else
@@ -254,9 +231,15 @@ namespace cwssWpf
             logView.Show();
         }
 
-        private void updateClimberStats()
+        public void UpdateClimberStats()
         {
             StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
+        }
+
+        private void menuUsers_Click(object sender, RoutedEventArgs e)
+        {
+            var climberView = new ClimberView(this);
+            climberView.Show();
         }
     }
 }

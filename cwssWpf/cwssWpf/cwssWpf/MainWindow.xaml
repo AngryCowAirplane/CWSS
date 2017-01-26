@@ -28,7 +28,7 @@
                     <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header= "_Employee" Visibility="Visible" Name="EmployeeMenu">
-                    <MenuItem Header="_View Climbers" Name="menuUsers"></MenuItem>
+                    <MenuItem Header="_View Climbers" Name="menuUsers" Click="menuUsers_Click"></MenuItem>
                     <MenuItem Header="_New User" Name="menuNewUser" Click="menuNewUser_Click"></MenuItem>
                     <MenuItem Header="_Waiver" Name="menuWaiver" Click="menuWaiver_Click"></MenuItem>
                     <MenuItem Header="_Messages" Name="menuMessageSystem" Click="menuMessageSystem_Click"></MenuItem>
