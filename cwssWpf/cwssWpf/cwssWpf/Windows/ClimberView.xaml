@@ -17,11 +17,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.ColumnSpan="3">
-            <Menu DockPanel.Dock="Top">
+            <Menu DockPanel.Dock="Top"  Background="CornflowerBlue">
                 <MenuItem Header="File">
                     <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
                 </MenuItem>
@@ -47,5 +47,8 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
+
+        <Label Content="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" FontWeight="Bold" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <Label Name="lblNumUsers" Content="" Grid.Column="2" Grid.ColumnSpan="1" Grid.Row="2" FontWeight="Bold" FontSize="10" VerticalAlignment="Top"/>
     </Grid>
 </Window>

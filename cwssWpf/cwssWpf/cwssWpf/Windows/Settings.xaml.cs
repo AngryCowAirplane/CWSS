@@ -21,6 +21,7 @@ namespace cwssWpf.Windows
     {
         public Settings()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
     }

@@ -31,6 +31,7 @@ namespace cwssWpf.Windows
             Top = mainWindow.Top + 30;
             Left = mainWindow.Left + 30;
             lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
+            updateList();
             lvClimbers.PreviewMouseRightButtonDown += rightMouseButtonClicked;
         }
 
@@ -51,6 +52,7 @@ namespace cwssWpf.Windows
             selectedUser.CheckOut();
             mainWindow.UpdateClimberStats();
             lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
+            updateList();
         }
 
         private void cmRevoke_Click(object sender, RoutedEventArgs e)
@@ -72,6 +74,12 @@ namespace cwssWpf.Windows
 
                 selectedUser = (User)lvClimbers.SelectedItem;
             }
+        }
+
+        private void updateList()
+        {
+            lvClimbers.Items.Refresh();
+            //lblNumUsers.Content = lvClimbers.Items.Count;
         }
     }
 }

@@ -63,7 +63,6 @@ namespace cwssWpf.Data
         {
             if (CheckedIn)
             {
-                TimeStamp = DateTime.Now;
                 var length = DateTime.Now - TimeStamp;
                 var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
                 Logger.Log(UserId, LogType.CheckOut, message);
@@ -110,6 +109,10 @@ namespace cwssWpf.Data
             return (GetName() + " (" + LoginId + ")");
         }
     }
+
+
+
+
 
     public class PersonalInfo
     {

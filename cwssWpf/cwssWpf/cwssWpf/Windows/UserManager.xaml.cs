@@ -22,6 +22,7 @@ namespace cwssWpf.Windows
     {
         public UserManager()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             dataGrid.AutoGenerateColumns = false;
             dataGrid.CanUserAddRows = false;

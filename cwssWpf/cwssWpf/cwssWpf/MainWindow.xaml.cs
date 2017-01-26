@@ -4,6 +4,7 @@ using cwssWpf.Migrations;
 using cwssWpf.Windows;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.IO;
@@ -176,12 +177,6 @@ namespace cwssWpf
             CurrentUser = null;
         }
 
-        private void menuWaiver_Click(object sender, RoutedEventArgs e)
-        {
-            var waiver = new Waiver();
-            waiver.ShowDialog();
-        }
-
         private void menuMessageSystem_Click(object sender, RoutedEventArgs e)
         {
 
@@ -240,6 +235,12 @@ namespace cwssWpf
         {
             var climberView = new ClimberView(this);
             climberView.Show();
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (CurrentUser != null)
+                menuLogOut_Click(null,null);
         }
     }
 }

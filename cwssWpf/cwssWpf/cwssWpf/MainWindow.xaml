@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf"
+        Closing="MainWindow_Closing"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         Title="SDSU Climbing Wall System" Height="350" Width="525">
@@ -30,7 +31,6 @@
                 <MenuItem Header= "_Employee" Visibility="Visible" Name="EmployeeMenu">
                     <MenuItem Header="_View Climbers" Name="menuUsers" Click="menuUsers_Click"></MenuItem>
                     <MenuItem Header="_New User" Name="menuNewUser" Click="menuNewUser_Click"></MenuItem>
-                    <MenuItem Header="_Waiver" Name="menuWaiver" Click="menuWaiver_Click"></MenuItem>
                     <MenuItem Header="_Messages" Name="menuMessageSystem" Click="menuMessageSystem_Click"></MenuItem>
                     <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>
                     <MenuItem Header="_Store" Name="menuStore" Click="menuStore_Click"></MenuItem>

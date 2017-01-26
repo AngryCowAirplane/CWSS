@@ -25,6 +25,7 @@ namespace cwssWpf.Windows
 
         public LogView()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
             dpFrom.SelectedDate = DateTime.Now;
