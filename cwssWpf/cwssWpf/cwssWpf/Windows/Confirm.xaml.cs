@@ -24,11 +24,15 @@ namespace cwssWpf.Windows
 
         public Confirm(Window window, string Message = "")
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             message = Message;
             InitializeComponent();
             Confirmed = false;
-            Top = window.Top + 50;
-            Left = window.Left + 50;
+            if(window != null)
+            {
+                Top = window.Top + 50;
+                Left = window.Left + 50;
+            }
             lbMessage.Content = message;
         }
 

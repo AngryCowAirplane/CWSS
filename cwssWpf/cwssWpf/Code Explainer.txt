@@ -1,3 +1,8 @@
+Friendly visual Studio KeyCombos:
+	F12		-> will jump into function or class under the text carrot
+	Ctrl-	-> will jump back to the code you just came from
+	Ctrl.	-> will show auto-fixes to code errors underlined in red (Very usefull for adding required using statements to top of file)
+
 Everything starts in MainWindow.xaml and MainWindow.xaml.cs
 
 -MainWindow.xaml defines the form and its contents

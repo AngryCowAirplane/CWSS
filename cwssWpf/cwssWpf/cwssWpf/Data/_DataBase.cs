@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using cwssWpf.Windows;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace cwssWpf.Data
 {
@@ -67,7 +69,21 @@ namespace cwssWpf.Data
             {
                 var data = File.ReadAllText(dbPath);
                 var decryptedData = Helpers.DecryptString(data);
-                Data = JsonConvert.DeserializeObject<_BaseDataObject>(decryptedData);
+                try
+                {
+                    Data = JsonConvert.DeserializeObject<_BaseDataObject>(decryptedData);
+                }
+                catch
+                {
+                    MessageBox.Show("Database MisMatch or Corrupted.");
+                    var confirm = new Confirm(null, "No to Exit Program.");
+                    confirm.Title = "Start New DataBase?";
+                    confirm.ShowDialog();
+                    if (confirm.Confirmed)
+                        Data = new _BaseDataObject();
+                    else
+                        Application.Current.Shutdown();
+                }
             }
 
             return true;

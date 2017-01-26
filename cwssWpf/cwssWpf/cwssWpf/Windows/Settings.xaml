@@ -9,6 +9,28 @@
         WindowStyle="ToolWindow"
         Title="Settings" Height="300" Width="300">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
+        <Label Content="Reports Generation Scheduling?" Grid.Row="0"/>
+        <Label Content="DataBase Backup Scheduling?" Grid.Row="1"/>
+        <Label Content="Set Certificate / Waiver Expiration TimeSpans?" Grid.Row="2"/>
+        <Label Content="" Grid.Row="3"/>
+        <Label Content="" Grid.Row="4"/>
+        <Label Content="" Grid.Row="5"/>
+        <Label Content="" Grid.Row="6"/>
+        <Label Content="Manual Save / Load Database" Grid.Row="7"/>
+        <Label Content="Start Full Screen" Grid.Row="8"/>
+
+
     </Grid>
 </Window>
