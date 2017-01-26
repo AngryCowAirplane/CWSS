@@ -1,6 +1,5 @@
 ﻿using cwssWpf.Data;
 using cwssWpf.Migrations;
-using MySql.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
