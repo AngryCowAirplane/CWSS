@@ -53,6 +53,12 @@ namespace cwssWpf.Data
             return success;
         }
 
+        public static void CreateNew(string path)
+        {
+            dbPath = path;
+            Data = new _BaseDataObject();
+        }
+
         private static bool loadFromFile(string path = "")
         {
             if (string.IsNullOrEmpty(path))

@@ -14,6 +14,11 @@ namespace cwssWpf.DataBase
         //public static Context dataBase;
         public static _BaseDataObject dataBase = _DataBase.Data;
 
+        public static void Initialize()
+        {
+            LoadDatabase();
+        }
+
         public static User GetUser(int loginId)
         {
             try
@@ -120,10 +125,22 @@ namespace cwssWpf.DataBase
             AddUser("Admin", "User", DefaultAdminId, DefaultAdminPassword, DefaultAdminPassword, "admin@admin.com", "local admin", "noCity", "ZZ", 12345, "123-456-7890", GenderType.Female, UserType.Admin);
         }
 
-        public static void Initialize()
+        public static void LoadDatabase()
         {
             var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CwssDataBase.cwdb");
             _DataBase.Load(dbPath);
+            dataBase = _DataBase.Data;
+        }
+
+        public static void LoadDatabase(string dbPath)
+        {
+            _DataBase.Load(dbPath);
+            dataBase = _DataBase.Data;
+        }
+
+        public static void CreateNewDatabase(string dbPath)
+        {
+            _DataBase.CreateNew(dbPath);
             dataBase = _DataBase.Data;
         }
 
