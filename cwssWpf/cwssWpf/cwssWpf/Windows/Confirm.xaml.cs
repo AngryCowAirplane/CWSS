@@ -20,13 +20,16 @@ namespace cwssWpf.Windows
     public partial class Confirm : Window
     {
         public bool Confirmed { get; set; }
+        private string message;
 
-        public Confirm(Window window)
+        public Confirm(Window window, string Message = "")
         {
+            message = Message;
             InitializeComponent();
             Confirmed = false;
             Top = window.Top + 50;
             Left = window.Left + 50;
+            lbMessage.Content = message;
         }
 
         private void btnYes_Click(object sender, RoutedEventArgs e)

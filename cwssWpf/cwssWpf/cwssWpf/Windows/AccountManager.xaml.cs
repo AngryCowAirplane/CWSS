@@ -21,35 +21,23 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class AccountManager : Window
     {
+        private User selectedUser;
+
         public AccountManager()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             lvUsers.ItemsSource = Db.dataBase.Users;
-            lbTypes.ItemsSource = (Enum.GetValues(typeof(UserType)).Cast<UserType>().ToList());
             tbSearch.TextChanged += tbSearch_Changed;
-            lvUsers.SelectionChanged += lbSelection_Changed;
+            lvUsers.PreviewMouseRightButtonDown += rightButtonDown;
         }
 
-        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        private void updateUser(UserType type)
         {
-            var user = (User)lvUsers.SelectedItem;
-            var type = (UserType)lbTypes.SelectedItem;
-
-            if(type != user.UserType)
-                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.EditUser, user.UserType.ToString() + ", " + user.GetName() + " (" + user.LoginId + ") Was Updated To " + type.ToString());
-
-            user.UserType = type;
-            lvUsers.Items.Refresh();
-        }
-
-        private void lbSelection_Changed(object sender, RoutedEventArgs e)
-        {
-            if(lvUsers.SelectedItem != null)
-                lbTypes.SelectedItem = ((User)lvUsers.SelectedItem).UserType;
-            else
+            if(selectedUser != null)
             {
-                lbTypes.SelectedItem = null;
+                selectedUser.UpdateUserType(type);
+                lvUsers.Items.Refresh();
             }
         }
 
@@ -68,15 +56,12 @@ namespace cwssWpf.Windows
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var confirm = new Confirm(this);
+            var message = "Delete " + selectedUser.GetName();
+            var confirm = new Confirm(this, message);
             confirm.ShowDialog();
 
             if (confirm.Confirmed)
-            {
-                var user = (User)lvUsers.SelectedItem;
-                Db.dataBase.Users.Remove(user);
-                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.DeleteUser, user.UserType.ToString() + ", " + user.GetName() + " (" + user.LoginId + ") Was Deleted"); 
-            }
+                Db.DeleteUser(selectedUser);
 
             lvUsers.ItemsSource = Db.dataBase.Users;
             lvUsers.Items.Refresh();
@@ -84,17 +69,7 @@ namespace cwssWpf.Windows
             tbSearch_Changed(this, null);
         }
 
-        private void btnInfo_Click(object sender, RoutedEventArgs e)
-        {
-            lvUsers.Items.Refresh();
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void addUser_Click(object sender, RoutedEventArgs e)
         {
             var user = new NewUser(this);
             user.Show();
@@ -102,6 +77,37 @@ namespace cwssWpf.Windows
             lvUsers.ItemsSource = Db.dataBase.Users;
             lvUsers.Items.Refresh();
             tbSearch_Changed(this, null);
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void patron_Click(object sender, RoutedEventArgs e)
+        {
+            updateUser(UserType.Patron);
+        }
+
+        private void employee_Click(object sender, RoutedEventArgs e)
+        {
+            updateUser(UserType.Employee);
+        }
+
+        private void manager_Click(object sender, RoutedEventArgs e)
+        {
+            updateUser(UserType.Manager);
+        }
+
+        private void admin_Click(object sender, RoutedEventArgs e)
+        {
+            updateUser(UserType.Admin);
+        }
+
+        private void rightButtonDown(object sender, MouseEventArgs e)
+        {
+            if(lvUsers.Items.Count > 0 && lvUsers.SelectedItem != null)
+                selectedUser = (User)lvUsers.SelectedItem;
         }
     }
 }

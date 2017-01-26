@@ -150,6 +150,18 @@ namespace cwssWpf.DataBase
             return dataBase;
         }
 
+        public static bool DeleteUser(User user)
+        {
+            if (dataBase.Users.Contains(user))
+            {
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.DeleteUser, user.UserType.ToString() + ", " + user.GetName() + " (" + user.LoginId + ") Was Deleted");
+                dataBase.Users.Remove(user);
+                return true;
+            }
+            else
+                return false;
+        }
+
 
         //----------------------------------------------------------------------------
         // 

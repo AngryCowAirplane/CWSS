@@ -54,6 +54,11 @@ namespace cwssWpf.Data
             return Info.FirstName + " " + Info.LastName;
         }
 
+        public int GetUserId()
+        {
+            return LoginId;
+        }
+
         public bool GetCheckedIn()
         {
             return CheckedIn;
@@ -102,6 +107,18 @@ namespace cwssWpf.Data
             Documents.Add(waiverDoc);
             Logger.Log(LoginId, LogType.Waiver, GetName() + " Signed Waiver.");
             return true;
+        }
+
+        public bool UpdateUserType(UserType type)
+        {
+            if (type != UserType)
+            {
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.EditUser, UserType.ToString() + ", " + GetName() + " (" + LoginId + ") Was Updated To " + type.ToString());
+                UserType = type;
+                return true;
+            }
+            else
+                return false;
         }
 
         public override string ToString()

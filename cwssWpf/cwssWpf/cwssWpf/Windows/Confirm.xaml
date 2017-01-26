@@ -8,15 +8,21 @@
         Background="AliceBlue"
         WindowStyle="ToolWindow"
         ResizeMode="NoResize"
-        Title="Are You Sure?" Height="60" Width="150">
+        Title="Are You Sure?" Height="100" Width="150">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
 
-        <Button x:Name="btnYes" Content="Yes" Width="50" Height="20" Grid.Column="0" Click="btnYes_Click"></Button>
-        <Button x:Name="btnNo" Content="No" Width="50" Height="20" Grid.Column="1" Click="btnNo_Click"></Button>
+        <Label x:Name="lbMessage" Grid.Row="0" Content="the message" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <Button x:Name="btnYes" Grid.Row="1" Content="Yes" Width="50" Height="20" Grid.Column="0" Click="btnYes_Click" VerticalAlignment="Top"></Button>
+        <Button x:Name="btnNo" Grid.Row="1" Content="No" Width="50" Height="20" Grid.Column="1" Click="btnNo_Click" VerticalAlignment="Top"></Button>
 
     </Grid>
 </Window>
