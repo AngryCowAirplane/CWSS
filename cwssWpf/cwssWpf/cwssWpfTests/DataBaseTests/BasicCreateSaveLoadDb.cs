@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using cwssWpf.Data;
 using System.IO;
+using cwssWpf.DataBase;
 
 namespace cwssWpf.DataBaseTests
 {
@@ -17,13 +18,13 @@ namespace cwssWpf.DataBaseTests
         public void _BasicCreateSaveLoadDb()
         {
             var dbPath = @"C:\CwssDataBase.cwdb";
-            _DataBase.Data = new _BaseDataObject();
+            var DB = Db.GetNewDatabase(dbPath);
 
             var user = new User();
             user.UserId = 1023542;
             user.Info.FirstName = "Derek";
             user.UserType = UserType.Admin;
-            _DataBase.Data.AddUser(user);
+            DB.AddUser(user);
             Assert.IsTrue(_DataBase.Data.Users.Count > 0);
 
             _DataBase.Save(dbPath);

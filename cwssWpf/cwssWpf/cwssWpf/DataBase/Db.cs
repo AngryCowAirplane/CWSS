@@ -144,6 +144,12 @@ namespace cwssWpf.DataBase
             dataBase = _DataBase.Data;
         }
 
+        public static _BaseDataObject GetNewDatabase(string dbPath)
+        {
+            CreateNewDatabase(dbPath);
+            return dataBase;
+        }
+
 
         //----------------------------------------------------------------------------
         // 
