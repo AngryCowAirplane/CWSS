@@ -1,0 +1,39 @@
+Everything starts in MainWindow.xaml and MainWindow.xaml.cs
+
+-MainWindow.xaml defines the form and its contents
+--ex. A TextBox in the form:
+---<TextBox x:Name="tbSampleTextBox" Text="sampleText" (+ other things defining size location and behavior) />
+----Name property is how the object is accessed in the MainWindow.xaml.cs file  (it is basically that objects variable name)
+----Naming convention should be tbObjectName, where tb stands for TextBox type, object name whatever is appropriate, makes easy to find if multiple similar names but looking for the TextBox
+--double clicking on an object (ex button) in the form viewer will create an event for the "Click" action.
+---it will look like < private objectName_Clicked(object sender, RoutedEventArgs e){} >  in the xaml.cs file.
+----place any code to be run when the button is clicked inside this method.  Try to keep these simple and abstract out functions, and use other classes methods.
+
+-MainWindow.xaml.cs is all the code and behavior we give to the objects in the Form defined by MainWindow.xaml
+--tbSampleTextBox.Text = "new Text";  will reset the text in that text box
+--tbSampleTextBox.Visible = false;  will hide that text box
+--var newWindow = new MainWindow();  will define another MainWindow form   (var is a lazy/easy way to define variable types if the type can be inferred by the context of the right hand side, in this case, the compiler will know it should be of type MainWindow)
+---newWindow.Show();  will open that newly defined window, and allow the parent window to still be accessed.
+---newWindow.ShowDialog();  will open that newly defined window, but not allow any other window in the program to be accessed until this window is closed.
+-while inside a window.xaml.cs file,  this.Close(); will close that window.
+
+-Db.cs in DataBase folder is a wrapper for accessing the database
+--Db.dataBase is where all the data is stored.  It is of type _DataBaseObject which is the class that defines the main tables of the data base.
+---any new Table will need to be added to the _DataBaseObject class as a new List of the type of that table.
+--var Users = Db.dataBase.Users;  will give you a list of every user in the data base, or you can just access it directly right now  by Db.dataBase.Users
+---Db.dataBase.Users.Add(new User);  will add a new user to the database
+---Db.dataBase.Users.Remove(user);  will delete a user from the data base, user needs to be of type User, and exist in the Users list.
+---var DerekUsers = Db.dataBase.Users.Where(user => user.Info.FirstName == "Derek");  will give you a list of users whose first name is "Derek"
+----var firstDerek = DerekUsers.First();  will give you the first user in that list.  Last() will give last etc.
+
+Please add new Windows in the Windows folder
+Try to user class methods if they exist.  ex:  User.CheckIn();  rather than User.CheckedIn = true;
+-Create methods if it makes sense to do so, but don't make the property private, or it won't work later if we switch to Entity Frameword Database
+--By using custom methods to set the variables/properties of the objects, we can add Logger actions to that class to log the events as other objects use these methods.
+--We can maybe just decide that we are not going to use database and then we can make private properties and variables all we want in these Data classes. 
+
+Logger.Log();  --use this to log any actions that might be usefull for reporting.  Feel free to add LogTypes to the LogType enum in Log.cs
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Asks questions to me if you have any...
+Or post below and I will try to answer.
