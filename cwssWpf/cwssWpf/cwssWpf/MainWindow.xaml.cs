@@ -79,7 +79,9 @@ namespace cwssWpf
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
         {
             var login = new Login(this);
-            login.Show();
+            login.ShowDialog();
+            if (login.Success)
+                menuEmployeeLogIn.IsEnabled = false;
         }
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
@@ -167,6 +169,7 @@ namespace cwssWpf
             EmployeeMenu.Visibility = Visibility.Hidden;
             ManagerMenu.Visibility = Visibility.Hidden;
             AdminMenu.Visibility = Visibility.Hidden;
+            menuEmployeeLogIn.IsEnabled = true;
 
             if(CurrentUser!=null)
             {

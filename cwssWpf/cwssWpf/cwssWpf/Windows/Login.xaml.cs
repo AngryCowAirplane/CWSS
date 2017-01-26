@@ -22,6 +22,8 @@ namespace cwssWpf.Windows
     public partial class Login : Window
     {
         MainWindow mainWindow;
+        public bool Success = false;
+
         public Login(MainWindow sender)
         {
             mainWindow = sender;
@@ -50,6 +52,7 @@ namespace cwssWpf.Windows
                 if ((int)user.UserType > 2)
                     mainWindow.AdminMenu.Visibility = Visibility.Visible;
 
+                Success = true;
                 var message = user.GetName() + " Logged In"; 
                 Logger.Log(user.UserId, LogType.LogIn, message);
             }
