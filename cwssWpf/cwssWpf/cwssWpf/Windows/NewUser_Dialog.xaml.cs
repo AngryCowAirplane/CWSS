@@ -19,12 +19,12 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for NewUser.xaml
     /// </summary>
-    public partial class NewUser : Window
+    public partial class NewUser_Dialog : Window
     {
         // TODO:
         // Rename all objects in the window editor and set appropriate label text
 
-        public NewUser(Window mainWindow)
+        public NewUser_Dialog(Window mainWindow)
         {
             InitializeComponent();
             this.Left = mainWindow.Left + 50;
@@ -35,7 +35,7 @@ namespace cwssWpf.Windows
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            var success = Db.AddUser(
+            var success = Db.dataBase.AddUser(
                 tbFirstName, tbLastName,
                 tbIdNumber, tbPassword, tbPassword2,
                 tbEmail, tbAddress, tbCity, tbState, tbZip,

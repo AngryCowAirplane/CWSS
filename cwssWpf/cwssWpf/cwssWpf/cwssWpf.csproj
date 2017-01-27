@@ -101,38 +101,41 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Reports\Report.cs" />
-    <Compile Include="Windows\AccountManager.xaml.cs">
-      <DependentUpon>AccountManager.xaml</DependentUpon>
+    <Compile Include="Windows\AccountManager_Dialog.xaml.cs">
+      <DependentUpon>AccountManager_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ClimberView.xaml.cs">
-      <DependentUpon>ClimberView.xaml</DependentUpon>
+    <Compile Include="Windows\ClimberView_Dialog.xaml.cs">
+      <DependentUpon>ClimberView_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Confirm.xaml.cs">
-      <DependentUpon>Confirm.xaml</DependentUpon>
+    <Compile Include="Windows\Confirm_Dialog.xaml.cs">
+      <DependentUpon>Confirm_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Email.xaml.cs">
-      <DependentUpon>Email.xaml</DependentUpon>
+    <Compile Include="Windows\Email_Dialog.xaml.cs">
+      <DependentUpon>Email_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\EmailCreds.xaml.cs">
-      <DependentUpon>EmailCreds.xaml</DependentUpon>
+    <Compile Include="Windows\EmailCreds_Dialog.xaml.cs">
+      <DependentUpon>EmailCreds_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Compile Include="Windows\Login_Dialog.xaml.cs">
+      <DependentUpon>Login_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\LogView.xaml.cs">
-      <DependentUpon>LogView.xaml</DependentUpon>
+    <Compile Include="Windows\LogView_Dialog.xaml.cs">
+      <DependentUpon>LogView_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\NewUser.xaml.cs">
-      <DependentUpon>NewUser.xaml</DependentUpon>
+    <Compile Include="Windows\Message_Dialog.xaml.cs">
+      <DependentUpon>Message_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
+    <Compile Include="Windows\NewUser_Dialog.xaml.cs">
+      <DependentUpon>NewUser_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\UserManager.xaml.cs">
-      <DependentUpon>UserManager.xaml</DependentUpon>
+    <Compile Include="Windows\Settings_Dialog.xaml.cs">
+      <DependentUpon>Settings_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Waiver.xaml.cs">
-      <DependentUpon>Waiver.xaml</DependentUpon>
+    <Compile Include="Windows\UserManager_Dialog.xaml.cs">
+      <DependentUpon>UserManager_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Waiver_Dialog.xaml.cs">
+      <DependentUpon>Waiver_Dialog.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -150,47 +153,51 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\AccountManager.xaml">
+    <Page Include="Windows\AccountManager_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ClimberView.xaml">
+    <Page Include="Windows\ClimberView_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Confirm.xaml">
+    <Page Include="Windows\Confirm_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Email.xaml">
+    <Page Include="Windows\Email_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\EmailCreds.xaml">
+    <Page Include="Windows\EmailCreds_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Login.xaml">
+    <Page Include="Windows\Login_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\LogView.xaml">
+    <Page Include="Windows\LogView_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\NewUser.xaml">
+    <Page Include="Windows\Message_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Settings.xaml">
+    <Page Include="Windows\NewUser_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\UserManager.xaml">
+    <Page Include="Windows\Settings_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Waiver.xaml">
+    <Page Include="Windows\UserManager_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Waiver_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

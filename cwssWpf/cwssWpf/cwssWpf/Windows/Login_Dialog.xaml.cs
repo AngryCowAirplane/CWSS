@@ -19,12 +19,12 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class Login_Dialog : Window
     {
         MainWindow mainWindow;
         public bool Success = false;
 
-        public Login(MainWindow sender)
+        public Login_Dialog(MainWindow sender)
         {
             mainWindow = sender;
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace cwssWpf.Windows
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             var loginId = int.Parse(tbUserId.Text);
-            var user = Db.GetUser(loginId);
+            var user = Db.dataBase.GetUser(loginId);
             if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
             {
                 MainWindow.CurrentUser = user;

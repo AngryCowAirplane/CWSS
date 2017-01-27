@@ -19,11 +19,11 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for AccountManager.xaml
     /// </summary>
-    public partial class AccountManager : Window
+    public partial class AccountManager_Dialog : Window
     {
         private User selectedUser;
 
-        public AccountManager()
+        public AccountManager_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
@@ -57,11 +57,11 @@ namespace cwssWpf.Windows
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             var message = "Delete " + selectedUser.GetName();
-            var confirm = new Confirm(this, message);
+            var confirm = new Confirm_Dialog(this, message);
             confirm.ShowDialog();
 
             if (confirm.Confirmed)
-                Db.DeleteUser(selectedUser);
+                Db.dataBase.DeleteUser(selectedUser);
 
             lvUsers.ItemsSource = Db.dataBase.Users;
             lvUsers.Items.Refresh();
@@ -71,7 +71,7 @@ namespace cwssWpf.Windows
 
         private void addUser_Click(object sender, RoutedEventArgs e)
         {
-            var user = new NewUser(this);
+            var user = new NewUser_Dialog(this);
             user.Show();
             lvUsers.ItemsSource = null;
             lvUsers.ItemsSource = Db.dataBase.Users;

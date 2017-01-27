@@ -20,9 +20,9 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for UserManager.xaml
     /// </summary>
-    public partial class UserManager : Window
+    public partial class UserManager_Dialog : Window
     {
-        public UserManager()
+        public UserManager_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
@@ -122,7 +122,7 @@ namespace cwssWpf.Windows
             {
                 try
                 {
-                    var email = new Email(emailList);
+                    var email = new Email_Dialog(emailList);
                     email.ShowDialog();
                     MessageBox.Show("Email Sent!");
                 }

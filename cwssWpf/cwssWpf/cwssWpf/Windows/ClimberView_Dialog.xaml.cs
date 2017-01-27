@@ -19,12 +19,12 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for ClimberView.xaml
     /// </summary>
-    public partial class ClimberView : Window
+    public partial class ClimberView_Dialog : Window
     {
         private MainWindow mainWindow;
         private User selectedUser;
 
-        public ClimberView(MainWindow mainWindow)
+        public ClimberView_Dialog(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;

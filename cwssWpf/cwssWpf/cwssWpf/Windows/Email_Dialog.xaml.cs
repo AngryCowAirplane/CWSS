@@ -18,11 +18,11 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for Email.xaml
     /// </summary>
-    public partial class Email : Window
+    public partial class Email_Dialog : Window
     {
         private List<string> toList = new List<string>();
 
-        public Email(List<string> emailList)
+        public Email_Dialog(List<string> emailList)
         {
             toList = emailList;
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
@@ -48,7 +48,7 @@ namespace cwssWpf.Windows
             }
             else
             {
-                var emailCreds = new EmailCreds();
+                var emailCreds = new EmailCreds_Dialog();
                 emailCreds.ShowDialog();
                 Helpers.SendEmail(tbFrom.Text, toList, tbSubject.Text, tbBody.Text, emailCreds.LoginCred, emailCreds.Password);
             }

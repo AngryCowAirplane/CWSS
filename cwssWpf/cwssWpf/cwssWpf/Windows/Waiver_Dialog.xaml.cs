@@ -17,9 +17,9 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for Waiver.xaml
     /// </summary>
-    public partial class Waiver : Window
+    public partial class Waiver_Dialog : Window
     {
-        public Waiver()
+        public Waiver_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             var waiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CW Acknowledgement of Risk and Sign-In Sheet.pdf");

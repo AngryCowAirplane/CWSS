@@ -18,13 +18,13 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for EmailCreds.xaml
     /// </summary>
-    public partial class EmailCreds : Window
+    public partial class EmailCreds_Dialog : Window
     {
         public string LoginCred;
         public string Password;
         public bool Save = false;
 
-        public EmailCreds()
+        public EmailCreds_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();

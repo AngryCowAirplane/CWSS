@@ -76,7 +76,7 @@ namespace cwssWpf.Data
                 catch
                 {
                     MessageBox.Show("Database MisMatch or Corrupted.");
-                    var confirm = new Confirm(null, "No to Exit Program.");
+                    var confirm = new Confirm_Dialog(null, "No to Exit Program.");
                     confirm.Title = "Start New DataBase?";
                     confirm.ShowDialog();
                     if (confirm.Confirmed)

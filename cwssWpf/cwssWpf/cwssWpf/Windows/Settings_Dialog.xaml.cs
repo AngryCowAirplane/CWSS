@@ -19,13 +19,13 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : Window
+    public partial class Settings_Dialog : Window
     {
         private ComboBool cbSsl;
         private ComboBool cbDefaultCreds;
         private ComboBool cbStoreCreds;
 
-        public Settings()
+        public Settings_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();

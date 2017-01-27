@@ -19,11 +19,11 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for LogView.xaml
     /// </summary>
-    public partial class LogView : Window
+    public partial class LogView_Dialog : Window
     {
         private List<Log> logs = new List<Log>();
 
-        public LogView()
+        public LogView_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();

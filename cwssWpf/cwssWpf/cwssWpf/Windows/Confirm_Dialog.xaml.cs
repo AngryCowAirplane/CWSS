@@ -17,12 +17,12 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for Confirm.xaml
     /// </summary>
-    public partial class Confirm : Window
+    public partial class Confirm_Dialog : Window
     {
         public bool Confirmed { get; set; }
         private string message;
 
-        public Confirm(Window window, string Message = "")
+        public Confirm_Dialog(Window window, string Message = "")
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             message = Message;

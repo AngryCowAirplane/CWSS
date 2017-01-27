@@ -61,7 +61,7 @@ namespace cwssWpf
             //Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
 
             if (Db.dataBase.Users.Count < 1)
-                Db.AddDefaultAdminUser(DefaultAdminId, DefaultAdminPassword);
+                Db.dataBase.AddDefaultAdminUser(DefaultAdminId, DefaultAdminPassword);
 
             FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
@@ -71,7 +71,7 @@ namespace cwssWpf
 
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
-            var newUser = new NewUser(this);
+            var newUser = new NewUser_Dialog(this);
             newUser.Show();
             // TODO:
             // Show Appropriate message in status bar
@@ -79,7 +79,7 @@ namespace cwssWpf
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
         {
-            var login = new Login(this);
+            var login = new Login_Dialog(this);
             login.ShowDialog();
             if (login.Success)
                 menuEmployeeLogIn.IsEnabled = false;
@@ -113,7 +113,7 @@ namespace cwssWpf
         private bool tryCheckinUser()
         {
             var loginId = int.Parse(tbLoginId.Text);
-            var user = Db.GetUser(loginId);
+            var user = Db.dataBase.GetUser(loginId);
             if(user != null)
             {
                 var hasWaiver = user.HasWaiver();
@@ -132,7 +132,7 @@ namespace cwssWpf
                     // FIND BETTER WAY TO RESOLVE THIS SHIT
                     if(!hasWaiver)
                     {
-                        var waiver = new Waiver();
+                        var waiver = new Waiver_Dialog();
                         var signedWaiver = waiver.ShowDialog();
                         if((bool)signedWaiver)
                         {
@@ -203,13 +203,13 @@ namespace cwssWpf
 
         private void menuManageUsers_Click(object sender, RoutedEventArgs e)
         {
-            var userManager = new UserManager();
+            var userManager = new UserManager_Dialog();
             userManager.Show();
         }
 
         private void menuAccounts_Click(object sender, RoutedEventArgs e)
         {
-            var accountManager = new AccountManager();
+            var accountManager = new AccountManager_Dialog();
             accountManager.Show();
         }
 
@@ -220,13 +220,13 @@ namespace cwssWpf
 
         private void menuSettings_Click(object sender, RoutedEventArgs e)
         {
-            var settings = new Settings();
+            var settings = new Settings_Dialog();
             settings.Show();
         }
 
         private void menuViewLog_Click(object sender, RoutedEventArgs e)
         {
-            var logView = new LogView();
+            var logView = new LogView_Dialog();
             logView.Show();
         }
 
@@ -237,7 +237,7 @@ namespace cwssWpf
 
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
-            var climberView = new ClimberView(this);
+            var climberView = new ClimberView_Dialog(this);
             climberView.Show();
         }
 
