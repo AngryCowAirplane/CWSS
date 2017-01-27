@@ -2,6 +2,7 @@
 using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +88,29 @@ namespace cwssWpf.Windows
 
         private void cmEmailUsers_Click(object sender, RoutedEventArgs e)
         {
+            var emailList = new List<string>();
+            Uri uri;
+
+            if (dataGrid.SelectedItems.Count > 1)
+            {
+                foreach (var item in dataGrid.SelectedItems)
+                {
+                    var user = (User)item;
+                    emailList.Add(user.GetEmailAddress());
+                }
+                uri = Helpers.GenerateEmailUriFromList(emailList);
+            }
+            else
+                uri = ((User)dataGrid.SelectedItem).GetEmailUri();
+
+            try
+            {
+                Process.Start(uri.AbsoluteUri);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Email Client Not Setup On Computer");
+            }
         }
 
         private void rightButtonDown(object sender, MouseEventArgs e)

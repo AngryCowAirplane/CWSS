@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,52 @@ namespace cwssWpf
         public static string DecryptString(string str)
         {
             return RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(str, passPhrase, saltValue, "SHA1");
+        }
+
+        public static Uri GenerateEmailUriFromList(List<string> emails)
+        {
+            var mailString = emails.First() + "?cc=";
+            emails.Remove(emails.First());
+            foreach (var email in emails)
+            {
+                mailString = mailString + email + ";";
+            }
+
+            mailString = mailString.Remove(mailString.Length - 1, 1);
+
+            var uri = new Uri("mailto:" + mailString);
+            return uri;
+        }
+
+        public static bool SendEmail(string from, List<string> to, string subject, string body)
+        {
+            MailMessage mail = new MailMessage();// from, recipients, subject, message);
+
+            foreach (var mailAddress in to)
+            {
+                mail.To.Add(mailAddress);
+            }
+
+            mail.From = new MailAddress(from);
+            mail.Subject = subject;
+            mail.Body = body;
+
+            SmtpClient client = new SmtpClient();
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Host = "smtp.google.com";
+
+            try
+            {
+                client.Send(mail);
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

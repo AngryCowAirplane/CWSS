@@ -24,7 +24,7 @@
         <Label Content="Reports Generation Scheduling?" Grid.Row="0"/>
         <Label Content="DataBase Backup Scheduling?" Grid.Row="1"/>
         <Label Content="Set Certificate / Waiver Expiration TimeSpans?" Grid.Row="2"/>
-        <Label Content="" Grid.Row="3"/>
+        <Label Content="Email Client Setup" Grid.Row="3"/>
         <Label Content="" Grid.Row="4"/>
         <Label Content="" Grid.Row="5"/>
         <Label Content="" Grid.Row="6"/>

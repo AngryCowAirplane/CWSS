@@ -109,6 +109,18 @@ namespace cwssWpf.Data
             return true;
         }
 
+        public Uri GetEmailUri()
+        {
+            var builder = new UriBuilder();
+            var uri = new Uri("mailto:" + GetEmailAddress());
+            return uri;
+        }
+
+        public string GetEmailAddress()
+        {
+            return Info.Email;
+        }
+
         public bool UpdateUserType(UserType type)
         {
             if (type != UserType)
