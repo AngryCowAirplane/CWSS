@@ -84,6 +84,17 @@ namespace cwssWpf.Windows
 
         private void cmSendMessage_Click(object sender, RoutedEventArgs e)
         {
+            var messageList = new List<User>();
+
+            foreach (var item in dataGrid.SelectedItems)
+            {
+                var user = (User)item;
+                messageList.Add(user);
+            }
+
+            var message = new Message_Dialog(messageList);
+
+            message.ShowDialog();
         }
 
         private void cmEmailUsers_Click(object sender, RoutedEventArgs e)

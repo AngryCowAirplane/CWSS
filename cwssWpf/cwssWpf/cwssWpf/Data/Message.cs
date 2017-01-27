@@ -13,6 +13,7 @@ namespace cwssWpf.Data
         public List<int> RecipientId { get; set; }
         public DateTime TimeStamp { get; set; }
         public DateTime ExpireDate { get; set; }
+        public string Subject { get; set; }
         public string Contents { get; set; }
 
         public Message()

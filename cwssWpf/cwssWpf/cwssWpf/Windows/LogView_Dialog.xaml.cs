@@ -1,6 +1,7 @@
 ﻿using cwssWpf.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,10 +38,22 @@ namespace cwssWpf.Windows
             logs = Logger.GetTodaysLog().Logs;
             lvLogs.ItemsSource = logs;
 
-            pupulateFilters();
+            populateFilters();
+            setupCountChanger();
         }
 
-        private void pupulateFilters()
+        private void setupCountChanger()
+        {
+            var changeDependency = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ListView));
+            if (changeDependency != null)
+            {
+                changeDependency.AddValueChanged(lvLogs, updateLogCount);
+            }
+
+            updateLogCount(null, null);
+        }
+
+        private void populateFilters()
         {
             lbFilters.SelectionMode = SelectionMode.Multiple;
             lbFilters.ItemsSource = (Enum.GetValues(typeof(LogType)).Cast<LogType>().ToList());
@@ -103,6 +116,11 @@ namespace cwssWpf.Windows
 
                 File.WriteAllLines(fileName, list.ToArray<string>());
             }
+        }
+
+        private void updateLogCount(object sender, EventArgs e)
+        {
+            lbCount.Content = "Logs: " + lvLogs.Items.Count;
         }
     }
 }

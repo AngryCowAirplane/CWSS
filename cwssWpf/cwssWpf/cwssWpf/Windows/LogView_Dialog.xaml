@@ -31,6 +31,7 @@
         <ListBox x:Name="lbFilters" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         <Button x:Name="btnSave" Content="Save To File" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Click="btnSave_Click"/>
+        <Label x:Name ="lbCount" Content="Logs: " Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="5,5,5,5"/>
         <Button x:Name="btnClose" Content="Close" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Click="btnClose_Click"/>
     </Grid>
 </Window>
