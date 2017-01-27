@@ -90,20 +90,25 @@ namespace cwssWpf.Windows
         {
             var emailList = new List<string>();
             Uri uri;
-            if(Config.Data.Email.Client == EmailClient.LocalClient)
-            {
-                if (dataGrid.SelectedItems.Count > 1)
-                {
-                    foreach (var item in dataGrid.SelectedItems)
-                    {
-                        var user = (User)item;
-                        emailList.Add(user.GetEmailAddress());
-                    }
-                    uri = Helpers.GenerateEmailUriFromList(emailList);
-                }
-                else
-                    uri = ((User)dataGrid.SelectedItem).GetEmailUri();
 
+            if (dataGrid.SelectedItems.Count > 1)
+            {
+                foreach (var item in dataGrid.SelectedItems)
+                {
+                    var user = (User)item;
+                    emailList.Add(user.GetEmailAddress());
+                }
+                uri = Helpers.GenerateEmailUriFromList(emailList);
+            }
+            else
+            {
+                emailList.Add(((User)dataGrid.SelectedItem).GetEmailAddress());
+                uri = ((User)dataGrid.SelectedItem).GetEmailUri();
+            }
+
+
+            if (Config.Data.Email.Client == EmailClient.LocalClient)
+            {
                 try
                 {
                     Process.Start(uri.AbsoluteUri);
@@ -117,8 +122,9 @@ namespace cwssWpf.Windows
             {
                 try
                 {
-                    // Open up email window
-                    //Helpers.SendEmail();
+                    var email = new Email(emailList);
+                    email.ShowDialog();
+                    MessageBox.Show("Email Sent!");
                 }
                 catch(Exception exc)
                 {
@@ -146,29 +152,3 @@ namespace cwssWpf.Windows
         }
     }
 }
-
-//private void menuSave_Click(object sender, RoutedEventArgs e)
-//{
-//    dataGrid.CommitEdit();
-//    dataGrid.CommitEdit();
-//}
-
-//private void menuCancel_Click(object sender, RoutedEventArgs e)
-//{
-//    dataGrid.CancelEdit();
-//    dataGrid.CancelEdit();
-//}
-
-//private void menuSaveExit_Click(object sender, RoutedEventArgs e)
-//{
-//    dataGrid.CommitEdit();
-//    dataGrid.CommitEdit();
-//    this.Close();
-//}
-
-//private void menuCancelExit_Click(object sender, RoutedEventArgs e)
-//{
-//    dataGrid.CancelEdit();
-//    dataGrid.CancelEdit();
-//    this.Close();
-//}

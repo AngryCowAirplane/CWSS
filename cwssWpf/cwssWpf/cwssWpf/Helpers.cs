@@ -26,10 +26,12 @@ namespace cwssWpf
         public static Uri GenerateEmailUriFromList(List<string> emails)
         {
             var mailString = emails.First() + "?cc=";
-            emails.Remove(emails.First());
+            int count = 0;
             foreach (var email in emails)
             {
-                mailString = mailString + email + ";";
+                if(count > 0)
+                    mailString = mailString + email + ";";
+                count++;
             }
 
             mailString = mailString.Remove(mailString.Length - 1, 1);
