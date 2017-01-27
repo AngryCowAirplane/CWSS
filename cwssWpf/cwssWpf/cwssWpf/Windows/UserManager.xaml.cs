@@ -90,26 +90,40 @@ namespace cwssWpf.Windows
         {
             var emailList = new List<string>();
             Uri uri;
-
-            if (dataGrid.SelectedItems.Count > 1)
+            if(Config.Data.Email.Client == EmailClient.LocalClient)
             {
-                foreach (var item in dataGrid.SelectedItems)
+                if (dataGrid.SelectedItems.Count > 1)
                 {
-                    var user = (User)item;
-                    emailList.Add(user.GetEmailAddress());
+                    foreach (var item in dataGrid.SelectedItems)
+                    {
+                        var user = (User)item;
+                        emailList.Add(user.GetEmailAddress());
+                    }
+                    uri = Helpers.GenerateEmailUriFromList(emailList);
                 }
-                uri = Helpers.GenerateEmailUriFromList(emailList);
+                else
+                    uri = ((User)dataGrid.SelectedItem).GetEmailUri();
+
+                try
+                {
+                    Process.Start(uri.AbsoluteUri);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Email Client Not Setup On Computer");
+                }
             }
             else
-                uri = ((User)dataGrid.SelectedItem).GetEmailUri();
-
-            try
             {
-                Process.Start(uri.AbsoluteUri);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Email Client Not Setup On Computer");
+                try
+                {
+                    // Open up email window
+                    //Helpers.SendEmail();
+                }
+                catch(Exception exc)
+                {
+                    MessageBox.Show("Email Send Failed");
+                }
             }
         }
 

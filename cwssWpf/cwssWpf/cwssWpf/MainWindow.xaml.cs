@@ -52,6 +52,7 @@ namespace cwssWpf
             menuLogOut_Click(this, null); // Hide Menus
 
             //--use custom DB
+            Config.Initialize();
             Db.Initialize();
             Logger.Initialize();
 

@@ -63,9 +63,10 @@ namespace cwssWpfTests
         [TestMethod]
         public void _SendEmailTest()
         {
+            Config.Initialize();
             var list = new List<string>();
             list.Add("derekjmeyer@hotmail.com");
-            Assert.IsTrue(Helpers.SendEmail("derekjmeyer@hotmail.com", list, "TESTING", "TESTING"));
+            Assert.IsTrue(Helpers.SendEmail("derekjmeyer@hotmail.com", list, "TESTING", "TESTING", "derekjmeyer@hotmail.com","insert password"));
         }
     }
 }

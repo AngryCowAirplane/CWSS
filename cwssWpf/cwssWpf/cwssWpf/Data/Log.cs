@@ -165,7 +165,8 @@ namespace cwssWpf.Data
         Waiver = 10,
         Privilege = 11,
         DataBase = 12,
-        Other = 13,
-        Error = 14
+        Settings = 13,
+        Other = 14,
+        Error = 15
     }
 }

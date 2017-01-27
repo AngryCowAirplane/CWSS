@@ -87,8 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomControls\ComboBool.cs" />
     <Compile Include="DataBase\DbContext.cs" />
     <Compile Include="DataBase\Db.cs" />
+    <Compile Include="Data\Config.cs" />
     <Compile Include="Data\Document.cs" />
     <Compile Include="Data\_BaseDataObject.cs" />
     <Compile Include="Data\Log.cs" />
