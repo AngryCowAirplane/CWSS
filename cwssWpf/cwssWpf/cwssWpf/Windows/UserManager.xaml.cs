@@ -1,4 +1,5 @@
-﻿using cwssWpf.DataBase;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace cwssWpf.Windows
             dataGrid.AutoGenerateColumns = false;
             dataGrid.CanUserAddRows = false;
             dataGrid.ItemsSource = Db.dataBase.Users;
+
+            dataGrid.SelectionMode = DataGridSelectionMode.Extended;
+            dataGrid.PreviewMouseRightButtonDown += rightButtonDown;
 
             setupColumns();
         }
@@ -60,21 +64,73 @@ namespace cwssWpf.Windows
             var cbColumn = new DataGridCheckBoxColumn();
             cbColumn.Header = "CanClimb";
             cbColumn.Binding = new Binding("CanClimb");
+            cbColumn.IsReadOnly = true;
             dataGrid.Columns.Add(cbColumn);
         }
 
-        private void menuSave_Click(object sender, RoutedEventArgs e)
+        private void cmCanClimb_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.CommitEdit();
-            dataGrid.CommitEdit();
+            var items = dataGrid.SelectedItems;
+
+            foreach (var item in dataGrid.SelectedItems)
+            {
+                var user = (User)item;
+                user.SetClimbingPrivilege(!user.CanClimb);
+            }
+
+            saveAndRefresh();
+        }
+
+        private void cmSendMessage_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void cmEmailUsers_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void rightButtonDown(object sender, MouseEventArgs e)
+        {
+            var test = dataGrid.SelectedItems;
+        }
+
+        private void menuExit_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
 
-        private void menuCancel_Click(object sender, RoutedEventArgs e)
+        private void saveAndRefresh()
         {
-            dataGrid.CancelEdit();
-            dataGrid.CancelEdit();
-            this.Close();
+            dataGrid.CommitEdit();
+            dataGrid.CommitEdit();
+            dataGrid.Items.Refresh();
+            dataGrid.Items.Refresh();
         }
     }
 }
+
+//private void menuSave_Click(object sender, RoutedEventArgs e)
+//{
+//    dataGrid.CommitEdit();
+//    dataGrid.CommitEdit();
+//}
+
+//private void menuCancel_Click(object sender, RoutedEventArgs e)
+//{
+//    dataGrid.CancelEdit();
+//    dataGrid.CancelEdit();
+//}
+
+//private void menuSaveExit_Click(object sender, RoutedEventArgs e)
+//{
+//    dataGrid.CommitEdit();
+//    dataGrid.CommitEdit();
+//    this.Close();
+//}
+
+//private void menuCancelExit_Click(object sender, RoutedEventArgs e)
+//{
+//    dataGrid.CancelEdit();
+//    dataGrid.CancelEdit();
+//    this.Close();
+//}

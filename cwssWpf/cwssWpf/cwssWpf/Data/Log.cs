@@ -163,8 +163,9 @@ namespace cwssWpf.Data
         Message = 8,
         Certification = 9,
         Waiver = 10,
-        DataBase = 11,
-        Other = 12,
-        Error = 13
+        Privilege = 11,
+        DataBase = 12,
+        Other = 13,
+        Error = 14
     }
 }

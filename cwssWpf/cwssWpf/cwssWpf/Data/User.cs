@@ -121,6 +121,25 @@ namespace cwssWpf.Data
                 return false;
         }
 
+        public bool SetClimbingPrivilege(bool canClimb)
+        {
+            if (canClimb != CanClimb)
+            {
+                var message = "";
+                CanClimb = canClimb;
+
+                if (CanClimb == false)
+                    message = MainWindow.CurrentUser.GetName() + " Revoked " + GetName() + "'s Climbing Privilege.";
+                else
+                    message = MainWindow.CurrentUser.GetName() + " Restored " + GetName() + "'s Climbing Privilege.";
+
+                Logger.Log(MainWindow.CurrentUser.GetUserId(), LogType.Privilege, message);
+                return true;
+            }
+            else
+                return false;
+        }
+
         public override string ToString()
         {
             return (GetName() + " (" + LoginId + ")");

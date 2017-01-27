@@ -18,9 +18,9 @@
             <Menu DockPanel.Dock="Top" Background="CornflowerBlue" Name="MainMenu">
                 <MenuItem Header="File">
                     <MenuItem Header= "_Print" Name="menuPrint"></MenuItem>
+
                     <MenuItem Header= ""></MenuItem>
-                    <MenuItem Header= "_Save / Exit" Name="menuSave" Click="menuSave_Click"></MenuItem>
-                    <MenuItem Header= "_Cancel / Exit" Name="menuCancel" Click="menuCancel_Click"></MenuItem>
+                    <MenuItem Header= "Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header= "Columns">
                 </MenuItem>
@@ -28,6 +28,14 @@
             <StackPanel></StackPanel>
         </DockPanel>
 
-        <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5"></DataGrid>
+        <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5">
+            <DataGrid.ContextMenu>
+                <ContextMenu Name="userMenu">
+                    <MenuItem Header="Toggle Can Climb" Name="cmCanClimb" Click="cmCanClimb_Click"></MenuItem>
+                    <MenuItem Header="Send Message" Name="cmSendMessage" Click="cmSendMessage_Click"></MenuItem>
+                    <MenuItem Header="Email User/s" Name="cmEmailUsers" Click="cmEmailUsers_Click"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
     </Grid>
 </Window>
