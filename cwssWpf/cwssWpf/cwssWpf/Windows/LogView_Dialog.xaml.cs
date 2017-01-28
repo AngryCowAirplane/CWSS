@@ -39,18 +39,16 @@ namespace cwssWpf.Windows
             lvLogs.ItemsSource = logs;
 
             populateFilters();
-            setupCountChanger();
+            setSourceOnChanger();
         }
 
-        private void setupCountChanger()
+        private void setSourceOnChanger()
         {
             var changeDependency = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ListView));
             if (changeDependency != null)
-            {
-                changeDependency.AddValueChanged(lvLogs, updateLogCount);
-            }
+                changeDependency.AddValueChanged(lvLogs, updateScreen);
 
-            updateLogCount(null, null);
+            updateScreen(null, null);
         }
 
         private void populateFilters()
@@ -118,9 +116,21 @@ namespace cwssWpf.Windows
             }
         }
 
-        private void updateLogCount(object sender, EventArgs e)
+        private void updateScreen(object sender, EventArgs e)
         {
             lbCount.Content = "Logs: " + lvLogs.Items.Count;
+
+            // For color changes:
+            // need to create new LogListViewItem : ListViewItem class
+
+            //foreach (var item in lvLogs.Items)
+            //{
+            //    var log = (Log)item;
+            //    if(log.Action == LogType.Error)
+            //    {
+            //         log.Foreground = Brushes.Red;
+            //    }
+            //}
         }
     }
 }

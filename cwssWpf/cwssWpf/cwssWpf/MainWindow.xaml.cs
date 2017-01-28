@@ -72,7 +72,7 @@ namespace cwssWpf
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
             var newUser = new NewUser_Dialog(this);
-            newUser.Show();
+            newUser.ShowDialog();
             // TODO:
             // Show Appropriate message in status bar
         }
@@ -204,13 +204,13 @@ namespace cwssWpf
         private void menuManageUsers_Click(object sender, RoutedEventArgs e)
         {
             var userManager = new UserManager_Dialog();
-            userManager.Show();
+            userManager.ShowDialog();
         }
 
         private void menuAccounts_Click(object sender, RoutedEventArgs e)
         {
             var accountManager = new AccountManager_Dialog();
-            accountManager.Show();
+            accountManager.ShowDialog();
         }
 
         private void menuStore_Click(object sender, RoutedEventArgs e)
@@ -221,13 +221,13 @@ namespace cwssWpf
         private void menuSettings_Click(object sender, RoutedEventArgs e)
         {
             var settings = new Settings_Dialog();
-            settings.Show();
+            settings.ShowDialog();
         }
 
         private void menuViewLog_Click(object sender, RoutedEventArgs e)
         {
             var logView = new LogView_Dialog();
-            logView.Show();
+            logView.ShowDialog();
         }
 
         public void UpdateClimberStats()
@@ -238,7 +238,7 @@ namespace cwssWpf
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
             var climberView = new ClimberView_Dialog(this);
-            climberView.Show();
+            climberView.ShowDialog();
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
