@@ -1,4 +1,5 @@
 ﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,7 +100,16 @@ namespace cwssWpf.Windows
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-
+            var message = new Message();
+            message.SetSender(MainWindow.CurrentUser);
+            message.SetRecipients(Users);
+            message.Subject = tbSubject.Text;
+            message.Contents = tbBody.Text;
+            message.ExpireDate = DateTime.Now + TimeSpan.FromDays(45);
+            message.TimeStamp = DateTime.Now;
+            Db.dataBase.AddMessage(message);
+            MessageBox.Show("Message Sent!");
+            this.Close();
         }
     }
 }

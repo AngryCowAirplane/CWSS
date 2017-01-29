@@ -82,7 +82,17 @@ namespace cwssWpf
             var login = new Login_Dialog(this);
             login.ShowDialog();
             if (login.Success)
+            {
+                // TODO abstract this + quickMessageRead Window (for each message)
+                // same code in Checkin logic.
+                var messages = Db.dataBase.GetMessages(CurrentUser);
+                if (messages.Count > 0)
+                {
+                    MessageBox.Show("You have " + messages.Count + " messages.");
+                }
+
                 menuEmployeeLogIn.IsEnabled = false;
+            }
         }
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
@@ -116,6 +126,13 @@ namespace cwssWpf
             var user = Db.dataBase.GetUser(loginId);
             if(user != null)
             {
+                var messages = Db.dataBase.GetMessages(user);
+                if(messages.Count > 0)
+                {
+                    MessageBox.Show("You have " + messages.Count + " messages.");
+                }
+
+
                 var hasWaiver = user.HasWaiver();
                 var canClimb = user.CanClimb;
 
