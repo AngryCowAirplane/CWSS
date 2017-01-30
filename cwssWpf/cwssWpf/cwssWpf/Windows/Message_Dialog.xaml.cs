@@ -117,8 +117,8 @@ namespace cwssWpf.Windows
                 {
                     toString += user.GetName() + ", ";
                 }
+                toString = toString.Remove(toString.Length - 2, 2);
             }
-            toString = toString.Remove(toString.Length - 2, 2);
             return toString;
         }
 
