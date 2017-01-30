@@ -32,6 +32,7 @@
                     <MenuItem Header="Toggle Can Climb" Name="cmCanClimb" Click="cmCanClimb_Click"></MenuItem>
                     <MenuItem Header="Send Message" Name="cmSendMessage" Click="cmSendMessage_Click"></MenuItem>
                     <MenuItem Header="Email User/s" Name="cmEmailUsers" Click="cmEmailUsers_Click"></MenuItem>
+                    <MenuItem Header="Delete User/s" Name="cmDeleteUsers" Click="cmDeleteUsers_Click"></MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

@@ -154,6 +154,11 @@ namespace cwssWpf.Windows
             }
         }
 
+        private void cmDeleteUsers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

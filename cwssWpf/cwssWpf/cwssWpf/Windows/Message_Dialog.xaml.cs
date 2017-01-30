@@ -26,9 +26,13 @@ namespace cwssWpf.Windows
         private bool Write = true;
 
         // Write Message
-        public Message_Dialog(List<User> users)
+        public Message_Dialog(List<User> users = null)
         {
-            this.users = users;
+            if(users == null)
+                this.users = new List<User>();
+            else
+                this.users = users;
+
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             tbTo.IsEnabled = false;
@@ -36,6 +40,7 @@ namespace cwssWpf.Windows
             tbFrom.Text = MainWindow.CurrentUser.GetName();
             cbMode.ItemsSource = (Enum.GetValues(typeof(MessageMode)).Cast<MessageMode>().ToList());
             cbMode.SelectionChanged += modeChange;
+            tbTo.TextChanged += toTextChange;
             setMessageMode();
         }
 
@@ -60,7 +65,7 @@ namespace cwssWpf.Windows
 
         private void setMessageMode()
         {
-            if (users.Count > 1)
+            if (users != null && users.Count > 1)
             {
                 cbMode.SelectedItem = MessageMode.Multi;
                 tbTo.Text = listToString();
@@ -68,7 +73,7 @@ namespace cwssWpf.Windows
             else
             {
                 cbMode.SelectedItem = MessageMode.Single;
-                if(users.Count == 1)
+                if (users != null && users.Count == 1)
                     tbTo.Text = users.First().GetName();
             }
         }
@@ -91,8 +96,8 @@ namespace cwssWpf.Windows
                     break;
                 // future maybe make to editable on a single message and autocomplete based on users
                 case MessageMode.Single:
-                    tbTo.IsEnabled = false;
-                    if (users.Count > 0)
+                    tbTo.IsEnabled = true;
+                    if (users != null && users.Count > 1)
                         tbTo.Text = users.First().GetName();
                     break;
                 default:
@@ -128,7 +133,22 @@ namespace cwssWpf.Windows
             {
                 var message = new Message();
                 message.SetSender(MainWindow.CurrentUser);
-                message.SetRecipients(users);
+
+                if((MessageMode)cbMode.SelectedItem == MessageMode.Employees)
+                {
+                    message.SetRecipients(Db.dataBase.Users.Where(user => (int)user.UserType > 0).ToList());
+                }
+                else if ((MessageMode)cbMode.SelectedItem == MessageMode.Managers)
+                {
+                    message.SetRecipients(Db.dataBase.Users.Where(user => (int)user.UserType > 1).ToList());
+                }
+                else if ((MessageMode)cbMode.SelectedItem == MessageMode.Everyone)
+                {
+                    message.SetRecipients(Db.dataBase.Users.ToList());
+                }
+                else
+                    message.SetRecipients(users);
+
                 message.Subject = tbSubject.Text;
                 message.Contents = tbBody.Text;
                 message.ExpireDate = DateTime.Now + TimeSpan.FromDays(45);
@@ -141,6 +161,44 @@ namespace cwssWpf.Windows
             {
                 message.ReadMessage(users.First());
                 this.Close();
+            }
+        }
+
+        private void toTextChange(object sender, RoutedEventArgs e)
+        {
+            // build dictionary of names to User object in db.
+            // custom TextBox for To box?
+            if((MessageMode)cbMode.SelectedItem == MessageMode.Single)
+            {
+                users = new List<User>();
+                tbTo.Foreground = Brushes.DarkRed;
+                foreach (var user in Db.dataBase.Users)
+                {
+                    if(user.GetName().ToLower() == (tbTo.Text.ToLower()))
+                    {
+                        this.users.Add(user);
+                        tbTo.Foreground = Brushes.Black;
+                    }
+                }
+            }
+            // this dont work yet
+            else if ((MessageMode)cbMode.SelectedItem == MessageMode.Multi)
+            {
+                tbTo.Foreground = Brushes.DarkRed;
+                foreach (var user in Db.dataBase.Users)
+                {
+                    if (user.GetName().ToLower() == (tbTo.Text.ToLower()))
+                    {
+                        if(!users.Contains(user))
+                            this.users.Add(user);
+
+                        tbTo.Foreground = Brushes.Black;
+                    }
+                }
+            }
+            else
+            {
+                tbTo.Foreground = Brushes.Black;
             }
         }
     }

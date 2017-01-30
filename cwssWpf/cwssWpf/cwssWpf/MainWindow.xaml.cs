@@ -23,20 +23,11 @@ using System.Windows.Shapes;
 
 namespace cwssWpf
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
-
     // mySQL infos
     // add name="DefaultConnection" providerName="MySql.Data.MySqlClient" connectionString="Server=localhost;Database=cwss;Uid=admin;Pwd=admin" />
 
     public partial class MainWindow : Window
     {
-        // TODO:
-        // find appropriate place and functionality for default admin user/password if DB is lost
-        // need the ability for the admin to change this immediately so this no longer is accepted from
-        // regular DB querying.
         private int DefaultAdminId = 12345;
         private string DefaultAdminPassword = "abc123";
         public static User CurrentUser = null;
@@ -266,6 +257,12 @@ namespace cwssWpf
         public void UpdateClimberStats()
         {
             StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
+        }
+
+        private void menuMessage_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new Message_Dialog();
+            message.ShowDialog();
         }
     }
 }
