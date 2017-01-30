@@ -21,10 +21,14 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Message_Dialog : Window
     {
-        public List<User> Users;
+        private List<User> users = new List<User>();
+        private Message message;
+        private bool Write = true;
+
+        // Write Message
         public Message_Dialog(List<User> users)
         {
-            Users = users;
+            this.users = users;
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             tbTo.IsEnabled = false;
@@ -35,9 +39,28 @@ namespace cwssWpf.Windows
             setMessageMode();
         }
 
+        // Read Message
+        public Message_Dialog(User user, Message message)
+        {
+            users.Add(user);
+            this.message = message;
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            InitializeComponent();
+            tbTo.IsEnabled = false;
+            tbFrom.IsEnabled = false;
+            cbMode.IsEnabled = false;
+            tbTo.Text = user.GetName();
+            tbFrom.Text = Db.dataBase.GetUser(message.SenderId).GetName();
+            tbSubject.Text = message.Subject;
+            tbBody.Text = message.Contents;
+            btnSend.Content = "Mark as Read";
+            Write = false;
+        }
+
+
         private void setMessageMode()
         {
-            if (Users.Count > 1)
+            if (users.Count > 1)
             {
                 cbMode.SelectedItem = MessageMode.Multi;
                 tbTo.Text = listToString();
@@ -45,8 +68,8 @@ namespace cwssWpf.Windows
             else
             {
                 cbMode.SelectedItem = MessageMode.Single;
-                if(Users.Count == 1)
-                    tbTo.Text = Users.First().GetName();
+                if(users.Count == 1)
+                    tbTo.Text = users.First().GetName();
             }
         }
 
@@ -66,10 +89,11 @@ namespace cwssWpf.Windows
                     tbTo.IsEnabled = false;
                     tbTo.Text = "<Everyone>";
                     break;
+                // future maybe make to editable on a single message and autocomplete based on users
                 case MessageMode.Single:
-                    tbTo.IsEnabled = true;
-                    if (Users.Count > 0)
-                        tbTo.Text = Users.First().GetName();
+                    tbTo.IsEnabled = false;
+                    if (users.Count > 0)
+                        tbTo.Text = users.First().GetName();
                     break;
                 default:
                     cbMode.SelectedItem = MessageMode.Multi;
@@ -82,9 +106,9 @@ namespace cwssWpf.Windows
         private string listToString()
         {
             var toString = string.Empty;
-            if(Users.Count > 0)
+            if(users.Count > 0)
             {
-                foreach (var user in Users)
+                foreach (var user in users)
                 {
                     toString += user.GetName() + ", ";
                 }
@@ -100,16 +124,24 @@ namespace cwssWpf.Windows
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            var message = new Message();
-            message.SetSender(MainWindow.CurrentUser);
-            message.SetRecipients(Users);
-            message.Subject = tbSubject.Text;
-            message.Contents = tbBody.Text;
-            message.ExpireDate = DateTime.Now + TimeSpan.FromDays(45);
-            message.TimeStamp = DateTime.Now;
-            Db.dataBase.AddMessage(message);
-            MessageBox.Show("Message Sent!");
-            this.Close();
+            if(Write)
+            {
+                var message = new Message();
+                message.SetSender(MainWindow.CurrentUser);
+                message.SetRecipients(users);
+                message.Subject = tbSubject.Text;
+                message.Contents = tbBody.Text;
+                message.ExpireDate = DateTime.Now + TimeSpan.FromDays(45);
+                message.TimeStamp = DateTime.Now;
+                Db.dataBase.AddMessage(message);
+                MessageBox.Show("Message Sent!");
+                this.Close();
+            }
+            else
+            {
+                message.ReadMessage(users.First());
+                this.Close();
+            }
         }
     }
 }

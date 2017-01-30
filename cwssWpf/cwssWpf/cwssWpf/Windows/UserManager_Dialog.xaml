@@ -17,12 +17,10 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="CornflowerBlue" Name="MainMenu">
                 <MenuItem Header="File">
-                    <MenuItem Header= "_Print" Name="menuPrint"></MenuItem>
-
+                    <MenuItem Header= "_Print" Name="menuPrint" Click="menuPrint_Click"></MenuItem>
+                    <MenuItem Header= "_Save" Name="menuSave" Click="menuSave_Click"></MenuItem>
                     <MenuItem Header= ""></MenuItem>
                     <MenuItem Header= "Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
-                </MenuItem>
-                <MenuItem Header= "Columns">
                 </MenuItem>
             </Menu>
             <StackPanel></StackPanel>

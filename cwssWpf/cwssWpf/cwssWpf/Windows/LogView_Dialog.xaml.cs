@@ -35,6 +35,7 @@ namespace cwssWpf.Windows
             dpTo.SelectedDateChanged += datesChanged;
             tbSearch.TextChanged += lbFilters_Changed;
 
+            Logger.SaveLog();
             logs = Logger.GetTodaysLog().Logs;
             lvLogs.ItemsSource = logs;
 

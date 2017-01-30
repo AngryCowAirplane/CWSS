@@ -158,10 +158,6 @@ namespace cwssWpf.Data
         }
     }
 
-
-
-
-
     public class PersonalInfo
     {
         public string FirstName { get; set; }

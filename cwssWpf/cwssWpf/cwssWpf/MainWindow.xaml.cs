@@ -127,11 +127,15 @@ namespace cwssWpf
             if(user != null)
             {
                 var messages = Db.dataBase.GetMessages(user);
-                if(messages.Count > 0)
+                if (messages.Count > 0)
                 {
                     MessageBox.Show("You have " + messages.Count + " messages.");
+                    foreach (var message in messages)
+                    {
+                        var messageDialog = new Message_Dialog(user, message);
+                        messageDialog.ShowDialog();
+                    }
                 }
-
 
                 var hasWaiver = user.HasWaiver();
                 var canClimb = user.CanClimb;
@@ -247,11 +251,6 @@ namespace cwssWpf
             logView.ShowDialog();
         }
 
-        public void UpdateClimberStats()
-        {
-            StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
-        }
-
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
             var climberView = new ClimberView_Dialog(this);
@@ -262,6 +261,11 @@ namespace cwssWpf
         {
             if (CurrentUser != null)
                 menuLogOut_Click(null,null);
+        }
+
+        public void UpdateClimberStats()
+        {
+            StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
         }
     }
 }

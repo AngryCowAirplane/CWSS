@@ -31,7 +31,6 @@ namespace cwssWpf.Windows
             dataGrid.ItemsSource = Db.dataBase.Users;
 
             dataGrid.SelectionMode = DataGridSelectionMode.Extended;
-            dataGrid.PreviewMouseRightButtonDown += rightButtonDown;
 
             setupColumns();
         }
@@ -71,82 +70,88 @@ namespace cwssWpf.Windows
 
         private void cmCanClimb_Click(object sender, RoutedEventArgs e)
         {
-            var items = dataGrid.SelectedItems;
-
-            foreach (var item in dataGrid.SelectedItems)
+            if(dataGrid.SelectedItems.Count > 0)
             {
-                var user = (User)item;
-                user.SetClimbingPrivilege(!user.CanClimb);
-            }
+                var items = dataGrid.SelectedItems;
 
-            saveAndRefresh();
+                foreach (var item in dataGrid.SelectedItems)
+                {
+                    var user = (User)item;
+                    user.SetClimbingPrivilege(!user.CanClimb);
+                }
+
+                saveAndRefresh();
+            }
         }
 
         private void cmSendMessage_Click(object sender, RoutedEventArgs e)
         {
-            var messageList = new List<User>();
-
-            foreach (var item in dataGrid.SelectedItems)
+            if (dataGrid.SelectedItems.Count > 0)
             {
-                var user = (User)item;
-                messageList.Add(user);
+
+                var messageList = new List<User>();
+
+                foreach (var item in dataGrid.SelectedItems)
+                {
+                    var user = (User)item;
+                    messageList.Add(user);
+                }
+
+                var message = new Message_Dialog(messageList);
+
+                message.ShowDialog();
             }
-
-            var message = new Message_Dialog(messageList);
-
-            message.ShowDialog();
         }
 
         private void cmEmailUsers_Click(object sender, RoutedEventArgs e)
         {
-            var emailList = new List<string>();
-            Uri uri;
-
-            if (dataGrid.SelectedItems.Count > 1)
+            if (dataGrid.SelectedItems.Count > 0)
             {
-                foreach (var item in dataGrid.SelectedItems)
+
+                var emailList = new List<string>();
+                Uri uri;
+
+                if (dataGrid.SelectedItems.Count > 1)
                 {
-                    var user = (User)item;
-                    emailList.Add(user.GetEmailAddress());
+                    foreach (var item in dataGrid.SelectedItems)
+                    {
+                        var user = (User)item;
+                        emailList.Add(user.GetEmailAddress());
+                    }
+                    uri = Helpers.GenerateEmailUriFromList(emailList);
                 }
-                uri = Helpers.GenerateEmailUriFromList(emailList);
-            }
-            else
-            {
-                emailList.Add(((User)dataGrid.SelectedItem).GetEmailAddress());
-                uri = ((User)dataGrid.SelectedItem).GetEmailUri();
-            }
+                else
+                {
+                    emailList.Add(((User)dataGrid.SelectedItem).GetEmailAddress());
+                    uri = ((User)dataGrid.SelectedItem).GetEmailUri();
+                }
 
 
-            if (Config.Data.Email.Client == EmailClient.LocalClient)
-            {
-                try
+                if (Config.Data.Email.Client == EmailClient.LocalClient)
                 {
-                    Process.Start(uri.AbsoluteUri);
+                    try
+                    {
+                        Process.Start(uri.AbsoluteUri);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Email Client Not Setup On Computer");
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Email Client Not Setup On Computer");
+                    try
+                    {
+                        var email = new Email_Dialog(emailList);
+                        email.ShowDialog();
+                        MessageBox.Show("Email Sent!");
+                    }
+                    catch (Exception exc)
+                    {
+                        MessageBox.Show("Email Send Failed");
+                    }
                 }
             }
-            else
-            {
-                try
-                {
-                    var email = new Email_Dialog(emailList);
-                    email.ShowDialog();
-                    MessageBox.Show("Email Sent!");
-                }
-                catch(Exception exc)
-                {
-                    MessageBox.Show("Email Send Failed");
-                }
-            }
-        }
-
-        private void rightButtonDown(object sender, MouseEventArgs e)
-        {
-            var test = dataGrid.SelectedItems;
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
@@ -160,6 +165,16 @@ namespace cwssWpf.Windows
             dataGrid.CommitEdit();
             dataGrid.Items.Refresh();
             dataGrid.Items.Refresh();
+        }
+
+        private void menuPrint_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuSave_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
