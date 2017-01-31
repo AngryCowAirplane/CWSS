@@ -20,6 +20,6 @@ namespace cwssWpf.Data
     {
         Waiver = 0,
         BelayCert = 1,
-        TrainerCert = 2
+        LeadClimb = 2
     }
 }

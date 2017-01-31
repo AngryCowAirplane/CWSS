@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace cwssWpf.Windows
 {
-    /// <summary>
-    /// Interaction logic for ClimberView.xaml
-    /// </summary>
     public partial class ClimberView_Dialog : Window
     {
         private MainWindow mainWindow;
@@ -40,11 +37,6 @@ namespace cwssWpf.Windows
             this.Close();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cmCheckOut_Click(object sender, RoutedEventArgs e)
         {
             userMenu.IsOpen = false;
@@ -57,7 +49,18 @@ namespace cwssWpf.Windows
 
         private void cmRevoke_Click(object sender, RoutedEventArgs e)
         {
+            //Db.dataBase.Notes.Requests.Clear();
+            if(selectedUser != null)
+            {
+                var request = new Request();
+                request.Patron = selectedUser;
+                request.Reason = "Smelly";
+                request.SuspensionLength = Suspension.Month;
+                request.TimeStamp = DateTime.Now;
+                request.Enforced = false;
 
+                Db.dataBase.Notes.Requests.Add(request);
+            }
         }
 
         private void cmStats_Click(object sender, RoutedEventArgs e)

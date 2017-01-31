@@ -22,11 +22,13 @@
                     <MenuItem Header= ""></MenuItem>
                     <MenuItem Header= "Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
                 </MenuItem>
+                <MenuItem Header="SuspensionRequests" Name="menuRequests" Click="menuRequests_Click"></MenuItem>
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
 
         <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5">
+
             <DataGrid.ContextMenu>
                 <ContextMenu Name="userMenu">
                     <MenuItem Header="Toggle Can Climb" Name="cmCanClimb" Click="cmCanClimb_Click"></MenuItem>

@@ -92,6 +92,7 @@
     <Compile Include="DataBase\Db.cs" />
     <Compile Include="Data\Config.cs" />
     <Compile Include="Data\Document.cs" />
+    <Compile Include="Data\Notes.cs" />
     <Compile Include="Data\_BaseDataObject.cs" />
     <Compile Include="Data\Log.cs" />
     <Compile Include="Helpers.cs" />

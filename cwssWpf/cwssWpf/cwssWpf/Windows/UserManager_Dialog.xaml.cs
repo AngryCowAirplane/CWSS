@@ -68,6 +68,44 @@ namespace cwssWpf.Windows
             dataGrid.Columns.Add(cbColumn);
         }
 
+        private void checkPriveleges()
+        {
+            for (int i = 0; i < dataGrid.Items.Count; i++)
+            {
+                DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(i);
+                TextBlock cellContent = dataGrid.Columns[2].GetCellContent(row) as TextBlock;
+                if (cellContent != null)
+                {
+                    var removal = new List<Request>();
+                    foreach (var request in Db.dataBase.Notes.Requests)
+                    {
+                        if (cellContent.Text == request.Patron.GetUserId().ToString() && request.Enforced == false)
+                        {
+                            var item = dataGrid.Items[i];
+                            dataGrid.SelectedItem = item;
+                            dataGrid.ScrollIntoView(item);
+                            var confirm = new Confirm_Dialog(this, request.Reason);
+                            confirm.Title = "Revoke " + request.Patron.GetName();
+                            confirm.ShowDialog();
+                            if(confirm.Confirmed)
+                            {
+                                Db.dataBase.Users.Where(user => user == request.Patron).First().SetClimbingPrivilege(false);
+                                request.Enforced = true;
+                            }
+                            else
+                            {
+                                removal.Add(request);
+                            }
+                        }
+                    }
+                    foreach (var req in removal)
+                    {
+                        Db.dataBase.Notes.Requests.Remove(req);
+                    }
+                }
+            }
+        }
+
         private void cmCanClimb_Click(object sender, RoutedEventArgs e)
         {
             if(dataGrid.SelectedItems.Count > 0)
@@ -180,6 +218,11 @@ namespace cwssWpf.Windows
         private void menuSave_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void menuRequests_Click(object sender, RoutedEventArgs e)
+        {
+            checkPriveleges();
         }
     }
 }

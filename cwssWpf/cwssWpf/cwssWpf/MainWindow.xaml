@@ -31,6 +31,7 @@
                 </MenuItem>
                 <MenuItem Header= "_Employee" Visibility="Visible" Name="EmployeeMenu">
                     <MenuItem Header="_View Climbers" Name="menuUsers" Click="menuUsers_Click"></MenuItem>
+                    <MenuItem Header="_Wall Notes" Name="menuNotes" Click="menuNotes_Click"></MenuItem>
                     <MenuItem Header="_Send Message" Name="menuMessage" Click="menuMessage_Click"></MenuItem>
                     <MenuItem Header="_Store" Name="menuStore" Click="menuStore_Click"></MenuItem>
                     <MenuItem Header="_Log Out" Name="menuLogOut" Click="menuLogOut_Click"></MenuItem>

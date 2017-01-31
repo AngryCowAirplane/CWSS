@@ -18,6 +18,7 @@ namespace cwssWpf.Data
         public List<Item> Items = new List<Item>();
         public List<Message> Messages = new List<Message>();
         public List<DailyLogTag> DailyLogs = new List<DailyLogTag>();
+        public Notes Notes = new Notes();
 
         public _BaseDataObject()
         {

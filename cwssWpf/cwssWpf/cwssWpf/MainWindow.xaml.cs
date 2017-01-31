@@ -264,5 +264,10 @@ namespace cwssWpf
             var message = new Message_Dialog();
             message.ShowDialog();
         }
+
+        private void menuNotes_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
