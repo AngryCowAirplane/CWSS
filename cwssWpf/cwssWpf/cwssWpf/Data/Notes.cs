@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,6 +69,18 @@ namespace cwssWpf.Data
         public string Reason;
         public DateTime TimeStamp;
         public bool Enforced = false;
+
+        public void EnforceRequest()
+        {
+            Patron.CanClimb = false;
+            Enforced = true;
+        }
+
+        public void ReleaseRequest()
+        {
+            Patron.CanClimb = true;
+            Db.dataBase.Notes.Requests.Remove(this);
+        }
     }
 
     public enum Suspension

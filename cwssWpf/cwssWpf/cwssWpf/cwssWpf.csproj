@@ -88,6 +88,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CustomControls\ComboBool.cs" />
+    <Compile Include="CustomControls\UserListViewItem.cs" />
     <Compile Include="DataBase\DbContext.cs" />
     <Compile Include="DataBase\Db.cs" />
     <Compile Include="Data\Config.cs" />
@@ -132,8 +133,8 @@
     <Compile Include="Windows\Settings_Dialog.xaml.cs">
       <DependentUpon>Settings_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\UserManager_Dialog.xaml.cs">
-      <DependentUpon>UserManager_Dialog.xaml</DependentUpon>
+    <Compile Include="Windows\ListServ_Dialog.xaml.cs">
+      <DependentUpon>ListServ_Dialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Waiver_Dialog.xaml.cs">
       <DependentUpon>Waiver_Dialog.xaml</DependentUpon>
@@ -194,7 +195,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\UserManager_Dialog.xaml">
+    <Page Include="Windows\ListServ_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

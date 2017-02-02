@@ -3,6 +3,7 @@ using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,6 +31,11 @@ namespace cwssWpf.Windows
             lvUsers.ItemsSource = Db.dataBase.Users;
             tbSearch.TextChanged += tbSearch_Changed;
             lvUsers.PreviewMouseRightButtonDown += rightButtonDown;
+
+            if (MainWindow.CurrentUser.UserType == UserType.Admin)
+                UserTypeMenu.IsEnabled = true;
+            else
+                UserTypeMenu.IsEnabled = false;
         }
 
         private void updateUser(UserType type)
@@ -72,10 +78,12 @@ namespace cwssWpf.Windows
         private void addUser_Click(object sender, RoutedEventArgs e)
         {
             var user = new NewUser_Dialog(this);
-            user.Show();
-            lvUsers.ItemsSource = null;
+            user.ShowDialog();
+            var oldText = tbSearch.Text;
+            tbSearch.Text = " update ";
             lvUsers.ItemsSource = Db.dataBase.Users;
             lvUsers.Items.Refresh();
+            tbSearch.Text = oldText;
             tbSearch_Changed(this, null);
         }
 
@@ -108,6 +116,51 @@ namespace cwssWpf.Windows
         {
             if(lvUsers.Items.Count > 0 && lvUsers.SelectedItem != null)
                 selectedUser = (User)lvUsers.SelectedItem;
+        }
+
+        private void toggleCanClimb_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUsers.SelectedItems.Count > 0)
+            {
+                selectedUser.SetClimbingPrivilege(!selectedUser.CanClimb);
+                lvUsers.Items.Refresh();
+            }
+        }
+
+        private void documents_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+
+    public class MyUserManagerColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var user = (User)value;
+            var requests = Db.dataBase.Notes.Requests.Where(u => u.Patron == user);
+            var brush = Brushes.Black;
+
+            if (requests.Count() > 0)
+            {
+                var request = requests.First();
+                if (request.Enforced == false)
+                    brush = Brushes.Yellow;
+                else
+                    brush = Brushes.DarkRed;
+            }
+            else
+            {
+                if (!user.CanClimb)
+                    brush = Brushes.Red;
+            }
+
+            return brush;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DependencyProperty.UnsetValue;
         }
     }
 }

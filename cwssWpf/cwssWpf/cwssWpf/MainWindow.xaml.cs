@@ -58,6 +58,9 @@ namespace cwssWpf
             StatusText.Text = "Ready";
             //MiddleText.Text = "User Name";
             UpdateClimberStats();
+
+            //TESTING REMOVE
+           // Db.dataBase.Notes.Requests = new List<Request>();
         }
 
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
@@ -210,13 +213,8 @@ namespace cwssWpf
 
         private void menuListServ_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void menuManageUsers_Click(object sender, RoutedEventArgs e)
-        {
-            var userManager = new UserManager_Dialog();
-            userManager.ShowDialog();
+            var listServ = new ListServ_Dialog();
+            listServ.ShowDialog();
         }
 
         private void menuAccounts_Click(object sender, RoutedEventArgs e)

@@ -71,7 +71,7 @@ namespace cwssWpf.Data
                 var length = DateTime.Now - TimeStamp;
                 var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
                 Logger.Log(UserId, LogType.CheckOut, message);
-                message = Info.FirstName + " " + Info.LastName + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                message = message + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
                 MessageBox.Show(message);
                 CheckedIn = false;
                 return true;

@@ -20,9 +20,9 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for UserManager.xaml
     /// </summary>
-    public partial class UserManager_Dialog : Window
+    public partial class ListServ_Dialog : Window
     {
-        public UserManager_Dialog()
+        public ListServ_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
@@ -66,60 +66,6 @@ namespace cwssWpf.Windows
             cbColumn.Binding = new Binding("CanClimb");
             cbColumn.IsReadOnly = true;
             dataGrid.Columns.Add(cbColumn);
-        }
-
-        private void checkPriveleges()
-        {
-            for (int i = 0; i < dataGrid.Items.Count; i++)
-            {
-                DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(i);
-                TextBlock cellContent = dataGrid.Columns[2].GetCellContent(row) as TextBlock;
-                if (cellContent != null)
-                {
-                    var removal = new List<Request>();
-                    foreach (var request in Db.dataBase.Notes.Requests)
-                    {
-                        if (cellContent.Text == request.Patron.GetUserId().ToString() && request.Enforced == false)
-                        {
-                            var item = dataGrid.Items[i];
-                            dataGrid.SelectedItem = item;
-                            dataGrid.ScrollIntoView(item);
-                            var confirm = new Confirm_Dialog(this, request.Reason);
-                            confirm.Title = "Revoke " + request.Patron.GetName();
-                            confirm.ShowDialog();
-                            if(confirm.Confirmed)
-                            {
-                                Db.dataBase.Users.Where(user => user == request.Patron).First().SetClimbingPrivilege(false);
-                                request.Enforced = true;
-                            }
-                            else
-                            {
-                                removal.Add(request);
-                            }
-                        }
-                    }
-                    foreach (var req in removal)
-                    {
-                        Db.dataBase.Notes.Requests.Remove(req);
-                    }
-                }
-            }
-        }
-
-        private void cmCanClimb_Click(object sender, RoutedEventArgs e)
-        {
-            if(dataGrid.SelectedItems.Count > 0)
-            {
-                var items = dataGrid.SelectedItems;
-
-                foreach (var item in dataGrid.SelectedItems)
-                {
-                    var user = (User)item;
-                    user.SetClimbingPrivilege(!user.CanClimb);
-                }
-
-                saveAndRefresh();
-            }
         }
 
         private void cmSendMessage_Click(object sender, RoutedEventArgs e)
@@ -192,11 +138,6 @@ namespace cwssWpf.Windows
             }
         }
 
-        private void cmDeleteUsers_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -218,11 +159,6 @@ namespace cwssWpf.Windows
         private void menuSave_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void menuRequests_Click(object sender, RoutedEventArgs e)
-        {
-            checkPriveleges();
         }
     }
 }

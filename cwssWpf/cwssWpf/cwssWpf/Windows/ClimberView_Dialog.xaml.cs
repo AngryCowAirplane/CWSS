@@ -49,7 +49,6 @@ namespace cwssWpf.Windows
 
         private void cmRevoke_Click(object sender, RoutedEventArgs e)
         {
-            //Db.dataBase.Notes.Requests.Clear();
             if(selectedUser != null)
             {
                 var request = new Request();
@@ -60,6 +59,7 @@ namespace cwssWpf.Windows
                 request.Enforced = false;
 
                 Db.dataBase.Notes.Requests.Add(request);
+                MessageBox.Show("Revoke Request Successfull, " + selectedUser.GetName() + " - " + request.Reason);
             }
         }
 
@@ -76,6 +76,7 @@ namespace cwssWpf.Windows
                     return;
 
                 selectedUser = (User)lvClimbers.SelectedItem;
+                lvClimbers.ScrollIntoView(selectedUser);
             }
         }
 

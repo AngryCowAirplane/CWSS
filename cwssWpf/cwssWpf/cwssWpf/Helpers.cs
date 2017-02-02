@@ -5,6 +5,11 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Media;
+using System.Globalization;
+using System.Windows;
+using cwssWpf.DataBase;
 
 namespace cwssWpf
 {
@@ -29,7 +34,7 @@ namespace cwssWpf
             int count = 0;
             foreach (var email in emails)
             {
-                if(count > 0)
+                if (count > 0)
                     mailString = mailString + email + ";";
                 count++;
             }
@@ -43,7 +48,7 @@ namespace cwssWpf
         public static bool SendEmail(string from, List<string> to, string subject, string body,
             string username = "", string password = "")
         {
-            if(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 username = Config.Data.Email.EmailAddress;
                 password = Config.Data.Email.Password;
@@ -72,7 +77,7 @@ namespace cwssWpf
             {
                 client.Send(mail);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="cwssWpf.Windows.UserManager_Dialog"
+﻿<Window x:Class="cwssWpf.Windows.ListServ_Dialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Background="AliceBlue"
         WindowStyle="ToolWindow"
-        Title="User Manager" Height="600" Width="800">
+        Title="List Serv" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
@@ -22,7 +22,6 @@
                     <MenuItem Header= ""></MenuItem>
                     <MenuItem Header= "Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="SuspensionRequests" Name="menuRequests" Click="menuRequests_Click"></MenuItem>
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
@@ -31,10 +30,8 @@
 
             <DataGrid.ContextMenu>
                 <ContextMenu Name="userMenu">
-                    <MenuItem Header="Toggle Can Climb" Name="cmCanClimb" Click="cmCanClimb_Click"></MenuItem>
                     <MenuItem Header="Send Message" Name="cmSendMessage" Click="cmSendMessage_Click"></MenuItem>
                     <MenuItem Header="Email User/s" Name="cmEmailUsers" Click="cmEmailUsers_Click"></MenuItem>
-                    <MenuItem Header="Delete User/s" Name="cmDeleteUsers" Click="cmDeleteUsers_Click"></MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
