@@ -49,7 +49,7 @@
                         <MenuItem Header="Manager" Name="manager" Click="manager_Click"></MenuItem>
                         <MenuItem Header="Admin" Name="admin" Click="admin_Click"></MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Toggle Can Climb" Name="toggleCanClimb" Click="toggleCanClimb_Click"></MenuItem>
+                    <MenuItem Header="Toggle/Enforce Privilege" Name="toggleCanClimb" Click="toggleCanClimb_Click"></MenuItem>
                     <MenuItem Header="Documents" Name="documents" Click="documents_Click"></MenuItem>
                     <MenuItem Header=""></MenuItem>
                     <MenuItem Header="Add User" Name="btnAdd" Click="addUser_Click"></MenuItem>

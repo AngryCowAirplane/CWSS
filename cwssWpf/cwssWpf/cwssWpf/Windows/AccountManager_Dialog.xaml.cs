@@ -120,9 +120,19 @@ namespace cwssWpf.Windows
 
         private void toggleCanClimb_Click(object sender, RoutedEventArgs e)
         {
-            if (lvUsers.SelectedItems.Count > 0)
+            if (selectedUser != null)
             {
-                selectedUser.SetClimbingPrivilege(!selectedUser.CanClimb);
+                var request = Db.dataBase.Notes.CheckRequest(selectedUser);
+                if(request != null)
+                {
+                    var confirm = new Request_Dialog(request);
+                    confirm.ShowDialog();
+                }
+                else
+                {
+                    selectedUser.SetClimbingPrivilege(!selectedUser.CanClimb);
+                }
+
                 lvUsers.Items.Refresh();
             }
         }

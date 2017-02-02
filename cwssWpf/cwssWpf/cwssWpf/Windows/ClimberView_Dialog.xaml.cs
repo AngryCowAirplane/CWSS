@@ -51,15 +51,8 @@ namespace cwssWpf.Windows
         {
             if(selectedUser != null)
             {
-                var request = new Request();
-                request.Patron = selectedUser;
-                request.Reason = "Smelly";
-                request.SuspensionLength = Suspension.Month;
-                request.TimeStamp = DateTime.Now;
-                request.Enforced = false;
-
-                Db.dataBase.Notes.Requests.Add(request);
-                MessageBox.Show("Revoke Request Successfull, " + selectedUser.GetName() + " - " + request.Reason);
+                var request = new Request_Dialog(selectedUser);
+                request.ShowDialog();
             }
         }
 

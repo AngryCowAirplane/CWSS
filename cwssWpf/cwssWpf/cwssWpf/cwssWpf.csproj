@@ -130,6 +130,9 @@
     <Compile Include="Windows\NewUser_Dialog.xaml.cs">
       <DependentUpon>NewUser_Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Request_Dialog.xaml.cs">
+      <DependentUpon>Request_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Settings_Dialog.xaml.cs">
       <DependentUpon>Settings_Dialog.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\NewUser_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Request_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

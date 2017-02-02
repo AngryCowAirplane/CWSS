@@ -54,6 +54,29 @@ namespace cwssWpf.Data
             var timeLeft = suspLength - timeElapsed;
             return timeLeft;
         }
+
+        public Request CheckRequest(User user)
+        {
+            var request = Requests.Where(u => u.Patron == user);
+            if (request.Count() > 0)
+                return request.First();
+            else
+                return null;
+        }
+
+        public void AddRequest(User user, string reason, Suspension length)
+        {
+            var request = new Request();
+            request.Patron = user;
+            request.Employee = MainWindow.CurrentUser;
+            request.Reason = reason;
+            request.SuspensionLength = length;
+            request.TimeStamp = DateTime.Now;
+            request.Enforced = false;
+
+            if(Db.dataBase.Notes.Requests.Where(u => u.Patron == user).Count() <1)
+                Db.dataBase.Notes.Requests.Add(request);
+        }
     }
 
     public class Note
@@ -64,7 +87,9 @@ namespace cwssWpf.Data
 
     public class Request
     {
+        // NEED TO SWITCH THESE TO PATRON LOGIN and EMPLOYEE LOGIN
         public User Patron;
+        public User Employee;
         public Suspension SuspensionLength;
         public string Reason;
         public DateTime TimeStamp;

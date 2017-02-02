@@ -59,8 +59,8 @@ namespace cwssWpf
             //MiddleText.Text = "User Name";
             UpdateClimberStats();
 
-            //TESTING REMOVE
-           // Db.dataBase.Notes.Requests = new List<Request>();
+            //TESTING ACTIONS - REMOVE LATER
+            //Db.dataBase.Notes.Requests = new List<Request>();
         }
 
         private void menuNewUser_Click(object sender, RoutedEventArgs e)

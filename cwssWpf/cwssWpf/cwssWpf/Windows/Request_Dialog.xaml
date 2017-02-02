@@ -1,0 +1,35 @@
+﻿<Window x:Class="cwssWpf.Windows.Request_Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:cwssWpf.Windows"
+        mc:Ignorable="d"
+        Background="AliceBlue"
+        WindowStyle="ToolWindow"
+        Title="Request Suspension" Height="250" Width="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Content="User Name:" Margin="2,2,2,2" HorizontalAlignment="Right"></Label>
+        <TextBox x:Name="tbUser" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,5,5,5"></TextBox>
+        <Label Content="Time Length:" Grid.Column="2" Margin="2,2,2,2" HorizontalAlignment="Right"></Label>
+        <Label Content="Reason:" Grid.Row="1" Grid.Column="0" Margin="2,2,2,2" HorizontalAlignment="Left"></Label>
+        <Label Content="employee" x:Name="lblEmployee" Grid.Row="1" Grid.Column="3" Margin="2,2,2,2" HorizontalAlignment="Right"></Label>
+        <ComboBox x:Name="cbTime" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" Margin="5,5,5,5"></ComboBox>
+        <TextBox x:Name="tbReason" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" ></TextBox>
+        <Button x:Name="btnCancel" Grid.Row="3" Grid.Column="2" Content="Cancel" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnCancel_Click"></Button>
+        <Button x:Name="btnSubmit" Grid.Row="3" Grid.Column="3" Content="Submit" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnSubmit_Click"></Button> 
+    </Grid>
+</Window>

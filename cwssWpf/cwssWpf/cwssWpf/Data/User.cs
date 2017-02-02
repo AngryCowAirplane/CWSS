@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -150,6 +151,11 @@ namespace cwssWpf.Data
             }
             else
                 return false;
+        }
+
+        public Request CheckRequest()
+        {
+            return Db.dataBase.Notes.CheckRequest(this);
         }
 
         public override string ToString()
