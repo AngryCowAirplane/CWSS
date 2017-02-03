@@ -128,7 +128,6 @@ namespace cwssWpf.Windows
                     {
                         var email = new Email_Dialog(emailList);
                         email.ShowDialog();
-                        MessageBox.Show("Email Sent!");
                     }
                     catch (Exception exc)
                     {

@@ -54,6 +54,7 @@ namespace cwssWpf.Windows
             }
 
             this.Close();
+            MessageBox.Show("Email Sent!");
         }
 
         private string listToString(List<string> list)
