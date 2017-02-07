@@ -44,6 +44,9 @@ namespace cwssWpf.Windows
 
             if (success)
             {
+                if (MainWindow.CurrentUser == null)
+                    MainWindow.CurrentUser = new Data.User();
+
                 Logger.Log(MainWindow.CurrentUser.UserId, LogType.AddUser,
                     MainWindow.CurrentUser.GetName() + " Added User: " +
                     tbFirstName.Text + " " + tbLastName.Text);

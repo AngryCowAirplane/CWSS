@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using cwssWpf.Data;
+using cwssWpf.DataBase;
+using System.IO;
 
 namespace cwssWpfTests
 {
@@ -65,7 +67,19 @@ namespace cwssWpfTests
             //
             // TODO: Add test logic here
             //
+            var text = File.ReadAllLines(Environment.SpecialFolder.Desktop + "names.txt");
+            string firstName, LastName, password, email, address, city, state, zip, phone;
+            int userId = 10;
+            var gender = GenderType.Male;
+            //foreach (var line in text)
+            //{
+            //    firstName = (string)line.Split(' ');
+            //}
 
+
+
+
+            //Db.dataBase.AddUser(firstName, LastName, userId, password1, password2, email, address, city, state, zip, phone, gender);
         }
     }
 }
