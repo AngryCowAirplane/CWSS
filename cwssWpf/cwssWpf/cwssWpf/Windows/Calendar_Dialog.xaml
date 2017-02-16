@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
+        WindowStyle="ToolWindow"
+        Background="AliceBlue"
         mc:Ignorable="d"
-        Title="Calendar_Dialog" Height="230" Width="300">
+        Title="Calendar_Dialog" Height="400" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -26,8 +28,20 @@
         </DockPanel>
 
         <Viewbox Name="vbCalendar"  Grid.Row="1" Grid.Column="0" >
-            <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Calendar>
+            <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Calendar.ContextMenu>
+                    <ContextMenu Name="calendarMenu">
+                        <MenuItem Header="Add Event" Name="calendarMenuAddEvent" Click="calendarMenuAddEvent_Click"></MenuItem>
+                    </ContextMenu>
+                </Calendar.ContextMenu>
+            </Calendar>
         </Viewbox>
-        <ListBox x:Name="lbEvents"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></ListBox>
+        <ListBox x:Name="lbEvents"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ListBox.ContextMenu>
+                <ContextMenu Name="eventMenu">
+                    <MenuItem Header="Test" Name="cmStats" Click="eventMenuTest_Click"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
     </Grid>
 </Window>

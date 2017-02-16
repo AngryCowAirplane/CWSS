@@ -21,6 +21,7 @@ namespace cwssWpf.Windows
     {
         public Calendar_Dialog()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             var style = Calendar.CalendarDayButtonStyle;
             var displayDate = Calendar.DisplayDate; // DisplayDateStart DisplayDateEnd
@@ -36,7 +37,7 @@ namespace cwssWpf.Windows
 
         }
 
-        public void sizeChanged(object sender, RoutedEventArgs e)
+        private void sizeChanged(object sender, RoutedEventArgs e)
         {
             lbEvents.Height = vbCalendar.ActualHeight - 20;
             lbEvents.Width = vbCalendar.ActualWidth -20;
@@ -45,6 +46,17 @@ namespace cwssWpf.Windows
         private void exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void calendarMenuAddEvent_Click(object sender, RoutedEventArgs e)
+        {
+            var eventWindow = new Event_Dialog();
+            eventWindow.ShowDialog();
+        }
+
+        private void eventMenuTest_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Event At Time Clicked");
         }
     }
 }

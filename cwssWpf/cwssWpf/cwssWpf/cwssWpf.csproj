@@ -122,6 +122,9 @@
     <Compile Include="Windows\EmailCreds_Dialog.xaml.cs">
       <DependentUpon>EmailCreds_Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Event_Dialog.xaml.cs">
+      <DependentUpon>Event_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Login_Dialog.xaml.cs">
       <DependentUpon>Login_Dialog.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\EmailCreds_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Event_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
