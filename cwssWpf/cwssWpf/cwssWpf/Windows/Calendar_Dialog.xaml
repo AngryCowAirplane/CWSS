@@ -43,5 +43,9 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
+
+        <StatusBar Name="calendarStatus" Grid.Row="2" Grid.ColumnSpan="2" Background="CornflowerBlue">
+            <Label Content="Testing Status Label - HiLight Dates With Events Yo!"></Label>
+        </StatusBar>
     </Grid>
 </Window>
