@@ -18,6 +18,7 @@ namespace cwssWpf.Data
         public List<Item> Items = new List<Item>();
         public List<Message> Messages = new List<Message>();
         public List<DailyLogTag> DailyLogs = new List<DailyLogTag>();
+        public List<Event> Events = new List<Event>();
         public Notes Notes = new Notes();
 
         public _BaseDataObject()
@@ -156,6 +157,25 @@ namespace cwssWpf.Data
         {
             var messages = Messages.Where(message => message.RecipientId.Contains(user.LoginId)).ToList();
             return messages;
+        }
+
+        public bool AddEvent(Event _event)
+        {
+            // check if conflicting event
+
+            Events.Add(_event);
+            return true;
+        }
+
+        public bool DeleteEvent(Event _event)
+        {
+            if (Events.Contains(_event))
+            {
+                Events.Remove(_event);
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

@@ -203,7 +203,8 @@ namespace cwssWpf
 
         private void menuCalendar_Click(object sender, RoutedEventArgs e)
         {
-
+            var calendar = new Calendar_Dialog();
+            calendar.Show();
         }
 
         private void menuReports_Click(object sender, RoutedEventArgs e)
