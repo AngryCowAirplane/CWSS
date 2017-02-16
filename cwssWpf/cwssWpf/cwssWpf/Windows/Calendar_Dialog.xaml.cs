@@ -26,7 +26,25 @@ namespace cwssWpf.Windows
             var displayDate = Calendar.DisplayDate; // DisplayDateStart DisplayDateEnd
             var mode = Calendar.DisplayMode = CalendarMode.Month;
 
+            this.SizeChanged += sizeChanged;
 
+
+            for (int i = 0; i < 20; i++)
+            {
+                lbEvents.Items.Add(i);
+            }
+
+        }
+
+        public void sizeChanged(object sender, RoutedEventArgs e)
+        {
+            lbEvents.Height = vbCalendar.ActualHeight - 20;
+            lbEvents.Width = vbCalendar.ActualWidth -20;
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -20,15 +20,14 @@
         <DockPanel Grid.ColumnSpan="2">
             <Menu DockPanel.Dock="Top" Background="CornflowerBlue">
                 <MenuItem Header="File">
-                    <MenuItem Header="_Exit" Name="exit"></MenuItem>
+                    <MenuItem Header="_Exit" Name="exit" Click="exit_Click"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>
-        
-        <Viewbox Grid.Row="1">
-            <Calendar x:Name="Calendar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Calendar>
+
+        <Viewbox Name="vbCalendar"  Grid.Row="1" Grid.Column="0" >
+            <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Calendar>
         </Viewbox>
-        <ListBox x:Name="lbEvents" Grid.Row="1" Grid.Column="1" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></ListBox>
-        
+        <ListBox x:Name="lbEvents"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></ListBox>
     </Grid>
 </Window>
