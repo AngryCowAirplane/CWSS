@@ -29,6 +29,19 @@
 
         <Viewbox Name="vbCalendar"  Grid.Row="1" Grid.Column="0" >
             <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Calendar.CalendarDayButtonStyle>
+                    <Style TargetType="{x:Type CalendarDayButton}">
+                        <Style.Resources>
+                            <local:HolidayHelper x:Key="HolidayHelper" />
+                        </Style.Resources>
+                        <Setter Property="local:HolidayHelper.Date" Value="{Binding}" />
+                        <Style.Triggers>
+                            <Trigger Property="local:HolidayHelper.IsHoliday" Value="True">
+                                <Setter Property="Background" Value="Green" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Calendar.CalendarDayButtonStyle>
                 <Calendar.ContextMenu>
                     <ContextMenu Name="calendarMenu">
                         <MenuItem Header="Add Event" Name="calendarMenuAddEvent" Click="calendarMenuAddEvent_Click"></MenuItem>
