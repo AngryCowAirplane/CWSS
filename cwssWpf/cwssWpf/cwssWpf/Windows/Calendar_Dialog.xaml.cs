@@ -1,4 +1,6 @@
-﻿using System;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -35,7 +37,6 @@ namespace cwssWpf.Windows
             {
                 lbEvents.Items.Add(i);
             }
-
         }
 
         private void sizeChanged(object sender, RoutedEventArgs e)
@@ -51,6 +52,13 @@ namespace cwssWpf.Windows
 
         private void calendarMenuAddEvent_Click(object sender, RoutedEventArgs e)
         {
+            var newEvent = new Event();
+            newEvent.EventName = "Test";
+            newEvent.EventStart = new DateTime(2017, 02, 11);
+
+            if(!Db.dataBase.Events.Contains(newEvent))
+                Db.dataBase.Events.Add(newEvent);
+
             var eventWindow = new Event_Dialog();
             eventWindow.ShowDialog();
         }
@@ -117,8 +125,13 @@ namespace cwssWpf.Windows
 
         private static bool CheckIsEvent(DateTime date)
         {
-            if (date.Day == 05)
+            var events = Db.dataBase.Events.Select(e => e.EventStart);
+
+            if(events.Contains(date))
+            {
                 return true;
+            }
+
             else
                 return false;
         }
