@@ -32,12 +32,15 @@
                 <Calendar.CalendarDayButtonStyle>
                     <Style TargetType="{x:Type CalendarDayButton}">
                         <Style.Resources>
-                            <local:HolidayHelper x:Key="HolidayHelper" />
+                            <local:CalendarHelper x:Key="CalendarHelper" />
                         </Style.Resources>
-                        <Setter Property="local:HolidayHelper.Date" Value="{Binding}" />
+                        <Setter Property="local:CalendarHelper.Date" Value="{Binding}" />
                         <Style.Triggers>
-                            <Trigger Property="local:HolidayHelper.IsHoliday" Value="True">
+                            <Trigger Property="local:CalendarHelper.IsHoliday" Value="True">
                                 <Setter Property="Background" Value="Green" />
+                            </Trigger>
+                            <Trigger Property="local:CalendarHelper.IsEvent" Value="True">
+                                <Setter Property="Background" Value="BlueViolet" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>

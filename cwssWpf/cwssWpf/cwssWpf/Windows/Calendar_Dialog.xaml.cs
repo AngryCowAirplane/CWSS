@@ -61,8 +61,23 @@ namespace cwssWpf.Windows
         }
     }
 
-    public class HolidayHelper
+    public class CalendarHelper
     {
+        public static readonly DependencyProperty DateProperty =
+        DependencyProperty.RegisterAttached("Date", typeof(DateTime), typeof(CalendarHelper), new PropertyMetadata { PropertyChangedCallback = DatePropertyChanged });
+
+        //-----------------------------------------------------------------------------------------------------
+
+        private static readonly DependencyPropertyKey IsHolidayPropertyKey =
+        DependencyProperty.RegisterAttachedReadOnly("IsHoliday", typeof(bool), typeof(CalendarHelper), new PropertyMetadata());
+        public static readonly DependencyProperty IsHolidayProperty = IsHolidayPropertyKey.DependencyProperty;
+
+        private static readonly DependencyPropertyKey IsEventPropertyKey =
+        DependencyProperty.RegisterAttachedReadOnly("IsEvent", typeof(bool), typeof(CalendarHelper), new PropertyMetadata());
+        public static readonly DependencyProperty IsEventProperty = IsHolidayPropertyKey.DependencyProperty;
+
+        //------------------------------------------------------------------------------------------------
+
         public static DateTime GetDate(DependencyObject obj)
         {
             return (DateTime)obj.GetValue(DateProperty);
@@ -73,38 +88,49 @@ namespace cwssWpf.Windows
             obj.SetValue(DateProperty, value);
         }
 
-        public static readonly DependencyProperty DateProperty =
-        DependencyProperty.RegisterAttached("Date", typeof(DateTime), typeof(HolidayHelper), new PropertyMetadata { PropertyChangedCallback = DatePropertyChanged });
+        public static bool GetIsHoliday(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsHolidayProperty);
+        }
+
+        public static bool GetIsEvent(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsEventProperty);
+        }
+
+        //------------------------------------------------------------------------------------------
 
         private static void DatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var date = GetDate(d);
             SetIsHoliday(d, CheckIsHoliday(date));
+            SetIsEvent(d, CheckIsEvent(date));
         }
 
         private static bool CheckIsHoliday(DateTime date)
         {
-            //here we should determine whether 'date' is a holiday
-            //or not and return corresponding value
             if (date.Day > 20)
                 return true;
             else
                 return false;
         }
 
-        private static readonly DependencyPropertyKey IsHolidayPropertyKey =
-        DependencyProperty.RegisterAttachedReadOnly("IsHoliday", typeof(bool), typeof(HolidayHelper), new PropertyMetadata());
-
-        public static readonly DependencyProperty IsHolidayProperty = IsHolidayPropertyKey.DependencyProperty;
-
-        public static bool GetIsHoliday(DependencyObject obj)
+        private static bool CheckIsEvent(DateTime date)
         {
-            return (bool)obj.GetValue(IsHolidayProperty);
+            if (date.Day == 05)
+                return true;
+            else
+                return false;
         }
 
         private static void SetIsHoliday(DependencyObject obj, bool value)
         {
             obj.SetValue(IsHolidayPropertyKey, value);
+        }
+
+        private static void SetIsEvent(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsEventPropertyKey, value);
         }
     }
 }
