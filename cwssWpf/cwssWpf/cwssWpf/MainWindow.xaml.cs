@@ -294,5 +294,13 @@ namespace cwssWpf
         {
 
         }
+
+        private void TestSomething(object sender, RoutedEventArgs e)
+        {
+            if(CheckinCanvas.IsVisible)
+                CheckinCanvas.Visibility = Visibility.Hidden;
+            else
+                CheckinCanvas.Visibility = Visibility.Visible;
+        }
     }
 }
