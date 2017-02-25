@@ -32,11 +32,6 @@ namespace cwssWpf.Windows
 
             this.SizeChanged += sizeChanged;
             MouseDown += Window_MouseDown;
-
-            for (int i = 0; i < 20; i++)
-            {
-                lbEvents.Items.Add(i);
-            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -54,6 +49,20 @@ namespace cwssWpf.Windows
         private void exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void calendar_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedEvents = Db.dataBase.Events.Where(ev => ev.EventStart == (DateTime)Calendar.SelectedDate);
+
+            if (selectedEvents != null && selectedEvents.Count() > 0)
+            {
+                lbEvents.Items.Clear();
+                foreach (var item in selectedEvents)
+                {
+                    lbEvents.Items.Add(item);
+                }
+            }
         }
 
         private void calendarMenuAddEvent_Click(object sender, RoutedEventArgs e)
@@ -158,7 +167,7 @@ namespace cwssWpf.Windows
         {
             var events = Db.dataBase.Events.Select(e => e.EventStart);
 
-            if(events.Contains(date))
+            if (events.Contains(date))
             {
                 return true;
             }

@@ -16,6 +16,16 @@ namespace cwssWpf.Data
         public DateTime EventEnd { get; set; }
         public List<User> EventMembers { get; set; }
         public User EventCreator { get; set; }
+
+        public Event()
+        {
+            EventMembers = new List<User>();
+        }
+
+        public override string ToString()
+        {
+            return EventName;
+        }
     }
 
     public class EventListViewItem : ListViewItem

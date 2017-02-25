@@ -29,7 +29,7 @@
         </DockPanel>
 
         <Viewbox Name="vbCalendar"  Grid.Row="1" Grid.Column="0" >
-            <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
+            <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGoldenrodYellow" MouseDoubleClick="calendar_Click">
                 <Calendar.CalendarDayButtonStyle>
                     <Style TargetType="{x:Type CalendarDayButton}">
                         <Style.Resources>
@@ -37,11 +37,11 @@
                         </Style.Resources>
                         <Setter Property="local:CalendarHelper.Date" Value="{Binding}" />
                         <Style.Triggers>
-                            <Trigger Property="local:CalendarHelper.IsHoliday" Value="True">
-                                <Setter Property="Background" Value="Green" />
-                            </Trigger>
+<!--                            <Trigger Property="local:CalendarHelper.IsHoliday" Value="True">
+                                <Setter Property="Background" Value="GoldenRod" />
+                            </Trigger>              -->
                             <Trigger Property="local:CalendarHelper.IsEvent" Value="True">
-                                <Setter Property="Background" Value="BlueViolet" />
+                                <Setter Property="Background" Value="Yellow" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
