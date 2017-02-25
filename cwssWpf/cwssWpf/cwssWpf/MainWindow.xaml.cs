@@ -150,6 +150,9 @@ namespace cwssWpf
                     // FIND BETTER WAY TO RESOLVE THIS SHIT
                     if(!hasWaiver)
                     {
+                        var alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
+                        alert.ShowDialog();
+
                         var waiver = new Waiver_Dialog();
                         var signedWaiver = waiver.ShowDialog();
                         if((bool)signedWaiver)
@@ -159,8 +162,8 @@ namespace cwssWpf
                         }
                         else
                         {
-                            var alert = new Alert_Dialog("Missing Waiver!", "Please read and signed the electronic waiver.");
-                            alert.ShowDialog();
+                            var newalert = new Alert_Dialog("Not Signed", "Waiver not signed!");
+                            newalert.ShowDialog();
                         }
                     }
                     if(!canClimb)
@@ -176,7 +179,7 @@ namespace cwssWpf
                 var message = "Failed Checkin By " + loginId;
                 Logger.Log(loginId, LogType.Error, message);
 
-                var alert = new Alert_Dialog("User Not Found!", "Please re-try login, or create a new account.");
+                var alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
                 alert.ShowDialog();
             }
 

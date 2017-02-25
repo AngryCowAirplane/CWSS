@@ -45,7 +45,7 @@ namespace cwssWpf.Data
             {
                 // TODO:
                 // throw exception up instead of MessageBox
-                MessageBox.Show("Waiver Not Found!");
+                //MessageBox.Show("Waiver Not Found!");
                 return false;
             }
             return false;
