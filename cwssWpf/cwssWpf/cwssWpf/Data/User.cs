@@ -74,6 +74,7 @@ namespace cwssWpf.Data
                 var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
                 Logger.Log(UserId, LogType.CheckOut, message);
                 message = message + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                Helpers.PlayCheckOut();
                 var alert = new Alert_Dialog("Checked Out", message);
                 alert.ShowDialog();
                 CheckedIn = false;
@@ -89,6 +90,7 @@ namespace cwssWpf.Data
             {
                 TimeStamp = DateTime.Now;
                 var message = Info.FirstName + " " + Info.LastName + " Checked In.";
+                Helpers.PlayCheckIn();
                 var alert = new Alert_Dialog("Check In", message);
                 alert.ShowDialog();
                 Logger.Log(UserId, LogType.CheckIn, message);

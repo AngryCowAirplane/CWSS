@@ -79,6 +79,7 @@ namespace cwssWpf
             {
                 // TODO abstract this + quickMessageRead Window (for each message)
                 // same code in Checkin logic.
+                Helpers.PlayLogin();
                 var messages = Db.dataBase.GetMessages(CurrentUser);
                 if (messages.Count > 0)
                 {
@@ -124,6 +125,7 @@ namespace cwssWpf
                 var messages = Db.dataBase.GetMessages(user);
                 if (messages.Count > 0)
                 {
+                    Helpers.PlaySuccess();
                     var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
                     alert.ShowDialog();
 
@@ -150,6 +152,7 @@ namespace cwssWpf
                     // FIND BETTER WAY TO RESOLVE THIS SHIT
                     if(!hasWaiver)
                     {
+                        Helpers.PlayFail();
                         var alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
                         alert.ShowDialog();
 
@@ -162,12 +165,14 @@ namespace cwssWpf
                         }
                         else
                         {
+                            Helpers.PlayFail();
                             var newalert = new Alert_Dialog("Not Signed", "Waiver not signed!");
                             newalert.ShowDialog();
                         }
                     }
                     if(!canClimb)
                     {
+                        Helpers.PlayFail();
                         var alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
                         alert.ShowDialog();
                         // Show better reason, have Comment variable in User Table?
@@ -178,7 +183,7 @@ namespace cwssWpf
             {
                 var message = "Failed Checkin By " + loginId;
                 Logger.Log(loginId, LogType.Error, message);
-
+                Helpers.PlayFail();
                 var alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
                 alert.ShowDialog();
             }
@@ -201,6 +206,7 @@ namespace cwssWpf
 
             if(CurrentUser!=null)
             {
+                Helpers.PlayLogOff();
                 var message = CurrentUser.GetName() + " Logged Off";
                 Logger.Log(CurrentUser.UserId, LogType.LogOut, message);
             }

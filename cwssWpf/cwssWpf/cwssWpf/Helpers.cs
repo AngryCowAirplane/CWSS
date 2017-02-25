@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Globalization;
 using System.Windows;
 using cwssWpf.DataBase;
+using System.Media;
 
 namespace cwssWpf
 {
@@ -26,6 +27,82 @@ namespace cwssWpf
         public static string DecryptString(string str)
         {
             return RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(str, passPhrase, saltValue, "SHA1");
+        }
+
+        public static void PlaySuccess()
+        {
+            SoundPlayer player = new SoundPlayer(System.IO.Path.Combine(Environment.CurrentDirectory + @"\Sounds\Success.wav"));
+            bool soundFinished = true;
+
+            if (soundFinished)
+            {
+                soundFinished = false;
+                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+            }
+        }
+
+        public static void PlayFail()
+        {
+            SoundPlayer player = new SoundPlayer(System.IO.Path.Combine(Environment.CurrentDirectory + @"\Sounds\Fail.wav"));
+            bool soundFinished = true;
+
+            if (soundFinished)
+            {
+                soundFinished = false;
+                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+            }
+        }
+
+
+        public static void PlayLogOff()
+        {
+            SoundPlayer player = new SoundPlayer(System.IO.Path.Combine(Environment.CurrentDirectory + @"\Sounds\LogOff.wav"));
+            bool soundFinished = true;
+
+            if (soundFinished)
+            {
+                soundFinished = false;
+                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+            }
+        }
+
+
+        public static void PlayLogin()
+        {
+            SoundPlayer player = new SoundPlayer(System.IO.Path.Combine(Environment.CurrentDirectory + @"\Sounds\LogIn.wav"));
+            bool soundFinished = true;
+
+            if (soundFinished)
+            {
+                soundFinished = false;
+                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+            }
+        }
+
+
+        public static void PlayCheckOut()
+        {
+            SoundPlayer player = new SoundPlayer(System.IO.Path.Combine(Environment.CurrentDirectory + @"\Sounds\CheckOut.wav"));
+            bool soundFinished = true;
+
+            if (soundFinished)
+            {
+                soundFinished = false;
+                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+            }
+        }
+
+
+        public static void PlayCheckIn()
+        {
+            SoundPlayer player = new SoundPlayer(System.IO.Path.Combine(Environment.CurrentDirectory + @"\Sounds\CheckIn.wav"));
+            bool soundFinished = true;
+
+            if (soundFinished)
+            {
+                soundFinished = false;
+                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+            }
         }
 
         public static Uri GenerateEmailUriFromList(List<string> emails)
