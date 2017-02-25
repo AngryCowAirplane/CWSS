@@ -95,6 +95,12 @@ namespace cwssWpf
                     alert.ShowDialog();
                 }
 
+                foreach (var message in messages)
+                {
+                    var messageDialog = new Message_Dialog(CurrentUser, message);
+                    messageDialog.ShowDialog();
+                }
+
                 menuEmployeeLogIn.IsEnabled = false;
             }
         }
