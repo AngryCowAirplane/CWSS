@@ -283,6 +283,9 @@
     <Content Include="Images\Alert.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\Success.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Sounds\CheckIn.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
