@@ -27,6 +27,8 @@ namespace cwssWpf.Windows
             InitializeComponent();
             webBrowser.Navigate("file:///" + waiverPath);
             this.Focus();
+            this.Activate();
+            this.Topmost = true;
         }
 
         private void btnSignForm_Click(object sender, RoutedEventArgs e)

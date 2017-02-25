@@ -82,7 +82,8 @@ namespace cwssWpf
                 var messages = Db.dataBase.GetMessages(CurrentUser);
                 if (messages.Count > 0)
                 {
-                    MessageBox.Show("You have " + messages.Count + " messages.");
+                    var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                    alert.ShowDialog();
                 }
 
                 menuEmployeeLogIn.IsEnabled = false;
@@ -123,7 +124,9 @@ namespace cwssWpf
                 var messages = Db.dataBase.GetMessages(user);
                 if (messages.Count > 0)
                 {
-                    MessageBox.Show("You have " + messages.Count + " messages.");
+                    var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                    alert.ShowDialog();
+
                     foreach (var message in messages)
                     {
                         var messageDialog = new Message_Dialog(user, message);
@@ -155,11 +158,15 @@ namespace cwssWpf
                             tryCheckinUser();
                         }
                         else
-                            MessageBox.Show("Waiver Missing / Required!");
+                        {
+                            var alert = new Alert_Dialog("Missing Waiver!", "Please read and signed the electronic waiver.");
+                            alert.ShowDialog();
+                        }
                     }
                     if(!canClimb)
                     {
-                        MessageBox.Show("Climbing Priveleges Revoked");
+                        var alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
+                        alert.ShowDialog();
                         // Show better reason, have Comment variable in User Table?
                     }
                 }
@@ -168,7 +175,9 @@ namespace cwssWpf
             {
                 var message = "Failed Checkin By " + loginId;
                 Logger.Log(loginId, LogType.Error, message);
-                MessageBox.Show("User Not Found!");
+
+                var alert = new Alert_Dialog("User Not Found!", "Please re-try login, or create a new account.");
+                alert.ShowDialog();
             }
 
             return true;
@@ -181,7 +190,7 @@ namespace cwssWpf
 
         private void menuLogOut_Click(object sender, RoutedEventArgs e)
         {
-            MainMenu.Background = Brushes.CornflowerBlue;
+            MainMenu.Background = Brushes.Goldenrod;
             EmployeeMenu.Visibility = Visibility.Hidden;
             ManagerMenu.Visibility = Visibility.Hidden;
             AdminMenu.Visibility = Visibility.Hidden;

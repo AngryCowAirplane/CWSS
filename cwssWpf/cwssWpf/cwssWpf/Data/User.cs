@@ -1,4 +1,5 @@
 ﻿using cwssWpf.DataBase;
+using cwssWpf.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +74,8 @@ namespace cwssWpf.Data
                 var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
                 Logger.Log(UserId, LogType.CheckOut, message);
                 message = message + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
-                MessageBox.Show(message);
+                var alert = new Alert_Dialog("Checked Out", message);
+                alert.ShowDialog();
                 CheckedIn = false;
                 return true;
             }
@@ -87,7 +89,8 @@ namespace cwssWpf.Data
             {
                 TimeStamp = DateTime.Now;
                 var message = Info.FirstName + " " + Info.LastName + " Checked In.";
-                MessageBox.Show(message);
+                var alert = new Alert_Dialog("Check In", message);
+                alert.ShowDialog();
                 Logger.Log(UserId, LogType.CheckIn, message);
                 CheckedIn = true;
                 return true;

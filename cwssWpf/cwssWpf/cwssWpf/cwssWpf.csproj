@@ -107,6 +107,9 @@
     <Compile Include="Windows\AccountManager_Dialog.xaml.cs">
       <DependentUpon>AccountManager_Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Alert_Dialog.xaml.cs">
+      <DependentUpon>Alert_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Calendar_Dialog.xaml.cs">
       <DependentUpon>Calendar_Dialog.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\AccountManager_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Alert_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +280,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>cwssWpf.Context.mdf</DependentUpon>
     </Content>
+    <Content Include="Images\Alert.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\Wall.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

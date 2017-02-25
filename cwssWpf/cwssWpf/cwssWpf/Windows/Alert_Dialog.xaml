@@ -1,0 +1,43 @@
+﻿<Window x:Class="cwssWpf.Windows.Alert_Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:cwssWpf.Windows"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        Title="Alert_Dialog" Height="200" Width="400">
+    <Window.Background>
+        <SolidColorBrush Opacity="0.75" Color="Black"></SolidColorBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="75"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Image Name="Image" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" d:LayoutOverrides="Width"/>
+        <Label Name="Title" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Content="Alert Title" FontSize="36" Foreground="Gold"></Label>
+
+        <TextBox Name="AlertText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" FontSize="16" Foreground="Yellow" Text="Test" BorderThickness="0">
+            <TextBox.Background>
+                <SolidColorBrush Opacity="0.15" Color="DarkGray"></SolidColorBrush>
+            </TextBox.Background>
+        </TextBox>
+
+        <Button Name="Close" Grid.Row="2" Grid.Column="2" Content="Close" Margin="5,5,5,5" Foreground="Gold" FontWeight="Heavy" Click="Close_Click">
+            <Button.Background>
+                <SolidColorBrush Opacity="0.25" Color="DarkGray"></SolidColorBrush>
+            </Button.Background>
+        </Button>
+
+    </Grid>
+</Window>

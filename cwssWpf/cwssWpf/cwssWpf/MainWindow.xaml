@@ -7,23 +7,27 @@
         Closing="MainWindow_Closing"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
-        Title="SDSU Climbing Wall System" Height="350" Width="525">
+        Title="SDSU Climbing Wall System" Height="480" Width="640">
     <Grid>
         <Grid.Background>
-            <SolidColorBrush Color="AliceBlue"></SolidColorBrush>
+            <!-- SolidColorBrush Color="AliceBlue"></ -->
+            <ImageBrush ImageSource="Images/Wall.jpg"></ImageBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.ColumnSpan="2">
-            <Menu DockPanel.Dock="Top" Background="CornflowerBlue" Name="MainMenu">
+        <DockPanel Grid.ColumnSpan="4">
+            <Menu DockPanel.Dock="Top" Background="Goldenrod" Name="MainMenu" FontWeight="Heavy">
                 <MenuItem Header="File">
                     <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>
                     <MenuItem Header="_Employee Log In" Name="menuEmployeeLogIn" Click="menuEmployeeLogIn_Click"></MenuItem>
@@ -51,12 +55,12 @@
         </DockPanel>
 
 
-        <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="23" Margin="5,5,5,5" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="167"/>
-        <Button Grid.Row="1" Grid.Column="1" x:Name="btnCheckIn" Content="Check In/Out" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Center" Width="75" Click="btnCheckIn_Click" Background="CornflowerBlue"/>
+        <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon"/>
+        <Button Grid.Row="2" Grid.Column="1" x:Name="btnCheckIn" Content="Check In/Out" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Width="105" Height="40" Click="btnCheckIn_Click" Background="Tan"/>
 
 
-        <DockPanel Grid.Row="2" Grid.ColumnSpan="2">
-            <StatusBar DockPanel.Dock="Bottom" Background="CornflowerBlue">
+        <DockPanel Grid.Row="4" Grid.ColumnSpan="4">
+            <StatusBar DockPanel.Dock="Bottom" Background="Goldenrod">
                 <StatusBarItem HorizontalAlignment="Left">
                     <TextBlock Grid.Column="0" Name="StatusText" FontSize="12" HorizontalAlignment="Left"/>
                 </StatusBarItem>
