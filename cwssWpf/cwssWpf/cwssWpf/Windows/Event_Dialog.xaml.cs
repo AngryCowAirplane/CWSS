@@ -1,4 +1,6 @@
-﻿using System;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,53 @@ namespace cwssWpf.Windows
         public Event_Dialog()
         {
             InitializeComponent();
+            cbUsers.ItemsSource = Db.dataBase.Users;
+            EventMenu.MouseDown += Window_MouseDown;
+            MouseDown += Window_MouseDown;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddUser_Click(object sender, RoutedEventArgs e)
+        {
+            lbUsers.Items.Add(cbUsers.SelectedItem);
+        }
+
+        private void RemoveUser_Click(object sender, RoutedEventArgs e)
+        {
+            lbUsers.Items.Remove(lbUsers.SelectedItem);
+        }
+
+        private void addEvent_Click(object sender, RoutedEventArgs e)
+        {
+            var newEvent = new Event();
+            newEvent.EventName = Title.Text;
+            newEvent.EventStart = StartDate.SelectedDate.Value;
+            newEvent.EventEnd = EndDate.SelectedDate.Value;
+
+            foreach (var item in lbUsers.Items)
+            {
+                newEvent.EventMembers.Add((User)item);
+            }
+
+            newEvent.EventCreator = MainWindow.CurrentUser;
+            newEvent.EventComment = Description.Text;
+
+            if (!Db.dataBase.Events.Contains(newEvent))
+                Db.dataBase.Events.Add(newEvent);
+
+            this.Close();
+            var alert = new Alert_Dialog("Event Created", "Your event has been created.");
+            alert.ShowDialog();
         }
     }
 }

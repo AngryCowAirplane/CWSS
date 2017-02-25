@@ -31,12 +31,18 @@ namespace cwssWpf.Windows
             var mode = Calendar.DisplayMode = CalendarMode.Month;
 
             this.SizeChanged += sizeChanged;
-
+            MouseDown += Window_MouseDown;
 
             for (int i = 0; i < 20; i++)
             {
                 lbEvents.Items.Add(i);
             }
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
         }
 
         private void sizeChanged(object sender, RoutedEventArgs e)
@@ -52,20 +58,45 @@ namespace cwssWpf.Windows
 
         private void calendarMenuAddEvent_Click(object sender, RoutedEventArgs e)
         {
-            var newEvent = new Event();
-            newEvent.EventName = "Test";
-            newEvent.EventStart = new DateTime(2017, 02, 11);
-
-            if(!Db.dataBase.Events.Contains(newEvent))
-                Db.dataBase.Events.Add(newEvent);
-
             var eventWindow = new Event_Dialog();
             eventWindow.ShowDialog();
+            reloadCalendar();
+        }
+
+        private void calendarMenuRemoveEvent_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedDate = Calendar.SelectedDate;
+
+            var events = new List<Event>();
+
+            events.AddRange(Db.dataBase.Events.Where(ev => ev.EventStart == selectedDate));
+
+            foreach (var item in events)
+            {
+                Db.dataBase.Events.Remove(item);
+            }
+
+            reloadCalendar();
         }
 
         private void eventMenuTest_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Event At Time Clicked");
+        }
+
+        private void reloadCalendar()
+        {
+            var calendarTopPos = Top;
+            var calendarLeftPos = Left;
+            var calendarSelectedDate = Calendar.SelectedDate;
+
+            var newCalendar = new Calendar_Dialog();
+            newCalendar.Show();
+
+            newCalendar.Top = calendarTopPos;
+            newCalendar.Left = calendarLeftPos;
+            newCalendar.Calendar.SelectedDate = calendarSelectedDate;
+            this.Close();
         }
     }
 

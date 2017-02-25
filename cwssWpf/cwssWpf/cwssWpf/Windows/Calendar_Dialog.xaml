@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         WindowStyle="ToolWindow"
-        Background="AliceBlue"
+        Background="LightGoldenrodYellow"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="Calendar_Dialog" Height="400" Width="600">
     <Grid>
@@ -20,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.ColumnSpan="2">
-            <Menu DockPanel.Dock="Top" Background="CornflowerBlue">
+            <Menu DockPanel.Dock="Top" Background="Goldenrod">
                 <MenuItem Header="File">
                     <MenuItem Header="_Exit" Name="exit" Click="exit_Click"></MenuItem>
                 </MenuItem>
@@ -28,7 +29,7 @@
         </DockPanel>
 
         <Viewbox Name="vbCalendar"  Grid.Row="1" Grid.Column="0" >
-            <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Calendar x:Name="Calendar" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
                 <Calendar.CalendarDayButtonStyle>
                     <Style TargetType="{x:Type CalendarDayButton}">
                         <Style.Resources>
@@ -48,11 +49,12 @@
                 <Calendar.ContextMenu>
                     <ContextMenu Name="calendarMenu">
                         <MenuItem Header="Add Event" Name="calendarMenuAddEvent" Click="calendarMenuAddEvent_Click"></MenuItem>
+                        <MenuItem Header="Delete All Events" Name="calendarMenuRemoveEvent" Click="calendarMenuRemoveEvent_Click"></MenuItem>
                     </ContextMenu>
                 </Calendar.ContextMenu>
             </Calendar>
         </Viewbox>
-        <ListBox x:Name="lbEvents"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <ListBox x:Name="lbEvents"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="LightGoldenrodYellow">
             <ListBox.ContextMenu>
                 <ContextMenu Name="eventMenu">
                     <MenuItem Header="Test" Name="cmStats" Click="eventMenuTest_Click"></MenuItem>
@@ -60,7 +62,7 @@
             </ListBox.ContextMenu>
         </ListBox>
 
-        <StatusBar Name="calendarStatus" Grid.Row="2" Grid.ColumnSpan="2" Background="CornflowerBlue">
+        <StatusBar Name="calendarStatus" Grid.Row="2" Grid.ColumnSpan="2" Background="Goldenrod">
             <Label Content="Testing Status Label - HiLight Dates With Events Yo!"></Label>
         </StatusBar>
     </Grid>

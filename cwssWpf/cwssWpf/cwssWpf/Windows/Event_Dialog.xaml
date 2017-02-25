@@ -5,10 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        WindowStyle="ToolWindow"
-        Background="AliceBlue"
-        Title="Event_Dialog" Height="300" Width="300">
+        WindowStyle="none"
+        Background="LightGoldenrodYellow"
+        WindowStartupLocation="CenterScreen"
+        Title="Event_Dialog" Height="300" Width="400">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.ColumnSpan="6" Name="EventMenu" >
+            <Menu DockPanel.Dock="Top" Background="Goldenrod">
+                <MenuItem Header="_Add" Name="Add" Click="addEvent_Click"></MenuItem>
+                <MenuItem Header="_Cancel" Name="Exit" Click="btnCancel_Click"></MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <Label Content="Dates:" Grid.Row="1" HorizontalAlignment="Right"></Label>
+        <DatePicker Name="StartDate" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,2,5,2"></DatePicker>
+        <DatePicker Name="EndDate" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5,2,5,2"></DatePicker>
+
+        <Label Content="Times:" Grid.Row="2" HorizontalAlignment="Right"></Label>
+        <TextBox Name="StartTime" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,2,5,2"></TextBox>
+        <TextBox Name="EndTime" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5,2,5,2"></TextBox>
+
+        <Label Content="Title" Grid.Row="3" HorizontalAlignment="Right"></Label>
+        <TextBox Name="Title" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,2,5,2"></TextBox>
+
+        <Label Content="Description:" Grid.Row="4" HorizontalAlignment="Right"></Label>
+        <TextBox Name="Description" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,2,5,2"></TextBox>
+
+        <Label Content="Members:" Grid.Row="5" HorizontalAlignment="Right"></Label>
+        <ComboBox Name="cbUsers" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,2,5,2" MouseDoubleClick="AddUser_Click" IsEditable="True"></ComboBox>
+        <Button Name="btnAddUser" Grid.Row="5" Grid.Column="3" Margin="5,5,5,5" Content="+" Click="AddUser_Click" FontWeight="Bold" VerticalAlignment="Center" Background="Goldenrod"></Button>
+        <ListBox Name="lbUsers" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5"></ListBox>
+        <Button Name="btnRemoveUser" Grid.Row="6" Grid.Column="3" Margin="5,5,5,5" Height="20" Content="-" VerticalAlignment="Top"  FontWeight="Bold" Click="RemoveUser_Click" Background="Goldenrod"></Button>
+
+        <Label Content="Send Notification?" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right"></Label>
+        <CheckBox Name="cbNotify" Grid.Row="7" Grid.Column="3" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
     </Grid>
 </Window>
