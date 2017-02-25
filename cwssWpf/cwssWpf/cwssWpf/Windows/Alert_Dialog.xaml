@@ -27,7 +27,7 @@
         <Image Name="Image" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" d:LayoutOverrides="Width"/>
         <Label Name="Title" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Content="Alert Title" FontSize="36" Foreground="Gold"></Label>
 
-        <TextBox Name="AlertText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" FontSize="16" Foreground="Yellow" Text="Test" BorderThickness="0">
+        <TextBox Name="AlertText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" FontSize="16" Foreground="Yellow" Text="Test" BorderThickness="0" TextWrapping="Wrap">
             <TextBox.Background>
                 <SolidColorBrush Opacity="0.15" Color="DarkGray"></SolidColorBrush>
             </TextBox.Background>
