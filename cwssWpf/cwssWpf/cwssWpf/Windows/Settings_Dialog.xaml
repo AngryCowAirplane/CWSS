@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Background="AliceBlue"
         WindowStyle="ToolWindow"
-        Title="Settings" Height="300" Width="300">
+        Title="Settings" Height="400" Width="300">
     <Grid Name="SettingsGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -40,10 +41,13 @@
         <Label Content="Use Ssl" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right"/>
         <Label Content="Default Creds" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right"/>
         <Label Content="Store Creds" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right"/>
-
         <ComboBox x:Name="cbClient" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"/>
         <TextBox x:Name="tbServer" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"/>
         <TextBox x:Name="tbPort" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"/>
 
+
+        <Label Content="General Settings" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+        <Label Content="Start Maximized" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Right"/>
+        <CheckBox x:Name="cbMaximized" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"/>
     </Grid>
 </Window>

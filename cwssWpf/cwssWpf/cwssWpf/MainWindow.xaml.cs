@@ -59,6 +59,14 @@ namespace cwssWpf
             //MiddleText.Text = "User Name";
             UpdateClimberStats();
 
+
+            if (Config.Data.General.StartMaximized)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.WindowStyle = WindowStyle.None;
+            }
+
+
             //TESTING ACTIONS - REMOVE LATER
             //Db.dataBase.Notes.Requests = new List<Request>();
         }

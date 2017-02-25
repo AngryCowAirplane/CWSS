@@ -43,6 +43,7 @@ namespace cwssWpf.Windows
             cbSsl.SelectedItem = Config.Data.Email.EnableSsl;
             cbDefaultCreds.SelectedItem = Config.Data.Email.UseDefaultCredentials;
             cbStoreCreds.SelectedItem = Config.Data.Email.StoreCreds;
+            cbMaximized.IsChecked = Config.Data.General.StartMaximized;
         }
 
         private void addControls()
@@ -81,6 +82,8 @@ namespace cwssWpf.Windows
             Config.Data.Email.SmtpServer = tbServer.Text;
             Config.Data.Email.UseDefaultCredentials = cbDefaultCreds.Value;
             Config.Data.Email.StoreCreds = cbStoreCreds.Value;
+
+            Config.Data.General.StartMaximized = (bool)cbMaximized.IsChecked;
 
             if (!Config.Data.Email.StoreCreds)
             {

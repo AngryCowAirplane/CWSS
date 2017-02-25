@@ -44,11 +44,18 @@ namespace cwssWpf.Data
     public class ConfigData
     {
         public EmailSettings Email { get; set; }
+        public GeneralSettings General { get; set; }
 
         public ConfigData()
         {
             Email = new EmailSettings();
+            General = new GeneralSettings();
         }
+    }
+
+    public class GeneralSettings
+    {
+        public bool StartMaximized = false;
     }
 
     public class EmailSettings
