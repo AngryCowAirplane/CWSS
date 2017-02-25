@@ -30,13 +30,14 @@
         <DockPanel Grid.ColumnSpan="4">
             <Menu DockPanel.Dock="Top" Background="Goldenrod" Name="MainMenu" FontWeight="Heavy">
                 <MenuItem Header="File">
-                    <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>
+<!--                    <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>     -->
                     <MenuItem Header="_Employee Log In" Name="menuEmployeeLogIn" Click="menuEmployeeLogIn_Click"></MenuItem>
                     <MenuItem Header="_New User" Name="menuNewUser" Click="menuNewUser_Click"></MenuItem>
                     <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header= "_Employee" Visibility="Visible" Name="EmployeeMenu">
                     <MenuItem Header="_View Climbers" Name="menuUsers" Click="menuUsers_Click"></MenuItem>
+                    <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>
                     <MenuItem Header="_Wall Notes" Name="menuNotes" Click="menuNotes_Click"></MenuItem>
                     <MenuItem Header="_Send Message" Name="menuMessage" Click="menuMessage_Click"></MenuItem>
                     <MenuItem Header="_Store" Name="menuStore" Click="menuStore_Click"></MenuItem>
@@ -61,10 +62,7 @@
             </Canvas.Background>
             <Border Width="{Binding ActualWidth, ElementName=CheckinCanvas}" Height="90" Margin="0" Background="Transparent" BorderBrush="Gold" BorderThickness="3" Opacity="0.6">
                 <Border.Effect>
-                    <DropShadowEffect ShadowDepth="2"
-                          Color="Yellow"
-                          Opacity="0.9"
-                          BlurRadius="6"/>
+                    <DropShadowEffect ShadowDepth="2" Color="Yellow" Opacity="0.9" BlurRadius="6"/>
                 </Border.Effect>
             </Border>
         </Canvas>
