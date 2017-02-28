@@ -16,5 +16,6 @@
         
         <WebBrowser x:Name="webBrowser" Grid.Row="0" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch"/>
         <Button x:Name="btnSignForm" Content="Sign Form" Grid.Row="1" HorizontalAlignment="Center" Margin="4,4,4,4" VerticalAlignment="Center" Click="btnSignForm_Click"/>
+        <Button x:Name="btnExitForm" Content="Close Without Signing" Grid.Row="1" HorizontalAlignment="Right" Margin="4,4,10,4" VerticalAlignment="Center" Click="btnExitForm_Click"/>
     </Grid>
 </Window>

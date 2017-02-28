@@ -142,6 +142,9 @@ namespace cwssWpf
 
         private bool tryCheckinUser()
         {
+            if (string.IsNullOrWhiteSpace(tbLoginId.Text))
+                return false;
+
             var loginId = int.Parse(tbLoginId.Text);
             var user = Db.dataBase.GetUser(loginId);
             if(user != null)
@@ -259,7 +262,8 @@ namespace cwssWpf
 
         private void menuReports_Click(object sender, RoutedEventArgs e)
         {
-
+            var reports = new Reports_Dialog();
+            reports.ShowDialog();
         }
 
         private void menuListServ_Click(object sender, RoutedEventArgs e)

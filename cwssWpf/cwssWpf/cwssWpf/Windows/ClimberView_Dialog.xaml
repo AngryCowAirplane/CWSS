@@ -22,7 +22,7 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.ColumnSpan="3">
+        <DockPanel Grid.ColumnSpan="3" Name="Test">
             <Menu DockPanel.Dock="Top"  Background="Goldenrod" Name="MainMenu">
                     <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
             </Menu>

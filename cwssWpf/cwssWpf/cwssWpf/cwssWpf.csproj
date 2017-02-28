@@ -146,6 +146,9 @@
     <Compile Include="Windows\Postit_Dialog.xaml.cs">
       <DependentUpon>Postit_Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Reports_Dialog.xaml.cs">
+      <DependentUpon>Reports_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Request_Dialog.xaml.cs">
       <DependentUpon>Request_Dialog.xaml</DependentUpon>
     </Compile>
@@ -227,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Postit_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Reports_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

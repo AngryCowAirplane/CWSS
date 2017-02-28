@@ -12,7 +12,7 @@
         Opacity="0.8"
         Title="Postit_Dialog" Height="300" Width="300">
     <Grid>
-        <TextBox Name="message" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,10,10" Background="Transparent" Opacity="1.0" TextWrapping="Wrap">
+        <TextBox Name="message" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,30,10,10" Background="Transparent" Opacity="1.0" TextWrapping="Wrap">
             <TextBox.ContextMenu>
                 <ContextMenu Name="userMenu" Opacity="0.5" Foreground="Black">
                     <MenuItem Header="Delete" Name="cmDelete" Click="cmDelete_Click"></MenuItem>

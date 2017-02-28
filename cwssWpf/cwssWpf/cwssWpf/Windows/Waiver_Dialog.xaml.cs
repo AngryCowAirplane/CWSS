@@ -36,5 +36,10 @@ namespace cwssWpf.Windows
             DialogResult = true;
             this.Close();
         }
+
+        private void btnExitForm_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

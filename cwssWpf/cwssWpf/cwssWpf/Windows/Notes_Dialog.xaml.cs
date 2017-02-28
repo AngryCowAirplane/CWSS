@@ -24,6 +24,8 @@ namespace cwssWpf.Windows
         {
             InitializeComponent();
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            KeyUp += EnterPressed;
+            Message.Focus();
         }
 
         private void exit_Click(object sender, RoutedEventArgs e)
@@ -45,6 +47,13 @@ namespace cwssWpf.Windows
             postit.Show();
             MainWindow.WindowsOpen.Add(postit);
             this.Close();
+        }
+
+        private void EnterPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+
+            add_Click(null, null);
         }
     }
 }
