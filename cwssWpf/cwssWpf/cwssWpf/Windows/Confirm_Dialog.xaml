@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Background="AliceBlue"
-        WindowStyle="ToolWindow"
+        Background="Black"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Opacity="0.8"
         ResizeMode="NoResize"
-        Title="Are You Sure?" Height="100" Width="150">
+        Title="Are You Sure?" Height="70" Width="150" Foreground="Yellow">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -19,10 +21,10 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="lbMessage" Grid.Row="0" Content="the message" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Label x:Name="lbMessage" Grid.Row="0" Content="the message" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Yellow"/>
 
-        <Button x:Name="btnYes" Grid.Row="1" Content="Yes" Width="50" Height="20" Grid.Column="0" Click="btnYes_Click" VerticalAlignment="Top"></Button>
-        <Button x:Name="btnNo" Grid.Row="1" Content="No" Width="50" Height="20" Grid.Column="1" Click="btnNo_Click" VerticalAlignment="Top"></Button>
+        <Button x:Name="btnYes" Grid.Row="1" Content="Yes" Width="50" Height="20" Grid.Column="0" Click="btnYes_Click" VerticalAlignment="Top" Background="Goldenrod"></Button>
+        <Button x:Name="btnNo" Grid.Row="1" Content="No" Width="50" Height="20" Grid.Column="1" Click="btnNo_Click" VerticalAlignment="Top" Background="Goldenrod"></Button>
 
     </Grid>
 </Window>

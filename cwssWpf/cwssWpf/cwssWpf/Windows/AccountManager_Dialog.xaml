@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Background="AliceBlue"
-        WindowStyle="ToolWindow"
+        Background="Black"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        Opacity="0.9"
         Title="Account Manager" Height="300" Width="500">
     <Grid x:Name="UserManager">
         <Grid.RowDefinitions>
@@ -20,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.ColumnSpan="2">
-            <Menu DockPanel.Dock="Top" Background="CornflowerBlue">
+            <Menu DockPanel.Dock="Top" Background="Goldenrod">
                 <MenuItem Header="File">
                     <MenuItem Header="_Add User" Name="addUser" Click="addUser_Click"></MenuItem>
                     <MenuItem Header="_Exit" Name="exit" Click="exit_Click"></MenuItem>
@@ -28,10 +31,10 @@
             </Menu>
         </DockPanel>
 
-        <Label Grid.Column="0" Grid.Row="1" Margin="2,4,10,2" Content="Search:"></Label>
-        <TextBox x:Name="tbSearch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="60,4,5,2" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Center"></TextBox>        
+        <Label Grid.Column="0" Grid.Row="1" Margin="2,4,10,2" Content="Search:" Foreground="Yellow"></Label>
+        <TextBox x:Name="tbSearch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="60,4,5,2" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Center" Background="LightGoldenrodYellow"></TextBox>        
         
-        <ListView x:Name="lvUsers" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Stretch" Background="LightGray">
+        <ListView x:Name="lvUsers" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,5,15" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Style.Triggers>
@@ -42,7 +45,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ContextMenu>
-                <ContextMenu Name="userMenu">
+                <ContextMenu Name="userMenu" Opacity="0.8">
                     <MenuItem Header="UserType" x:Name="UserTypeMenu">
                         <MenuItem Header="Patron" Name="patron" Click="patron_Click"></MenuItem>
                         <MenuItem Header="Employee" Name="employee" Click="employee_Click"></MenuItem>

@@ -36,6 +36,8 @@ namespace cwssWpf.Windows
                 UserTypeMenu.IsEnabled = true;
             else
                 UserTypeMenu.IsEnabled = false;
+
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
         }
 
         private void updateUser(UserType type)

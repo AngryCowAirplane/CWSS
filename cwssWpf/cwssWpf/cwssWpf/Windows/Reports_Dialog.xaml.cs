@@ -1,4 +1,6 @@
-﻿using System;
+﻿using cwssWpf.Data;
+using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,7 @@ namespace cwssWpf.Windows
         {
             InitializeComponent();
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            populateLabels();
         }
 
         private void exit_Click(object sender, RoutedEventArgs e)
@@ -32,7 +35,11 @@ namespace cwssWpf.Windows
 
         private void populateLabels()
         {
+            var totalUsers = Db.dataBase.Users.Count;
+            var totalEmployees = Db.dataBase.Users.Where(t => (int)t.UserType > 0).Count();
 
+            TotalUsers.Content = TotalUsers.Content + " " + totalUsers.ToString();
+            TotalEmployees.Content = TotalEmployees.Content + " " + totalEmployees.ToString();
         }
     }
 }
