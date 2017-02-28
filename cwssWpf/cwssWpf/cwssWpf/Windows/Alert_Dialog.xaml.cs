@@ -28,6 +28,21 @@ namespace cwssWpf.Windows
             this.Topmost = true;
             Title.Content = alertTitle;
             AlertText.Text = alertText;
+            MouseLeftButtonDown += Window_MouseDown;
+            KeyUp += EnterPressed;
+        }
+
+        private void EnterPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+
+            Close_Click(null, null);
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
         }
 
         private void LoadImage()

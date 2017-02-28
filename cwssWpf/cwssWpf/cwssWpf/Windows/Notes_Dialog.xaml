@@ -1,0 +1,28 @@
+﻿<Window x:Class="cwssWpf.Windows.Notes_Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:cwssWpf.Windows"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Black"
+        ResizeMode="CanResizeWithGrip"
+        Opacity="0.8"
+        Title="Notes_Dialog" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.ColumnSpan="2">
+            <Menu DockPanel.Dock="Top" Background="Goldenrod">
+                <MenuItem Header="_Add" Name="add" Click="add_Click"></MenuItem>
+                <MenuItem Header="_Exit" Name="exit" Click="exit_Click"></MenuItem>
+            </Menu>
+        </DockPanel>
+        <TextBox Name="Message" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="Yellow" Background="Black" Opacity="0.9" Margin="10,10,10,10"></TextBox>
+    </Grid>
+</Window>

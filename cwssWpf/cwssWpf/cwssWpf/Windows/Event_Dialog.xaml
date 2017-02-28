@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
         WindowStyle="none"
-        Background="LightGoldenrodYellow"
+        Background="black"
+        AllowsTransparency="true"
+        Opacity="0.95"
         WindowStartupLocation="CenterScreen"
         Title="Event_Dialog" Height="300" Width="400">
     <Grid>
@@ -34,27 +36,27 @@
             </Menu>
         </DockPanel>
 
-        <Label Content="Dates:" Grid.Row="1" HorizontalAlignment="Right"></Label>
+        <Label Content="Dates:" Grid.Row="1" HorizontalAlignment="Right" Foreground="Yellow"></Label>
         <DatePicker Name="StartDate" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,2,5,2"></DatePicker>
         <DatePicker Name="EndDate" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5,2,5,2"></DatePicker>
 
-        <Label Content="Times:" Grid.Row="2" HorizontalAlignment="Right"></Label>
+        <Label Content="Times:" Grid.Row="2" HorizontalAlignment="Right" Foreground="Yellow"></Label>
         <TextBox Name="StartTime" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,2,5,2"></TextBox>
         <TextBox Name="EndTime" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5,2,5,2"></TextBox>
 
-        <Label Content="Title" Grid.Row="3" HorizontalAlignment="Right"></Label>
+        <Label Content="Title" Grid.Row="3" HorizontalAlignment="Right" Foreground="Yellow"></Label>
         <TextBox Name="Title" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,2,5,2"></TextBox>
 
-        <Label Content="Description:" Grid.Row="4" HorizontalAlignment="Right"></Label>
+        <Label Content="Description:" Grid.Row="4" HorizontalAlignment="Right" Foreground="Yellow"></Label>
         <TextBox Name="Description" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,2,5,2"></TextBox>
 
-        <Label Content="Members:" Grid.Row="5" HorizontalAlignment="Right"></Label>
+        <Label Content="Members:" Grid.Row="5" HorizontalAlignment="Right" Foreground="Yellow"></Label>
         <ComboBox Name="cbUsers" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,2,5,2" MouseDoubleClick="AddUser_Click" IsEditable="True"></ComboBox>
         <Button Name="btnAddUser" Grid.Row="5" Grid.Column="3" Margin="5,5,5,5" Content="+" Click="AddUser_Click" FontWeight="Bold" VerticalAlignment="Center" Background="Goldenrod"></Button>
         <ListBox Name="lbUsers" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5"></ListBox>
         <Button Name="btnRemoveUser" Grid.Row="6" Grid.Column="3" Margin="5,5,5,5" Height="20" Content="-" VerticalAlignment="Top"  FontWeight="Bold" Click="RemoveUser_Click" Background="Goldenrod"></Button>
 
-        <Label Content="Send Notification?" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right"></Label>
-        <CheckBox Name="cbNotify" Grid.Row="7" Grid.Column="3" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+        <Label Content="Send Notification?" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right" Foreground="Yellow"></Label>
+        <CheckBox Name="cbNotify" Grid.Row="7" Grid.Column="3" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Goldenrod"></CheckBox>
     </Grid>
 </Window>

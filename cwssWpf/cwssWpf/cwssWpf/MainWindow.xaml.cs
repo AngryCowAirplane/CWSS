@@ -32,6 +32,8 @@ namespace cwssWpf
         private string DefaultAdminPassword = "abc123";
         public static User CurrentUser = null;
 
+        public static List<Window> WindowsOpen = new List<Window>();
+
         public MainWindow()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
@@ -59,6 +61,7 @@ namespace cwssWpf
             //MiddleText.Text = "User Name";
             UpdateClimberStats();
 
+            KeyUp += KeyPressed;
 
             if (Config.Data.General.StartMaximized)
             {
@@ -99,6 +102,13 @@ namespace cwssWpf
                 {
                     var messageDialog = new Message_Dialog(CurrentUser, message);
                     messageDialog.ShowDialog();
+                }
+
+                foreach (var note in Db.dataBase.Notes.WallNotes)
+                {
+                    var postit = new Postit_Dialog(note);
+                    postit.Show();
+                    WindowsOpen.Add(postit);
                 }
 
                 menuEmployeeLogIn.IsEnabled = false;
@@ -192,6 +202,7 @@ namespace cwssWpf
                         // Show better reason, have Comment variable in User Table?
                     }
                 }
+                tbLoginId.Text = "";
             }
             else
             {
@@ -225,6 +236,13 @@ namespace cwssWpf
                 Logger.Log(CurrentUser.UserId, LogType.LogOut, message);
             }
 
+            foreach (var wnd in WindowsOpen)
+            {
+                wnd.Close();
+            }
+
+            WindowsOpen.Clear();
+
             CurrentUser = null;
         }
 
@@ -236,7 +254,7 @@ namespace cwssWpf
         private void menuCalendar_Click(object sender, RoutedEventArgs e)
         {
             var calendar = new Calendar_Dialog();
-            calendar.Show();
+            calendar.ShowDialog();
         }
 
         private void menuReports_Click(object sender, RoutedEventArgs e)
@@ -298,7 +316,8 @@ namespace cwssWpf
 
         private void menuNotes_Click(object sender, RoutedEventArgs e)
         {
-
+            var notes = new Notes_Dialog();
+            notes.ShowDialog();
         }
 
         private void TestSomething(object sender, RoutedEventArgs e)
@@ -307,6 +326,35 @@ namespace cwssWpf
                 CheckinCanvas.Visibility = Visibility.Hidden;
             else
                 CheckinCanvas.Visibility = Visibility.Visible;
+        }
+
+        private void EnterPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+
+            checkIn();                
+        }
+
+        private void KeyPressed(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                if (e.Key == Key.L)
+                {
+                    if (CurrentUser == null)
+                        menuEmployeeLogIn_Click(null, null);
+                    else
+                        menuLogOut_Click(null, null);
+                }
+                if (e.Key == Key.X)
+                {
+                    menuExit_Click(null, null);
+                }
+                if (e.Key == Key.N && CurrentUser != null)
+                {
+                    menuNotes_Click(null, null);
+                }
+            }
         }
     }
 }

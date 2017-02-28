@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Windows;
 using cwssWpf.DataBase;
 using System.Media;
+using System.Windows.Input;
 
 namespace cwssWpf
 {
@@ -160,6 +161,12 @@ namespace cwssWpf
             }
 
             return true;
+        }
+
+        public static void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                ((Window)sender).DragMove();
         }
     }
 }

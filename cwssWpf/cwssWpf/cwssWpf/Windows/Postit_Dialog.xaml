@@ -1,0 +1,23 @@
+﻿<Window x:Class="cwssWpf.Windows.Postit_Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:cwssWpf.Windows"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Goldenrod"
+        ResizeMode="CanResizeWithGrip"
+        Opacity="0.8"
+        Title="Postit_Dialog" Height="300" Width="300">
+    <Grid>
+        <TextBox Name="message" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,10,10" Background="Transparent" Opacity="1.0" TextWrapping="Wrap">
+            <TextBox.ContextMenu>
+                <ContextMenu Name="userMenu" Opacity="0.5" Foreground="Black">
+                    <MenuItem Header="Delete" Name="cmDelete" Click="cmDelete_Click"></MenuItem>
+                </ContextMenu>
+            </TextBox.ContextMenu>
+        </TextBox>
+    </Grid>
+</Window>

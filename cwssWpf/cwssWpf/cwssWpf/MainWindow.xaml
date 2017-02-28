@@ -38,14 +38,14 @@
                 <MenuItem Header= "_Employee" Visibility="Visible" Name="EmployeeMenu">
                     <MenuItem Header="_View Climbers" Name="menuUsers" Click="menuUsers_Click"></MenuItem>
                     <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>
-                    <MenuItem Header="_Wall Notes" Name="menuNotes" Click="menuNotes_Click"></MenuItem>
+                    <MenuItem Header="_Add Note" Name="menuNotes" Click="menuNotes_Click"></MenuItem>
                     <MenuItem Header="_Send Message" Name="menuMessage" Click="menuMessage_Click"></MenuItem>
-                    <MenuItem Header="_Store" Name="menuStore" Click="menuStore_Click"></MenuItem>
+                    <!-- <MenuItem Header="_Store" Name="menuStore" Click="menuStore_Click"></MenuItem> -->
                     <MenuItem Header="_Log Out" Name="menuLogOut" Click="menuLogOut_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header= "_Manager" Visibility="Visible" Name="ManagerMenu">
                     <MenuItem Header="_Accounts" Name="menuAccounts" Click="menuAccounts_Click"></MenuItem>
-                    <MenuItem Header="_List Serv" Name="menuManageUsers" Click="menuListServ_Click"></MenuItem>
+                    <MenuItem Header="_Email List" Name="menuManageUsers" Click="menuListServ_Click"></MenuItem>
                     <MenuItem Header="_Reports" Name="menuReports" Click="menuReports_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header= "_Admin" Visibility="Visible" Name="AdminMenu">
@@ -66,7 +66,7 @@
                 </Border.Effect>
             </Border>
         </Canvas>
-        <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon"/>
+        <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon" KeyUp="EnterPressed"/>
         <Button Grid.Row="2" Grid.Column="1" x:Name="btnCheckIn" Content="Check In/Out" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Width="105" Height="40" Click="btnCheckIn_Click" Background="Goldenrod"/>
 
 

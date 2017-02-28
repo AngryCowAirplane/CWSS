@@ -67,7 +67,11 @@ namespace cwssWpf.Windows
 
         private void calendarMenuAddEvent_Click(object sender, RoutedEventArgs e)
         {
-            var eventWindow = new Event_Dialog();
+            Event_Dialog eventWindow = new Event_Dialog(DateTime.Now);
+
+            if (Calendar.SelectedDate != null)
+                eventWindow = new Event_Dialog((DateTime)Calendar.SelectedDate);
+
             eventWindow.ShowDialog();
             reloadCalendar();
         }
@@ -90,7 +94,12 @@ namespace cwssWpf.Windows
 
         private void eventMenuTest_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Event At Time Clicked");
+            if(lbEvents.SelectedItem != null)
+            {
+                var ev = (Event)lbEvents.SelectedItem;
+                var alert = new Alert_Dialog(ev.EventName, ev.EventComment);
+                alert.ShowDialog();
+            }
         }
 
         private void reloadCalendar()

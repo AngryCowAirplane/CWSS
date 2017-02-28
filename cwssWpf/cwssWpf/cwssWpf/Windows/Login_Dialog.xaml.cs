@@ -31,6 +31,13 @@ namespace cwssWpf.Windows
             this.Left = mainWindow.Left + 50;
             this.Top = mainWindow.Top + 50;
             FocusManager.SetFocusedElement(this, tbUserId);
+            MouseLeftButtonDown += Window_MouseDown;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -45,7 +52,7 @@ namespace cwssWpf.Windows
             if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
             {
                 MainWindow.CurrentUser = user;
-                mainWindow.MainMenu.Background = Brushes.Crimson;
+                mainWindow.MainMenu.Background = Brushes.OrangeRed;
                 mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
                 if ((int)user.UserType > 1)
                     mainWindow.ManagerMenu.Visibility = Visibility.Visible;
@@ -60,9 +67,17 @@ namespace cwssWpf.Windows
             {
                 var message = "Failed Login By " + loginId;
                 Logger.Log(loginId, LogType.Error, message);
-                MessageBox.Show("Invalid Login");
+                var alert = new Alert_Dialog("Login Failed", "Employee ID or Password Incorrect!");
+                alert.ShowDialog();
             }
             this.Close();
+        }
+
+        private void EnterPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+
+            btnSubmit_Click(null, null);
         }
     }
 }

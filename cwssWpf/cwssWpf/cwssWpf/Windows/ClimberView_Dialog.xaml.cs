@@ -25,11 +25,18 @@ namespace cwssWpf.Windows
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            Top = mainWindow.Top + 30;
-            Left = mainWindow.Left + 30;
+            Top = mainWindow.Top + 50;
+            Left = mainWindow.Left + 50;
             lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
             updateList();
             lvClimbers.PreviewMouseRightButtonDown += rightMouseButtonClicked;
+            MouseLeftButtonDown += Window_MouseDown;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)

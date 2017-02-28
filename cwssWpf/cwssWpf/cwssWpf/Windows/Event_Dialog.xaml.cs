@@ -21,12 +21,17 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Event_Dialog : Window
     {
-        public Event_Dialog()
+        public Event_Dialog(DateTime date)
         {
             InitializeComponent();
             cbUsers.ItemsSource = Db.dataBase.Users;
             EventMenu.MouseDown += Window_MouseDown;
             MouseDown += Window_MouseDown;
+            if(date != null)
+            {
+                StartDate.SelectedDate = date;
+                EndDate.SelectedDate = date;
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

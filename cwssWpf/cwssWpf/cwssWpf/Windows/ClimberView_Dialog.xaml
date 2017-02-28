@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Background="AliceBlue"
-        WindowStyle="ToolWindow"
+        Background="Black"
+        Opacity="0.8"
+        WindowStyle="None"
+        AllowsTransparency="True"
         Title="Climber View" Height="300" Width="300">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,15 +23,13 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.ColumnSpan="3">
-            <Menu DockPanel.Dock="Top"  Background="CornflowerBlue">
-                <MenuItem Header="File">
+            <Menu DockPanel.Dock="Top"  Background="Goldenrod" Name="MainMenu">
                     <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
-                </MenuItem>
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
 
-        <ListView x:Name="lvClimbers" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5">
+        <ListView x:Name="lvClimbers" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5" Opacity="0.75" Background="Black" Foreground="Yellow">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Style.Triggers>
@@ -40,7 +40,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ContextMenu>
-                <ContextMenu Name="userMenu">
+                <ContextMenu Name="userMenu" Opacity="0.5" Foreground="Black">
                     <MenuItem Header="Stats" Name="cmStats" Click="cmStats_Click"></MenuItem>
                     <MenuItem Header="Request Revoke" Name="cmRevoke" Click="cmRevoke_Click"></MenuItem>
                     <MenuItem Header="CheckOut" Name="cmCheckOut" Click="cmCheckOut_Click"></MenuItem>

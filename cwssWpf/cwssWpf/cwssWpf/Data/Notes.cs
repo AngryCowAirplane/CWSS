@@ -81,8 +81,11 @@ namespace cwssWpf.Data
 
     public class Note
     {
-        public string Subject;
         public string Contents;
+        public double Top;
+        public double Left;
+        public double Width;
+        public double Height;
     }
 
     public class Request
