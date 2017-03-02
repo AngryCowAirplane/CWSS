@@ -1,5 +1,6 @@
 ﻿using cwssWpf.Data;
 using cwssWpf.Network;
+using cwssWpf.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace cwssWpf
 {
-    /// <summary>
-    /// Interaction logic for ClientWindow.xaml
-    /// </summary>
     public partial class ClientWindow : Window
     {
         MulticastUdpClient udpClientWrapper;
@@ -40,7 +38,7 @@ namespace cwssWpf
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
-            SendMessage("Remote Checkin Clicked " + tbLoginId.Text);
+            SendMessage("Checkin," + tbLoginId.Text);
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -63,9 +61,8 @@ namespace cwssWpf
 
         private void SendMessage(string message)
         {
-            string msgString = String.Format(message);// {1}", Helpers.GetLocalIPAddress());
+            string msgString = String.Format(message);
             byte[] buffer = Encoding.Unicode.GetBytes(msgString);
-            // Send
             udpClientWrapper.SendMulticast(buffer);
         }
 
@@ -83,7 +80,16 @@ namespace cwssWpf
 
         private void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
         {
-            //throw new NotImplementedException();
+            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
+
+            if (MainWindow.ClientMode)
+            {
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
+                    alert.ShowDialog();
+                }));
+            }
         }
     }
 }

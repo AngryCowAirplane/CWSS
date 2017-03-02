@@ -32,7 +32,7 @@ namespace cwssWpf
     {
         public static User CurrentUser = null;
         public static List<Window> WindowsOpen = new List<Window>();
-        private bool clientMode = false;
+        public static bool ClientMode = false;
 
         public MainWindow()
         {
@@ -172,7 +172,7 @@ namespace cwssWpf
         {
             var clientWindow = new ClientWindow();
             clientWindow.Show();
-            clientMode = true;
+            ClientMode = true;
             this.Hide();
         }
 
@@ -258,6 +258,12 @@ namespace cwssWpf
         #endregion
 
         #region Custom Methods
+        private bool tryCheckinUser(string userId)
+        {
+            tbLoginId.Text = userId;
+            return tryCheckinUser();
+        }
+
         private bool tryCheckinUser()
         {
             if (string.IsNullOrWhiteSpace(tbLoginId.Text))
@@ -372,25 +378,47 @@ namespace cwssWpf
 
         void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
         {
-            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
+            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer).ToLower();
 
-            if(receivedText=="ClientClosed")
+            if(receivedText.Contains("clientclosed") && ClientMode)
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     this.Show();
-                    clientMode = false;
+                    ClientMode = false;
                 }));
             }
 
-            if(!clientMode)
+            if(!ClientMode)
             {
-                Dispatcher.BeginInvoke((Action)(() =>
+                if(receivedText.Contains("checkin"))
                 {
-                    var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
-                    alert.ShowDialog();
-                }));
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        var id = receivedText.Split(',').Last();
+                        var success = tryCheckinUser(id);
+                        if(success)
+                            SendMessage("Check in Successful.");
+                        else
+                            SendMessage("Check in Failure.");
+                    }));
+                }
+                else
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
+                        alert.ShowDialog();
+                    }));
+                }
             }
+        }
+
+        private void SendMessage(string message)
+        {
+            string msgString = String.Format(message);
+            byte[] buffer = Encoding.Unicode.GetBytes(msgString);
+            udpClientWrapper.SendMulticast(buffer);
         }
         #endregion
 
