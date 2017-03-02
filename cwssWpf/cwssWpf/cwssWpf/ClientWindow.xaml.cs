@@ -98,7 +98,20 @@ namespace cwssWpf
                     }));
                 }
             }
+            else if (receivedText.Contains("Message@"))
+            {
+                var message = receivedText.Split(('@')).Last();
+                var userMessage = Newtonsoft.Json.JsonConvert.DeserializeObject<Message>(message);
 
+                if (MainWindow.ClientMode)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        var messageDialog = new Message_Dialog(userMessage.RecipientId.First(), userMessage);
+                        messageDialog.ShowDialog();
+                    }));
+                }
+            }
         }
     }
 }

@@ -62,6 +62,24 @@ namespace cwssWpf.Windows
             Write = false;
         }
 
+        public Message_Dialog(int userId, Message message)
+        {
+            var user = Db.dataBase.Users.Where(u => u.LoginId == userId).First();
+            users.Add(user);
+            this.message = message;
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            InitializeComponent();
+            tbTo.IsEnabled = false;
+            tbFrom.IsEnabled = false;
+            cbMode.IsEnabled = false;
+            tbTo.Text = user.GetName();
+            tbFrom.Text = Db.dataBase.GetUser(message.SenderId).GetName();
+            tbSubject.Text = message.Subject;
+            tbBody.Text = message.Contents;
+            btnSend.Content = "Mark as Read";
+            Write = false;
+        }
+
 
         private void setMessageMode()
         {

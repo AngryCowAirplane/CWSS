@@ -40,7 +40,7 @@ namespace cwssWpf
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(Environment.CurrentDirectory, "AppData"));
             InitializeComponent();
-            
+
             // Other Loading/Initializing done here between Status texts
             //-------------------------------------------------------------
             StatusText.Text = "Loading...";
@@ -127,7 +127,7 @@ namespace cwssWpf
             AdminMenu.Visibility = Visibility.Hidden;
             menuEmployeeLogIn.IsEnabled = true;
 
-            if(CurrentUser!=null)
+            if (CurrentUser != null)
             {
                 Helpers.PlayLogOff();
                 var message = CurrentUser.GetName() + " Logged Off";
@@ -202,7 +202,7 @@ namespace cwssWpf
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (CurrentUser != null)
-                menuLogOut_Click(null,null);
+                menuLogOut_Click(null, null);
         }
 
         private void menuMessage_Click(object sender, RoutedEventArgs e)
@@ -221,7 +221,7 @@ namespace cwssWpf
         #region Other Event Handlers
         private void TestSomething(object sender, RoutedEventArgs e)
         {
-            if(CheckinCanvas.IsVisible)
+            if (CheckinCanvas.IsVisible)
                 CheckinCanvas.Visibility = Visibility.Hidden;
             else
                 CheckinCanvas.Visibility = Visibility.Visible;
@@ -248,18 +248,39 @@ namespace cwssWpf
                     else
                         menuLogOut_Click(null, null);
                 }
+
                 if (e.Key == Key.X)
-                {
                     menuExit_Click(null, null);
-                }
                 if (e.Key == Key.N)
-                {
                     menuNewUser_Click(null, null);
-                }
-                if (e.Key == Key.P)
+
+                if (CurrentUser != null && (int)CurrentUser.UserType > 0)
                 {
-                    if (CurrentUser != null)
+                    if (e.Key == Key.P)
                         menuNotes_Click(null, null);
+                    if (e.Key == Key.F1)
+                        menuClient_Click(null, null);
+                    if (e.Key == Key.V)
+                        menuUsers_Click(null, null);
+                    if (e.Key == Key.C)
+                        menuCalendar_Click(null, null);
+                }
+                if (CurrentUser != null && (int)CurrentUser.UserType > 1)
+                {
+                    if (e.Key == Key.A)
+                        menuAccounts_Click(null, null);
+                    if (e.Key == Key.R)
+                        menuReports_Click(null, null);
+                    if (e.Key == Key.U)
+                        menuUsers_Click(null, null);
+                }
+
+                if (CurrentUser != null && (int)CurrentUser.UserType > 2)
+                {
+                    if (e.Key == Key.L)
+                        menuViewLog_Click(null, null);
+                    if (e.Key == Key.S)
+                        menuSettings_Click(null, null);
                 }
             }
         }
@@ -277,14 +298,14 @@ namespace cwssWpf
             var result = new Result();
             var loginId = int.Parse(tbLoginId.Text);
             var user = Db.dataBase.GetUser(loginId);
-            if(user != null)
+            if (user != null)
             {
                 checkMessages(user);
 
                 var hasWaiver = user.HasWaiver();
                 var canClimb = user.CanClimb;
 
-                if(hasWaiver && canClimb)
+                if (hasWaiver && canClimb)
                 {
                     //if(!user.CheckedIn)
                     //    user.CheckIn();
@@ -298,14 +319,14 @@ namespace cwssWpf
                 }
                 else
                 {
-                    if(!hasWaiver)
+                    if (!hasWaiver)
                     {
                         Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
 
                         var waiver = new Waiver_Dialog();
                         var signedWaiver = waiver.ShowDialog();
-                        if((bool)signedWaiver)
+                        if ((bool)signedWaiver)
                         {
                             user.AddWaiver();
                             tryCheckinUser();
@@ -316,7 +337,7 @@ namespace cwssWpf
                             result.Alert = new Alert_Dialog("Not Signed", "Waiver not signed!");
                         }
                     }
-                    if(!canClimb)
+                    if (!canClimb)
                     {
                         Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
@@ -334,7 +355,7 @@ namespace cwssWpf
 
             tbLoginId.Text = "";
             UpdateClimberStats();
-        
+
             return result;
         }
 
@@ -347,7 +368,7 @@ namespace cwssWpf
 
         private void checkMessages(User user)
         {
-            if(!ClientMode)
+            if (!ClientMode)
             {
                 var messages = Db.dataBase.GetMessages(user);
                 if (messages.Count > 0)
@@ -391,7 +412,7 @@ namespace cwssWpf
         {
             string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer).ToLower();
 
-            if(receivedText.Contains("clientclosed") && ClientMode)
+            if (receivedText.Contains("clientclosed") && ClientMode)
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
@@ -400,9 +421,9 @@ namespace cwssWpf
                 }));
             }
 
-            if(!ClientMode)
+            if (!ClientMode)
             {
-                if(receivedText.Contains("checkin"))
+                if (receivedText.Contains("checkin"))
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
@@ -417,14 +438,6 @@ namespace cwssWpf
                         SendMessage("Result@" + message);
                     }));
                 }
-                //else
-                //{
-                //    Dispatcher.BeginInvoke((Action)(() =>
-                //    {
-                //        var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
-                //        alert.ShowDialog();
-                //    }));
-                //}
             }
         }
 
