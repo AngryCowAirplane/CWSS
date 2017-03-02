@@ -277,7 +277,7 @@ namespace cwssWpf
 
                 if (CurrentUser != null && (int)CurrentUser.UserType > 2)
                 {
-                    if (e.Key == Key.L)
+                    if (e.Key == Key.D)
                         menuViewLog_Click(null, null);
                     if (e.Key == Key.S)
                         menuSettings_Click(null, null);
