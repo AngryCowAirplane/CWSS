@@ -1,9 +1,11 @@
-﻿using System;
+﻿using cwssWpf.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,73 +23,76 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Network_Dialog : Window
     {
-        const int PORT_NO = 5000;
-        const string SERVER_IP = "192.168.56.1";
-
         public Network_Dialog()
         {
             InitializeComponent();
         }
 
-        private void startClient()
+        MulticastUdpClient udpClientWrapper;
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            //---data to send to the server---
-            string textToSend = DateTime.Now.ToString();
+            // Create address objects
+            int port = Int32.Parse(txtPort.Text);
+            IPAddress multicastIPaddress = IPAddress.Parse(txtRemoteIP.Text);
+            IPAddress localIPaddress = IPAddress.Any;
 
-            //---create a TCPClient object at the IP and port no.---
-            TcpClient client = new TcpClient(SERVER_IP, PORT_NO);
-            NetworkStream nwStream = client.GetStream();
-            byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
+            // Create MulticastUdpClient
+            udpClientWrapper = new MulticastUdpClient(multicastIPaddress, port, localIPaddress);
+            udpClientWrapper.UdpMessageReceived += OnUdpMessageReceived;
 
-            //---send the text---
-            Messages.Items.Add("Sending : " + textToSend);
-            nwStream.Write(bytesToSend, 0, bytesToSend.Length);
-
-            //---read back the text---
-            byte[] bytesToRead = new byte[client.ReceiveBufferSize];
-            int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
-            Messages.Items.Add("Received : " + Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
-
-            client.Close();
+            AddToLog("UDP Client started");
         }
 
-        private void startServer()
+        int i = 1;
+        private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            //---listen at the specified IP and port no.---
-            IPAddress localAdd = IPAddress.Parse(SERVER_IP);
-            TcpListener listener = new TcpListener(localAdd, PORT_NO);
-            Messages.Items.Add("Listening...");
-            listener.Start();
+            // Generate some message bytes
+            string msgString = String.Format("Message from {0} pid {1} #{2}",
+                GetLocalIPAddress(),
+                System.Diagnostics.Process.GetCurrentProcess().Id,
+                i.ToString());
+            i++;
+            byte[] buffer = Encoding.Unicode.GetBytes(msgString);
 
-            //---incoming client connected---
-            TcpClient client = listener.AcceptTcpClient();
-
-            //---get the incoming data through a network stream---
-            NetworkStream nwStream = client.GetStream();
-            byte[] buffer = new byte[client.ReceiveBufferSize];
-
-            //---read incoming stream---
-            int bytesRead = nwStream.Read(buffer, 0, client.ReceiveBufferSize);
-
-            //---convert the data received into a string---
-            string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-            Messages.Items.Add("Received : " + dataReceived);
-
-            //---write back the text to the client---
-            Messages.Items.Add("Sending back : " + dataReceived);
-            nwStream.Write(buffer, 0, bytesRead);
-            client.Close();
-            listener.Stop();
+            // Send
+            udpClientWrapper.SendMulticast(buffer);
+            AddToLog("Sent message: " + msgString);
         }
 
-        private void Server_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// UDP Message received event
+        /// </summary>
+        void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
         {
-            startServer();
+            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
+            AddToLog("Received message: " + receivedText);
         }
 
-        private void Client_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Write the information to log
+        /// </summary>
+        void AddToLog(string s)
         {
-            startClient();
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                txtLog.Text += Environment.NewLine;
+                txtLog.Text += s;
+            }), null);
+        }
+
+        // http://stackoverflow.com/questions/6803073/get-local-ip-address
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("Local IP Address Not Found!");
         }
     }
 }

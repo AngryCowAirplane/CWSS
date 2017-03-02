@@ -5,15 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Title="Network_Dialog" Height="300" Width="300">
+        Title="Network_Dialog" Height="500" Width="300">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-        </Grid.RowDefinitions>
-        
-        <ListBox x:Name="Messages" Margin="2,2,2,2"></ListBox>
-        <Button x:Name="Server" Content="Server" Grid.Row="2" Width="100" HorizontalAlignment="Left" Click="Server_Click"></Button>
-        <Button x:Name="Client" Content="Client" Grid.Row="2" Width="100" HorizontalAlignment="Right" Click="Client_Click"></Button>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,0" >
+                <Label Content="Remote IP:" />
+                <TextBox x:Name="txtRemoteIP" Text="239.0.0.222"/>
+                <Label Content="Port:" />
+                <TextBox x:Name="txtPort" Text="2222"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,0" >
+                <Button x:Name="btnStart" Content="Start UDP Client" Click="btnStart_Click" Width="146" />
+                <Button x:Name="btnSend" Content="Sent test message" Margin="10,0,0,0" Click="btnSend_Click" Width="148" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="0,0,0,0" >
+                <Label Content="Log:" />
+                <TextBox x:Name="txtLog" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="247" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
