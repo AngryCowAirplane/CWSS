@@ -34,6 +34,7 @@ namespace cwssWpf
             }
 
             StartNetworkListen(null, null);
+            FocusManager.SetFocusedElement(this, tbLoginId);
         }
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)

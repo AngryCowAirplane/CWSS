@@ -107,7 +107,8 @@ namespace cwssWpf
             // TODO:
             // validate input in tbUserId
 
-            tryCheckinUser();
+            var result = tryCheckinUser();
+            result.Show();
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
@@ -225,8 +226,11 @@ namespace cwssWpf
 
         private void EnterPressed(object sender, KeyEventArgs e)
         {
+            var result = new Result();
             if (e.Key != Key.Enter) return;
-                tryCheckinUser();
+                result = tryCheckinUser();
+
+            result.Show();
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -328,7 +332,7 @@ namespace cwssWpf
 
             tbLoginId.Text = "";
             UpdateClimberStats();
-            result.Show();
+        
             return result;
         }
 
