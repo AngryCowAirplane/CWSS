@@ -404,6 +404,7 @@ namespace cwssWpf
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
+
                         SendMessage("result," + message);
                     }));
                 }

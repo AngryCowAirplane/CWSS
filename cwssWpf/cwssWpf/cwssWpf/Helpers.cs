@@ -17,6 +17,7 @@ using System.Net.Sockets;
 using System.Web;
 using cwssWpf.Windows;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace cwssWpf
 {
@@ -214,7 +215,7 @@ namespace cwssWpf
         public string Heading = "";
         public string Body = "";
 
-        [ScriptIgnore]
+        [JsonIgnore]
         public Alert_Dialog Alert;
 
 
