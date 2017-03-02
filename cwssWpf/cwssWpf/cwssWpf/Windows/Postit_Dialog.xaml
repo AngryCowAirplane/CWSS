@@ -9,6 +9,7 @@
         WindowStyle="None"
         Background="Goldenrod"
         ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False"
         Opacity="0.8"
         Title="Postit_Dialog" Height="300" Width="300">
     <Grid>

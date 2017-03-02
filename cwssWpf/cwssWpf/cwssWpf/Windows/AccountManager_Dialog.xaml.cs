@@ -157,7 +157,7 @@ namespace cwssWpf.Windows
             {
                 var request = requests.First();
                 if (request.Enforced == false)
-                    brush = Brushes.Yellow;
+                    brush = Brushes.DarkOrange;
                 else
                     brush = Brushes.DarkRed;
             }

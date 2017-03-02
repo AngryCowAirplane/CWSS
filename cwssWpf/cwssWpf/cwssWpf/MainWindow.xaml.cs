@@ -32,6 +32,7 @@ namespace cwssWpf
         private string DefaultAdminPassword = "abc123";
         public static User CurrentUser = null;
 
+        // keep track of note windows when employee is logged in.
         public static List<Window> WindowsOpen = new List<Window>();
 
         public MainWindow()
@@ -41,45 +42,50 @@ namespace cwssWpf
             InitializeComponent();
             
             // Other Loading/Initializing done here between Status texts
+            //-------------------------------------------------------------
             StatusText.Text = "Loading...";
             menuLogOut_Click(this, null); // Hide Menus
 
-            //--use custom DB
+            // Static Class Initializations
             Config.Initialize();
             Db.Initialize();
             Logger.Initialize();
 
+            // DataBase (don't change unless migrating to a real database with entity framework)
+            #region Database Setup
             //--use entity framework DB
             //Db.dataBase = new Context();
             //Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
 
             if (Db.dataBase.Users.Count < 1)
                 Db.dataBase.AddDefaultAdminUser(DefaultAdminId, DefaultAdminPassword);
+            #endregion
 
-            FocusManager.SetFocusedElement(this, tbLoginId);
-            StatusText.Text = "Ready";
-            //MiddleText.Text = "User Name";
-            UpdateClimberStats();
-
+            // Event Subscriptions
             KeyUp += KeyPressed;
 
+            // Other
             if (Config.Data.General.StartMaximized)
             {
                 this.WindowState = WindowState.Maximized;
                 this.WindowStyle = WindowStyle.None;
             }
 
+            UpdateClimberStats();
+            FocusManager.SetFocusedElement(this, tbLoginId);
+            StatusText.Text = "Ready";
+            //--------------------------------------------------------------
+
 
             //TESTING ACTIONS - REMOVE LATER
             //Db.dataBase.Notes.Requests = new List<Request>();
         }
 
+        #region UI Click Event Handlers
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
             var newUser = new NewUser_Dialog(this);
             newUser.ShowDialog();
-            // TODO:
-            // Show Appropriate message in status bar
         }
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
@@ -88,29 +94,9 @@ namespace cwssWpf
             login.ShowDialog();
             if (login.Success)
             {
-                // TODO abstract this + quickMessageRead Window (for each message)
-                // same code in Checkin logic.
                 Helpers.PlayLogin();
-                var messages = Db.dataBase.GetMessages(CurrentUser);
-                if (messages.Count > 0)
-                {
-                    var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-                    alert.ShowDialog();
-                }
-
-                foreach (var message in messages)
-                {
-                    var messageDialog = new Message_Dialog(CurrentUser, message);
-                    messageDialog.ShowDialog();
-                }
-
-                foreach (var note in Db.dataBase.Notes.WallNotes)
-                {
-                    var postit = new Postit_Dialog(note);
-                    postit.Show();
-                    WindowsOpen.Add(postit);
-                }
-
+                checkMessages(CurrentUser);
+                loadNotes();
                 menuEmployeeLogIn.IsEnabled = false;
             }
         }
@@ -119,104 +105,8 @@ namespace cwssWpf
         {
             // TODO:
             // validate input in tbUserId
-            // if valid checkIn()
-            checkIn();
-            UpdateClimberStats();
-        }
 
-        // TODO:
-        // Add event like above to call checkIn() when the
-        // "Enter" Key is pressed from within the userId textBox
-
-        private void checkIn()
-        {
-            var success = tryCheckinUser();
-            // TODO:
-            // LOG APPROPRIATE MESSAGE (both for success and failure)
-            // Show Appropriate message in status bar
-
-            // TODO:
-            // Make Function to Check to see if any messages for the user
-            // And display to user any messages
-        }
-
-        private bool tryCheckinUser()
-        {
-            if (string.IsNullOrWhiteSpace(tbLoginId.Text))
-                return false;
-
-            var loginId = int.Parse(tbLoginId.Text);
-            var user = Db.dataBase.GetUser(loginId);
-            if(user != null)
-            {
-                var messages = Db.dataBase.GetMessages(user);
-                if (messages.Count > 0)
-                {
-                    Helpers.PlaySuccess();
-                    var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-                    alert.ShowDialog();
-
-                    foreach (var message in messages)
-                    {
-                        var messageDialog = new Message_Dialog(user, message);
-                        messageDialog.ShowDialog();
-                    }
-                }
-
-                var hasWaiver = user.HasWaiver();
-                var canClimb = user.CanClimb;
-
-                if(hasWaiver && canClimb)
-                {
-                    if(!user.CheckedIn)
-                        user.CheckIn();
-                    else
-                        user.CheckOut();
-                }
-                else
-                {
-                    // TODO:
-                    // FIND BETTER WAY TO RESOLVE THIS SHIT
-                    if(!hasWaiver)
-                    {
-                        Helpers.PlayFail();
-                        var alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
-                        alert.ShowDialog();
-
-                        var waiver = new Waiver_Dialog();
-                        var signedWaiver = waiver.ShowDialog();
-                        if((bool)signedWaiver)
-                        {
-                            user.AddWaiver();
-                            tryCheckinUser();
-                        }
-                        else
-                        {
-                            Helpers.PlayFail();
-                            var newalert = new Alert_Dialog("Not Signed", "Waiver not signed!");
-                            newalert.ShowDialog();
-                        }
-                    }
-                    if(!canClimb)
-                    {
-                        Helpers.PlayFail();
-                        var alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
-                        alert.ShowDialog();
-                        // Show better reason, have Comment variable in User Table?
-                    }
-                }
-                tbLoginId.Text = "";
-            }
-            else
-            {
-                var message = "Failed Checkin By " + loginId;
-                Logger.Log(loginId, LogType.Error, message);
-                Helpers.PlayFail();
-                var alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
-                alert.ShowDialog();
-            }
-
-            return true;
+            tryCheckinUser();
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
@@ -307,11 +197,6 @@ namespace cwssWpf
                 menuLogOut_Click(null,null);
         }
 
-        public void UpdateClimberStats()
-        {
-            StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
-        }
-
         private void menuMessage_Click(object sender, RoutedEventArgs e)
         {
             var message = new Message_Dialog();
@@ -323,7 +208,9 @@ namespace cwssWpf
             var notes = new Notes_Dialog();
             notes.ShowDialog();
         }
+        #endregion
 
+        #region Other Event Handlers
         private void TestSomething(object sender, RoutedEventArgs e)
         {
             if(CheckinCanvas.IsVisible)
@@ -336,7 +223,7 @@ namespace cwssWpf
         {
             if (e.Key != Key.Enter) return;
 
-            checkIn();                
+            tryCheckinUser();                
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -360,5 +247,105 @@ namespace cwssWpf
                 }
             }
         }
+        #endregion
+
+        #region Custom Methods
+        private bool tryCheckinUser()
+        {
+            if (string.IsNullOrWhiteSpace(tbLoginId.Text))
+                return false;
+
+            var loginId = int.Parse(tbLoginId.Text);
+            var user = Db.dataBase.GetUser(loginId);
+            if(user != null)
+            {
+                checkMessages(user);
+
+                var hasWaiver = user.HasWaiver();
+                var canClimb = user.CanClimb;
+
+                if(hasWaiver && canClimb)
+                {
+                    if(!user.CheckedIn)
+                        user.CheckIn();
+                    else
+                        user.CheckOut();
+                }
+                else
+                {
+                    if(!hasWaiver)
+                    {
+                        Helpers.PlayFail();
+                        var alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
+                        alert.ShowDialog();
+
+                        var waiver = new Waiver_Dialog();
+                        var signedWaiver = waiver.ShowDialog();
+                        if((bool)signedWaiver)
+                        {
+                            user.AddWaiver();
+                            tryCheckinUser();
+                        }
+                        else
+                        {
+                            Helpers.PlayFail();
+                            var newalert = new Alert_Dialog("Not Signed", "Waiver not signed!");
+                            newalert.ShowDialog();
+                        }
+                    }
+                    if(!canClimb)
+                    {
+                        Helpers.PlayFail();
+                        var alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
+                        alert.ShowDialog();
+                        // Show better reason, have Comment variable in User Table?
+                    }
+                }
+                tbLoginId.Text = "";
+            }
+            else
+            {
+                var message = "Failed Checkin By " + loginId;
+                Logger.Log(loginId, LogType.Error, message);
+                Helpers.PlayFail();
+                var alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
+                alert.ShowDialog();
+            }
+
+            UpdateClimberStats();
+            return true;
+        }
+
+        public void UpdateClimberStats()
+        {
+            StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
+        }
+
+        private void checkMessages(User user)
+        {
+            var messages = Db.dataBase.GetMessages(user);
+            if (messages.Count > 0)
+            {
+                var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                alert.ShowDialog();
+            }
+
+            foreach (var message in messages)
+            {
+                var messageDialog = new Message_Dialog(CurrentUser, message);
+                messageDialog.ShowDialog();
+            }
+        }
+
+        private void loadNotes()
+        {
+            foreach (var note in Db.dataBase.Notes.WallNotes)
+            {
+                var postit = new Postit_Dialog(note);
+                postit.Show();
+                WindowsOpen.Add(postit);
+            }
+        }
+        #endregion
     }
 }

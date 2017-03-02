@@ -25,7 +25,7 @@ namespace cwssWpf.Windows
 
         public Postit_Dialog(Note note)
         {
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //WindowStartupLocation = WindowStartupLocation.CenterOwner;
             InitializeComponent();
 
             this.note = note;

@@ -57,7 +57,7 @@
         <ListBox x:Name="lbEvents"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="LightGoldenrodYellow" Opacity="0.95">
             <ListBox.ContextMenu>
                 <ContextMenu Name="eventMenu">
-                    <MenuItem Header="Test" Name="cmStats" Click="eventMenuTest_Click"></MenuItem>
+                    <MenuItem Header="Details" Name="cmStats" Click="eventMenuTest_Click"></MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
