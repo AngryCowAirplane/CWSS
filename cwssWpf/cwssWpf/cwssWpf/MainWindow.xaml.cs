@@ -28,11 +28,7 @@ namespace cwssWpf
 
     public partial class MainWindow : Window
     {
-        private int DefaultAdminId = 12345;
-        private string DefaultAdminPassword = "abc123";
         public static User CurrentUser = null;
-
-        // keep track of note windows when employee is logged in.
         public static List<Window> WindowsOpen = new List<Window>();
 
         public MainWindow()
@@ -58,7 +54,7 @@ namespace cwssWpf
             //Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
 
             if (Db.dataBase.Users.Count < 1)
-                Db.dataBase.AddDefaultAdminUser(DefaultAdminId, DefaultAdminPassword);
+                Db.dataBase.AddDefaultAdminUser(StaticValues.DefaultAdminId, StaticValues.DefaultAdminPassword);
             #endregion
 
             // Event Subscriptions
@@ -241,9 +237,14 @@ namespace cwssWpf
                 {
                     menuExit_Click(null, null);
                 }
-                if (e.Key == Key.N && CurrentUser != null)
+                if (e.Key == Key.N)
                 {
-                    menuNotes_Click(null, null);
+                    menuNewUser_Click(null, null);
+                }
+                if (e.Key == Key.P)
+                {
+                    if (CurrentUser != null)
+                        menuNotes_Click(null, null);
                 }
             }
         }
@@ -318,7 +319,9 @@ namespace cwssWpf
 
         public void UpdateClimberStats()
         {
-            StatsText.Text = "Climbers: " + Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
+            var climbersCount = Db.dataBase.Users.Where(t => t.CheckedIn == true).Count();
+            StatsText.Text = "Climbers: " + climbersCount;
+            tbClimbers.Content = climbersCount;
         }
 
         private void checkMessages(User user)

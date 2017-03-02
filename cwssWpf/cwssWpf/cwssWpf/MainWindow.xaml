@@ -29,7 +29,7 @@
 
         <DockPanel Grid.ColumnSpan="4">
             <Menu DockPanel.Dock="Top" Background="Goldenrod" Name="MainMenu" FontWeight="Heavy">
-                <MenuItem Header="File">
+                <MenuItem Header="Menu">
 <!--                    <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>     -->
                     <MenuItem Header="_Employee Log In" Name="menuEmployeeLogIn" Click="menuEmployeeLogIn_Click"></MenuItem>
                     <MenuItem Header="_New User" Name="menuNewUser" Click="menuNewUser_Click"></MenuItem>
@@ -56,6 +56,18 @@
             <StackPanel></StackPanel>
         </DockPanel>
 
+        <Canvas Name="ClimbersCanvas" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Height="50" Width="75" Margin="2,2,2,2" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Visible">
+            <Canvas.Background>
+                <SolidColorBrush Opacity="0.6" Color="Black"></SolidColorBrush>
+            </Canvas.Background>
+            <Border Height="50" Width="75" Margin="0" Background="Transparent" BorderBrush="Gold" BorderThickness="3" Opacity="0.6">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="2" Color="Yellow" Opacity="0.9" BlurRadius="6"/>
+                </Border.Effect>
+            </Border>
+            <Label Name="tbClimbers" Content="54" Foreground="Yellow" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Width="75" HorizontalContentAlignment="Right" Margin="-5,0,0,0"></Label>
+        </Canvas>
+
         <Canvas Name="CheckinCanvas" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="90" Visibility="Visible">
             <Canvas.Background>
                 <SolidColorBrush Opacity="0.6" Color="Black"></SolidColorBrush>
@@ -69,8 +81,7 @@
         <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon" KeyUp="EnterPressed"/>
         <Button Grid.Row="2" Grid.Column="1" x:Name="btnCheckIn" Content="Check In/Out" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Width="105" Height="40" Click="btnCheckIn_Click" Background="Goldenrod"/>
 
-
-        <DockPanel Grid.Row="4" Grid.ColumnSpan="4">
+        <DockPanel Grid.Row="4" Grid.ColumnSpan="4" Visibility="Hidden">
             <StatusBar DockPanel.Dock="Bottom" Background="Goldenrod" MouseDoubleClick="TestSomething">
                 <StatusBarItem HorizontalAlignment="Left">
                     <TextBlock Grid.Column="0" Name="StatusText" FontSize="12" HorizontalAlignment="Left"/>

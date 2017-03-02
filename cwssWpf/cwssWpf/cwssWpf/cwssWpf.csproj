@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Reports\Report.cs" />
+    <Compile Include="StaticValues.cs" />
     <Compile Include="Windows\AccountManager_Dialog.xaml.cs">
       <DependentUpon>AccountManager_Dialog.xaml</DependentUpon>
     </Compile>

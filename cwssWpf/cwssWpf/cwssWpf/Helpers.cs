@@ -93,6 +93,17 @@ namespace cwssWpf
             }
         }
 
+        internal static int GenerateNewID()
+        {
+            var firstNonStudentNumber = StaticValues.StartNonStudentIdNumber;
+            var logins = Db.dataBase.Users.Select(t => t.LoginId).Where(
+                t => t > StaticValues.StartNonStudentIdNumber && t < StaticValues.EndNonStudentIdNumber);
+
+            if (logins.Count() > 0)
+                firstNonStudentNumber = logins.Last() + 1;
+
+            return firstNonStudentNumber;
+        }
 
         public static void PlayCheckIn()
         {

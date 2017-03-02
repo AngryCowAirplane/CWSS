@@ -9,6 +9,7 @@
         Opacity="0.8"
         WindowStyle="None"
         AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
         Title="Climber View" Height="300" Width="300">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -40,7 +41,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ContextMenu>
-                <ContextMenu Name="userMenu" Opacity="0.5" Foreground="Black">
+                <ContextMenu Name="userMenu" Opacity="0.9" Foreground="Black">
                     <MenuItem Header="Stats" Name="cmStats" Click="cmStats_Click"></MenuItem>
                     <MenuItem Header="Request Revoke" Name="cmRevoke" Click="cmRevoke_Click"></MenuItem>
                     <MenuItem Header="CheckOut" Name="cmCheckOut" Click="cmCheckOut_Click"></MenuItem>

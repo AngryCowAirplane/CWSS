@@ -25,7 +25,6 @@ namespace cwssWpf.Windows
 
         public Postit_Dialog(Note note)
         {
-            //WindowStartupLocation = WindowStartupLocation.CenterOwner;
             InitializeComponent();
 
             this.note = note;
@@ -41,13 +40,9 @@ namespace cwssWpf.Windows
             MouseLeftButtonDown += Helpers.Window_MouseDown;
             LocationChanged += windowLocation_Changed;
             SizeChanged += windowLocation_Changed;
-
-            if((int)MainWindow.CurrentUser.UserType < 2)
-            {
-                userMenu.IsEnabled = false;
-            }
         }
 
+        // Keep Notes On Top
         private void Window_Deactivated(object sender, EventArgs e)
         {
             Window window = (Window)sender;
@@ -56,10 +51,19 @@ namespace cwssWpf.Windows
 
         private void cmDelete_Click(object sender, RoutedEventArgs e)
         {
-            Db.dataBase.Notes.WallNotes.Remove(note);
-            this.Close();
+            if ((int)MainWindow.CurrentUser.UserType > 1)
+            {
+                Db.dataBase.Notes.WallNotes.Remove(note);
+                this.Close();
+            }
+            else
+            {
+                var alert = new Alert_Dialog("Can't Delete", "Only a manager or admin user may delete a note.");
+                alert.ShowDialog();
+            }
         }
 
+        // Save new location of window when moved or resized.
         private void windowLocation_Changed(object sender, EventArgs e)
         {
             var dbNote = Db.dataBase.Notes.WallNotes.Where(t => t == note).First();

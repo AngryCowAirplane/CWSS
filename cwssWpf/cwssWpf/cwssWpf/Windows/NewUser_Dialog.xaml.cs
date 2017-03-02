@@ -31,6 +31,7 @@ namespace cwssWpf.Windows
             this.Top = mainWindow.Top + 50;
             cbGender.ItemsSource = (Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList());
             FocusManager.SetFocusedElement(this, tbFirstName);
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -71,6 +72,22 @@ namespace cwssWpf.Windows
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnGenerateID_Click(object sender, RoutedEventArgs e)
+        {
+            if(tbIdNumber.IsEnabled)
+            {
+                tbIdNumber.IsEnabled = false;
+                tbIdNumber.Text = Helpers.GenerateNewID().ToString();
+                btnGenerateID.Content = "Student";
+            }
+            else
+            {
+                tbIdNumber.IsEnabled = true;
+                tbIdNumber.Text = "";
+                btnGenerateID.Content = "Non Student";
+            }
         }
 
         // TODO:
