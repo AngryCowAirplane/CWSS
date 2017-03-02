@@ -138,6 +138,9 @@
     <Compile Include="Windows\Message_Dialog.xaml.cs">
       <DependentUpon>Message_Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Network_Dialog.xaml.cs">
+      <DependentUpon>Network_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\NewUser_Dialog.xaml.cs">
       <DependentUpon>NewUser_Dialog.xaml</DependentUpon>
     </Compile>
@@ -219,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Message_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Network_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -341,6 +348,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Network\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

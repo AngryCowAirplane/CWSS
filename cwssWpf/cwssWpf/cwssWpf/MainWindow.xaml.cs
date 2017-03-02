@@ -350,5 +350,11 @@ namespace cwssWpf
             }
         }
         #endregion
+
+        private void menuTest_Click(object sender, RoutedEventArgs e)
+        {
+            var net = new Network_Dialog();
+            net.Show();
+        }
     }
 }
