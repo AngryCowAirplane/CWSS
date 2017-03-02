@@ -107,8 +107,11 @@ namespace cwssWpf
             // TODO:
             // validate input in tbUserId
 
-            var result = tryCheckinUser();
-            result.Show();
+            if (!string.IsNullOrWhiteSpace(tbLoginId.Text))
+            {
+                var result = tryCheckinUser();
+                result.Show();
+            }
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
@@ -227,8 +230,9 @@ namespace cwssWpf
         private void EnterPressed(object sender, KeyEventArgs e)
         {
             var result = new Result();
-            if (e.Key != Key.Enter) return;
-                result = tryCheckinUser();
+            if (e.Key != Key.Enter || string.IsNullOrWhiteSpace(tbLoginId.Text)) return;
+
+            result = tryCheckinUser();
 
             result.Show();
         }
@@ -271,10 +275,6 @@ namespace cwssWpf
         private Result tryCheckinUser()
         {
             var result = new Result();
-
-            if (string.IsNullOrWhiteSpace(tbLoginId.Text))
-                return new cwssWpf.Result(false);
-
             var loginId = int.Parse(tbLoginId.Text);
             var user = Db.dataBase.GetUser(loginId);
             if(user != null)
@@ -347,17 +347,20 @@ namespace cwssWpf
 
         private void checkMessages(User user)
         {
-            var messages = Db.dataBase.GetMessages(user);
-            if (messages.Count > 0)
+            if(!ClientMode)
             {
-                var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-                alert.ShowDialog();
-            }
+                var messages = Db.dataBase.GetMessages(user);
+                if (messages.Count > 0)
+                {
+                    var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                    alert.ShowDialog();
+                }
 
-            foreach (var message in messages)
-            {
-                var messageDialog = new Message_Dialog(CurrentUser, message);
-                messageDialog.ShowDialog();
+                foreach (var message in messages)
+                {
+                    var messageDialog = new Message_Dialog(user, message);
+                    messageDialog.ShowDialog();
+                }
             }
         }
 

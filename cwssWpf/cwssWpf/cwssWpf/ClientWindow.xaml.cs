@@ -39,7 +39,8 @@ namespace cwssWpf
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
-            SendMessage("Checkin," + tbLoginId.Text);
+            if(tbLoginId.Text.Length > 0)
+                SendMessage("Checkin," + tbLoginId.Text);
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -88,15 +89,16 @@ namespace cwssWpf
             {
                 var message = receivedText.Split(('@')).Last();
                 result = Newtonsoft.Json.JsonConvert.DeserializeObject<Result>(message);
+
+                if (MainWindow.ClientMode)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        result.Show();
+                    }));
+                }
             }
 
-            if (MainWindow.ClientMode)
-            {
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    result.Show();
-                }));
-            }
         }
     }
 }
