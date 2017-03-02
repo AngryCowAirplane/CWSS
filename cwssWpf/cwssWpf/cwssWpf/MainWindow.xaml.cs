@@ -69,6 +69,7 @@ namespace cwssWpf
                 this.WindowStyle = WindowStyle.None;
             }
 
+            StartNetworkListen(null, null);
             UpdateClimberStats();
             FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
@@ -376,8 +377,11 @@ namespace cwssWpf
                 this.Show();
             }
 
-            var alert = new Alert_Dialog("MESSAGE", receivedText);
-            alert.ShowDialog();
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                var alert = new Alert_Dialog("MESSAGE", receivedText);
+                alert.ShowDialog();
+            }));
         }
         #endregion
 

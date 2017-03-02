@@ -21,7 +21,7 @@ namespace cwssWpf.Windows
     {
         public Alert_Dialog(string alertTitle, string alertText)
         {
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             InitializeComponent();
             LoadImage();
             this.Activate();
