@@ -1,6 +1,7 @@
 ﻿using cwssWpf.Data;
 using cwssWpf.DataBase;
 using cwssWpf.Migrations;
+using cwssWpf.Network;
 using cwssWpf.Windows;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -164,9 +166,11 @@ namespace cwssWpf
             accountManager.ShowDialog();
         }
 
-        private void menuStore_Click(object sender, RoutedEventArgs e)
+        private void menuClient_Click(object sender, RoutedEventArgs e)
         {
-
+            var clientWindow = new ClientWindow();
+            clientWindow.Show();
+            this.Hide();
         }
 
         private void menuSettings_Click(object sender, RoutedEventArgs e)
@@ -348,6 +352,32 @@ namespace cwssWpf
                 postit.Show();
                 WindowsOpen.Add(postit);
             }
+        }
+
+        MulticastUdpClient udpClientWrapper;
+        private void StartNetworkListen(object sender, RoutedEventArgs e)
+        {
+            // Create address objects
+            int port = Int32.Parse(StaticValues.RemotePort);
+            IPAddress multicastIPaddress = IPAddress.Parse(StaticValues.RemoteIP);
+            IPAddress localIPaddress = IPAddress.Any;
+
+            // Create MulticastUdpClient
+            udpClientWrapper = new MulticastUdpClient(multicastIPaddress, port, localIPaddress);
+            udpClientWrapper.UdpMessageReceived += OnUdpMessageReceived;
+        }
+
+        void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
+        {
+            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
+
+            if(receivedText=="ClientClosed")
+            {
+                this.Show();
+            }
+
+            var alert = new Alert_Dialog("MESSAGE", receivedText);
+            alert.ShowDialog();
         }
         #endregion
 

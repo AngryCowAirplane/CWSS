@@ -87,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClientWindow.xaml.cs">
+      <DependentUpon>ClientWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\ComboBool.cs" />
     <Compile Include="CustomControls\UserListViewItem.cs" />
     <Compile Include="DataBase\DbContext.cs" />
@@ -166,6 +169,10 @@
     <Compile Include="Windows\Waiver_Dialog.xaml.cs">
       <DependentUpon>Waiver_Dialog.xaml</DependentUpon>
     </Compile>
+    <Page Include="ClientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

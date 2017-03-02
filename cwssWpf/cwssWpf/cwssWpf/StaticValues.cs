@@ -13,5 +13,7 @@ namespace cwssWpf
         public static int StartNonStudentIdNumber = 10000;
         public static int EndNonStudentIdNumber = 100000;
 
+        public static string RemoteIP = "239.0.0.222";
+        public static string RemotePort = "2222";
     }
 }

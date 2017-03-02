@@ -12,6 +12,8 @@ using System.Windows;
 using cwssWpf.DataBase;
 using System.Media;
 using System.Windows.Input;
+using System.Net;
+using System.Net.Sockets;
 
 namespace cwssWpf
 {
@@ -186,6 +188,20 @@ namespace cwssWpf
         {
             if (e.ChangedButton == MouseButton.Left)
                 ((Window)sender).DragMove();
+        }
+
+        // http://stackoverflow.com/questions/6803073/get-local-ip-address
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("Local IP Address Not Found!");
         }
     }
 }

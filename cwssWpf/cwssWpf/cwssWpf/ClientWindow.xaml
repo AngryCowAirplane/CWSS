@@ -1,10 +1,9 @@
-﻿<Window x:Class="cwssWpf.MainWindow"
+﻿<Window x:Class="cwssWpf.ClientWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf"
-        Closing="MainWindow_Closing"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         BorderThickness="0"
@@ -26,36 +25,6 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
-
-        <DockPanel Grid.ColumnSpan="4">
-            <Menu DockPanel.Dock="Top" Background="Goldenrod" Name="MainMenu" FontWeight="Heavy">
-                <MenuItem Header="Menu">
-                    <!--                    <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>     -->
-                    <MenuItem Header="_Test" Name="menuTest" Click="menuTest_Click"></MenuItem>
-                    <MenuItem Header="_Employee Log In" Name="menuEmployeeLogIn" Click="menuEmployeeLogIn_Click"></MenuItem>
-                    <MenuItem Header="_New User" Name="menuNewUser" Click="menuNewUser_Click"></MenuItem>
-                    <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
-                </MenuItem>
-                <MenuItem Header= "_Employee" Visibility="Visible" Name="EmployeeMenu">
-                    <MenuItem Header="_View Climbers" Name="menuUsers" Click="menuUsers_Click"></MenuItem>
-                    <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>
-                    <MenuItem Header="_Add Note" Name="menuNotes" Click="menuNotes_Click"></MenuItem>
-                    <MenuItem Header="_Send Message" Name="menuMessage" Click="menuMessage_Click"></MenuItem>
-                    <MenuItem Header="_Enter Client Mode" Name="menuStore" Click="menuClient_Click"></MenuItem> 
-                    <MenuItem Header="_Log Out" Name="menuLogOut" Click="menuLogOut_Click"></MenuItem>
-                </MenuItem>
-                <MenuItem Header= "_Manager" Visibility="Visible" Name="ManagerMenu">
-                    <MenuItem Header="_Accounts" Name="menuAccounts" Click="menuAccounts_Click"></MenuItem>
-                    <MenuItem Header="_Email List" Name="menuManageUsers" Click="menuListServ_Click"></MenuItem>
-                    <MenuItem Header="_Reports" Name="menuReports" Click="menuReports_Click"></MenuItem>
-                </MenuItem>
-                <MenuItem Header= "_Admin" Visibility="Visible" Name="AdminMenu">
-                    <MenuItem Header="_Log Viewer" Name="menuViewLog" Click="menuViewLog_Click"></MenuItem>
-                    <MenuItem Header="_Settings" Name="menuSettings" Click="menuSettings_Click"></MenuItem>
-                </MenuItem>
-            </Menu>
-            <StackPanel></StackPanel>
-        </DockPanel>
 
         <Canvas Name="ClimbersCanvas" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Height="50" Width="75" Margin="2,2,2,2" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Visible">
             <Canvas.Background>
@@ -81,19 +50,5 @@
         </Canvas>
         <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon" KeyUp="EnterPressed"/>
         <Button Grid.Row="2" Grid.Column="1" x:Name="btnCheckIn" Content="Check In/Out" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Width="105" Height="40" Click="btnCheckIn_Click" Background="Goldenrod"/>
-
-        <DockPanel Grid.Row="4" Grid.ColumnSpan="4" Visibility="Hidden">
-            <StatusBar DockPanel.Dock="Bottom" Background="Goldenrod" MouseDoubleClick="TestSomething">
-                <StatusBarItem HorizontalAlignment="Left">
-                    <TextBlock Grid.Column="0" Name="StatusText" FontSize="12" HorizontalAlignment="Left"/>
-                </StatusBarItem>
-                <StatusBarItem HorizontalAlignment="Center">
-                    <TextBlock Grid.Column="0" Name="MiddleText" FontSize="12" HorizontalAlignment="Center"/>
-                </StatusBarItem>
-                <StatusBarItem HorizontalAlignment="Right">
-                    <TextBlock Grid.Column="0" Name="StatsText" FontSize="12" HorizontalAlignment="Right"/>
-                </StatusBarItem>
-            </StatusBar>
-        </DockPanel>
     </Grid>
 </Window>
