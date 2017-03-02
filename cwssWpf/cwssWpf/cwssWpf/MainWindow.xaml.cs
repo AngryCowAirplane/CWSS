@@ -3,6 +3,7 @@ using cwssWpf.DataBase;
 using cwssWpf.Migrations;
 using cwssWpf.Network;
 using cwssWpf.Windows;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -398,8 +399,10 @@ namespace cwssWpf
                     {
                         var id = receivedText.Split(',').Last();
                         var success = tryCheckinUser(id);
-                        success.Show();
-                        var message = Newtonsoft.Json.JsonConvert.SerializeObject(success);
+                        var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
                         SendMessage("result," + message);
                     }));
                 }
@@ -416,8 +419,8 @@ namespace cwssWpf
 
         private void SendMessage(string message)
         {
-            string msgString = String.Format(message);
-            byte[] buffer = Encoding.Unicode.GetBytes(msgString);
+            //string msgString = String.Format(message);
+            byte[] buffer = Encoding.Unicode.GetBytes(message);
             udpClientWrapper.SendMulticast(buffer);
         }
         #endregion

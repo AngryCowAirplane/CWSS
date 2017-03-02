@@ -209,7 +209,8 @@ namespace cwssWpf
     public class Result
     {
         public bool Success = false;
-        public Alert_Dialog Alert;
+        public string Heading = "";
+        public string Body = "";
 
         public Result() { }
         public Result(bool success)
@@ -218,18 +219,20 @@ namespace cwssWpf
         }
         public Result(Alert_Dialog alert)
         {
-            Alert = alert;
+            Heading = (string)alert.Title.Content;
+            Body = (string)alert.AlertText.Text;
         }
         public Result(bool success, Alert_Dialog alert)
         {
             Success = success;
-            Alert = alert;
+            Heading = (string)alert.Title.Content;
+            Body = (string)alert.AlertText.Text;
         }
 
         public void Show()
         {
-            if(Alert != null)
-                Alert.ShowDialog();
+            var alert = new Alert_Dialog(Heading, Body);
+                alert.ShowDialog();
         }
     }
 }
