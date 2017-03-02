@@ -34,6 +34,8 @@ namespace cwssWpf
                 this.WindowState = WindowState.Maximized;
                 this.WindowStyle = WindowStyle.None;
             }
+
+            StartNetworkListen(null, null);
         }
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
