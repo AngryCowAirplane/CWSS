@@ -83,8 +83,8 @@ namespace cwssWpf
             Result result = new Result();
             string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
 
-            if (receivedText.ToLower().Contains("result"))
-                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Result>(receivedText.Split(',').Last());
+            if (receivedText.Contains("Result,"))
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Result>(receivedText.Split("Result,".ToCharArray()).Last());
 
             if (MainWindow.ClientMode)
             {
