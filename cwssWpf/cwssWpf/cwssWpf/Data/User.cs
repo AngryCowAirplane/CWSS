@@ -70,13 +70,15 @@ namespace cwssWpf.Data
         {
             if (CheckedIn)
             {
-                var length = DateTime.Now - TimeStamp;
-                var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
-                Logger.Log(UserId, LogType.CheckOut, message);
-                message = message + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
-                Helpers.PlayCheckOut();
-                var alert = new Alert_Dialog("Checked Out", message);
-                alert.ShowDialog();
+                //var length = DateTime.Now - TimeStamp;
+                //var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
+                //Logger.Log(UserId, LogType.CheckOut, message);
+                //message = message + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
+                //Helpers.PlayCheckOut();
+                //var alert = new Alert_Dialog("Checked Out", message);
+                //alert.ShowDialog();
+                //CheckedIn = false;
+                //return true;
                 CheckedIn = false;
                 return true;
             }

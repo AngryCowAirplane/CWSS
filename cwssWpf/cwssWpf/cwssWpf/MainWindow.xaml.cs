@@ -286,10 +286,12 @@ namespace cwssWpf
 
                 if(hasWaiver && canClimb)
                 {
-                    if(!user.CheckedIn)
-                        user.CheckIn();
-                    else
-                        user.CheckOut();
+                    //if(!user.CheckedIn)
+                    //    user.CheckIn();
+                    //else
+                    //    user.CheckOut();
+
+                    user.CheckIn();
 
                     var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
                     result.Alert = new Alert_Dialog("Check In", message);
