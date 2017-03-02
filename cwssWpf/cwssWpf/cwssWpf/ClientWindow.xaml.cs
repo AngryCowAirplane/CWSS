@@ -1,7 +1,9 @@
-﻿using cwssWpf.Network;
+﻿using cwssWpf.Data;
+using cwssWpf.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,10 +22,18 @@ namespace cwssWpf
     /// </summary>
     public partial class ClientWindow : Window
     {
+        MulticastUdpClient udpClientWrapper;
+
         public ClientWindow()
         {
             InitializeComponent();
             KeyUp += KeyPressed;
+
+            if (Config.Data.General.StartMaximized)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.WindowStyle = WindowStyle.None;
+            }
         }
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
@@ -49,13 +59,29 @@ namespace cwssWpf
             btnCheckIn_Click(null, null);
         }
 
-        MulticastUdpClient udpClientWrapper;
         private void SendMessage(string message)
         {
-            string msgString = String.Format("message {1}", Helpers.GetLocalIPAddress());
+            string msgString = String.Format("message");// {1}", Helpers.GetLocalIPAddress());
             byte[] buffer = Encoding.Unicode.GetBytes(msgString);
             // Send
             udpClientWrapper.SendMulticast(buffer);
+        }
+
+        private void StartNetworkListen(object sender, RoutedEventArgs e)
+        {
+            // Create address objects
+            int port = Int32.Parse(StaticValues.RemotePort);
+            IPAddress multicastIPaddress = IPAddress.Parse(StaticValues.RemoteIP);
+            IPAddress localIPaddress = IPAddress.Any;
+
+            // Create MulticastUdpClient
+            udpClientWrapper = new MulticastUdpClient(multicastIPaddress, port, localIPaddress);
+            udpClientWrapper.UdpMessageReceived += OnUdpMessageReceived;
+        }
+
+        private void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
     }
 }
