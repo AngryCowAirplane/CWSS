@@ -93,18 +93,6 @@ namespace cwssWpf
             }
         }
 
-        internal static int GenerateNewID()
-        {
-            var firstNonStudentNumber = StaticValues.StartNonStudentIdNumber;
-            var logins = Db.dataBase.Users.Select(t => t.LoginId).Where(
-                t => t > StaticValues.StartNonStudentIdNumber && t < StaticValues.EndNonStudentIdNumber);
-
-            if (logins.Count() > 0)
-                firstNonStudentNumber = logins.Last() + 1;
-
-            return firstNonStudentNumber;
-        }
-
         public static void PlayCheckIn()
         {
             SoundPlayer player = new SoundPlayer(System.IO.Path.Combine(Environment.CurrentDirectory + @"\Sounds\CheckIn.wav"));
@@ -172,6 +160,26 @@ namespace cwssWpf
             }
 
             return true;
+        }
+
+        internal static int GenerateNewID()
+        {
+            var firstNonStudentNumber = -1;
+            var logins = Db.dataBase.Users.Select(t => t.LoginId).Where(
+                t => t >= StaticValues.StartNonStudentIdNumber && t < StaticValues.EndNonStudentIdNumber);
+
+            if (logins.Count() > 0)
+            {
+                for (int i = firstNonStudentNumber; i < StaticValues.EndNonStudentIdNumber; i++)
+                {
+                    if (!logins.Contains(i))
+                        firstNonStudentNumber = i;
+                }
+            }
+            else
+                firstNonStudentNumber = StaticValues.StartNonStudentIdNumber;
+
+            return firstNonStudentNumber;
         }
 
         public static void Window_MouseDown(object sender, MouseButtonEventArgs e)
