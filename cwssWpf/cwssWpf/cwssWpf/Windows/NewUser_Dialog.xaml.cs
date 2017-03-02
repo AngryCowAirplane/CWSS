@@ -78,9 +78,18 @@ namespace cwssWpf.Windows
         {
             if(tbIdNumber.IsEnabled)
             {
-                tbIdNumber.IsEnabled = false;
-                tbIdNumber.Text = Helpers.GenerateNewID().ToString();
-                btnGenerateID.Content = "Student";
+                var id = Helpers.GenerateNewID();
+                if(id == -1)
+                {
+                    var alert = new Alert_Dialog("ID Error", "ID number not available.  Please alert system administrator.");
+                    alert.ShowDialog();
+                }
+                else
+                {
+                    tbIdNumber.IsEnabled = false;
+                    tbIdNumber.Text = id.ToString();
+                    btnGenerateID.Content = "Student";
+                }
             }
             else
             {

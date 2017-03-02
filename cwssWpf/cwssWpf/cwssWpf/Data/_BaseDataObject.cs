@@ -1,4 +1,5 @@
 ﻿using cwssWpf.DataBase;
+using cwssWpf.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,7 +79,8 @@ namespace cwssWpf.Data
                 }
                 else
                 {
-                    MessageBox.Show("User Already Exists.");
+                    var alert = new Alert_Dialog("User Id Exists", "A user with the entered ID number already exists!");
+                    alert.ShowDialog();
                 }
             }
             catch
