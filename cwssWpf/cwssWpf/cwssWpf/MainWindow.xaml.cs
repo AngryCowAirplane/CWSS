@@ -376,8 +376,11 @@ namespace cwssWpf
 
             if(receivedText=="ClientClosed")
             {
-                this.Show();
-                clientMode = false;
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    this.Show();
+                    clientMode = false;
+                }));
             }
 
             if(!clientMode)
