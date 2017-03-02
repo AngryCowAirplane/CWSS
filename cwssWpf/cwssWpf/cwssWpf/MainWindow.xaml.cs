@@ -399,6 +399,7 @@ namespace cwssWpf
                     {
                         var id = receivedText.Split(',').Last();
                         var success = tryCheckinUser(id);
+                        success.Initialize();
                         var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore

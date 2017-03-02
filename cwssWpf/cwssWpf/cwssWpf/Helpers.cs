@@ -14,7 +14,9 @@ using System.Media;
 using System.Windows.Input;
 using System.Net;
 using System.Net.Sockets;
+using System.Web;
 using cwssWpf.Windows;
+using System.Web.Script.Serialization;
 
 namespace cwssWpf
 {
@@ -212,6 +214,10 @@ namespace cwssWpf
         public string Heading = "";
         public string Body = "";
 
+        [ScriptIgnore]
+        public Alert_Dialog Alert;
+
+
         public Result() { }
         public Result(bool success)
         {
@@ -219,20 +225,24 @@ namespace cwssWpf
         }
         public Result(Alert_Dialog alert)
         {
-            Heading = (string)alert.Title.Content;
-            Body = (string)alert.AlertText.Text;
+            Alert = alert;
         }
         public Result(bool success, Alert_Dialog alert)
         {
             Success = success;
-            Heading = (string)alert.Title.Content;
-            Body = (string)alert.AlertText.Text;
+            Alert = alert;
         }
 
         public void Show()
         {
             var alert = new Alert_Dialog(Heading, Body);
                 alert.ShowDialog();
+        }
+
+        public void Initialize()
+        {
+            Heading = (string)Alert.Title.Content;
+            Body = (string)Alert.AlertText.Text;
         }
     }
 }
