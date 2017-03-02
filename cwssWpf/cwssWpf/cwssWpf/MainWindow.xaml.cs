@@ -405,17 +405,17 @@ namespace cwssWpf
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
 
-                        SendMessage("Result," + message);
+                        SendMessage("Result@" + message);
                     }));
                 }
-                else
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
-                        alert.ShowDialog();
-                    }));
-                }
+                //else
+                //{
+                //    Dispatcher.BeginInvoke((Action)(() =>
+                //    {
+                //        var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
+                //        alert.ShowDialog();
+                //    }));
+                //}
             }
         }
 
