@@ -379,7 +379,7 @@ namespace cwssWpf
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                var alert = new Alert_Dialog("MESSAGE", receivedText);
+                var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
                 alert.ShowDialog();
             }));
         }

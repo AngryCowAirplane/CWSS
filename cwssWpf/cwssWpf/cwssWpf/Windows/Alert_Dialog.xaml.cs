@@ -19,9 +19,16 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Alert_Dialog : Window
     {
-        public Alert_Dialog(string alertTitle, string alertText)
+        public Alert_Dialog(string alertTitle, string alertText, Vector? screenCoords = null)
         {
-            this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            if(screenCoords == null)
+                this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            else
+            {
+                Left = screenCoords.Value.X;
+                Top = screenCoords.Value.Y;
+            }
+
             InitializeComponent();
             LoadImage();
             this.Activate();
