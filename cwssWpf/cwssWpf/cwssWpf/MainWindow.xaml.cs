@@ -225,8 +225,7 @@ namespace cwssWpf
         private void EnterPressed(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter) return;
-
-            tryCheckinUser();                
+                tryCheckinUser();
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -258,16 +257,18 @@ namespace cwssWpf
         #endregion
 
         #region Custom Methods
-        private bool tryCheckinUser(string userId)
+        private Result tryCheckinUser(string userId)
         {
             tbLoginId.Text = userId;
             return tryCheckinUser();
         }
 
-        private bool tryCheckinUser()
+        private Result tryCheckinUser()
         {
+            var result = new Result();
+
             if (string.IsNullOrWhiteSpace(tbLoginId.Text))
-                return false;
+                return new cwssWpf.Result(false);
 
             var loginId = int.Parse(tbLoginId.Text);
             var user = Db.dataBase.GetUser(loginId);
@@ -284,14 +285,16 @@ namespace cwssWpf
                         user.CheckIn();
                     else
                         user.CheckOut();
+
+                    var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
+                    result.Alert = new Alert_Dialog("Check In", message);
                 }
                 else
                 {
                     if(!hasWaiver)
                     {
                         Helpers.PlayFail();
-                        var alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
-                        alert.ShowDialog();
+                        result.Alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
 
                         var waiver = new Waiver_Dialog();
                         var signedWaiver = waiver.ShowDialog();
@@ -303,31 +306,29 @@ namespace cwssWpf
                         else
                         {
                             Helpers.PlayFail();
-                            var newalert = new Alert_Dialog("Not Signed", "Waiver not signed!");
-                            newalert.ShowDialog();
+                            result.Alert = new Alert_Dialog("Not Signed", "Waiver not signed!");
                         }
                     }
                     if(!canClimb)
                     {
                         Helpers.PlayFail();
-                        var alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
-                        alert.ShowDialog();
+                        result.Alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
                         // Show better reason, have Comment variable in User Table?
                     }
                 }
-                tbLoginId.Text = "";
             }
             else
             {
                 var message = "Failed Checkin By " + loginId;
                 Logger.Log(loginId, LogType.Error, message);
                 Helpers.PlayFail();
-                var alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
-                alert.ShowDialog();
+                result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }
 
+            tbLoginId.Text = "";
             UpdateClimberStats();
-            return true;
+            result.Show();
+            return result;
         }
 
         public void UpdateClimberStats()
@@ -397,10 +398,9 @@ namespace cwssWpf
                     {
                         var id = receivedText.Split(',').Last();
                         var success = tryCheckinUser(id);
-                        if(success)
-                            SendMessage("Check in Successful.");
-                        else
-                            SendMessage("Check in Failure.");
+                        success.Show();
+                        var message = Newtonsoft.Json.JsonConvert.SerializeObject(success);
+                        SendMessage("result," + message);
                     }));
                 }
                 else

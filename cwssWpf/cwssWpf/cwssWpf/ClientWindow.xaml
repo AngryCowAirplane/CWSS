@@ -26,18 +26,6 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Canvas Name="ClimbersCanvas" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Height="50" Width="75" Margin="2,2,2,2" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Visible">
-            <Canvas.Background>
-                <SolidColorBrush Opacity="0.6" Color="Black"></SolidColorBrush>
-            </Canvas.Background>
-            <Border Height="50" Width="75" Margin="0" Background="Transparent" BorderBrush="Gold" BorderThickness="3" Opacity="0.6">
-                <Border.Effect>
-                    <DropShadowEffect ShadowDepth="2" Color="Yellow" Opacity="0.9" BlurRadius="6"/>
-                </Border.Effect>
-            </Border>
-            <Label Name="tbClimbers" Content="54" Foreground="Yellow" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Width="75" HorizontalContentAlignment="Right" Margin="-5,0,0,0"></Label>
-        </Canvas>
-
         <Canvas Name="CheckinCanvas" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="90" Visibility="Visible">
             <Canvas.Background>
                 <SolidColorBrush Opacity="0.6" Color="Black"></SolidColorBrush>

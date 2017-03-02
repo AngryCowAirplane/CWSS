@@ -11,7 +11,6 @@
         Title=" SDSU Climbing Wall System" Height="480" Width="640">
     <Grid>
         <Grid.Background>
-            <!-- SolidColorBrush Color="AliceBlue"></ -->
             <ImageBrush ImageSource="Images/Wall.jpg"></ImageBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
@@ -30,8 +29,8 @@
         <DockPanel Grid.ColumnSpan="4">
             <Menu DockPanel.Dock="Top" Background="Goldenrod" Name="MainMenu" FontWeight="Heavy">
                 <MenuItem Header="Menu">
-                    <!--                    <MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>     -->
-                    <MenuItem Header="_Test" Name="menuTest" Click="menuTest_Click"></MenuItem>
+                    <!--<MenuItem Header="_Calendar" Name="menuCalendar" Click="menuCalendar_Click"></MenuItem>-->
+                    <!--<MenuItem Header="_Test" Name="menuTest" Click="menuTest_Click"></MenuItem>-->
                     <MenuItem Header="_Employee Log In" Name="menuEmployeeLogIn" Click="menuEmployeeLogIn_Click"></MenuItem>
                     <MenuItem Header="_New User" Name="menuNewUser" Click="menuNewUser_Click"></MenuItem>
                     <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>

@@ -91,8 +91,6 @@ namespace cwssWpf.Data
                 TimeStamp = DateTime.Now;
                 var message = Info.FirstName + " " + Info.LastName + " Checked In.";
                 Helpers.PlayCheckIn();
-                var alert = new Alert_Dialog("Check In", message);
-                alert.ShowDialog();
                 Logger.Log(UserId, LogType.CheckIn, message);
                 CheckedIn = true;
                 return true;

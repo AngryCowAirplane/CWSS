@@ -80,14 +80,17 @@ namespace cwssWpf
 
         private void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
         {
+            Result result = new Result();
             string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
+
+            if (receivedText.ToLower().Contains("result"))
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Result>(receivedText.Split(',').Last());
 
             if (MainWindow.ClientMode)
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
-                    alert.ShowDialog();
+                    result.Show();
                 }));
             }
         }

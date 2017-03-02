@@ -14,6 +14,7 @@ using System.Media;
 using System.Windows.Input;
 using System.Net;
 using System.Net.Sockets;
+using cwssWpf.Windows;
 
 namespace cwssWpf
 {
@@ -202,6 +203,33 @@ namespace cwssWpf
                 }
             }
             throw new Exception("Local IP Address Not Found!");
+        }
+    }
+
+    public class Result
+    {
+        public bool Success = false;
+        public Alert_Dialog Alert;
+
+        public Result() { }
+        public Result(bool success)
+        {
+            Success = success;
+        }
+        public Result(Alert_Dialog alert)
+        {
+            Alert = alert;
+        }
+        public Result(bool success, Alert_Dialog alert)
+        {
+            Success = success;
+            Alert = alert;
+        }
+
+        public void Show()
+        {
+            if(Alert != null)
+                Alert.ShowDialog();
         }
     }
 }
