@@ -32,6 +32,7 @@ namespace cwssWpf
     {
         public static User CurrentUser = null;
         public static List<Window> WindowsOpen = new List<Window>();
+        private bool clientMode = false;
 
         public MainWindow()
         {
@@ -171,6 +172,7 @@ namespace cwssWpf
         {
             var clientWindow = new ClientWindow();
             clientWindow.Show();
+            clientMode = true;
             this.Hide();
         }
 
@@ -375,13 +377,17 @@ namespace cwssWpf
             if(receivedText=="ClientClosed")
             {
                 this.Show();
+                clientMode = false;
             }
 
-            Dispatcher.BeginInvoke((Action)(() =>
+            if(!clientMode)
             {
-                var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
-                alert.ShowDialog();
-            }));
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    var alert = new Alert_Dialog("MESSAGE", receivedText, new Vector(Left, Top));
+                    alert.ShowDialog();
+                }));
+            }
         }
         #endregion
 

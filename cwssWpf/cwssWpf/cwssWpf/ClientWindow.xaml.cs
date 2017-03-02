@@ -63,7 +63,7 @@ namespace cwssWpf
 
         private void SendMessage(string message)
         {
-            string msgString = String.Format("message");// {1}", Helpers.GetLocalIPAddress());
+            string msgString = String.Format(message);// {1}", Helpers.GetLocalIPAddress());
             byte[] buffer = Encoding.Unicode.GetBytes(msgString);
             // Send
             udpClientWrapper.SendMulticast(buffer);
