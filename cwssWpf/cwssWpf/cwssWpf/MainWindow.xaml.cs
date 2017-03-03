@@ -287,13 +287,13 @@ namespace cwssWpf
         #endregion
 
         #region Custom Methods
-        private Result tryCheckinUser(string userId)
+        private Result tryCheckinUser(string userId, bool remote = false)
         {
             tbLoginId.Text = userId;
             return tryCheckinUser();
         }
 
-        private Result tryCheckinUser()
+        private Result tryCheckinUser(bool remote = false)
         {
             var result = new Result();
             var loginId = int.Parse(tbLoginId.Text);
@@ -307,13 +307,7 @@ namespace cwssWpf
 
                 if (hasWaiver && canClimb)
                 {
-                    //if(!user.CheckedIn)
-                    //    user.CheckIn();
-                    //else
-                    //    user.CheckOut();
-
                     user.CheckIn();
-
                     var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
                     result.Alert = new Alert_Dialog("Check In", message);
                 }
@@ -341,7 +335,6 @@ namespace cwssWpf
                     {
                         Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
-                        // Show better reason, have Comment variable in User Table?
                     }
                 }
             }
@@ -368,19 +361,31 @@ namespace cwssWpf
 
         private void checkMessages(User user)
         {
-            if (!ClientMode)
+            List<Message> messages = Db.dataBase.GetMessages(user).ToList();
+            if (messages.Count > 0)
             {
-                var messages = Db.dataBase.GetMessages(user);
-                if (messages.Count > 0)
+                if (!ClientMode)
                 {
                     var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
                     alert.ShowDialog();
-                }
 
-                foreach (var message in messages)
+                    foreach (var message in messages)
+                    {
+                        var messageDialog = new Message_Dialog(user, message);
+                        messageDialog.ShowDialog();
+                    }
+                }
+                else
                 {
-                    var messageDialog = new Message_Dialog(user, message);
-                    messageDialog.ShowDialog();
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        var message = JsonConvert.SerializeObject(messages, Formatting.None, new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+
+                        SendMessage("Message@" + message);
+                    }));
                 }
             }
         }

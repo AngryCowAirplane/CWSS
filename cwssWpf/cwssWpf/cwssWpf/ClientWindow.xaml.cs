@@ -101,14 +101,20 @@ namespace cwssWpf
             else if (receivedText.Contains("Message@"))
             {
                 var message = receivedText.Split(('@')).Last();
-                var userMessage = Newtonsoft.Json.JsonConvert.DeserializeObject<Message>(message);
+                var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(message);
 
                 if (MainWindow.ClientMode)
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        var messageDialog = new Message_Dialog(userMessage.RecipientId.First(), userMessage);
-                        messageDialog.ShowDialog();
+                        var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                        alert.ShowDialog();
+
+                        foreach (var msg in messages)
+                        {
+                            var messageDialog = new Message_Dialog(msg.RecipientId.First(), msg);
+                            messageDialog.ShowDialog();
+                        }
                     }));
                 }
             }
