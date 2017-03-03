@@ -388,7 +388,7 @@ namespace cwssWpf
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
 
-                        SendMessage("Message@" + userString + "@" + message);
+                        SendMessage("Message^" + userString + "^" + message);
                     }));
                 }
             }
@@ -444,7 +444,7 @@ namespace cwssWpf
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
 
-                        SendMessage("Result@" + message);
+                        SendMessage("Result^" + message);
                     }));
                 }
             }

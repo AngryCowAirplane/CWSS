@@ -87,7 +87,7 @@ namespace cwssWpf
 
             if (receivedText.Contains("Result@"))
             {
-                var message = receivedText.Split(('@')).Last();
+                var message = receivedText.Split(('^')).Last();
                 result = Newtonsoft.Json.JsonConvert.DeserializeObject<Result>(message);
 
                 if (MainWindow.ClientMode)
@@ -100,7 +100,7 @@ namespace cwssWpf
             }
             else if (receivedText.Contains("Message@"))
             {
-                var parts = receivedText.Split(('@'));
+                var parts = receivedText.Split(('^'));
                 var userString = parts[1];
                 var messagesString = parts.Last();
 
