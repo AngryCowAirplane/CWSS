@@ -383,8 +383,12 @@ namespace cwssWpf
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
+                        var userString = JsonConvert.SerializeObject(user, Formatting.None, new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
 
-                        SendMessage("Message@" + message);
+                        SendMessage("Message@" + userString + "@" + message);
                     }));
                 }
             }

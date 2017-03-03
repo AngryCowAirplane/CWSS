@@ -100,8 +100,12 @@ namespace cwssWpf
             }
             else if (receivedText.Contains("Message@"))
             {
-                var message = receivedText.Split(('@')).Last();
-                var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(message);
+                var parts = receivedText.Split(('@'));
+                var userString = parts[1];
+                var messagesString = parts.Last();
+
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userString);
+                var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(messagesString);
 
                 if (MainWindow.ClientMode)
                 {
@@ -112,7 +116,7 @@ namespace cwssWpf
 
                         foreach (var msg in messages)
                         {
-                            var messageDialog = new Message_Dialog(msg.RecipientId.First(), msg);
+                            var messageDialog = new Message_Dialog(user, msg);
                             messageDialog.ShowDialog();
                         }
                     }));
