@@ -459,7 +459,10 @@ namespace cwssWpf
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
                         List<Message> msgs = Db.dataBase.GetMessages(user).ToList();
-                        msgs = messages;
+                        foreach (var item in messages)
+                        {
+                            msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(user);
+                        }
                     }));
                 }
             }
