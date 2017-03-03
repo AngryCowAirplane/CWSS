@@ -436,7 +436,7 @@ namespace cwssWpf
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        var id = receivedText.Split(',').Last();
+                        var id = receivedText.Split('^').Last();
                         var success = tryCheckinUser(id, true);
                         success.Initialize();
                         var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
@@ -445,6 +445,24 @@ namespace cwssWpf
                         });
 
                         SendMessage("Result^" + message);
+                    }));
+                }
+
+                if (receivedText.Contains("ReturnMessages^"))
+                {
+                    var parts = receivedText.Split(('^'));
+                    var userString = parts[1];
+                    var messagesString = parts.Last();
+                    var user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userString);
+                    var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(messagesString);
+
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        foreach (var msg in messages)
+                        {
+                            msg.ReadMessage(user);
+                        }
+
                     }));
                 }
             }

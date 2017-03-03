@@ -25,6 +25,8 @@ namespace cwssWpf.Windows
         private Message message;
         private bool Write = true;
 
+        public bool ReadMessage = false;
+
         // Write Message
         public Message_Dialog(List<User> users = null)
         {
@@ -178,6 +180,7 @@ namespace cwssWpf.Windows
             else
             {
                 message.ReadMessage(users.First());
+                ReadMessage = true;
                 this.Close();
             }
         }

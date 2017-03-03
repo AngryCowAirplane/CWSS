@@ -1,6 +1,7 @@
 ﻿using cwssWpf.Data;
 using cwssWpf.Network;
 using cwssWpf.Windows;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace cwssWpf
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
             if(tbLoginId.Text.Length > 0)
-                SendMessage("Checkin," + tbLoginId.Text);
+                SendMessage("Checkin^" + tbLoginId.Text);
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -119,6 +120,13 @@ namespace cwssWpf
                             var messageDialog = new Message_Dialog(user, msg);
                             messageDialog.ShowDialog();
                         }
+
+                        var message = JsonConvert.SerializeObject(messages, Formatting.None, new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+
+                        SendMessage("ReturnMessages^" + userString + "^" + message);
                     }));
                 }
             }
