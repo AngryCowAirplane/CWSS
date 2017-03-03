@@ -300,7 +300,7 @@ namespace cwssWpf
             var user = Db.dataBase.GetUser(loginId);
             if (user != null)
             {
-                checkMessages(user);
+                checkMessages(user, remote);
 
                 var hasWaiver = user.HasWaiver();
                 var canClimb = user.CanClimb;
@@ -359,12 +359,12 @@ namespace cwssWpf
             tbClimbers.Content = climbersCount;
         }
 
-        private void checkMessages(User user)
+        private void checkMessages(User user, bool remote = false)
         {
             List<Message> messages = Db.dataBase.GetMessages(user).ToList();
             if (messages.Count > 0)
             {
-                if (!ClientMode)
+                if (!ClientMode && !remote)
                 {
                     var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
                     alert.ShowDialog();
@@ -433,7 +433,7 @@ namespace cwssWpf
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
                         var id = receivedText.Split(',').Last();
-                        var success = tryCheckinUser(id);
+                        var success = tryCheckinUser(id, remote: true);
                         success.Initialize();
                         var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
                         {
