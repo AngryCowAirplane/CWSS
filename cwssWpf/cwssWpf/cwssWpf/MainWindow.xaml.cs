@@ -461,7 +461,8 @@ namespace cwssWpf
                         List<Message> msgs = Db.dataBase.GetMessages(user).ToList();
                         foreach (var item in messages)
                         {
-                            msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(user);
+                            if(item.RecipientId.Count < 1)
+                                msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(user);
                         }
                     }));
                 }
