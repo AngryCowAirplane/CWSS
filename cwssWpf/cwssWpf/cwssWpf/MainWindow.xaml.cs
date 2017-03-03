@@ -290,7 +290,7 @@ namespace cwssWpf
         private Result tryCheckinUser(string userId, bool remote = false)
         {
             tbLoginId.Text = userId;
-            return tryCheckinUser();
+            return tryCheckinUser(remote);
         }
 
         private Result tryCheckinUser(bool remote = false)
@@ -433,7 +433,7 @@ namespace cwssWpf
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
                         var id = receivedText.Split(',').Last();
-                        var success = tryCheckinUser(id, remote: true);
+                        var success = tryCheckinUser(id, true);
                         success.Initialize();
                         var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
                         {
