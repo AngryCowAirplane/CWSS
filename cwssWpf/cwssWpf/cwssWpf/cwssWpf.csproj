@@ -107,6 +107,7 @@
       <DependentUpon>201701230205324_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Network\Comms.cs" />
     <Compile Include="Network\MulticastUdpClient.cs" />
     <Compile Include="Reports\Report.cs" />
     <Compile Include="StaticValues.cs" />

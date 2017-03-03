@@ -209,7 +209,7 @@ namespace cwssWpf
         }
     }
 
-    public class Result
+    public class CheckinResult
     {
         public bool Success = false;
         public string Heading = "";
@@ -219,16 +219,16 @@ namespace cwssWpf
         public Alert_Dialog Alert;
 
 
-        public Result() { }
-        public Result(bool success)
+        public CheckinResult() { }
+        public CheckinResult(bool success)
         {
             Success = success;
         }
-        public Result(Alert_Dialog alert)
+        public CheckinResult(Alert_Dialog alert)
         {
             Alert = alert;
         }
-        public Result(bool success, Alert_Dialog alert)
+        public CheckinResult(bool success, Alert_Dialog alert)
         {
             Success = success;
             Alert = alert;

@@ -83,13 +83,13 @@ namespace cwssWpf
 
         private void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
         {
-            Result result = new Result();
+            CheckinResult result = new CheckinResult();
             string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
 
             if (receivedText.Contains("Result^"))
             {
                 var message = receivedText.Split(('^')).Last();
-                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Result>(message);
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject<CheckinResult>(message);
 
                 if (MainWindow.ClientMode)
                 {

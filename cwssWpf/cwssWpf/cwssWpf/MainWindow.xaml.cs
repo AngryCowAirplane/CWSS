@@ -229,7 +229,7 @@ namespace cwssWpf
 
         private void EnterPressed(object sender, KeyEventArgs e)
         {
-            var result = new Result();
+            var result = new CheckinResult();
             if (e.Key != Key.Enter || string.IsNullOrWhiteSpace(tbLoginId.Text)) return;
 
             result = tryCheckinUser();
@@ -287,15 +287,15 @@ namespace cwssWpf
         #endregion
 
         #region Custom Methods
-        private Result tryCheckinUser(string userId, bool remote = false)
+        private CheckinResult tryCheckinUser(string userId, bool remote = false)
         {
             tbLoginId.Text = userId;
             return tryCheckinUser(remote);
         }
 
-        private Result tryCheckinUser(bool remote = false)
+        private CheckinResult tryCheckinUser(bool remote = false)
         {
-            var result = new Result();
+            var result = new CheckinResult();
             var loginId = int.Parse(tbLoginId.Text);
             var user = Db.dataBase.GetUser(loginId);
             if (user != null)
@@ -322,8 +322,16 @@ namespace cwssWpf
                         var signedWaiver = waiver.ShowDialog();
                         if ((bool)signedWaiver)
                         {
-                            user.AddWaiver();
-                            tryCheckinUser();
+                            if(remote)
+                            {
+                                // Start Remote Actions class to move everything remote related out of logic in this class.
+                                // or seperate remote try checkin user function.
+                            }
+                            else
+                            {
+                                user.AddWaiver();
+                                tryCheckinUser();
+                            }
                         }
                         else
                         {
@@ -336,6 +344,7 @@ namespace cwssWpf
                         Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
                     }
+                    result.Show();
                 }
             }
             else
