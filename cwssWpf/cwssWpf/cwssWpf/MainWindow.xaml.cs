@@ -458,11 +458,8 @@ namespace cwssWpf
 
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        foreach (var msg in messages)
-                        {
-                            msg.ReadMessage(user);
-                        }
-
+                        List<Message> msgs = Db.dataBase.GetMessages(user).ToList();
+                        msgs = messages;
                     }));
                 }
             }
