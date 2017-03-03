@@ -419,9 +419,9 @@ namespace cwssWpf
 
         void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
         {
-            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer).ToLower();
+            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
 
-            if (receivedText.Contains("clientclosed") && ClientMode)
+            if (receivedText.Contains("ClientClosed") && ClientMode)
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
@@ -432,7 +432,7 @@ namespace cwssWpf
 
             if (!ClientMode)
             {
-                if (receivedText.Contains("checkin"))
+                if (receivedText.Contains("Checkin^"))
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {

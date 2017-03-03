@@ -64,8 +64,8 @@ namespace cwssWpf
 
         private void SendMessage(string message)
         {
-            string msgString = String.Format(message);
-            byte[] buffer = Encoding.Unicode.GetBytes(msgString);
+            //string msgString = String.Format(message);
+            byte[] buffer = Encoding.Unicode.GetBytes(message);
             udpClientWrapper.SendMulticast(buffer);
         }
 
