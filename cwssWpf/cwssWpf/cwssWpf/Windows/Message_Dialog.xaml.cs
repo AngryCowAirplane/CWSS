@@ -55,7 +55,7 @@ namespace cwssWpf.Windows
             tbFrom.IsEnabled = false;
             cbMode.IsEnabled = false;
             tbTo.Text = user.GetName();
-            tbFrom.Text = Db.dataBase.GetUser(message.SenderId).GetName();
+            tbFrom.Text = message.SenderName;
             tbSubject.Text = message.Subject;
             tbBody.Text = message.Contents;
             btnSend.Content = "Mark as Read";
@@ -73,7 +73,7 @@ namespace cwssWpf.Windows
             tbFrom.IsEnabled = false;
             cbMode.IsEnabled = false;
             tbTo.Text = user.GetName();
-            tbFrom.Text = Db.dataBase.GetUser(message.SenderId).GetName();
+            tbFrom.Text = user.GetName();
             tbSubject.Text = message.Subject;
             tbBody.Text = message.Contents;
             btnSend.Content = "Mark as Read";

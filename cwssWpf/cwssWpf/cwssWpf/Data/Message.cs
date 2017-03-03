@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cwssWpf.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace cwssWpf.Data
         public DateTime ExpireDate { get; set; }
         public string Subject { get; set; }
         public string Contents { get; set; }
+        public string SenderName { get; set; }
 
         public Message()
         {
@@ -25,6 +27,7 @@ namespace cwssWpf.Data
         public void SetSender(User user)
         {
             SenderId = user.LoginId;
+            SenderName = user.GetName();
         }
 
         public void SetRecipient(User user)
