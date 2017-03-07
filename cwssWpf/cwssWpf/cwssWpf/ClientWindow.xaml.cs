@@ -21,8 +21,6 @@ namespace cwssWpf
 {
     public partial class ClientWindow : Window
     {
-        MulticastUdpClient udpClientWrapper;
-
         public ClientWindow()
         {
             InitializeComponent();
@@ -41,7 +39,10 @@ namespace cwssWpf
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
             if(tbLoginId.Text.Length > 0)
-                SendMessage("Checkin^" + tbLoginId.Text);
+            {
+                var packet = new CommPacket(Sender.Client, tbLoginId.Text);
+                Comms.SendMessage(packet);
+            }
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -51,7 +52,8 @@ namespace cwssWpf
                 if (e.Key == Key.X)
                 {
                     this.Close();
-                    SendMessage("ClientClosed");
+                    var packet = new CommPacket(Sender.Client, true);
+                    Comms.SendMessage(packet);
                 }
             }
         }
@@ -62,33 +64,24 @@ namespace cwssWpf
             btnCheckIn_Click(null, null);
         }
 
-        private void SendMessage(string message)
-        {
-            ////string msgString = String.Format(message);
-            //var encryptedString = Helpers.EncryptString(message);
-            //byte[] buffer = Encoding.Unicode.GetBytes(message);
-            //udpClientWrapper.SendMulticast(buffer);
-            var packet = new CommPacket(Sender.Client, message);
-            Comms.SendMessage(packet);
-        }
-
         private void StartNetworkListen(object sender, RoutedEventArgs e)
         {
-            //// Create address objects
-            //int port = Int32.Parse(StaticValues.RemotePort);
-            //IPAddress multicastIPaddress = IPAddress.Parse(StaticValues.RemoteIP);
-            //IPAddress localIPaddress = IPAddress.Any;
-
-            //// Create MulticastUdpClient
-            //udpClientWrapper = new MulticastUdpClient(multicastIPaddress, port, localIPaddress);
-            //udpClientWrapper.UdpMessageReceived += OnUdpMessageReceived;
             Comms.Initialize();
             Comms.CommPacketReceived += Comms_CommPacketReceived;
         }
 
         private void Comms_CommPacketReceived(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var message = Comms.GetMessage();
+            if(message.sender == Sender.Server)
+            {
+                var messageObject = Comms.GetObject(message);
+                if (message.messageType == MessageType.CheckInResult)
+                {
+
+                    messageObject.Show();
+                }
+            }
         }
 
         private void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)

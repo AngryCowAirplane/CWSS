@@ -397,7 +397,11 @@ namespace cwssWpf
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
 
-                        SendMessage("Message^" + userString + "^" + message);
+                        //SendMessage("Message^" + userString + "^" + message);
+
+                        var packet = new CommPacket(Sender.Server, messages);
+                        Comms.SendMessage(packet);
+
                     }));
                 }
             }
@@ -413,17 +417,8 @@ namespace cwssWpf
             }
         }
 
-        MulticastUdpClient udpClientWrapper;
         private void StartNetworkListen(object sender, RoutedEventArgs e)
         {
-            //// Create address objects
-            //int port = Int32.Parse(StaticValues.RemotePort);
-            //IPAddress multicastIPaddress = IPAddress.Parse(StaticValues.RemoteIP);
-            //IPAddress localIPaddress = IPAddress.Any;
-
-            //// Create MulticastUdpClient
-            //udpClientWrapper = new MulticastUdpClient(multicastIPaddress, port, localIPaddress);
-            //udpClientWrapper.UdpMessageReceived += OnUdpMessageReceived;
             Comms.Initialize();
             Comms.CommPacketReceived += Comms_CommPacketReceived;
         }
@@ -433,12 +428,14 @@ namespace cwssWpf
             var message = Comms.GetMessage();
             if (message.sender == Sender.Client)
             {
-                MessageBox.Show("Message Recieved: " + message.messageType.ToString());
+                if(message.messageType == MessageType.CheckIn)
+                {
+
+                }
             }
 
             var test = Comms.GetObject(message);
 
-            //throw new NotImplementedException();
         }
 
         void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
@@ -468,7 +465,7 @@ namespace cwssWpf
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
 
-                        SendMessage("Result^" + message);
+                        //SendMessage("Result^" + message);
                     }));
                 }
 
@@ -491,13 +488,6 @@ namespace cwssWpf
                     }));
                 }
             }
-        }
-
-        private void SendMessage(string message)
-        {
-            //string msgString = String.Format(message);
-            byte[] buffer = Encoding.Unicode.GetBytes(message);
-            udpClientWrapper.SendMulticast(buffer);
         }
         #endregion
 

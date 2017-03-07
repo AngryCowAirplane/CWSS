@@ -56,7 +56,7 @@ namespace cwssWpf.Network
 
         public static dynamic GetObject(CommPacket packet)
         {
-            if (packet.messageType == MessageType.CheckIn)
+            if (packet.messageType == MessageType.CheckInResult)
                 return JsonConvert.DeserializeObject<CheckinResult>(packet.messageObject);
             else if (packet.messageType == MessageType.Messages)
                 return JsonConvert.DeserializeObject<List<Message>>(packet.messageObject);
@@ -64,8 +64,10 @@ namespace cwssWpf.Network
                 return JsonConvert.DeserializeObject<User>(packet.messageObject);
             else if (packet.messageType == MessageType.Waiver)
                 return JsonConvert.DeserializeObject<Document>(packet.messageObject);
-            else if (packet.messageType == MessageType.Action)
+            else if (packet.messageType == MessageType.CheckIn)
                 return JsonConvert.DeserializeObject<string>(packet.messageObject);
+            else if (packet.messageType == MessageType.ClientClosed)
+                return packet.messageObject;
             else
                 return null;
         }
@@ -78,10 +80,14 @@ namespace cwssWpf.Network
         public MessageType messageType { get; set; }
         public string messageObject { get; set; }
 
+        [JsonConstructor]
+        public CommPacket()
+        { }
+
         public CommPacket(Sender sender, CheckinResult result)
         {
             this.sender = sender;
-            this.messageType = MessageType.CheckIn;
+            this.messageType = MessageType.CheckInResult;
             messageObject = JsonConvert.SerializeObject(result);
         }
 
@@ -106,11 +112,18 @@ namespace cwssWpf.Network
             messageObject = JsonConvert.SerializeObject(user);
         }
 
-        public CommPacket(Sender sender, string action)
+        public CommPacket(Sender sender, string userId)
         {
             this.sender = sender;
-            this.messageType = MessageType.Action;
-            messageObject = JsonConvert.SerializeObject(action);
+            this.messageType = MessageType.CheckIn;
+            messageObject = JsonConvert.SerializeObject(userId);
+        }
+
+        public CommPacket(Sender sender, bool clientClosed)
+        {
+            this.sender = sender;
+            this.messageType = MessageType.ClientClosed;
+            messageObject = "ClientClosed";
         }
     }
 
@@ -123,9 +136,10 @@ namespace cwssWpf.Network
     public enum MessageType
     {
         CheckIn = 0,
-        Messages = 1,
-        Waiver = 2,
-        NewUser = 3,
-        Action = 4
+        CheckInResult = 1,
+        Messages = 2,
+        Waiver = 3,
+        NewUser = 4,
+        ClientClosed = 5
     }
 }
