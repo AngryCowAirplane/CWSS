@@ -80,8 +80,8 @@ namespace cwssWpf
                     var messageObject = Comms.GetObject(message);
                     if (message.messageType == MessageType.CheckInResult)
                     {
-
-                            messageObject.Show();
+                        messageObject.Initialize();
+                        messageObject.Show();
                     }
                 }
             }));

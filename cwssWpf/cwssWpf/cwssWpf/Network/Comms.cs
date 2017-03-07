@@ -88,35 +88,50 @@ namespace cwssWpf.Network
         {
             this.sender = sender;
             this.messageType = MessageType.CheckInResult;
-            messageObject = JsonConvert.SerializeObject(result);
+            messageObject = JsonConvert.SerializeObject(result, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         public CommPacket(Sender sender, List<Message> messages)
         {
             this.sender = sender;
             this.messageType = MessageType.Messages;
-            messageObject = JsonConvert.SerializeObject(messages);
+            messageObject = JsonConvert.SerializeObject(messages, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         public CommPacket(Sender sender, Document document)
         {
             this.sender = sender;
             this.messageType = MessageType.Waiver;
-            messageObject = JsonConvert.SerializeObject(document);
+            messageObject = JsonConvert.SerializeObject(document, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         public CommPacket(Sender sender, User user)
         {
             this.sender = sender;
             this.messageType = MessageType.Waiver;
-            messageObject = JsonConvert.SerializeObject(user);
+            messageObject = JsonConvert.SerializeObject(user, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         public CommPacket(Sender sender, string userId)
         {
             this.sender = sender;
             this.messageType = MessageType.CheckIn;
-            messageObject = JsonConvert.SerializeObject(userId);
+            messageObject = JsonConvert.SerializeObject(userId, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         public CommPacket(Sender sender, bool clientClosed)

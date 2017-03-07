@@ -425,25 +425,31 @@ namespace cwssWpf
 
         private void Comms_CommPacketReceived(object sender, EventArgs e)
         {
-            var message = Comms.GetMessage();
-            if (message.sender == Sender.Client)
+            Dispatcher.BeginInvoke((Action)(() =>
             {
-                var messageObject = Comms.GetObject(message);
+                var message = Comms.GetMessage();
 
-                if (message.messageType == MessageType.CheckIn)
+                if (message.sender == Sender.Client && ClientMode && message.messageType == MessageType.ClientClosed)
                 {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        tbLoginId.Text = messageObject;
-                        var success = tryCheckinUser();
-                        tbLoginId.Text = "";
-                        var packet = new CommPacket(Sender.Server, success);
-                        Comms.SendMessage(packet);
-                    }));
+                    this.Show();
+                    ClientMode = false;
                 }
-            }
 
+                if (message.sender == Sender.Client && !ClientMode)
+                {
+                    var messageObject = Comms.GetObject(message);
 
+                    if (message.messageType == MessageType.CheckIn)
+                    {
+
+                            tbLoginId.Text = messageObject;
+                            var success = tryCheckinUser();
+                            tbLoginId.Text = "";
+                            var packet = new CommPacket(Sender.Server, success);
+                            Comms.SendMessage(packet);
+                    }
+                }
+            }));
         }
 
         void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
