@@ -233,7 +233,6 @@ namespace cwssWpf
             if (e.Key != Key.Enter || string.IsNullOrWhiteSpace(tbLoginId.Text)) return;
 
             result = tryCheckinUser();
-
             result.Show();
         }
 
@@ -323,7 +322,7 @@ namespace cwssWpf
                         var signedWaiver = waiver.ShowDialog();
                         if ((bool)signedWaiver)
                         {
-                            if(remote)
+                            if (remote)
                             {
                                 // Start Remote Actions class to move everything remote related out of logic in this class.
                                 // or seperate remote try checkin user function.
@@ -345,7 +344,6 @@ namespace cwssWpf
                         Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
                     }
-                    result.Show();
                 }
             }
             else
@@ -390,20 +388,8 @@ namespace cwssWpf
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        var message = JsonConvert.SerializeObject(messages, Formatting.None, new JsonSerializerSettings()
-                        {
-                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                        });
-                        var userString = JsonConvert.SerializeObject(user, Formatting.None, new JsonSerializerSettings()
-                        {
-                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                        });
-
-                        //SendMessage("Message^" + userString + "^" + message);
-
                         var packet = new CommPacket(Sender.Server, messages);
                         Comms.SendMessage(packet);
-
                     }));
                 }
             }
@@ -427,84 +413,91 @@ namespace cwssWpf
 
         private void Comms_CommPacketReceived(object sender, EventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
+            var message = Comms.GetMessage();
+            if (message != null)
             {
-                var message = Comms.GetMessage();
-
                 if (message.sender == Sender.Client && ClientMode && message.messageType == MessageType.ClientClosed)
                 {
-                    this.Show();
-                    ClientMode = false;
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+
+                        this.Show();
+                        ClientMode = false;
+                    }));
                 }
 
-                if (message.sender == Sender.Client && !ClientMode)
+                else if (message.sender == Sender.Client && !ClientMode)
                 {
                     var messageObject = Comms.GetObject(message);
 
                     if (message.messageType == MessageType.CheckIn)
                     {
 
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+
                             tbLoginId.Text = messageObject;
                             var success = tryCheckinUser();
                             tbLoginId.Text = "";
                             var packet = new CommPacket(Sender.Server, success);
                             Comms.SendMessage(packet);
+                        }));
                     }
                 }
-            }));
-        }
-
-        void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
-        {
-            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
-
-            if (receivedText.Contains("ClientClosed") && ClientMode)
-            {
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    this.Show();
-                    ClientMode = false;
-                }));
-            }
-
-            if (!ClientMode)
-            {
-                if (receivedText.Contains("Checkin^"))
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        var id = receivedText.Split('^').Last();
-                        var success = tryCheckinUser(id, true);
-                        success.Initialize();
-                        var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
-                        {
-                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                        });
-
-                        //SendMessage("Result^" + message);
-                    }));
-                }
-
-                if (receivedText.Contains("ReturnMessages^"))
-                {
-                    var parts = receivedText.Split(('^'));
-                    var userString = parts[1];
-                    var messagesString = parts.Last();
-                    var user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userString);
-                    var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(messagesString);
-
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        List<Message> msgs = Db.dataBase.GetMessages(user).ToList();
-                        foreach (var item in messages)
-                        {
-                            if(item.RecipientId.Count < 1)
-                                msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(user);
-                        }
-                    }));
-                }
             }
         }
+
+        //void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
+        //{
+        //    string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
+
+        //    if (receivedText.Contains("ClientClosed") && ClientMode)
+        //    {
+        //        Dispatcher.BeginInvoke((Action)(() =>
+        //        {
+        //            this.Show();
+        //            ClientMode = false;
+        //        }));
+        //    }
+
+        //    if (!ClientMode)
+        //    {
+        //        if (receivedText.Contains("Checkin^"))
+        //        {
+        //            Dispatcher.BeginInvoke((Action)(() =>
+        //            {
+        //                var id = receivedText.Split('^').Last();
+        //                var success = tryCheckinUser(id, true);
+        //                success.Initialize();
+        //                var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
+        //                {
+        //                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        //                });
+
+        //                //SendMessage("Result^" + message);
+        //            }));
+        //        }
+
+        //        if (receivedText.Contains("ReturnMessages^"))
+        //        {
+        //            var parts = receivedText.Split(('^'));
+        //            var userString = parts[1];
+        //            var messagesString = parts.Last();
+        //            var user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userString);
+        //            var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(messagesString);
+
+        //            Dispatcher.BeginInvoke((Action)(() =>
+        //            {
+        //                List<Message> msgs = Db.dataBase.GetMessages(user).ToList();
+        //                foreach (var item in messages)
+        //                {
+        //                    if(item.RecipientId.Count < 1)
+        //                        msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(user);
+        //                }
+        //            }));
+        //        }
+        //    }
+        //}
         #endregion
 
         private void menuTest_Click(object sender, RoutedEventArgs e)

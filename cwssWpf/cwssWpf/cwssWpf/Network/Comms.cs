@@ -43,7 +43,9 @@ namespace cwssWpf.Network
 
         public static CommPacket GetMessage()
         {
-            return commPacket;
+            var message = commPacket;
+            //commPacket = null;
+            return message;
         }
 
         private static void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)

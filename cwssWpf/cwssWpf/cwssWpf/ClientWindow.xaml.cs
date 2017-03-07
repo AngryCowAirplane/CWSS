@@ -75,14 +75,14 @@ namespace cwssWpf
             var message = Comms.GetMessage();
             if (message.sender == Sender.Server)
             {
-                Dispatcher.BeginInvoke((Action)(() =>
+                var messageObject = Comms.GetObject(message);
+                if (message.messageType == MessageType.CheckInResult)
                 {
-                    var messageObject = Comms.GetObject(message);
-                    if (message.messageType == MessageType.CheckInResult)
+                    Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        messageObject.Show();
-                    }
-                }));
+                            messageObject.Show();
+                    }));
+                }
             }
         }
 
