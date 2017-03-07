@@ -129,7 +129,7 @@ namespace cwssWpf
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
 
-                        SendMessage("ReturnMessages^" + userString + "^" + message);
+                       // SendMessage("ReturnMessages^" + userString + "^" + message);
                     }));
                 }
             }
