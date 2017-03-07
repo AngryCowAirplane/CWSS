@@ -310,6 +310,7 @@ namespace cwssWpf
                     user.CheckIn();
                     var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
                     result.Alert = new Alert_Dialog("Check In", message);
+                    result.Success = true;
                 }
                 else
                 {
@@ -358,6 +359,7 @@ namespace cwssWpf
             tbLoginId.Text = "";
             UpdateClimberStats();
 
+            result.Initialize();
             return result;
         }
 
