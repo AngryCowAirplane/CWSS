@@ -411,11 +411,11 @@ namespace cwssWpf
             Comms.CommPacketReceived += Comms_CommPacketReceived;
         }
 
-        private void Comms_CommPacketReceived(object sender, EventArgs e)
+        private void Comms_CommPacketReceived(object sender, CustomCommArgs args)
         {
-            var message = Comms.GetMessage();
-            if (message != null)
+            if (args.senderWindow == Sender.Client)
             {
+                var message = Comms.GetMessage();
                 if (message.sender == Sender.Client && ClientMode && message.messageType == MessageType.ClientClosed)
                 {
                     Dispatcher.BeginInvoke((Action)(() =>

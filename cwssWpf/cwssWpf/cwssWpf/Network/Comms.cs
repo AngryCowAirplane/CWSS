@@ -13,7 +13,7 @@ namespace cwssWpf.Network
     public static class Comms
     {
         public static MulticastUdpClient udpClientWrapper;
-        public static event EventHandler CommPacketReceived;
+        public static event EventHandler <CustomCommArgs> CommPacketReceived;
 
         private static CommPacket commPacket;
 
@@ -43,9 +43,7 @@ namespace cwssWpf.Network
 
         public static CommPacket GetMessage()
         {
-            var message = commPacket;
-            //commPacket = null;
-            return message;
+            return commPacket;
         }
 
         private static void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
@@ -53,7 +51,7 @@ namespace cwssWpf.Network
             string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
             var decryptedString = Helpers.DecryptString(receivedText);
             commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
-            CommPacketReceived(null, null);
+            CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
         }
 
         public static dynamic GetObject(CommPacket packet)
@@ -158,5 +156,15 @@ namespace cwssWpf.Network
         Waiver = 3,
         NewUser = 4,
         ClientClosed = 5
+    }
+
+    public class CustomCommArgs : EventArgs
+    {
+        public Sender senderWindow;
+
+        public CustomCommArgs(Sender sender)
+        {
+            senderWindow = sender;
+        }
     }
 }

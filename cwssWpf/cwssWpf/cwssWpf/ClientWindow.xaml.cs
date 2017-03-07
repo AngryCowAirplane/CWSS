@@ -70,11 +70,11 @@ namespace cwssWpf
             Comms.CommPacketReceived += Comms_CommPacketReceived;
         }
 
-        private void Comms_CommPacketReceived(object sender, EventArgs e)
+        private void Comms_CommPacketReceived(object sender, CustomCommArgs args)
         {
-            var message = Comms.GetMessage();
-            if (message.sender == Sender.Server)
+            if (args.senderWindow == Sender.Server)
             {
+                var message = Comms.GetMessage();
                 var messageObject = Comms.GetObject(message);
                 if (message.messageType == MessageType.CheckInResult)
                 {
