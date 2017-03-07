@@ -416,14 +416,29 @@ namespace cwssWpf
         MulticastUdpClient udpClientWrapper;
         private void StartNetworkListen(object sender, RoutedEventArgs e)
         {
-            // Create address objects
-            int port = Int32.Parse(StaticValues.RemotePort);
-            IPAddress multicastIPaddress = IPAddress.Parse(StaticValues.RemoteIP);
-            IPAddress localIPaddress = IPAddress.Any;
+            //// Create address objects
+            //int port = Int32.Parse(StaticValues.RemotePort);
+            //IPAddress multicastIPaddress = IPAddress.Parse(StaticValues.RemoteIP);
+            //IPAddress localIPaddress = IPAddress.Any;
 
-            // Create MulticastUdpClient
-            udpClientWrapper = new MulticastUdpClient(multicastIPaddress, port, localIPaddress);
-            udpClientWrapper.UdpMessageReceived += OnUdpMessageReceived;
+            //// Create MulticastUdpClient
+            //udpClientWrapper = new MulticastUdpClient(multicastIPaddress, port, localIPaddress);
+            //udpClientWrapper.UdpMessageReceived += OnUdpMessageReceived;
+            Comms.Initialize();
+            Comms.CommPacketReceived += Comms_CommPacketReceived;
+        }
+
+        private void Comms_CommPacketReceived(object sender, EventArgs e)
+        {
+            var message = Comms.GetMessage();
+            if (message.sender == Sender.Client)
+            {
+                MessageBox.Show("Message Recieved: " + message.messageType.ToString());
+            }
+
+            var test = Comms.GetObject(message);
+
+            //throw new NotImplementedException();
         }
 
         void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)

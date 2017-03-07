@@ -53,6 +53,22 @@ namespace cwssWpf.Network
             commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
             CommPacketReceived(null, null);
         }
+
+        public static dynamic GetObject(CommPacket packet)
+        {
+            if (packet.messageType == MessageType.CheckIn)
+                return JsonConvert.DeserializeObject<CheckinResult>(packet.messageObject);
+            else if (packet.messageType == MessageType.Messages)
+                return JsonConvert.DeserializeObject<List<Message>>(packet.messageObject);
+            else if (packet.messageType == MessageType.NewUser)
+                return JsonConvert.DeserializeObject<User>(packet.messageObject);
+            else if (packet.messageType == MessageType.Waiver)
+                return JsonConvert.DeserializeObject<Document>(packet.messageObject);
+            else if (packet.messageType == MessageType.Action)
+                return JsonConvert.DeserializeObject<string>(packet.messageObject);
+            else
+                return null;
+        }
     }
 
     public class CommPacket
@@ -89,6 +105,13 @@ namespace cwssWpf.Network
             this.messageType = MessageType.Waiver;
             messageObject = JsonConvert.SerializeObject(user);
         }
+
+        public CommPacket(Sender sender, string action)
+        {
+            this.sender = sender;
+            this.messageType = MessageType.Action;
+            messageObject = JsonConvert.SerializeObject(action);
+        }
     }
 
     public enum Sender
@@ -102,6 +125,7 @@ namespace cwssWpf.Network
         CheckIn = 0,
         Messages = 1,
         Waiver = 2,
-        NewUser = 3
+        NewUser = 3,
+        Action = 4
     }
 }
