@@ -428,13 +428,21 @@ namespace cwssWpf
             var message = Comms.GetMessage();
             if (message.sender == Sender.Client)
             {
-                if(message.messageType == MessageType.CheckIn)
-                {
+                var messageObject = Comms.GetObject(message);
 
+                if (message.messageType == MessageType.CheckIn)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        tbLoginId.Text = messageObject;
+                        var success = tryCheckinUser();
+                        tbLoginId.Text = "";
+                        var packet = new CommPacket(Sender.Server, success);
+                        Comms.SendMessage(packet);
+                    }));
                 }
             }
 
-            var test = Comms.GetObject(message);
 
         }
 

@@ -73,15 +73,18 @@ namespace cwssWpf
         private void Comms_CommPacketReceived(object sender, EventArgs e)
         {
             var message = Comms.GetMessage();
-            if(message.sender == Sender.Server)
+            Dispatcher.BeginInvoke((Action)(() =>
             {
-                var messageObject = Comms.GetObject(message);
-                if (message.messageType == MessageType.CheckInResult)
+                if (message.sender == Sender.Server)
                 {
+                    var messageObject = Comms.GetObject(message);
+                    if (message.messageType == MessageType.CheckInResult)
+                    {
 
-                    messageObject.Show();
+                            messageObject.Show();
+                    }
                 }
-            }
+            }));
         }
 
         private void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
