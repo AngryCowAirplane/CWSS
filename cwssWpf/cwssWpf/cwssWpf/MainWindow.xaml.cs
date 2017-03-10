@@ -175,10 +175,12 @@ namespace cwssWpf
 
         private void menuClient_Click(object sender, RoutedEventArgs e)
         {
+            Comms.CommPacketReceived -= Comms_CommPacketReceived;
             var clientWindow = new ClientWindow();
             clientWindow.Show();
             ClientMode = true;
             this.Hide();
+            this.Close();
         }
 
         private void menuSettings_Click(object sender, RoutedEventArgs e)
@@ -420,7 +422,7 @@ namespace cwssWpf
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-
+                        Comms.CommPacketReceived += Comms_CommPacketReceived;
                         this.Show();
                         ClientMode = false;
                     }));

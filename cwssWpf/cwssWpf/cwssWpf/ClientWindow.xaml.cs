@@ -51,9 +51,11 @@ namespace cwssWpf
             {
                 if (e.Key == Key.X)
                 {
-                    this.Close();
-                    var packet = new CommPacket(Sender.Client, true);
-                    Comms.SendMessage(packet);
+                    //Comms.CommPacketReceived -= Comms_CommPacketReceived;
+                    //this.Close();
+                    //var packet = new CommPacket(Sender.Client, true);
+                    //Comms.SendMessage(packet);
+                    Application.Current.Shutdown();
                 }
             }
         }
