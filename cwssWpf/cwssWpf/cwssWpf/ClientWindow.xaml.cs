@@ -32,7 +32,7 @@ namespace cwssWpf
                 this.WindowStyle = WindowStyle.None;
             }
 
-            //StartNetworkListen(null, null);
+            StartNetworkListen(null, null);
             FocusManager.SetFocusedElement(this, tbLoginId);
         }
 
@@ -68,7 +68,7 @@ namespace cwssWpf
 
         private void StartNetworkListen(object sender, RoutedEventArgs e)
         {
-            Comms.Initialize();
+            //Comms.Initialize();
             Comms.CommPacketReceived += Comms_CommPacketReceived;
         }
 
