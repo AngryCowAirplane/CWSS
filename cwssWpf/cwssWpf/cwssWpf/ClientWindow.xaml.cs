@@ -32,7 +32,7 @@ namespace cwssWpf
                 this.WindowStyle = WindowStyle.None;
             }
 
-            StartNetworkListen(null, null);
+            //StartNetworkListen(null, null);
             FocusManager.SetFocusedElement(this, tbLoginId);
         }
 

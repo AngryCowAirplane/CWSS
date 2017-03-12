@@ -23,8 +23,11 @@ namespace cwssWpf.Windows
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             var waiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CW Acknowledgement of Risk and Sign-In Sheet.pdf");
-
+            
             InitializeComponent();
+            tbName.Width = (this.Width / 2) - 100;
+            tbDate.Width = (this.Width / 2) - 100;
+
             webBrowser.Navigate("file:///" + waiverPath);
             this.Focus();
             this.Activate();
@@ -37,7 +40,12 @@ namespace cwssWpf.Windows
             this.Close();
         }
 
-        private void btnExitForm_Click(object sender, RoutedEventArgs e)
+        private void btnNoSignForm_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
