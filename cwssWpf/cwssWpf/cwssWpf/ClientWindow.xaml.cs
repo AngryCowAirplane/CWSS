@@ -84,7 +84,7 @@ namespace cwssWpf
                         messageObject.Show();
                     }));
                 }
-                if (message.messageType == MessageType.NewUser)
+                else if (message.messageType == MessageType.NewUser)
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
@@ -99,7 +99,7 @@ namespace cwssWpf
                         }
                     }));
                 }
-                if (message.messageType == MessageType.Messages)
+                else if (message.messageType == MessageType.Messages)
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
@@ -108,7 +108,7 @@ namespace cwssWpf
                         var messages = messagePacket.Messages;
 
                         var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-                        alert.Show();
+                        alert.ShowDialog();
 
                         foreach (var msg in messages)
                         {

@@ -446,7 +446,7 @@ namespace cwssWpf
                         }));
                     }
 
-                    if (message.messageType == MessageType.CheckIn)
+                    else if (message.messageType == MessageType.CheckIn)
                     {
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
@@ -462,7 +462,7 @@ namespace cwssWpf
                         }));
                     }
 
-                    if (message.messageType == MessageType.NewUser)
+                    else if (message.messageType == MessageType.NewUser)
                     {
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
@@ -470,7 +470,7 @@ namespace cwssWpf
                         }));
                     }
 
-                    if (message.messageType == MessageType.Messages)
+                    else if (message.messageType == MessageType.Messages)
                     {
                         var messagePacket = (MessagesPacket)messageObject;
                         Dispatcher.BeginInvoke((Action)(() =>
