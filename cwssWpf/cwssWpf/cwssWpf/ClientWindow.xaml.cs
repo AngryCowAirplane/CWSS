@@ -108,12 +108,12 @@ namespace cwssWpf
                         var messages = messagePacket.Messages;
 
                         var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-                        alert.ShowDialog();
+                        alert.Show();
 
                         foreach (var msg in messages)
                         {
                             var messageDialog = new Message_Dialog(user, msg);
-                            messageDialog.ShowDialog();
+                            messageDialog.Show();
                         }
 
                         var newMessagePacket = new MessagesPacket(messages, user);
