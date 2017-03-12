@@ -321,8 +321,9 @@ namespace cwssWpf
                 {
                     user.CheckIn();
                     var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
-                    result.Alert = new Alert_Dialog("Check In", message);
+                    result.Alert = new Alert_Dialog("Check In", message, autoClose: true);
                     result.Success = true;
+                    Helpers.PlayLogin();
                 }
                 else
                 {
@@ -455,7 +456,7 @@ namespace cwssWpf
                             tbLoginId.Text = "";
                             var packet = new CommPacket(Sender.Server, success);
                             Comms.SendMessage(packet);
-                            success.ShowAuto();
+                            //success.ShowAuto();
                         }));
                     }
 

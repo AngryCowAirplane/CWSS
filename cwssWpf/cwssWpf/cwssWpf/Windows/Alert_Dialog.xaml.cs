@@ -20,6 +20,7 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Alert_Dialog : Window
     {
+        //Autoclose won't work like this.  might as well take it out.
         private static Timer timer;
 
         public Alert_Dialog(string alertTitle, string alertText, Vector? screenCoords = null, bool autoClose = false)
@@ -36,6 +37,8 @@ namespace cwssWpf.Windows
             {
                 timer = new Timer(3000);
                 timer.Elapsed += timerExpired;
+                timer.Enabled = true;
+                timer.Start();
             }
 
             InitializeComponent();
@@ -75,11 +78,16 @@ namespace cwssWpf.Windows
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            if(timer != null)
+                timer.Dispose();
         }
 
         private void timerExpired(object sender, ElapsedEventArgs e)
         {
-            Close_Click(null, null);
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                Close_Click(null, null);
+            }));
         }
     }
 }
