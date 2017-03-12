@@ -476,7 +476,7 @@ namespace cwssWpf
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
                             List<Message> msgs = Db.dataBase.GetMessages(messagePacket.MessageUser).ToList();
-                            foreach (var item in messagePacket.Messages)
+                            foreach (var item in msgs)
                             {
                                 if (item.RecipientId.Count < 1)
                                     msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(messagePacket.MessageUser);
