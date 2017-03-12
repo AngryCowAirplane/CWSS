@@ -438,7 +438,7 @@ namespace cwssWpf
                     {
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
-                            if (messageObject == false)
+                            if ((string)messageObject.ToLower() == "false")
                                 ClientMode = true;
                             else
                                 ClientMode = false;

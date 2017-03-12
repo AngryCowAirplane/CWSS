@@ -48,10 +48,17 @@ namespace cwssWpf.Network
 
         private static void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
         {
-            string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
-            var decryptedString = Helpers.DecryptString(receivedText);
-            commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
-            CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
+            try
+            {
+                string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
+                var decryptedString = Helpers.DecryptString(receivedText);
+                commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
+                CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
+            }
+            catch
+            {
+
+            }
         }
 
         public static dynamic GetObject(CommPacket packet)
