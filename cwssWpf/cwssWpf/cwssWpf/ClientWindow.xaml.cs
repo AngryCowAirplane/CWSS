@@ -113,7 +113,7 @@ namespace cwssWpf
                         foreach (var msg in messages)
                         {
                             var messageDialog = new Message_Dialog(user, msg);
-                            messageDialog.Show();
+                            messageDialog.ShowDialog();
                         }
 
                         var newMessagePacket = new MessagesPacket(messages, user);
