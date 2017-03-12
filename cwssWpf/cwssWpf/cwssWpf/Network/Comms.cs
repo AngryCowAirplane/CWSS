@@ -66,7 +66,7 @@ namespace cwssWpf.Network
                 return JsonConvert.DeserializeObject<Document>(packet.messageObject);
             else if (packet.messageType == MessageType.CheckIn)
                 return JsonConvert.DeserializeObject<string>(packet.messageObject);
-            else if (packet.messageType == MessageType.ClientClosed)
+            else if (packet.messageType == MessageType.ClientMode)
                 return packet.messageObject;
             else
                 return null;
