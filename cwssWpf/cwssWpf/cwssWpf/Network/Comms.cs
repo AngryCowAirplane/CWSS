@@ -66,7 +66,7 @@ namespace cwssWpf.Network
             if (packet.messageType == MessageType.CheckInResult)
                 return JsonConvert.DeserializeObject<CheckinResult>(packet.messageObject);
             else if (packet.messageType == MessageType.Messages)
-                return JsonConvert.DeserializeObject<List<Message>>(packet.messageObject);
+                return JsonConvert.DeserializeObject<MessagesPacket>(packet.messageObject);
             else if (packet.messageType == MessageType.NewUser)
                 return JsonConvert.DeserializeObject<User>(packet.messageObject);
             else if (packet.messageType == MessageType.Waiver)

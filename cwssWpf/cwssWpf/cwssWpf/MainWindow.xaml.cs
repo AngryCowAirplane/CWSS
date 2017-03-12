@@ -457,6 +457,8 @@ namespace cwssWpf
                             var packet = new CommPacket(Sender.Server, success);
                             Comms.SendMessage(packet);
                             //success.ShowAuto();
+
+
                         }));
                     }
 
@@ -484,58 +486,6 @@ namespace cwssWpf
                 }
             }
         }
-
-        //void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
-        //{
-        //    string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
-
-        //    if (receivedText.Contains("ClientClosed") && ClientMode)
-        //    {
-        //        Dispatcher.BeginInvoke((Action)(() =>
-        //        {
-        //            this.Show();
-        //            ClientMode = false;
-        //        }));
-        //    }
-
-        //    if (!ClientMode)
-        //    {
-        //        if (receivedText.Contains("Checkin^"))
-        //        {
-        //            Dispatcher.BeginInvoke((Action)(() =>
-        //            {
-        //                var id = receivedText.Split('^').Last();
-        //                var success = tryCheckinUser(id, true);
-        //                success.Initialize();
-        //                var message = JsonConvert.SerializeObject(success, Formatting.None, new JsonSerializerSettings()
-        //                {
-        //                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        //                });
-
-        //                //SendMessage("Result^" + message);
-        //            }));
-        //        }
-
-        //        if (receivedText.Contains("ReturnMessages^"))
-        //        {
-        //            var parts = receivedText.Split(('^'));
-        //            var userString = parts[1];
-        //            var messagesString = parts.Last();
-        //            var user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userString);
-        //            var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(messagesString);
-
-        //            Dispatcher.BeginInvoke((Action)(() =>
-        //            {
-        //                List<Message> msgs = Db.dataBase.GetMessages(user).ToList();
-        //                foreach (var item in messages)
-        //                {
-        //                    if(item.RecipientId.Count < 1)
-        //                        msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(user);
-        //                }
-        //            }));
-        //        }
-        //    }
-        //}
         #endregion
 
         private void menuTest_Click(object sender, RoutedEventArgs e)
