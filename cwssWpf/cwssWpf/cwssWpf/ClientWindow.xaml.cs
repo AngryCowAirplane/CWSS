@@ -38,7 +38,7 @@ namespace cwssWpf
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
-            if(tbLoginId.Text.Length > 0)
+            if (tbLoginId.Text.Length > 0)
             {
                 var packet = new CommPacket(Sender.Client, tbLoginId.Text);
                 Comms.SendMessage(packet);
@@ -51,10 +51,10 @@ namespace cwssWpf
             {
                 if (e.Key == Key.X)
                 {
-                    //Comms.CommPacketReceived -= Comms_CommPacketReceived;
-                    //this.Close();
-                    //var packet = new CommPacket(Sender.Client, true);
-                    //Comms.SendMessage(packet);
+                    Comms.CommPacketReceived -= Comms_CommPacketReceived;
+                    this.Close();
+                    var packet = new CommPacket(Sender.Client, true);
+                    Comms.SendMessage(packet);
                     Application.Current.Shutdown();
                 }
             }
@@ -68,7 +68,6 @@ namespace cwssWpf
 
         private void StartNetworkListen(object sender, RoutedEventArgs e)
         {
-            //Comms.Initialize();
             Comms.CommPacketReceived += Comms_CommPacketReceived;
         }
 
@@ -82,61 +81,47 @@ namespace cwssWpf
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                            messageObject.Show();
+                        messageObject.Show();
+                    }));
+                }
+                if (message.messageType == MessageType.NewUser)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        var newUser = new NewUser_Dialog(this);
+                        newUser.ShowDialog();
+
+                        if (newUser.Success)
+                        {
+                            var user = newUser.NewUser;
+                            var packet = new CommPacket(Sender.Client, user);
+                            Comms.SendMessage(packet);
+                        }
+                    }));
+                }
+                if (message.messageType == MessageType.Messages)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        var messagePacket = (MessagesPacket)messageObject;
+                        var user = messagePacket.MessageUser;
+                        var messages = messagePacket.Messages;
+
+                        var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                        alert.ShowDialog();
+
+                        foreach (var msg in messages)
+                        {
+                            var messageDialog = new Message_Dialog(user, msg);
+                            messageDialog.ShowDialog();
+                        }
+
+                        var newMessagePacket = new MessagesPacket(messages, user);
+                        var packet = new CommPacket(Sender.Client, newMessagePacket);
+                        Comms.SendMessage(packet);
                     }));
                 }
             }
         }
-
-        //private void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
-        //{
-        //    CheckinResult result = new CheckinResult();
-        //    string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
-
-        //    if (receivedText.Contains("Result^"))
-        //    {
-        //        var message = receivedText.Split(('^')).Last();
-        //        result = Newtonsoft.Json.JsonConvert.DeserializeObject<CheckinResult>(message);
-
-        //        if (MainWindow.ClientMode)
-        //        {
-        //            Dispatcher.BeginInvoke((Action)(() =>
-        //            {
-        //                result.Show();
-        //            }));
-        //        }
-        //    }
-        //    else if (receivedText.Contains("Message^"))
-        //    {
-        //        var parts = receivedText.Split(('^'));
-        //        var userString = parts[1];
-        //        var messagesString = parts.Last();
-
-        //        var user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userString);
-        //        var messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Message>>(messagesString);
-
-        //        if (MainWindow.ClientMode)
-        //        {
-        //            Dispatcher.BeginInvoke((Action)(() =>
-        //            {
-        //                var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-        //                alert.ShowDialog();
-
-        //                foreach (var msg in messages)
-        //                {
-        //                    var messageDialog = new Message_Dialog(user, msg);
-        //                    messageDialog.ShowDialog();
-        //                }
-
-        //                var message = JsonConvert.SerializeObject(messages, Formatting.None, new JsonSerializerSettings()
-        //                {
-        //                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        //                });
-
-        //               // SendMessage("ReturnMessages^" + userString + "^" + message);
-        //            }));
-        //        }
-        //    }
-        //}
     }
 }

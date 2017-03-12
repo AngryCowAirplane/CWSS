@@ -240,6 +240,12 @@ namespace cwssWpf
                 alert.ShowDialog();
         }
 
+        public void ShowAuto()
+        {
+            var alert = new Alert_Dialog(Heading, Body, autoClose: true);
+            alert.ShowDialog();
+        }
+
         public void Initialize()
         {
             Heading = (string)Alert.Title.Content;

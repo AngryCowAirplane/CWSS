@@ -50,6 +50,7 @@ namespace cwssWpf
             Config.Initialize();
             Db.Initialize();
             Logger.Initialize();
+            Comms.Initialize();
 
             // DataBase (don't change unless migrating to a real database with entity framework)
             #region Database Setup
@@ -85,8 +86,16 @@ namespace cwssWpf
         #region UI Click Event Handlers
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
-            var newUser = new NewUser_Dialog(this);
-            newUser.ShowDialog();
+            if(ClientMode)
+            {
+                var packet = new CommPacket(Sender.Server, new User());
+                Comms.SendMessage(packet);
+            }
+            else
+            {
+                var newUser = new NewUser_Dialog(this);
+                newUser.ShowDialog();
+            }
         }
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
@@ -178,8 +187,10 @@ namespace cwssWpf
             Comms.CommPacketReceived -= Comms_CommPacketReceived;
             var clientWindow = new ClientWindow();
             clientWindow.Show();
-            ClientMode = true;
-            this.Hide();
+
+            var packet = new CommPacket(Sender.Client, false);
+            Comms.SendMessage(packet);
+
             this.Close();
         }
 
@@ -390,7 +401,8 @@ namespace cwssWpf
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        var packet = new CommPacket(Sender.Server, messages);
+                        var messagesPacket = new MessagesPacket(messages, user);
+                        var packet = new CommPacket(Sender.Server, messagesPacket);
                         Comms.SendMessage(packet);
                     }));
                 }
@@ -409,7 +421,6 @@ namespace cwssWpf
 
         private void StartNetworkListen(object sender, RoutedEventArgs e)
         {
-            Comms.Initialize();
             Comms.CommPacketReceived += Comms_CommPacketReceived;
         }
 
@@ -418,23 +429,24 @@ namespace cwssWpf
             if (args.senderWindow == Sender.Client)
             {
                 var message = Comms.GetMessage();
-                if (message.sender == Sender.Client && ClientMode && message.messageType == MessageType.ClientClosed)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        Comms.CommPacketReceived += Comms_CommPacketReceived;
-                        this.Show();
-                        ClientMode = false;
-                    }));
-                }
 
-                else if (message.sender == Sender.Client && !ClientMode)
+                if (message.sender == Sender.Client)
                 {
                     var messageObject = Comms.GetObject(message);
 
+                    if (message.messageType == MessageType.ClientMode)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            if (messageObject == false)
+                                ClientMode = true;
+                            else
+                                ClientMode = false;
+                        }));
+                    }
+
                     if (message.messageType == MessageType.CheckIn)
                     {
-
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
 
@@ -443,6 +455,29 @@ namespace cwssWpf
                             tbLoginId.Text = "";
                             var packet = new CommPacket(Sender.Server, success);
                             Comms.SendMessage(packet);
+                            success.ShowAuto();
+                        }));
+                    }
+
+                    if (message.messageType == MessageType.NewUser)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            Db.dataBase.AddUser((User)messageObject);
+                        }));
+                    }
+
+                    if (message.messageType == MessageType.Messages)
+                    {
+                        var messagePacket = (MessagesPacket)messageObject;
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            List<Message> msgs = Db.dataBase.GetMessages(messagePacket.MessageUser).ToList();
+                            foreach (var item in messagePacket.Messages)
+                            {
+                                if (item.RecipientId.Count < 1)
+                                    msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(messagePacket.MessageUser);
+                            }
                         }));
                     }
                 }

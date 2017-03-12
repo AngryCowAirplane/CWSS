@@ -24,6 +24,9 @@ namespace cwssWpf.Windows
         // TODO:
         // Rename all objects in the window editor and set appropriate label text
 
+        public User NewUser;
+        public bool Success = false;
+
         public NewUser_Dialog(Window mainWindow)
         {
             InitializeComponent();
@@ -36,6 +39,8 @@ namespace cwssWpf.Windows
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            // VALIDATE ALL FIELDS FIRST
+
             var success = Db.dataBase.AddUser(
                 tbFirstName, tbLastName,
                 tbIdNumber, tbPassword, tbPassword2,
@@ -51,6 +56,9 @@ namespace cwssWpf.Windows
                 Logger.Log(MainWindow.CurrentUser.UserId, LogType.AddUser,
                     MainWindow.CurrentUser.GetName() + " Added User: " +
                     tbFirstName.Text + " " + tbLastName.Text);
+
+                Success = true;
+                NewUser = Db.dataBase.GetUser(int.Parse(tbIdNumber.Text));
             }
             else
             {

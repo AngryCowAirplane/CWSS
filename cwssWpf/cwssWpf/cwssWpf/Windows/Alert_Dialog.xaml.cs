@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,7 +20,9 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Alert_Dialog : Window
     {
-        public Alert_Dialog(string alertTitle, string alertText, Vector? screenCoords = null)
+        private static Timer timer;
+
+        public Alert_Dialog(string alertTitle, string alertText, Vector? screenCoords = null, bool autoClose = false)
         {
             if(screenCoords == null)
                 this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -27,6 +30,12 @@ namespace cwssWpf.Windows
             {
                 Left = screenCoords.Value.X;
                 Top = screenCoords.Value.Y;
+            }
+
+            if(autoClose)
+            {
+                timer = new Timer(3000);
+                timer.Elapsed += timerExpired;
             }
 
             InitializeComponent();
@@ -66,6 +75,11 @@ namespace cwssWpf.Windows
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void timerExpired(object sender, ElapsedEventArgs e)
+        {
+            Close_Click(null, null);
         }
     }
 }

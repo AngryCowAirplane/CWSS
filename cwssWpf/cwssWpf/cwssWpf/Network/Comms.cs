@@ -94,7 +94,7 @@ namespace cwssWpf.Network
             });
         }
 
-        public CommPacket(Sender sender, List<Message> messages)
+        public CommPacket(Sender sender, MessagesPacket messages)
         {
             this.sender = sender;
             this.messageType = MessageType.Messages;
@@ -117,7 +117,7 @@ namespace cwssWpf.Network
         public CommPacket(Sender sender, User user)
         {
             this.sender = sender;
-            this.messageType = MessageType.Waiver;
+            this.messageType = MessageType.NewUser;
             messageObject = JsonConvert.SerializeObject(user, Formatting.None, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -137,8 +137,8 @@ namespace cwssWpf.Network
         public CommPacket(Sender sender, bool clientClosed)
         {
             this.sender = sender;
-            this.messageType = MessageType.ClientClosed;
-            messageObject = "ClientClosed";
+            this.messageType = MessageType.ClientMode;
+            messageObject = clientClosed.ToString();
         }
     }
 
@@ -155,7 +155,19 @@ namespace cwssWpf.Network
         Messages = 2,
         Waiver = 3,
         NewUser = 4,
-        ClientClosed = 5
+        ClientMode = 5
+    }
+
+    public class MessagesPacket
+    {
+        public List<Message> Messages;
+        public User MessageUser;
+
+        public MessagesPacket(List<Message> messages, User user)
+        {
+            this.Messages = messages;
+            MessageUser = user;
+        }
     }
 
     public class CustomCommArgs : EventArgs
