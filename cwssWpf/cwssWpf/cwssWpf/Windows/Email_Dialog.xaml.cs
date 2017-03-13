@@ -30,6 +30,7 @@ namespace cwssWpf.Windows
             tbTo.Text = listToString(toList);
             tbTo.IsEnabled = false;
             tbFrom.Text = MainWindow.CurrentUser.GetEmailAddress();
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

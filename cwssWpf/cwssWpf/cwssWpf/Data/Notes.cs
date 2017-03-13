@@ -86,6 +86,7 @@ namespace cwssWpf.Data
         public double Left;
         public double Width;
         public double Height;
+        public int UserId;
     }
 
     public class Request

@@ -47,7 +47,6 @@
             <Style TargetType="ComboBox">
                 <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
             </Style>
-
         </Grid.Resources>
 
         <Label x:Name="Label0" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Content="First Name" VerticalAlignment="Center" HorizontalAlignment="Right" ></Label>

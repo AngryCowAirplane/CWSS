@@ -29,6 +29,7 @@ namespace cwssWpf.Windows
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             tbUserId.Text = MainWindow.CurrentUser.GetEmailAddress();
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

@@ -210,7 +210,7 @@ namespace cwssWpf
 
         internal static string TryGetCardId(string idString)
         {
-            var id = idString.Substring(11, 7);
+            var id = idString.Substring(StaticValues.CardReaderStartIndexOfID, StaticValues.StudentIdLength);
             return id;
         }
 
@@ -222,7 +222,7 @@ namespace cwssWpf
             try
             {
                 var integerValue = int.Parse(idString);
-                if (integerValue < 100000 || integerValue > 9999999)
+                if (integerValue < StaticValues.StartNonStudentIdNumber || integerValue > StaticValues.EndStudentIdNumber)
                     isGood = false;
             }
             catch

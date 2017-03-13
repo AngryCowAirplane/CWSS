@@ -31,13 +31,7 @@ namespace cwssWpf.Windows
             var mode = Calendar.DisplayMode = CalendarMode.Month;
 
             this.SizeChanged += sizeChanged;
-            MouseDown += Window_MouseDown;
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
         }
 
         private void sizeChanged(object sender, RoutedEventArgs e)

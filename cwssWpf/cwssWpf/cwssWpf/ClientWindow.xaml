@@ -10,7 +10,6 @@
         Title=" SDSU Climbing Wall System" Height="480" Width="640">
     <Grid>
         <Grid.Background>
-            <!-- SolidColorBrush Color="AliceBlue"></ -->
             <ImageBrush ImageSource="Images/Wall.jpg"></ImageBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
@@ -23,7 +22,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Canvas Name="CheckinCanvas" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="90" Visibility="Visible">
@@ -38,5 +37,19 @@
         </Canvas>
         <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon" KeyUp="EnterPressed"/>
         <Button Grid.Row="2" Grid.Column="1" x:Name="btnCheckIn" Content="Check In/Out" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Width="105" Height="40" Click="btnCheckIn_Click" Background="Goldenrod"/>
+
+
+        <Canvas Name="newUserCanvas" Grid.Row="4" Grid.Column="2" Height="30"  Width="85" HorizontalAlignment="Right" Visibility="Visible">
+            <Canvas.Background>
+                <SolidColorBrush Opacity="0.6" Color="Black"></SolidColorBrush>
+            </Canvas.Background>
+            <Border Width="{Binding ActualWidth, ElementName=newUserCanvas}" Height="30" Margin="0" Background="Transparent" BorderBrush="Gold" BorderThickness="3" Opacity="0.6">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="2" Color="Yellow" Opacity="0.9" BlurRadius="6"/>
+                </Border.Effect>
+            </Border>
+        </Canvas>
+
+        <Label x:Name="newUser" Grid.Row="4" Grid.Column="2" Content="New User" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="Yellow" FontSize="16" MouseDown="newUser_Click" Margin="2,0,2,2"></Label>
     </Grid>
 </Window>

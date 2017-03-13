@@ -42,6 +42,20 @@ namespace cwssWpf
             {
                 var packet = new CommPacket(Sender.Client, tbLoginId.Text);
                 Comms.SendMessage(packet);
+                tbLoginId.Text = string.Empty;
+            }
+        }
+
+        private void newUser_Click(object sender, RoutedEventArgs e)
+        {
+            var newUser = new NewUser_Dialog(this);
+            newUser.ShowDialog();
+
+            if (newUser.Success)
+            {
+                var user = newUser.NewUser;
+                var packet = new CommPacket(Sender.Client, user);
+                Comms.SendMessage(packet);
             }
         }
 

@@ -31,6 +31,7 @@ namespace cwssWpf.Windows
             dataGrid.ItemsSource = Db.dataBase.Users;
 
             dataGrid.SelectionMode = DataGridSelectionMode.Extended;
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
 
             setupColumns();
         }

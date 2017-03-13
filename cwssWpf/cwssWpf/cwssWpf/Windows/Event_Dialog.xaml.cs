@@ -25,19 +25,12 @@ namespace cwssWpf.Windows
         {
             InitializeComponent();
             cbUsers.ItemsSource = Db.dataBase.Users;
-            EventMenu.MouseDown += Window_MouseDown;
-            MouseDown += Window_MouseDown;
-            if(date != null)
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
+            if (date != null)
             {
                 StartDate.SelectedDate = date;
                 EndDate.SelectedDate = date;
             }
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

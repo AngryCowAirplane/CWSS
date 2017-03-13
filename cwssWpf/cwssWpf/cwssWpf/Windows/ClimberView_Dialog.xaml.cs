@@ -30,13 +30,7 @@ namespace cwssWpf.Windows
             lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
             updateList();
             lvClimbers.PreviewMouseRightButtonDown += rightMouseButtonClicked;
-            MouseLeftButtonDown += Window_MouseDown;
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)

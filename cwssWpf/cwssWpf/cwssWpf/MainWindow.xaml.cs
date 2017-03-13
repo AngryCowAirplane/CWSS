@@ -26,9 +26,6 @@ using System.Windows.Shapes;
 
 namespace cwssWpf
 {
-    // mySQL infos
-    // add name="DefaultConnection" providerName="MySql.Data.MySqlClient" connectionString="Server=localhost;Database=cwss;Uid=admin;Pwd=admin" />
-
     public partial class MainWindow : Window
     {
         public static User CurrentUser = null;
@@ -52,18 +49,12 @@ namespace cwssWpf
             Logger.Initialize();
             Comms.Initialize();
 
-            // DataBase (don't change unless migrating to a real database with entity framework)
-            #region Database Setup
-            //--use entity framework DB
-            //Db.dataBase = new Context();
-            //Db.dataBase.Database.Log = delegate (string message) { Console.Write(message); };
-
             if (Db.dataBase.Users.Count < 1)
                 Db.dataBase.AddDefaultAdminUser(StaticValues.DefaultAdminId, StaticValues.DefaultAdminPassword);
-            #endregion
 
             // Event Subscriptions
             KeyUp += KeyPressed;
+            Comms.CommPacketReceived += Comms_CommPacketReceived;
 
             // Other
             if (Config.Data.General.StartMaximized)
@@ -72,7 +63,6 @@ namespace cwssWpf
                 this.WindowStyle = WindowStyle.None;
             }
 
-            StartNetworkListen(null, null);
             UpdateClimberStats();
             FocusManager.SetFocusedElement(this, tbLoginId);
             StatusText.Text = "Ready";
@@ -86,7 +76,8 @@ namespace cwssWpf
         #region UI Click Event Handlers
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
-            if(ClientMode)
+            //if(ClientMode)  // can send new user form to client screen
+            if(false)
             {
                 var packet = new CommPacket(Sender.Server, new User());
                 Comms.SendMessage(packet);
@@ -113,13 +104,19 @@ namespace cwssWpf
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
-            // TODO:
-            // validate input in tbUserId
-
             if (!string.IsNullOrWhiteSpace(tbLoginId.Text))
             {
-                var result = tryCheckinUser();
-                result.Show();
+                if (Helpers.ValidateIdInput(tbLoginId.Text))
+                {
+                    var result = tryCheckinUser();
+                    result.Show();
+                }
+                else
+                {
+                    var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
+                    alert.ShowDialog();
+                    tbLoginId.Text = string.Empty;
+                }
             }
         }
 
@@ -151,11 +148,6 @@ namespace cwssWpf
             WindowsOpen.Clear();
 
             CurrentUser = null;
-        }
-
-        private void menuMessageSystem_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void menuCalendar_Click(object sender, RoutedEventArgs e)
@@ -308,7 +300,7 @@ namespace cwssWpf
         private CheckinResult tryCheckinUser(bool remote = false)
         {
             var result = new CheckinResult();
-            if (tbLoginId.Text[0] == ';')
+            if (tbLoginId.Text[0] == StaticValues.CardReaderStartChar)
                 tbLoginId.Text = Helpers.TryGetCardId(tbLoginId.Text);
 
             var loginId = int.Parse(tbLoginId.Text);
@@ -423,11 +415,6 @@ namespace cwssWpf
             }
         }
 
-        private void StartNetworkListen(object sender, RoutedEventArgs e)
-        {
-            Comms.CommPacketReceived += Comms_CommPacketReceived;
-        }
-
         private void Comms_CommPacketReceived(object sender, CustomCommArgs args)
         {
             if (args.senderWindow == Sender.Client)
@@ -493,8 +480,7 @@ namespace cwssWpf
 
         private void menuTest_Click(object sender, RoutedEventArgs e)
         {
-            var net = new Network_Dialog();
-            net.Show();
+
         }
     }
 }

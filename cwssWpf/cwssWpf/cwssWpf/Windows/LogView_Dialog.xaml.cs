@@ -34,6 +34,7 @@ namespace cwssWpf.Windows
             dpFrom.SelectedDateChanged += datesChanged;
             dpTo.SelectedDateChanged += datesChanged;
             tbSearch.TextChanged += lbFilters_Changed;
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
 
             Logger.SaveLog();
             logs = Logger.GetTodaysLog().Logs;

@@ -51,7 +51,7 @@ namespace cwssWpf.Windows
 
         private void cmDelete_Click(object sender, RoutedEventArgs e)
         {
-            if ((int)MainWindow.CurrentUser.UserType > 1)
+            if ((int)MainWindow.CurrentUser.UserType > 1 || note.UserId == MainWindow.CurrentUser.LoginId)
             {
                 Db.dataBase.Notes.WallNotes.Remove(note);
                 this.Close();

@@ -41,6 +41,7 @@ namespace cwssWpf.Windows
             note.Left = Left;
             note.Width = Width;
             note.Height = Height;
+            note.UserId = MainWindow.CurrentUser.LoginId;
 
             Db.dataBase.Notes.WallNotes.Add(note);
             var postit = new Postit_Dialog(note);

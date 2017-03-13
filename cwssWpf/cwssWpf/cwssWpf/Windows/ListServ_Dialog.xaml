@@ -5,18 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Background="AliceBlue"
-        WindowStyle="ToolWindow"
+        WindowStyle="none"
+        Background="black"
+        AllowsTransparency="true"
+        Opacity="0.95"
+        WindowStartupLocation="CenterScreen"
         Title="List Serv" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Yellow"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+        </Grid.Resources>
         
         <DockPanel>
-            <Menu DockPanel.Dock="Top" Background="CornflowerBlue" Name="MainMenu">
-                <MenuItem Header="File">
+            <Menu DockPanel.Dock="Top" Name="MainMenu" Background="Black">
+                <MenuItem Header="File" Foreground="Yellow">
                     <MenuItem Header= "_Print" Name="menuPrint" Click="menuPrint_Click"></MenuItem>
                     <MenuItem Header= "_Save" Name="menuSave" Click="menuSave_Click"></MenuItem>
                     <MenuItem Header= ""></MenuItem>

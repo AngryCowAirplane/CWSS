@@ -28,6 +28,8 @@ namespace cwssWpf.Windows
             tbName.Width = (this.Width / 2) - 100;
             tbDate.Width = (this.Width / 2) - 100;
 
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
+
             webBrowser.Navigate("file:///" + waiverPath);
             this.Focus();
             this.Activate();

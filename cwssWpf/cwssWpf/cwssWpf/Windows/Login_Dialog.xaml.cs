@@ -31,13 +31,7 @@ namespace cwssWpf.Windows
             this.Left = mainWindow.Left + 50;
             this.Top = mainWindow.Top + 50;
             FocusManager.SetFocusedElement(this, tbUserId);
-            MouseLeftButtonDown += Window_MouseDown;
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

@@ -152,9 +152,6 @@
     <Compile Include="Windows\Message_Dialog.xaml.cs">
       <DependentUpon>Message_Dialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Network_Dialog.xaml.cs">
-      <DependentUpon>Network_Dialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\NewUser_Dialog.xaml.cs">
       <DependentUpon>NewUser_Dialog.xaml</DependentUpon>
     </Compile>
@@ -240,10 +237,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Message_Dialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\Network_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -34,6 +34,7 @@ namespace cwssWpf.Windows
             tbUser.Text = user.GetName();
             cbTime.ItemsSource = (Enum.GetValues(typeof(Suspension)).Cast<Suspension>().ToList());
             cbTime.SelectedIndex = 0;
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
             requestMode = mode.Request;
         }
 

@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Background="AliceBlue"
-        WindowStyle="ToolWindow"
+        WindowStyle="None"
         ResizeMode="NoResize"
-        Title="EmailCreds" Height="180" Width="300">
+        Background="Black"
+        AllowsTransparency="True"
+        Opacity="0.9"
+        Title="EmailCreds" Height="145" Width="300">
     <Grid Margin="10,10,10,10">
-        <Grid.Background>
-            <SolidColorBrush Color="AliceBlue"></SolidColorBrush>
-        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -24,6 +23,24 @@
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
 
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Yellow"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+        </Grid.Resources>
+
         <Label x:Name="Label1" Grid.Column="0" Grid.Row="0" Height="23" Margin="5,5,5,5" Content="Email Login" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
         <Label x:Name="Label2" Grid.Column="0" Grid.Row="1" Height="23" Margin="5,5,5,5" Content="Password" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
         <Label x:Name="Label3" Grid.Column="0" Grid.Row="2" Height="23" Margin="5,5,5,5" Content="Save" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
@@ -32,7 +49,7 @@
         <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="1" Height="23" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
         <CheckBox x:Name="cbSave" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
 
-        <Button x:Name="btnCancel" Grid.Column="0" Grid.Row="3" Height="20" Margin="5,5,5,5" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnCancel_Click" Background="CornflowerBlue"></Button>
-        <Button x:Name="btnSubmit" Grid.Column="1" Grid.Row="3" Height="20" Margin="5,5,5,5" Content="Log In" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnSubmit_Click" Background="CornflowerBlue"></Button>
+        <Button x:Name="btnCancel" Grid.Column="0" Grid.Row="3" Height="20" Margin="5,5,5,5" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnCancel_Click"></Button>
+        <Button x:Name="btnSubmit" Grid.Column="1" Grid.Row="3" Height="20" Margin="5,5,5,5" Content="Log In" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnSubmit_Click"></Button>
     </Grid>
 </Window>

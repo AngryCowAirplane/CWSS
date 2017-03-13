@@ -43,6 +43,7 @@ namespace cwssWpf.Windows
             cbMode.ItemsSource = (Enum.GetValues(typeof(MessageMode)).Cast<MessageMode>().ToList());
             cbMode.SelectionChanged += modeChange;
             tbTo.TextChanged += toTextChange;
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
             setMessageMode();
         }
 
