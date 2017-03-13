@@ -308,6 +308,9 @@ namespace cwssWpf
         private CheckinResult tryCheckinUser(bool remote = false)
         {
             var result = new CheckinResult();
+            if (tbLoginId.Text[0] == ';')
+                tbLoginId.Text = Helpers.TryGetCardId(tbLoginId.Text);
+
             var loginId = int.Parse(tbLoginId.Text);
             var user = Db.dataBase.GetUser(loginId);
             if (user != null)

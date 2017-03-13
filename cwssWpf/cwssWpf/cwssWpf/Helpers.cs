@@ -207,6 +207,31 @@ namespace cwssWpf
             }
             throw new Exception("Local IP Address Not Found!");
         }
+
+        internal static string TryGetCardId(string idString)
+        {
+            var id = idString.Substring(11, 7);
+            return id;
+        }
+
+
+        // Validate Field Methods
+        internal static bool ValidateIdInput(string idString)
+        {
+            bool isGood = true;
+            try
+            {
+                var integerValue = int.Parse(idString);
+                if (integerValue < 100000 || integerValue > 9999999)
+                    isGood = false;
+            }
+            catch
+            {
+                isGood = false;
+            }
+
+            return isGood;
+        }
     }
 
     public class CheckinResult

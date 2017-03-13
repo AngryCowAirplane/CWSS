@@ -8,11 +8,12 @@ namespace cwssWpf
 {
     public static class StaticValues
     {
-        public static int DefaultAdminId = 123456;
+        public static int DefaultAdminId = 012345;
         public static string DefaultAdminPassword = "abc123";
-        public static int StartNonStudentIdNumber = 10000;
-        public static int EndNonStudentIdNumber = 100000;
+        public static int StartNonStudentIdNumber = 100000;
+        public static int EndNonStudentIdNumber = 999999;
 
+        // Remote Communication Settings
         public static string RemoteIP = "239.0.0.222";
         public static string RemotePort = "2222";
     }
