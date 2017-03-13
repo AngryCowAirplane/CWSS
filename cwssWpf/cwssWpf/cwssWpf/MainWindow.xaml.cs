@@ -234,11 +234,9 @@ namespace cwssWpf
 
         private void EnterPressed(object sender, KeyEventArgs e)
         {
-            var result = new CheckinResult();
             if (e.Key != Key.Enter || string.IsNullOrWhiteSpace(tbLoginId.Text)) return;
 
-            result = tryCheckinUser();
-            result.Show();
+            btnCheckIn_Click(null, null);
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
