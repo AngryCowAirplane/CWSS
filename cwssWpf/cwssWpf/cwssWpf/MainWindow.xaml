@@ -78,7 +78,7 @@
                 </Border.Effect>
             </Border>
         </Canvas>
-        <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon" KeyUp="EnterPressed"/>
+        <TextBox Grid.Row="2" Grid.Column="0" x:Name="tbLoginId" HorizontalAlignment="Right" Height="40" Margin="5,5,5,5" TextWrapping="Wrap" Text="" FontSize="24"  FontWeight="ExtraBlack" VerticalAlignment="Center" Width="167" Background="LemonChiffon"/>
         <Button Grid.Row="2" Grid.Column="1" x:Name="btnCheckIn" Content="Check In/Out" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Width="105" Height="40" Click="btnCheckIn_Click" Background="Goldenrod"/>
 
         <DockPanel Grid.Row="4" Grid.ColumnSpan="4" Visibility="Hidden">

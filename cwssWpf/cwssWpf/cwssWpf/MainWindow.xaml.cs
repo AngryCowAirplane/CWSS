@@ -73,7 +73,25 @@ namespace cwssWpf
             //Db.dataBase.Notes.Requests = new List<Request>();
         }
 
-        #region UI Click Event Handlers
+        #region UI Click Event Handlers  (Click Events)
+        private void btnCheckIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(tbLoginId.Text))
+            {
+                if (Helpers.ValidateIdInput(tbLoginId.Text))
+                {
+                    var result = tryCheckinUser();
+                    result.Show();
+                }
+                else
+                {
+                    var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
+                    alert.ShowDialog();
+                    tbLoginId.Text = string.Empty;
+                }
+            }
+        }
+
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
             //if(ClientMode)  // can send new user form to client screen
@@ -99,24 +117,6 @@ namespace cwssWpf
                 checkMessages(CurrentUser);
                 loadNotes();
                 menuEmployeeLogIn.IsEnabled = false;
-            }
-        }
-
-        private void btnCheckIn_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(tbLoginId.Text))
-            {
-                if (Helpers.ValidateIdInput(tbLoginId.Text))
-                {
-                    var result = tryCheckinUser();
-                    result.Show();
-                }
-                else
-                {
-                    var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
-                    alert.ShowDialog();
-                    tbLoginId.Text = string.Empty;
-                }
             }
         }
 
@@ -204,12 +204,6 @@ namespace cwssWpf
             climberView.ShowDialog();
         }
 
-        private void MainWindow_Closing(object sender, CancelEventArgs e)
-        {
-            if (CurrentUser != null)
-                menuLogOut_Click(null, null);
-        }
-
         private void menuMessage_Click(object sender, RoutedEventArgs e)
         {
             var message = new Message_Dialog();
@@ -224,24 +218,20 @@ namespace cwssWpf
         #endregion
 
         #region Other Event Handlers
-        private void TestSomething(object sender, RoutedEventArgs e)
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (CheckinCanvas.IsVisible)
-                CheckinCanvas.Visibility = Visibility.Hidden;
-            else
-                CheckinCanvas.Visibility = Visibility.Visible;
-        }
-
-        private void EnterPressed(object sender, KeyEventArgs e)
-        {
-            if (e.Key != Key.Enter || string.IsNullOrWhiteSpace(tbLoginId.Text)) return;
-
-            btnCheckIn_Click(null, null);
+            if (CurrentUser != null)
+                menuLogOut_Click(null, null);
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            if (e.Key == (Key.Enter))
+            {
+                btnCheckIn_Click(null, null);
+            }
+
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
                 if (e.Key == Key.L)
                 {
@@ -288,7 +278,7 @@ namespace cwssWpf
         }
         #endregion
 
-        #region Custom Methods
+        #region Custom Methods  //MOVE TO DIFFERENT_NEW CLASS?, KEEP ONLY EVENT HANDLERS HERE
         private CheckinResult tryCheckinUser(string userId, bool remote = false)
         {
             tbLoginId.Text = userId;
@@ -476,9 +466,14 @@ namespace cwssWpf
         }
         #endregion
 
-        private void menuTest_Click(object sender, RoutedEventArgs e)
+        #region TESTING
+        private void TestSomething(object sender, RoutedEventArgs e)
         {
-
+            if (CheckinCanvas.IsVisible)
+                CheckinCanvas.Visibility = Visibility.Hidden;
+            else
+                CheckinCanvas.Visibility = Visibility.Visible;
         }
+        #endregion
     }
 }
