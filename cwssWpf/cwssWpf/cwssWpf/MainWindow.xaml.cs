@@ -103,18 +103,15 @@ namespace cwssWpf
 
                     if(result.Alert.Title.ToString().ToLower().Contains("waiver"))
                     {
-                        var waiver = new Waiver_Dialog(user);
-                        var signedWaiver = waiver.ShowDialog();
-                        if ((bool)signedWaiver)
-                        {
-                            user.AddWaiver();
-                            tryCheckinUser(user);
-                        }
+                        var signed = Helpers.ShowWaiver(user);
+                        if (signed)
+                            result = tryCheckinUser(user);
                         else
                         {
                             Helpers.PlayFail();
                             result.Alert = new Alert_Dialog("Not Signed", "Waiver not signed!, User not checked in!");
                             WindowsOpen.Add(result.Alert, new TimerVal(6));
+                            result.Alert.ShowDialog();
                         }
                     }
                 }

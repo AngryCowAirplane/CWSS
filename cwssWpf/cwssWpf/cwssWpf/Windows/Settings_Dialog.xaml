@@ -5,12 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Background="AliceBlue"
-        WindowStyle="ToolWindow"
+        Background="black"
+        AllowsTransparency="True"
+        Opacity="0.95"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
         Title="Settings" Height="400" Width="300">
     <Grid Name="SettingsGrid">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Yellow"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -27,27 +49,30 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel  Grid.ColumnSpan="3" HorizontalAlignment="Stretch">
-            <Menu DockPanel.Dock="Top" Background="CornflowerBlue" Name="MainMenu">
+            <Menu DockPanel.Dock="Top" Background="Goldenrod" Name="MainMenu">
                 <MenuItem Header="Save" Click="MenuSave_Click"/>
                 <MenuItem Header="Cancel" Click="MenuExit_Click"/>
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
 
-        <Label Content="Email Settings" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold"/>
-        <Label Content="Client Type" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"/>
-        <Label Content="Server" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
-        <Label Content="Port" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"/>
-        <Label Content="Use Ssl" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right"/>
-        <Label Content="Default Creds" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right"/>
-        <Label Content="Store Creds" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right"/>
-        <ComboBox x:Name="cbClient" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"/>
-        <TextBox x:Name="tbServer" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"/>
-        <TextBox x:Name="tbPort" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"/>
+        <Label Content="Settings" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="20"/>
+        <Label Content="Email Settings" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+        <Label Content="Client Type" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
+        <Label Content="Server" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"/>
+        <Label Content="Port" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right"/>
+        <Label Content="Use Ssl" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right"/>
+        <Label Content="Default Creds" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right"/>
+        <Label Content="Store Creds" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Right"/>
+        <ComboBox x:Name="cbClient" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"/>
+        <TextBox x:Name="tbServer" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"/>
+        <TextBox x:Name="tbPort" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"/>
 
 
-        <Label Content="General Settings" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold"/>
-        <Label Content="Start Maximized" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Right"/>
-        <CheckBox x:Name="cbMaximized" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"/>
+        <Label Content="General Settings" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+        <Label Content="Start Maximized" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Right"/>
+        <CheckBox x:Name="cbMaximized" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5"/>
+        <Label Content="Start As Client" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Right"/>
+        <CheckBox x:Name="cbIsClient" Grid.Column="1" Grid.Row="11" Margin="5,5,5,5" IsChecked="False"/>
     </Grid>
 </Window>

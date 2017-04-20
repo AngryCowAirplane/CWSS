@@ -74,6 +74,8 @@ namespace cwssWpf.Windows
 
                     Success = true;
                     NewUser = Db.dataBase.GetUser(int.Parse(tbIdNumber.Text));
+
+                    bool signed = Helpers.ShowWaiver(NewUser);
                 }
                 else
                 {

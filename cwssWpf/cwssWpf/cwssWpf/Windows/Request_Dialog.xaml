@@ -5,10 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
-        Background="AliceBlue"
-        WindowStyle="ToolWindow"
+        Background="black"
+        AllowsTransparency="true"
+        Opacity="0.95"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
         Title="Request Suspension" Height="250" Width="500">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Yellow"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -25,7 +45,7 @@
         <Label Content="User Name:" Margin="2,2,2,2" HorizontalAlignment="Right"></Label>
         <TextBox x:Name="tbUser" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,5,5,5"></TextBox>
         <Label Content="Time Length:" Grid.Column="2" Margin="2,2,2,2" HorizontalAlignment="Right"></Label>
-        <Label Content="Reason:" Grid.Row="1" Grid.Column="0" Margin="2,2,2,2" HorizontalAlignment="Left"></Label>
+        <Label Content="Suspension Request Reason:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="2,2,2,2" HorizontalAlignment="Left"></Label>
         <Label Content="employee" x:Name="lblEmployee" Grid.Row="1" Grid.Column="3" Margin="2,2,2,2" HorizontalAlignment="Right"></Label>
         <ComboBox x:Name="cbTime" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" Margin="5,5,5,5"></ComboBox>
         <TextBox x:Name="tbReason" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" ></TextBox>

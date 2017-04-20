@@ -69,7 +69,12 @@ namespace cwssWpf.Windows
             confirm.ShowDialog();
 
             if (confirm.Confirmed)
-                Db.dataBase.DeleteUser(selectedUser);
+            {
+                if(selectedUser.UserType != UserType.Admin || selectedUser.UserId == MainWindow.CurrentUser.UserId)
+                {
+                    Db.dataBase.DeleteUser(selectedUser);
+                }
+            }
 
             lvUsers.ItemsSource = Db.dataBase.Users;
             lvUsers.Items.Refresh();

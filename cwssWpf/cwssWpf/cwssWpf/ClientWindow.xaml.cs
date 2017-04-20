@@ -38,17 +38,22 @@ namespace cwssWpf
             }
 
             StartNetworkListen(null, null);
-            FocusManager.SetFocusedElement(this, tbLoginId);
 
             Comms.CommPacketReceived += Comms_CommPacketReceived;
             DasTimer.Interval = TimeSpan.FromSeconds(1);
             DasTimer.Tick += OnTimerTick;
             DasTimer.Start();
+
+            FocusManager.SetFocusedElement(this, tbLoginId);
+            tbLoginId.Focus();
         }
 
         private void OnTimerTick(object sender, EventArgs e)
         {
-            if(serverConnected)
+            FocusManager.SetFocusedElement(this, tbLoginId);
+            tbLoginId.Focus();
+
+            if (serverConnected)
             {
                 tbLoginId.IsEnabled = true;
                 btnCheckIn.IsEnabled = true;

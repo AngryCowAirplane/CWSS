@@ -234,6 +234,24 @@ namespace cwssWpf
 
             return isGood;
         }
+
+        public static bool ShowWaiver(User user)
+        {
+            var waiver = new Waiver_Dialog(user);
+            var signedWaiver = waiver.ShowDialog();
+            if ((bool)signedWaiver)
+            {
+                user.AddWaiver();
+                //tryCheckinUser(user);
+            }
+            //else
+            //{
+            //    Helpers.PlayFail();
+            //    result.Alert = new Alert_Dialog("Not Signed", "Waiver not signed!, User not checked in!");
+            //    MainWindow.WindowsOpen.Add(result.Alert, new TimerVal(6));
+            //}
+            return (bool)signedWaiver;
+        }
     }
 
     public class CheckinResult
