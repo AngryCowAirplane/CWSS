@@ -252,6 +252,14 @@ namespace cwssWpf
                             Comms.ClientPingCount = 0;
                         }));
                     }
+                    else if (message.messageType == MessageType.Reset)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            Config.Data.General.StartClientMode = false;
+                            Config.SaveConfigToFile();
+                        }));
+                    }
                 }
             }
         }

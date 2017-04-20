@@ -252,6 +252,15 @@ namespace cwssWpf
             var notes = new Notes_Dialog();
             notes.ShowDialog();
         }
+
+        private void resetClientMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (ClientConnected)
+            {
+                var packet = new CommPacket(Sender.Server, Sender.Client);
+                Comms.SendMessage(packet);
+            }
+        }
         #endregion
 
         #region Other Event Handlers

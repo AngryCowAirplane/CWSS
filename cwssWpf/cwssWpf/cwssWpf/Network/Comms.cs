@@ -164,6 +164,14 @@ namespace cwssWpf.Network
             this.messageType = MessageType.Ping;
             messageObject = null;
         }
+
+        // Reset client commpacket
+        public CommPacket(Sender sender, Sender client)
+        {
+            this.sender = sender;
+            this.messageType = MessageType.Reset;
+            messageObject = null;
+        }
     }
 
     public enum Sender
@@ -180,7 +188,8 @@ namespace cwssWpf.Network
         Waiver = 3,
         NewUser = 4,
         ClientMode = 5,
-        Ping = 6
+        Ping = 6,
+        Reset = 7
     }
 
     public class MessagesPacket

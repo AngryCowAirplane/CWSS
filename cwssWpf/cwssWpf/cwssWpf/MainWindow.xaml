@@ -56,8 +56,14 @@
             <StackPanel></StackPanel>
         </DockPanel>
 
-        <Image Name="ConnectionImage" Grid.Row="0" Grid.Column="3" Margin="0,0,2,0" d:LayoutOverrides="Width" HorizontalAlignment="Right"/>
-        
+        <Image Name="ConnectionImage" Grid.Row="0" Grid.Column="3" Margin="0,0,2,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
+            <Image.ContextMenu>
+                <ContextMenu Name="userMenu" Opacity="0.95">
+                    <MenuItem Header="ResetClientMode" Name="resetClientMode" Click="resetClientMode_Click"></MenuItem>
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
+
         <Canvas Name="ClimbersCanvas" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Height="50" Width="75" Margin="2,2,2,2" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Visible">
             <Canvas.Background>
                 <SolidColorBrush Opacity="0.6" Color="Black"></SolidColorBrush>
