@@ -31,10 +31,10 @@
             </Menu>
         </DockPanel>
 
-        <Label Grid.Column="0" Grid.Row="1" Margin="2,4,10,2" Content="Search:" Foreground="Yellow"></Label>
-        <TextBox x:Name="tbSearch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="60,4,5,2" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Center" Background="LightGoldenrodYellow"></TextBox>        
+        <Label Grid.Column="0" Grid.Row="1" Margin="6,4,10,2" Content="Search:" Foreground="Yellow"></Label>
+        <TextBox x:Name="tbSearch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="60,4,6,2" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Center" Background="LightGoldenrodYellow"></TextBox>        
         
-        <ListView x:Name="lvUsers" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,5,15" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
+        <ListView x:Name="lvUsers" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="6,6,6,15" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Style.Triggers>
@@ -45,7 +45,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ContextMenu>
-                <ContextMenu Name="userMenu" Opacity="0.8">
+                <ContextMenu Name="userMenu" Opacity="0.95">
                     <MenuItem Header="UserType" x:Name="UserTypeMenu">
                         <MenuItem Header="Patron" Name="patron" Click="patron_Click"></MenuItem>
                         <MenuItem Header="Employee" Name="employee" Click="employee_Click"></MenuItem>

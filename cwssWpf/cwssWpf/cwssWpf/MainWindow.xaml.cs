@@ -82,6 +82,9 @@ namespace cwssWpf
             FocusManager.SetFocusedElement(this, tbLoginId);
             Logger.Log(000000, LogType.Other, "Application Started");
             StatusText.Text = "Ready";
+
+            if (Config.Data.General.StartClientMode)
+                menuClient_Click(null, null);
             //--------------------------------------------------------------
 
 

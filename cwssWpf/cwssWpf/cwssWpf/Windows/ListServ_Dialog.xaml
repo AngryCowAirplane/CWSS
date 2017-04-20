@@ -10,6 +10,7 @@
         AllowsTransparency="true"
         Opacity="0.95"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip"
         Title="List Serv" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -36,9 +37,9 @@
         </Grid.Resources>
         
         <DockPanel>
-            <Menu DockPanel.Dock="Top" Name="MainMenu" Background="Black">
-                <MenuItem Header="File" Foreground="Yellow">
-                    <MenuItem Header= "_Print" Name="menuPrint" Click="menuPrint_Click"></MenuItem>
+            <Menu DockPanel.Dock="Top" Name="MainMenu" Background="Goldenrod">
+                <MenuItem Header="File">
+                    <!--<MenuItem Header= "_Print" Name="menuPrint" Click="menuPrint_Click"></MenuItem>-->
                     <MenuItem Header= "_Save" Name="menuSave" Click="menuSave_Click"></MenuItem>
                     <MenuItem Header= ""></MenuItem>
                     <MenuItem Header= "Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
@@ -47,7 +48,7 @@
             <StackPanel></StackPanel>
         </DockPanel>
 
-        <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,5,5,5">
+        <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="6,6,6,6" Background="LightGoldenrodYellow">
 
             <DataGrid.ContextMenu>
                 <ContextMenu Name="userMenu">

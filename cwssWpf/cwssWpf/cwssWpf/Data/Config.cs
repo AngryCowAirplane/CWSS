@@ -56,6 +56,7 @@ namespace cwssWpf.Data
     public class GeneralSettings
     {
         public bool StartMaximized = false;
+        public bool StartClientMode = false;
     }
 
     public class EmailSettings

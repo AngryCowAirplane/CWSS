@@ -45,6 +45,7 @@ namespace cwssWpf.Windows
             cbDefaultCreds.SelectedItem = Config.Data.Email.UseDefaultCredentials;
             cbStoreCreds.SelectedItem = Config.Data.Email.StoreCreds;
             cbMaximized.IsChecked = Config.Data.General.StartMaximized;
+            cbIsClient.IsChecked = Config.Data.General.StartClientMode;
         }
 
         private void addControls()
@@ -85,6 +86,7 @@ namespace cwssWpf.Windows
             Config.Data.Email.StoreCreds = cbStoreCreds.Value;
 
             Config.Data.General.StartMaximized = (bool)cbMaximized.IsChecked;
+            Config.Data.General.StartClientMode = (bool)cbIsClient.IsChecked;
 
             if (!Config.Data.Email.StoreCreds)
             {

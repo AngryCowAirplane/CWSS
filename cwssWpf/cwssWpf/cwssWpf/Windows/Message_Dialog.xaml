@@ -11,7 +11,7 @@
         Opacity="0.95"
         WindowStartupLocation="CenterScreen"
         Title="Send Message" Height="300" Width="600">
-    <Grid>
+    <Grid Margin="6,6,6,6">
 
         <Grid.Resources>
             <Style TargetType="Label">

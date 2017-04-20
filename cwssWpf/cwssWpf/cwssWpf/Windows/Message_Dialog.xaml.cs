@@ -175,7 +175,10 @@ namespace cwssWpf.Windows
                 message.ExpireDate = DateTime.Now + TimeSpan.FromDays(45);
                 message.TimeStamp = DateTime.Now;
                 Db.dataBase.AddMessage(message);
-                MessageBox.Show("Message Sent!");
+
+                var alert = new Alert_Dialog("Message Sent", "Message Sent Successfuly.", AlertType.Success);
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(4));
+                alert.Show();
                 this.Close();
             }
             else
