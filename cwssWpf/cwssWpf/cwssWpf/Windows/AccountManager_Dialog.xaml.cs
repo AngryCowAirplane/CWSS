@@ -44,8 +44,17 @@ namespace cwssWpf.Windows
         {
             if(selectedUser != null)
             {
-                selectedUser.UpdateUserType(type);
-                lvUsers.Items.Refresh();
+                if(selectedUser.UserType < UserType.Admin || MainWindow.CurrentUser.LoginId == selectedUser.LoginId)
+                {
+                    selectedUser.UpdateUserType(type);
+                    lvUsers.Items.Refresh();
+                }
+                else
+                {
+                    var alert = new Alert_Dialog("Failed", "Admins may only demote their own account.");
+                    MainWindow.WindowsOpen.Add(alert, new TimerVal(4));
+                    alert.Show();
+                }
             }
         }
 
@@ -70,9 +79,15 @@ namespace cwssWpf.Windows
 
             if (confirm.Confirmed)
             {
-                if(selectedUser.UserType != UserType.Admin || selectedUser.UserId == MainWindow.CurrentUser.UserId)
+                if(selectedUser.UserType != UserType.Admin || selectedUser.LoginId == MainWindow.CurrentUser.LoginId)
                 {
                     Db.dataBase.DeleteUser(selectedUser);
+                }
+                else
+                {
+                    var alert = new Alert_Dialog("Failed", "Admins may only delete their own account.");
+                    MainWindow.WindowsOpen.Add(alert, new TimerVal(4));
+                    alert.Show();
                 }
             }
 
