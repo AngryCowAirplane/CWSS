@@ -38,7 +38,7 @@
         
         <DockPanel>
             <Menu DockPanel.Dock="Top" Name="MainMenu" Background="Goldenrod">
-                <MenuItem Header="File">
+                <MenuItem Header="Menu">
                     <!--<MenuItem Header= "_Print" Name="menuPrint" Click="menuPrint_Click"></MenuItem>-->
                     <MenuItem Header= "_Save" Name="menuSave" Click="menuSave_Click"></MenuItem>
                     <MenuItem Header= ""></MenuItem>

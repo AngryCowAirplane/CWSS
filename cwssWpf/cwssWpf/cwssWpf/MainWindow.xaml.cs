@@ -47,6 +47,7 @@ namespace cwssWpf
             //-------------------------------------------------------------
             StatusText.Text = "Loading...";
             menuLogOut_Click(this, null); // Hide Menus
+            setCurrentUserApplication();
 
             // Static Class Initializations
             Config.Initialize();
@@ -470,6 +471,8 @@ namespace cwssWpf
 
         private void LoadConnectionImage()
         {
+            Comms.ClientPingCount = 6;
+            Comms.ServerPingCount = 6;
             BitmapImage b = new BitmapImage();
             b.BeginInit();
             var path = System.IO.Path.Combine(Environment.CurrentDirectory, "Images\\Disconnect.png");
@@ -617,6 +620,15 @@ namespace cwssWpf
 
             if (Config.Data.General.StartClientMode)
                 menuClient_Click(null, null);
+        }
+
+        private void setCurrentUserApplication()
+        {
+            var user = new User();
+            user.LoginId = 000000;
+            user.Info.FirstName = "CWSS";
+            user.Info.LastName = "APP";
+            CurrentUser = user;
         }
         #endregion
 
