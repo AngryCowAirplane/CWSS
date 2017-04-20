@@ -268,6 +268,8 @@ namespace cwssWpf
         #region Other Event Handlers
         private void OnTimerTick(object sender, EventArgs e)
         {
+            //tbLoginId.Focus();
+
             // Check windows timing out.
             var wndList = new List<Window>();
             foreach (var wnd in WindowsOpen)

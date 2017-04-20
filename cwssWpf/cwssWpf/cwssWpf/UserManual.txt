@@ -1,0 +1,20 @@
+﻿Default Administrator Account:
+	user login id:		123456
+	password:		abc123
+
+Command Line Reset of "Start in Client Mode":
+	add " resetclient" to end of the .exe
+
+Keyboard ShortCuts:
+	Ctrl + L:		Login / Logout
+	Ctrl + X:		Exit Program
+	Ctrl + N:		New User
+	Ctrl + P:		Postit Note
+	Ctrl + F1:		Enter Client Mode
+	Ctrl + V:		View Climbers
+	Ctrl + C:		Calendar
+	Ctrl + A:		Account Viewer
+	Ctrl + R:		Reports
+	Ctrl + U:		Users
+	Ctrl + D:		Log Viewer
+	Ctrl + S:		Settings

@@ -323,6 +323,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>cwssWpf.Context.mdf</DependentUpon>
     </Content>
+    <Content Include="UserManual.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="cwss_R0L_icon.ico" />
     <Content Include="Images\Alert.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
