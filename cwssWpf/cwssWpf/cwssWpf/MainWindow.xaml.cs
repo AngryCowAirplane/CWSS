@@ -37,6 +37,8 @@ namespace cwssWpf
 
         public MainWindow()
         {
+            string[] args = Environment.GetCommandLineArgs();
+
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(Environment.CurrentDirectory, "AppData"));
             InitializeComponent();
@@ -83,8 +85,7 @@ namespace cwssWpf
             Logger.Log(000000, LogType.Other, "Application Started");
             StatusText.Text = "Ready";
 
-            if (Config.Data.General.StartClientMode)
-                menuClient_Click(null, null);
+            checkClientStart(args);
             //--------------------------------------------------------------
 
 
@@ -601,6 +602,21 @@ namespace cwssWpf
                     }
                 }
             }
+        }
+
+        private void checkClientStart(string[] args)
+        {
+            foreach (var arg in args)
+            {
+                if (arg.ToLower().Contains("resetclient"))
+                {
+                    Config.Data.General.StartClientMode = false;
+                    Config.SaveConfigToFile();
+                }
+            }
+
+            if (Config.Data.General.StartClientMode)
+                menuClient_Click(null, null);
         }
         #endregion
 
