@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,42 +40,63 @@ namespace cwssWpf.Windows
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            // VALIDATE ALL FIELDS FIRST
+            //reset field backgrounds
+            tbFirstName.Background = Brushes.LightGoldenrodYellow;
+            tbLastName.Background = Brushes.LightGoldenrodYellow;
+            tbIdNumber.Background = Brushes.LightGoldenrodYellow;
+            tbPassword.Background = Brushes.LightGoldenrodYellow;
+            tbPassword2.Background = Brushes.LightGoldenrodYellow;
+            tbEmail.Background = Brushes.LightGoldenrodYellow;
+            tbAddress.Background = Brushes.LightGoldenrodYellow;
+            tbCity.Background = Brushes.LightGoldenrodYellow;
+            tbState.Background = Brushes.LightGoldenrodYellow;
+            tbZip.Background = Brushes.LightGoldenrodYellow;
+            tbPhone.Background = Brushes.LightGoldenrodYellow;
+            cbGender.Background = Brushes.LightGoldenrodYellow;
 
-            var success = Db.dataBase.AddUser(
-                tbFirstName, tbLastName,
-                tbIdNumber, tbPassword, tbPassword2,
-                tbEmail, tbAddress, tbCity, tbState, tbZip,
-                tbPhone, cbGender
-                );
-
-            if (success)
+            if (validateFields())
             {
-                if (MainWindow.CurrentUser == null)
-                    MainWindow.CurrentUser = new Data.User();
+                var success = Db.dataBase.AddUser(
+                    tbFirstName, tbLastName,
+                    tbIdNumber, tbPassword, tbPassword2,
+                    tbEmail, tbAddress, tbCity, tbState, tbZip,
+                    tbPhone, cbGender
+                    );
 
-                Logger.Log(MainWindow.CurrentUser.UserId, LogType.AddUser,
-                    MainWindow.CurrentUser.GetName() + " Added User: " +
-                    tbFirstName.Text + " " + tbLastName.Text);
+                if (success)
+                {
+                    if (MainWindow.CurrentUser == null)
+                        MainWindow.CurrentUser = new Data.User();
 
-                Success = true;
-                NewUser = Db.dataBase.GetUser(int.Parse(tbIdNumber.Text));
+                    Logger.Log(MainWindow.CurrentUser.UserId, LogType.AddUser,
+                        MainWindow.CurrentUser.GetName() + " Added User: " +
+                        tbFirstName.Text + " " + tbLastName.Text);
+
+                    Success = true;
+                    NewUser = Db.dataBase.GetUser(int.Parse(tbIdNumber.Text));
+                }
+                else
+                {
+                    if (MainWindow.CurrentUser == null)
+                        MainWindow.CurrentUser = new Data.User();
+
+                    Logger.Log(MainWindow.CurrentUser.UserId, LogType.Error,
+                        MainWindow.CurrentUser.GetName() + " Failed Add User: " +
+                        tbFirstName.Text + " " + tbLastName.Text);
+
+                    var alert = new Alert_Dialog("Add User Failed", "User add failed.");
+                    MainWindow.WindowsOpen.Add(alert, new TimerVal(6));
+                    alert.ShowDialog();
+                }
+
+                this.Close();
             }
             else
             {
-                if (MainWindow.CurrentUser == null)
-                    MainWindow.CurrentUser = new Data.User();
-
-                Logger.Log(MainWindow.CurrentUser.UserId, LogType.Error,
-                    MainWindow.CurrentUser.GetName() + " Failed Add User: " +
-                    tbFirstName.Text + " " + tbLastName.Text);
-
-                // TODO:
-                // Give feedback on why failed
-                MessageBox.Show("Add User Failed");
+                var alert = new Alert_Dialog("Form Error/s", "Please fix highlighted fields.");
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(6));
+                alert.Show();
             }
-
-            this.Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -107,11 +129,80 @@ namespace cwssWpf.Windows
             }
         }
 
-        // TODO:
-        // Event for cancel button click
-        // -- window.close()
-        // Event for submit button click
-        // -- call below function
-        // Function for checking values and calling DB.AddUser with correct infos
+        private bool validateFields()
+        {
+            bool valid = true;
+
+            if(string.IsNullOrEmpty(tbFirstName.Text))
+            {
+                valid = false;
+                tbFirstName.Background = Brushes.LightPink;
+            }
+
+            if(string.IsNullOrEmpty(tbLastName.Text))
+            {
+                valid = false;
+                tbLastName.Background = Brushes.LightPink;
+            }
+
+            if(tbPassword.Password != tbPassword2.Password || (tbPassword.Password.Length < StaticValues.MinPasswordLength || tbPassword2.Password.Length < StaticValues.MinPasswordLength))
+            {
+                valid = false;
+                tbPassword2.Background = Brushes.LightPink;
+                tbPassword.Background = Brushes.LightPink;
+            }
+
+            if(!Helpers.ValidateIdInput(tbIdNumber.Text.ToString()))
+            {
+                valid = false;
+                tbIdNumber.Background = Brushes.LightPink;
+            }
+
+            int zip = 0;
+            if(!int.TryParse(tbZip.Text, out zip) || tbZip.Text.Length != 5)
+            {
+                valid = false;
+                tbZip.Background = Brushes.LightPink;
+            }
+
+            var phoneReg = new Regex(@"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$");
+            if(!phoneReg.IsMatch(tbPhone.Text))
+            {
+                valid = false;
+                tbPhone.Background = Brushes.LightPink;
+            }
+
+            if(cbGender.SelectedIndex == -1)
+            {
+                valid = false;
+                cbGender.Background = Brushes.LightPink;
+            }
+
+            if(string.IsNullOrEmpty(tbEmail.Text))
+            {
+                valid = false;
+                tbEmail.Background = Brushes.LightPink;
+            }
+
+            if (string.IsNullOrEmpty(tbAddress.Text))
+            {
+                valid = false;
+                tbAddress.Background = Brushes.LightPink;
+            }
+
+            if (string.IsNullOrEmpty(tbState.Text))
+            {
+                valid = false;
+                tbState.Background = Brushes.LightPink;
+            }
+
+            if (string.IsNullOrEmpty(tbCity.Text))
+            {
+                valid = false;
+                tbCity.Background = Brushes.LightPink;
+            }
+
+            return valid;
+        }
     }
 }

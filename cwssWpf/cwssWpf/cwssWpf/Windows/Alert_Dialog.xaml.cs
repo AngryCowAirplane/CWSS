@@ -20,11 +20,11 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Alert_Dialog : Window
     {
-        //Autoclose won't work like this.  might as well take it out.
-        private static Timer timer;
+        public AlertType Alert_Type;
 
-        public Alert_Dialog(string alertTitle, string alertText, Vector? screenCoords = null, bool autoClose = false)
+        public Alert_Dialog(string alertTitle, string alertText, AlertType alertType = AlertType.Failure, Vector? screenCoords = null, bool autoClose = false)
         {
+            Alert_Type = alertType;
             if(screenCoords == null)
                 this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             else
@@ -33,16 +33,14 @@ namespace cwssWpf.Windows
                 Top = screenCoords.Value.Y;
             }
 
-            if(autoClose)
+            if (autoClose)
             {
-                timer = new Timer(3000);
-                timer.Elapsed += timerExpired;
-                timer.Enabled = true;
-                timer.Start();
+                MainWindow.WindowsOpen.Add(this, new TimerVal(3));
             }
 
             InitializeComponent();
             LoadImage();
+            PlaySound();
             this.Activate();
             this.Topmost = true;
             Title.Content = alertTitle;
@@ -69,25 +67,41 @@ namespace cwssWpf.Windows
             BitmapImage b = new BitmapImage();
             b.BeginInit();
             var path = System.IO.Path.Combine(Environment.CurrentDirectory, "Images\\Alert.png");
+            if (Alert_Type == AlertType.Success)
+                path = System.IO.Path.Combine(Environment.CurrentDirectory, "Images\\Success.png");
+
             b.UriSource = new Uri(path);
             b.EndInit();
 
             Image.Source = b;
         }
 
+        private void PlaySound()
+        {
+            if(Alert_Type == AlertType.Failure)
+            {
+                Helpers.PlayFail();
+            }
+            else if (Alert_Type == AlertType.Success)
+            {
+                Helpers.PlaySuccess();
+            }
+            else
+            {
+                Helpers.PlayFail();
+            }
+        }
+
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            if(timer != null)
-                timer.Dispose();
         }
+    }
 
-        private void timerExpired(object sender, ElapsedEventArgs e)
-        {
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                Close_Click(null, null);
-            }));
-        }
+    public enum AlertType
+    {
+        Success = 0,
+        Failure = 1,
+        Notice = 2
     }
 }

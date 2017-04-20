@@ -16,11 +16,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace cwssWpf
 {
     public partial class ClientWindow : Window
     {
+        public static Dictionary<Window, TimerVal> WindowsOpen = new Dictionary<Window, TimerVal>();
+        public static DispatcherTimer DasTimer = new DispatcherTimer();
+        private bool serverConnected = false;
+
         public ClientWindow()
         {
             InitializeComponent();
@@ -34,14 +39,74 @@ namespace cwssWpf
 
             StartNetworkListen(null, null);
             FocusManager.SetFocusedElement(this, tbLoginId);
+
+            Comms.CommPacketReceived += Comms_CommPacketReceived;
+            DasTimer.Interval = TimeSpan.FromSeconds(1);
+            DasTimer.Tick += OnTimerTick;
+            DasTimer.Start();
+        }
+
+        private void OnTimerTick(object sender, EventArgs e)
+        {
+            if(serverConnected)
+            {
+                tbLoginId.IsEnabled = true;
+                btnCheckIn.IsEnabled = true;
+                newUser.IsEnabled = true;
+            }
+            else
+            {
+                tbLoginId.IsEnabled = false;
+                btnCheckIn.IsEnabled = false;
+                newUser.IsEnabled = false;
+            }
+
+            // Check windows timing out.
+            var wndList = new List<Window>();
+            foreach (var wnd in WindowsOpen)
+            {
+                if (wnd.Value.time > 0)
+                {
+                    wnd.Value.time--;
+                }
+                else if (wnd.Value.time == 0)
+                {
+                    wnd.Key.Close();
+                    wndList.Add(wnd.Key);
+                }
+            }
+            foreach (var wnd in wndList)
+            {
+                WindowsOpen.Remove(wnd);
+            }
+
+            // Check Client Connection
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                var packet = new CommPacket(Sender.Client);
+                Comms.SendMessage(packet);
+                Comms.ClientPingCount++;
+            }));
+
+            if (Comms.ClientPingCount > 5)
+                serverConnected = false;
+            else
+                serverConnected = true;
         }
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
-            if (tbLoginId.Text.Length > 0)
+            if (tbLoginId.Text.Length > 0 && Helpers.ValidateIdInput(tbLoginId.Text))
             {
                 var packet = new CommPacket(Sender.Client, tbLoginId.Text);
                 Comms.SendMessage(packet);
+                tbLoginId.Text = string.Empty;
+            }
+            else
+            {
+                var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
+                WindowsOpen.Add(alert, new TimerVal(6));
+                alert.ShowDialog();
                 tbLoginId.Text = string.Empty;
             }
         }
@@ -89,51 +154,99 @@ namespace cwssWpf
         {
             if (args.senderWindow == Sender.Server)
             {
-                var message = Comms.GetMessage();
-                var messageObject = Comms.GetObject(message);
-                if (message.messageType == MessageType.CheckInResult)
+                var message = Comms.GetMessage(Sender.Client);
+                if(message != null)
                 {
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    var messageObject = Comms.GetObject(message);
+                    if (message.messageType == MessageType.CheckInResult)
                     {
-                        messageObject.Show();
-                    }));
-                }
-                else if (message.messageType == MessageType.NewUser)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        var newUser = new NewUser_Dialog(this);
-                        newUser.ShowDialog();
-
-                        if (newUser.Success)
+                        var result = (CheckinResult)messageObject;
+                        if (result.Success)
                         {
-                            var user = newUser.NewUser;
-                            var packet = new CommPacket(Sender.Client, user);
+                            Dispatcher.BeginInvoke((Action)(() =>
+                            {
+                                var alert = new Alert_Dialog(result.Heading, result.Body, AlertType.Success);
+                                WindowsOpen.Add(alert, new TimerVal(2));
+                                alert.Show();
+                            }));
+                        }
+                        else
+                        {
+                            Dispatcher.BeginInvoke((Action)(() =>
+                            {
+                                var alert = new Alert_Dialog(result.Heading, result.Body, AlertType.Failure);
+                                WindowsOpen.Add(alert, new TimerVal(6));
+                                alert.Show();
+                            }));
+                        }
+                    }
+                    else if (message.messageType == MessageType.NewUser)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            var newUser = new NewUser_Dialog(this);
+                            newUser.ShowDialog();
+
+                            if (newUser.Success)
+                            {
+                                var user = newUser.NewUser;
+                                var packet = new CommPacket(Sender.Client, user);
+                                Comms.SendMessage(packet);
+                            }
+                        }));
+                    }
+                    else if (message.messageType == MessageType.Messages)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            var messagePacket = (MessagesPacket)messageObject;
+                            var user = messagePacket.MessageUser;
+                            var messages = messagePacket.Messages;
+
+                            var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                            alert.ShowDialog();
+
+                            foreach (var msg in messages)
+                            {
+                                var messageDialog = new Message_Dialog(user, msg);
+                                messageDialog.ShowDialog();
+                            }
+
+                            var newMessagePacket = new MessagesPacket(messages, user);
+                            var packet = new CommPacket(Sender.Client, newMessagePacket);
                             Comms.SendMessage(packet);
-                        }
-                    }));
-                }
-                else if (message.messageType == MessageType.Messages)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
+                        }));
+                    }
+                    else if (message.messageType == MessageType.Waiver)
                     {
-                        var messagePacket = (MessagesPacket)messageObject;
-                        var user = messagePacket.MessageUser;
-                        var messages = messagePacket.Messages;
-
-                        var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-                        alert.ShowDialog();
-
-                        foreach (var msg in messages)
+                        Dispatcher.BeginInvoke((Action)(() =>
                         {
-                            var messageDialog = new Message_Dialog(user, msg);
-                            messageDialog.ShowDialog();
-                        }
-
-                        var newMessagePacket = new MessagesPacket(messages, user);
-                        var packet = new CommPacket(Sender.Client, newMessagePacket);
-                        Comms.SendMessage(packet);
-                    }));
+                            var packet = (WaiverPacket)messageObject;
+                            var user = packet.user;
+                            var waiver = new Waiver_Dialog(user);
+                            var signedWaiver = waiver.ShowDialog();
+                            if ((bool)signedWaiver)
+                            {
+                                var waiverPac = new WaiverPacket();
+                                waiverPac.user = user;
+                                var newPacket = new CommPacket(Sender.Client, waiverPac);
+                                Comms.SendMessage(newPacket);
+                            }
+                            else
+                            {
+                                var alert = new Alert_Dialog("Waiver Required", "Please see an employee to complete waiver agreement.", AlertType.Failure);
+                                WindowsOpen.Add(alert, new TimerVal(6));
+                                alert.Show();
+                            }
+                        }));
+                    }
+                    else if (message.messageType == MessageType.Ping)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            Comms.ClientPingCount = 0;
+                        }));
+                    }
                 }
             }
         }

@@ -20,6 +20,8 @@ namespace cwssWpf
         public static int StartStudentIdNumber = 1000000;
         public static int EndStudentIdNumber = 9999999;
 
+        public static int MinPasswordLength = 4;
+
         // Remote Communication Settings
         public static string RemoteIP = "239.0.0.222";
         public static string RemotePort = "2222";

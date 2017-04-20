@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cwssWpf.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -56,7 +57,14 @@ namespace cwssWpf.Network
         /// <param name="bufferToSend"></param>
         public void SendMulticast(byte[] bufferToSend)
         {
-            _udpclient.Send(bufferToSend, bufferToSend.Length, _remoteEndPoint);
+            try
+            {
+                _udpclient.Send(bufferToSend, bufferToSend.Length, _remoteEndPoint);
+            }
+            catch
+            {
+                //Logger.Log(000000, LogType.Error, "Error sending UDP Message");
+            }
         }
 
         /// <summary>

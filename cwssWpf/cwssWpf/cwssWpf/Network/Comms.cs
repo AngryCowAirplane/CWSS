@@ -14,6 +14,8 @@ namespace cwssWpf.Network
     {
         public static MulticastUdpClient udpClientWrapper;
         public static event EventHandler <CustomCommArgs> CommPacketReceived;
+        public static int ClientPingCount = 0;
+        public static int ServerPingCount = 0;
 
         private static CommPacket commPacket;
 
@@ -41,9 +43,17 @@ namespace cwssWpf.Network
             udpClientWrapper.SendMulticast(buffer);
         }
 
-        public static CommPacket GetMessage()
+        public static CommPacket GetMessage(Sender sender)
         {
-            return commPacket;
+            if (sender != commPacket.sender)
+            {
+                var packet = new CommPacket();
+                packet = commPacket;
+                commPacket = null;
+                return packet;
+            }
+            else
+                return null;
         }
 
         private static void OnUdpMessageReceived(object sender, MulticastUdpClient.UdpMessageReceivedEventArgs e)
@@ -70,7 +80,7 @@ namespace cwssWpf.Network
             else if (packet.messageType == MessageType.NewUser)
                 return JsonConvert.DeserializeObject<User>(packet.messageObject);
             else if (packet.messageType == MessageType.Waiver)
-                return JsonConvert.DeserializeObject<Document>(packet.messageObject);
+                return JsonConvert.DeserializeObject<WaiverPacket>(packet.messageObject);
             else if (packet.messageType == MessageType.CheckIn)
                 return JsonConvert.DeserializeObject<string>(packet.messageObject);
             else if (packet.messageType == MessageType.ClientMode)
@@ -111,11 +121,11 @@ namespace cwssWpf.Network
             });
         }
 
-        public CommPacket(Sender sender, Document document)
+        public CommPacket(Sender sender, WaiverPacket waiverPacket)
         {
             this.sender = sender;
             this.messageType = MessageType.Waiver;
-            messageObject = JsonConvert.SerializeObject(document, Formatting.None, new JsonSerializerSettings()
+            messageObject = JsonConvert.SerializeObject(waiverPacket, Formatting.None, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
@@ -147,6 +157,13 @@ namespace cwssWpf.Network
             this.messageType = MessageType.ClientMode;
             messageObject = clientClosed.ToString();
         }
+
+        public CommPacket(Sender sender)
+        {
+            this.sender = sender;
+            this.messageType = MessageType.Ping;
+            messageObject = null;
+        }
     }
 
     public enum Sender
@@ -162,7 +179,8 @@ namespace cwssWpf.Network
         Messages = 2,
         Waiver = 3,
         NewUser = 4,
-        ClientMode = 5
+        ClientMode = 5,
+        Ping = 6
     }
 
     public class MessagesPacket
@@ -175,6 +193,11 @@ namespace cwssWpf.Network
             this.Messages = messages;
             MessageUser = user;
         }
+    }
+
+    public class WaiverPacket
+    {
+        public User user;
     }
 
     public class CustomCommArgs : EventArgs

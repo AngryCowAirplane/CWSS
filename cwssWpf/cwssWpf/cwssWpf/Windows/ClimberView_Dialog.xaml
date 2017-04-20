@@ -44,7 +44,7 @@
                 <ContextMenu Name="userMenu" Opacity="0.9" Foreground="Black">
                     <MenuItem Header="Stats" Name="cmStats" Click="cmStats_Click"></MenuItem>
                     <MenuItem Header="Request Revoke" Name="cmRevoke" Click="cmRevoke_Click"></MenuItem>
-                    <MenuItem Header="CheckOut" Name="cmCheckOut" Click="cmCheckOut_Click"></MenuItem>
+                    <!--<MenuItem Header="CheckOut" Name="cmCheckOut" Click="cmCheckOut_Click"></MenuItem>-->
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

@@ -46,7 +46,7 @@ namespace cwssWpf.Windows
             Db.dataBase.Notes.WallNotes.Add(note);
             var postit = new Postit_Dialog(note);
             postit.Show();
-            MainWindow.WindowsOpen.Add(postit);
+            MainWindow.WindowsOpen.Add(postit, new TimerVal(-1));
             this.Close();
         }
 

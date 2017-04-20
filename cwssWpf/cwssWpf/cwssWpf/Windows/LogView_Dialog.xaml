@@ -46,9 +46,9 @@
             <Style TargetType="Button">
                 <Setter Property="Background" Value="Goldenrod"></Setter>
             </Style>
-            <Style TargetType="ComboBox">
+            <!--<Style TargetType="ComboBox">
                 <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
-            </Style>
+            </Style>-->
         </Grid.Resources>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Log Date Range:" FontSize="20" HorizontalAlignment="Right" Margin="5,0,5,0"/>

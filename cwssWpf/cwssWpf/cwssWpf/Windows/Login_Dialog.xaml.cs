@@ -41,30 +41,40 @@ namespace cwssWpf.Windows
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            var loginId = int.Parse(tbUserId.Text);
-            var user = Db.dataBase.GetUser(loginId);
-            if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
+            if(Helpers.ValidateIdInput(tbUserId.Text))
             {
-                MainWindow.CurrentUser = user;
-                mainWindow.MainMenu.Background = Brushes.OrangeRed;
-                mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
-                if ((int)user.UserType > 1)
-                    mainWindow.ManagerMenu.Visibility = Visibility.Visible;
-                if ((int)user.UserType > 2)
-                    mainWindow.AdminMenu.Visibility = Visibility.Visible;
+                var loginId = int.Parse(tbUserId.Text);
+                var user = Db.dataBase.GetUser(loginId);
+                if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
+                {
+                    MainWindow.CurrentUser = user;
+                    mainWindow.MainMenu.Background = Brushes.OrangeRed;
+                    mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
+                    if ((int)user.UserType > 1)
+                        mainWindow.ManagerMenu.Visibility = Visibility.Visible;
+                    if ((int)user.UserType > 2)
+                        mainWindow.AdminMenu.Visibility = Visibility.Visible;
 
-                Success = true;
-                var message = user.GetName() + " Logged In"; 
-                Logger.Log(user.UserId, LogType.LogIn, message);
+                    Success = true;
+                    var message = user.GetName() + " Logged In"; 
+                    Logger.Log(user.UserId, LogType.LogIn, message);
+                }
+                else
+                {
+                    var message = "Failed Login By " + loginId;
+                    Logger.Log(loginId, LogType.Error, message);
+                    var alert = new Alert_Dialog("Login Failed", "Employee ID or Password Incorrect!");
+                    alert.ShowDialog();
+                }
+                this.Close();
             }
             else
             {
-                var message = "Failed Login By " + loginId;
-                Logger.Log(loginId, LogType.Error, message);
-                var alert = new Alert_Dialog("Login Failed", "Employee ID or Password Incorrect!");
+                var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(6));
                 alert.ShowDialog();
+                tbUserId.Text = string.Empty;
             }
-            this.Close();
         }
 
         private void EnterPressed(object sender, KeyEventArgs e)

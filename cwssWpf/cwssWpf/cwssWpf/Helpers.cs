@@ -21,6 +21,8 @@ using Newtonsoft.Json;
 
 namespace cwssWpf
 {
+    public class TimerVal { public int time { get; set; } public TimerVal(int time) { this.time = time; } }
+
     public class Helpers
     {
         // encryption keys
@@ -261,14 +263,8 @@ namespace cwssWpf
 
         public void Show()
         {
-            var alert = new Alert_Dialog(Heading, Body);
-                alert.ShowDialog();
-        }
-
-        public void ShowAuto()
-        {
-            var alert = new Alert_Dialog(Heading, Body, autoClose: true);
-            alert.ShowDialog();
+            var alert = new Alert_Dialog(Heading, Body,( Success == true ? AlertType.Success : AlertType.Failure));
+                alert.Show();
         }
 
         public void Initialize()

@@ -23,14 +23,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace cwssWpf
 {
     public partial class MainWindow : Window
     {
         public static User CurrentUser = null;
-        public static List<Window> WindowsOpen = new List<Window>();
+        public static Dictionary<Window, TimerVal> WindowsOpen = new Dictionary<Window, TimerVal>();
         public static bool ClientMode = false;
+        public static bool ClientConnected = false;
+        public static DispatcherTimer DasTimer = new DispatcherTimer(); 
 
         public MainWindow()
         {
@@ -49,12 +52,23 @@ namespace cwssWpf
             Logger.Initialize();
             Comms.Initialize();
 
-            if (Db.dataBase.Users.Count < 1)
+            if ((Db.dataBase.Users.Where(u => u.UserType == UserType.Admin)).Count() < 1)
                 Db.dataBase.AddDefaultAdminUser(StaticValues.DefaultAdminId, StaticValues.DefaultAdminPassword);
+
+            if (Logger.GetTodaysLog().Logs.Count == 0)
+            {
+                foreach (var user in Db.dataBase.Users.Where(u => u.CheckedIn == true)) 
+                {
+                    user.CheckOut();
+                }
+            }
 
             // Event Subscriptions
             KeyUp += KeyPressed;
             Comms.CommPacketReceived += Comms_CommPacketReceived;
+            DasTimer.Interval = TimeSpan.FromSeconds(1);
+            DasTimer.Tick += OnTimerTick;
+            DasTimer.Start();
 
             // Other
             if (Config.Data.General.StartMaximized)
@@ -63,8 +77,10 @@ namespace cwssWpf
                 this.WindowStyle = WindowStyle.None;
             }
 
+            LoadConnectionImage();
             UpdateClimberStats();
             FocusManager.SetFocusedElement(this, tbLoginId);
+            Logger.Log(000000, LogType.Other, "Application Started");
             StatusText.Text = "Ready";
             //--------------------------------------------------------------
 
@@ -80,12 +96,32 @@ namespace cwssWpf
             {
                 if (Helpers.ValidateIdInput(tbLoginId.Text))
                 {
-                    var result = tryCheckinUser();
-                    result.Show();
+                    var user = getUserFromCheckInText();
+                    var result = tryCheckinUser(user);
+                    WindowsOpen.Add(result.Alert, new TimerVal(3));
+                    result.Alert.ShowDialog();
+
+                    if(result.Alert.Title.ToString().ToLower().Contains("waiver"))
+                    {
+                        var waiver = new Waiver_Dialog(user);
+                        var signedWaiver = waiver.ShowDialog();
+                        if ((bool)signedWaiver)
+                        {
+                            user.AddWaiver();
+                            tryCheckinUser(user);
+                        }
+                        else
+                        {
+                            Helpers.PlayFail();
+                            result.Alert = new Alert_Dialog("Not Signed", "Waiver not signed!, User not checked in!");
+                            WindowsOpen.Add(result.Alert, new TimerVal(6));
+                        }
+                    }
                 }
                 else
                 {
                     var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
+                    WindowsOpen.Add(alert, new TimerVal(6));
                     alert.ShowDialog();
                     tbLoginId.Text = string.Empty;
                 }
@@ -142,7 +178,8 @@ namespace cwssWpf
 
             foreach (var wnd in WindowsOpen)
             {
-                wnd.Close();
+                if(wnd.Value.time == -1)
+                    wnd.Key.Close();
             }
 
             WindowsOpen.Clear();
@@ -218,10 +255,59 @@ namespace cwssWpf
         #endregion
 
         #region Other Event Handlers
+        private void OnTimerTick(object sender, EventArgs e)
+        {
+            // Check windows timing out.
+            var wndList = new List<Window>();
+            foreach (var wnd in WindowsOpen)
+            {
+                if(wnd.Value.time > 0)
+                {
+                    wnd.Value.time--;
+                }
+                else if(wnd.Value.time == 0)
+                {
+                    wnd.Key.Close();
+                    wndList.Add(wnd.Key);
+                }
+            }
+            foreach (var wnd in wndList)
+            {
+                WindowsOpen.Remove(wnd);
+            }
+
+            // Check Client Connection
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                var packet = new CommPacket(Sender.Server);
+                Comms.SendMessage(packet);
+                Comms.ServerPingCount++;
+            }));
+
+            var oldStatus = ClientConnected;
+
+            if (Comms.ServerPingCount > 5)
+                ClientConnected = false;
+            else
+                ClientConnected = true;
+
+            if (oldStatus != ClientConnected)
+            {
+                if (ClientConnected)
+                    Helpers.PlayLogin();
+                else
+                    Helpers.PlayLogOff();
+
+                LoadConnectionImage();
+            }
+        }
+
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (CurrentUser != null)
                 menuLogOut_Click(null, null);
+
+            DasTimer.Stop();
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
@@ -279,20 +365,10 @@ namespace cwssWpf
         #endregion
 
         #region Custom Methods  //MOVE TO DIFFERENT_NEW CLASS?, KEEP ONLY EVENT HANDLERS HERE
-        private CheckinResult tryCheckinUser(string userId, bool remote = false)
-        {
-            tbLoginId.Text = userId;
-            return tryCheckinUser(remote);
-        }
-
-        private CheckinResult tryCheckinUser(bool remote = false)
+        private CheckinResult tryCheckinUser(User user, bool remote = false)
         {
             var result = new CheckinResult();
-            if (tbLoginId.Text[0] == StaticValues.CardReaderStartChar)
-                tbLoginId.Text = Helpers.TryGetCardId(tbLoginId.Text);
 
-            var loginId = int.Parse(tbLoginId.Text);
-            var user = Db.dataBase.GetUser(loginId);
             if (user != null)
             {
                 checkMessages(user, remote);
@@ -304,37 +380,16 @@ namespace cwssWpf
                 {
                     user.CheckIn();
                     var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
-                    result.Alert = new Alert_Dialog("Check In", message, autoClose: true);
+                    result.Alert = new Alert_Dialog("Check In", message, AlertType.Success);
                     result.Success = true;
-                    Helpers.PlayLogin();
+                    //Helpers.PlayLogin();
                 }
                 else
                 {
                     if (!hasWaiver)
                     {
-                        Helpers.PlayFail();
+                        //Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
-
-                        var waiver = new Waiver_Dialog();
-                        var signedWaiver = waiver.ShowDialog();
-                        if ((bool)signedWaiver)
-                        {
-                            if (remote)
-                            {
-                                // Start Remote Actions class to move everything remote related out of logic in this class.
-                                // or seperate remote try checkin user function.
-                            }
-                            else
-                            {
-                                user.AddWaiver();
-                                tryCheckinUser();
-                            }
-                        }
-                        else
-                        {
-                            Helpers.PlayFail();
-                            result.Alert = new Alert_Dialog("Not Signed", "Waiver not signed!");
-                        }
                     }
                     if (!canClimb)
                     {
@@ -345,9 +400,9 @@ namespace cwssWpf
             }
             else
             {
-                var message = "Failed Checkin By " + loginId;
-                Logger.Log(loginId, LogType.Error, message);
-                Helpers.PlayFail();
+                var message = "Failed Checkin By " + tbLoginId.Text;
+                Logger.Log(int.Parse(tbLoginId.Text), LogType.Error, message);
+                //Helpers.PlayFail();
                 result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }
 
@@ -399,15 +454,39 @@ namespace cwssWpf
             {
                 var postit = new Postit_Dialog(note);
                 postit.Show();
-                WindowsOpen.Add(postit);
+                WindowsOpen.Add(postit, new TimerVal(-1));
             }
+        }
+
+        private void LoadConnectionImage()
+        {
+            BitmapImage b = new BitmapImage();
+            b.BeginInit();
+            var path = System.IO.Path.Combine(Environment.CurrentDirectory, "Images\\Disconnect.png");
+            if (ClientConnected)
+                path = System.IO.Path.Combine(Environment.CurrentDirectory, "Images\\Connect.png");
+
+            b.UriSource = new Uri(path);
+            b.EndInit();
+
+            ConnectionImage.Source = b;
+        }
+
+        private User getUserFromCheckInText()
+        {
+            if (tbLoginId.Text[0] == StaticValues.CardReaderStartChar)
+                tbLoginId.Text = Helpers.TryGetCardId(tbLoginId.Text);
+
+            var loginId = int.Parse(tbLoginId.Text);
+            var user = Db.dataBase.GetUser(loginId);
+            return user;
         }
 
         private void Comms_CommPacketReceived(object sender, CustomCommArgs args)
         {
             if (args.senderWindow == Sender.Client)
             {
-                var message = Comms.GetMessage();
+                var message = Comms.GetMessage(Sender.Server);
 
                 if (message.sender == Sender.Client)
                 {
@@ -428,15 +507,37 @@ namespace cwssWpf
                     {
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
-
                             tbLoginId.Text = messageObject;
-                            var success = tryCheckinUser();
+                            var user = getUserFromCheckInText();
+                            var success = tryCheckinUser(user);
                             tbLoginId.Text = "";
-                            var packet = new CommPacket(Sender.Server, success);
-                            Comms.SendMessage(packet);
-                            //success.ShowAuto();
 
+                            if(success.Body.ToLower().Contains("waiver"))
+                            {
+                                var waiverPac = new WaiverPacket();
+                                waiverPac.user = user;
+                                var packet = new CommPacket(Sender.Server, waiverPac);
+                                Comms.SendMessage(packet);
+                            }
+                            else
+                            {
+                                var packet = new CommPacket(Sender.Server, success);
+                                Comms.SendMessage(packet);
+                            }
 
+                            if(success.Success)
+                            {
+                                var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
+                                WindowsOpen.Add(alert, new TimerVal(2));
+                                alert.Show();
+                            }
+                            else
+                            {
+                                var alert = new Alert_Dialog("Client Checkin", "Failed Check In.\n" + success.Body, AlertType.Failure);
+                                WindowsOpen.Add(alert, new TimerVal(2));
+                                alert.Show();
+
+                            }
                         }));
                     }
 
@@ -461,6 +562,34 @@ namespace cwssWpf
                             }
                         }));
                     }
+
+                    else if (message.messageType == MessageType.Waiver)
+                    {
+                        var waiverDoc = (WaiverPacket)messageObject;
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            var user = Db.dataBase.Users.Where(u => u.LoginId == waiverDoc.user.LoginId).First();
+                            user.AddWaiver();
+                            var success = tryCheckinUser(user);
+                            var packet = new CommPacket(Sender.Server, success);
+                            Comms.SendMessage(packet);
+
+                            if (success.Success)
+                            {
+                                var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
+                                WindowsOpen.Add(alert, new TimerVal(2));
+                                alert.Show();
+                            }
+                        }));
+                    }
+
+                    else if (message.messageType == MessageType.Ping)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            Comms.ServerPingCount = 0;
+                        }));
+                    }
                 }
             }
         }
@@ -469,10 +598,14 @@ namespace cwssWpf
         #region TESTING
         private void TestSomething(object sender, RoutedEventArgs e)
         {
-            if (CheckinCanvas.IsVisible)
-                CheckinCanvas.Visibility = Visibility.Hidden;
-            else
-                CheckinCanvas.Visibility = Visibility.Visible;
+            var alert = new Alert_Dialog("TESTING AUTO", "This should auto destruct in 3 seconds..", AlertType.Success);
+            WindowsOpen.Add(alert, new TimerVal(3));
+            alert.Show();
+
+            //if (CheckinCanvas.IsVisible)
+            //    CheckinCanvas.Visibility = Visibility.Hidden;
+            //else
+            //    CheckinCanvas.Visibility = Visibility.Visible;
         }
         #endregion
     }
