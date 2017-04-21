@@ -53,14 +53,6 @@
     <ApplicationIcon>cwss_R0L_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ImageProcessor, Version=2.5.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ImageProcessor.2.5.2\lib\net45\ImageProcessor.dll</HintPath>
       <Private>True</Private>
@@ -104,7 +96,6 @@
     </Compile>
     <Compile Include="CustomControls\ComboBool.cs" />
     <Compile Include="CustomControls\UserListViewItem.cs" />
-    <Compile Include="DataBase\DbContext.cs" />
     <Compile Include="DataBase\Db.cs" />
     <Compile Include="Data\Calendar.cs" />
     <Compile Include="Data\Config.cs" />
@@ -113,11 +104,6 @@
     <Compile Include="Data\_BaseDataObject.cs" />
     <Compile Include="Data\Log.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="Migrations\201701230205324_InitialCreate.cs" />
-    <Compile Include="Migrations\201701230205324_InitialCreate.Designer.cs">
-      <DependentUpon>201701230205324_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Network\Comms.cs" />
     <Compile Include="Network\MulticastUdpClient.cs" />
     <Compile Include="Reports\Report.cs" />
@@ -290,9 +276,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201701230205324_InitialCreate.resx">
-      <DependentUpon>201701230205324_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

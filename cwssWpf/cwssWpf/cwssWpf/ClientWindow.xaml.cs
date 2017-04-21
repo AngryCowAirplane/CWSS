@@ -101,17 +101,10 @@ namespace cwssWpf
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
-            if (tbLoginId.Text.Length > 0 && Helpers.ValidateIdInput(tbLoginId.Text))
+            if (tbLoginId.Text.Length > 0)
             {
                 var packet = new CommPacket(Sender.Client, tbLoginId.Text);
                 Comms.SendMessage(packet);
-                tbLoginId.Text = string.Empty;
-            }
-            else
-            {
-                var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
-                WindowsOpen.Add(alert, new TimerVal(6));
-                alert.ShowDialog();
                 tbLoginId.Text = string.Empty;
             }
         }
@@ -192,7 +185,7 @@ namespace cwssWpf
                             var newUser = new NewUser_Dialog(this);
                             newUser.ShowDialog();
 
-                            if (newUser.Success)
+                            if (true/*newUser.Success*/)
                             {
                                 var user = newUser.NewUser;
                                 var packet = new CommPacket(Sender.Client, user);
@@ -252,6 +245,27 @@ namespace cwssWpf
                             Comms.ClientPingCount = 0;
                         }));
                     }
+                    else if (message.messageType == MessageType.CheckIn)
+                    {
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            if((string)messageObject == "failed")
+                            {
+                                var alert = new Alert_Dialog("New User Failed", "New user failed to create.  Please see employee.", AlertType.Failure);
+                                WindowsOpen.Add(alert, new TimerVal(6));
+                                alert.Show();
+                            }
+                            else
+                            {
+                                var alert = new Alert_Dialog("New User Created!", "Please sign waiver.", AlertType.Success);
+                                WindowsOpen.Add(alert, new TimerVal(3));
+                                alert.ShowDialog();
+                                tbLoginId.Text = (string)messageObject;
+                                btnCheckIn_Click(null, null);
+                            }
+                        }));
+                    }
+
                     else if (message.messageType == MessageType.Reset)
                     {
                         Dispatcher.BeginInvoke((Action)(() =>

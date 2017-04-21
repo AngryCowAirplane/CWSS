@@ -18,6 +18,7 @@ using System.Web;
 using cwssWpf.Windows;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using System.Windows.Controls;
 
 namespace cwssWpf
 {
@@ -229,7 +230,7 @@ namespace cwssWpf
                     return true;
             }
 
-            catch{}
+            catch { }
 
             {
                 bool isGood = true;
@@ -250,7 +251,7 @@ namespace cwssWpf
 
         public static User getUserFromCheckInText(string text = "")
         {
-            if(text.Length > StaticValues.StudentIdLength)
+            if (text.Length > StaticValues.StudentIdLength)
             {
                 var user = Db.dataBase.GetUser(text);
                 return user;
@@ -274,6 +275,102 @@ namespace cwssWpf
 
             return (bool)signedWaiver;
         }
+
+        public static User TryAddUser(TextBox firstName, TextBox LastName, TextBox userId, PasswordBox password1, PasswordBox password2,
+            TextBox email, TextBox address, TextBox city, TextBox state, TextBox zip, TextBox phone, ComboBox gender, DatePicker dob, TextBox cardID)
+        {
+            User NewUser = null;
+
+            var success = Db.dataBase.AddUser(
+                firstName, LastName,
+                userId, password1, password2,
+                email, address, city, state, zip,
+                phone, gender, dob, cardID
+            );
+
+            if (success)
+            {
+                if (MainWindow.CurrentUser == null)
+                    MainWindow.CurrentUser = new User();
+
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.AddUser,
+                    MainWindow.CurrentUser.GetName() + " Added User: " +
+                    firstName.Text + " " + LastName.Text);
+
+                NewUser = Db.dataBase.GetUser(int.Parse(userId.Text));
+
+                var alert = new Alert_Dialog("User Created!", NewUser.GetName(), AlertType.Success);
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
+                alert.Show();
+
+                return NewUser;
+            }
+            else
+            {
+                if (MainWindow.CurrentUser == null)
+                    MainWindow.CurrentUser = new User();
+
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.Error,
+                    MainWindow.CurrentUser.GetName() + " Failed Add User: " +
+                    firstName.Text + " " + LastName.Text);
+
+                var alert = new Alert_Dialog("Add User Failed", "");
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
+                alert.Show();
+                MainWindow.CurrentUser = null;
+                return null;
+            }
+        }
+
+        public static User TryAddUser(User user)
+        {
+            User NewUser = null;
+            bool success = false;
+
+            if(user != null)
+            {
+                success = Db.dataBase.AddUser(
+                    user.Info.FirstName, user.Info.LastName,
+                    user.LoginId, user.Password, user.Password,
+                    user.Info.Email, user.Info.Address, user.Info.City, user.Info.State, int.Parse(user.Info.Zip),
+                    user.Info.Phone, user.Info.Gender, user.Info.DateOfBirth, user.CardId
+                );
+            }
+
+
+            if (success)
+            {
+                if (MainWindow.CurrentUser == null)
+                    MainWindow.CurrentUser = new User();
+
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.AddUser,
+                    MainWindow.CurrentUser.GetName() + " Added User: " +
+                    user.Info.FirstName + " " + user.Info.LastName);
+
+                NewUser = Db.dataBase.GetUser((user.LoginId));
+
+                var alert = new Alert_Dialog("User Created!", user.GetName(), AlertType.Success);
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
+                alert.Show();
+
+                return NewUser;
+            }
+            else
+            {
+                if (MainWindow.CurrentUser == null)
+                    MainWindow.CurrentUser = new User();
+
+
+                Logger.Log(MainWindow.CurrentUser.LoginId, LogType.Error,
+                    MainWindow.CurrentUser.GetName() + " Failed Add User");
+
+                var alert = new Alert_Dialog("Add User Failed", "");
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
+                alert.Show();
+                return null;
+            }
+        }
+
     }
 
     public class CheckinResult
@@ -303,8 +400,8 @@ namespace cwssWpf
 
         public void Show()
         {
-            var alert = new Alert_Dialog(Heading, Body,( Success == true ? AlertType.Success : AlertType.Failure));
-                alert.Show();
+            var alert = new Alert_Dialog(Heading, Body, (Success == true ? AlertType.Success : AlertType.Failure));
+            alert.Show();
         }
 
         public void Initialize()

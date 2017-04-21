@@ -95,6 +95,7 @@ namespace cwssWpf.Data
                 {
                     var alert = new Alert_Dialog("User Id Exists", "A user with the entered ID number already exists!");
                     alert.ShowDialog();
+                    throw new Exception();
                 }
             }
             catch
@@ -108,18 +109,19 @@ namespace cwssWpf.Data
         public bool AddUser(string firstName, string LastName, string userId, string password1, string password2,
             string email, string address, string city, string state, string zip, string phone, GenderType gender, DateTime dob, string cardID)
         {
+            var success = false;
             try
             {
                 var Id = int.Parse(userId);
                 var Zip = int.Parse(zip);
 
-                AddUser(firstName, LastName, Id, password1, password2, email, address, city, state, Zip, phone, gender, dob, cardID);
+                success = AddUser(firstName, LastName, Id, password1, password2, email, address, city, state, Zip, phone, gender, dob, cardID);
             }
             catch
             {
                 return false;
             }
-            return true;
+            return success;
         }
 
         public bool AddUser(TextBox firstName, TextBox LastName, TextBox userId, PasswordBox password1, PasswordBox password2,

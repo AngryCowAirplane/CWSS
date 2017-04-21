@@ -1,5 +1,6 @@
 ﻿using cwssWpf.Data;
 using cwssWpf.DataBase;
+using cwssWpf.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,42 +62,36 @@ namespace cwssWpf.Windows
 
             if (validateFields())
             {
-                var success = Db.dataBase.AddUser(
-                    tbFirstName, tbLastName,
-                    tbIdNumber, tbPassword, tbPassword2,
-                    tbEmail, tbAddress, tbCity, tbState, tbZip,
-                    tbPhone, cbGender, dpDOB, tbIdCardID
-                    );
-
-                if (success)
+                if(!MainWindow.ClientWindowOpen)
                 {
-                    if (MainWindow.CurrentUser == null)
-                        MainWindow.CurrentUser = new Data.User();
-
-                    Logger.Log(MainWindow.CurrentUser.LoginId, LogType.AddUser,
-                        MainWindow.CurrentUser.GetName() + " Added User: " +
-                        tbFirstName.Text + " " + tbLastName.Text);
-
-                    Success = true;
-                    NewUser = Db.dataBase.GetUser(int.Parse(tbIdNumber.Text));
-
-                    bool signed = Helpers.ShowWaiver(NewUser);
+                    var user = Helpers.TryAddUser(
+                        tbFirstName, tbLastName,
+                        tbIdNumber, tbPassword, tbPassword2,
+                        tbEmail, tbAddress, tbCity, tbState, tbZip,
+                        tbPhone, cbGender, dpDOB, tbIdCardID
+                    );
+                    this.Close();
                 }
                 else
                 {
-                    if (MainWindow.CurrentUser == null)
-                        MainWindow.CurrentUser = new Data.User();
+                    var user = new User();
+                    user.CardId = tbIdCardID.Text;
+                    user.LoginId = int.Parse(tbIdNumber.Text);
+                    user.Password = tbPassword.Password;
+                    user.UserType = UserType.Patron;
+                    user.Info.FirstName = tbFirstName.Text;
+                    user.Info.LastName = tbLastName.Text;
+                    user.Info.Email = tbEmail.Text;
+                    user.Info.Address = tbAddress.Text;
+                    user.Info.City = tbCity.Text;
+                    user.Info.State = tbState.Text;
+                    user.Info.Zip = tbZip.Text;
+                    user.Info.Phone = tbPhone.Text;
+                    user.Info.DateOfBirth = (DateTime)dpDOB.SelectedDate;
 
-                    Logger.Log(MainWindow.CurrentUser.LoginId, LogType.Error,
-                        MainWindow.CurrentUser.GetName() + " Failed Add User: " +
-                        tbFirstName.Text + " " + tbLastName.Text);
-
-                    var alert = new Alert_Dialog("Add User Failed", "User add failed.");
-                    MainWindow.WindowsOpen.Add(alert, new TimerVal(6));
-                    alert.ShowDialog();
+                    NewUser = user;
+                    this.Close();
                 }
-
-                this.Close();
             }
             else
             {

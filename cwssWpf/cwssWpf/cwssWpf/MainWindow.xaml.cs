@@ -1,14 +1,11 @@
 ﻿using cwssWpf.Data;
 using cwssWpf.DataBase;
-using cwssWpf.Migrations;
 using cwssWpf.Network;
 using cwssWpf.Windows;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -31,6 +28,7 @@ namespace cwssWpf
     {
         public static User CurrentUser = null;
         public static Dictionary<Window, TimerVal> WindowsOpen = new Dictionary<Window, TimerVal>();
+        public static bool ClientWindowOpen = false;
         public static bool ClientMode = false;
         public static bool ClientConnected = false;
         public static DispatcherTimer DasTimer = new DispatcherTimer(); 
@@ -134,7 +132,7 @@ namespace cwssWpf
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
             var newUser = new NewUser_Dialog(this);
-            newUser.ShowDialog();
+            var user = newUser.ShowDialog();
         }
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
@@ -214,6 +212,8 @@ namespace cwssWpf
             var packet = new CommPacket(Sender.Client, false);
             Comms.SendMessage(packet);
 
+            ClientWindowOpen = true;
+
             this.Close();
         }
 
@@ -260,8 +260,6 @@ namespace cwssWpf
         #region Other Event Handlers
         private void OnTimerTick(object sender, EventArgs e)
         {
-            //tbLoginId.Focus();
-
             // Check windows timing out.
             var wndList = new List<Window>();
             foreach (var wnd in WindowsOpen)
@@ -478,13 +476,7 @@ namespace cwssWpf
 
         private User getUserFromCheckInText(string text = "")
         {
-            //if (tbLoginId.Text[0] == StaticValues.CardReaderStartChar)
-            //    tbLoginId.Text = Helpers.TryGetCardId(tbLoginId.Text);
-
-            //var loginId = int.Parse(tbLoginId.Text);
-            //var user = Db.dataBase.GetUser(loginId);
             var user = Helpers.getUserFromCheckInText(tbLoginId.Text);
-
             return user;
         }
 
@@ -514,35 +506,52 @@ namespace cwssWpf
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
                             tbLoginId.Text = messageObject;
-                            var user = getUserFromCheckInText();
-                            var success = tryCheckinUser(user);
-                            tbLoginId.Text = "";
-
-                            if(success.Body.ToLower().Contains("waiver"))
+                            if(Helpers.ValidateIdInput(tbLoginId.Text))
                             {
-                                var waiverPac = new WaiverPacket();
-                                waiverPac.user = user;
-                                var packet = new CommPacket(Sender.Server, waiverPac);
-                                Comms.SendMessage(packet);
+                                var user = getUserFromCheckInText();
+                                var success = tryCheckinUser(user);
+                                tbLoginId.Text = "";
+
+                                if (success.Body.ToLower().Contains("waiver"))
+                                {
+                                    var waiverPac = new WaiverPacket();
+                                    waiverPac.user = user;
+                                    var packet = new CommPacket(Sender.Server, waiverPac);
+                                    Comms.SendMessage(packet);
+                                }
+                                else
+                                {
+                                    var packet = new CommPacket(Sender.Server, success);
+                                    Comms.SendMessage(packet);
+                                }
+
+                                if (success.Success)
+                                {
+                                    var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
+                                    WindowsOpen.Add(alert, new TimerVal(2));
+                                    alert.Show();
+                                }
+                                else
+                                {
+                                    var alert = new Alert_Dialog("Client Checkin", "Failed Check In.\n" + success.Body, AlertType.Failure);
+                                    WindowsOpen.Add(alert, new TimerVal(2));
+                                    alert.Show();
+                                }
                             }
                             else
                             {
-                                var packet = new CommPacket(Sender.Server, success);
+                                tbLoginId.Text = string.Empty;
+                                var checkinResult = new CheckinResult();
+                                checkinResult.Alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
+                                checkinResult.Heading = "Invalid ID";
+                                checkinResult.Body = "The ID entered is not a valid integer ID within account range.";
+                                checkinResult.Success = false;
+                                var packet = new CommPacket(Sender.Server, checkinResult);
                                 Comms.SendMessage(packet);
-                            }
 
-                            if(success.Success)
-                            {
-                                var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
+                                var alert = new Alert_Dialog("Failed Checkin!", "A user just attempted to login un-successfuly.", AlertType.Notice);
                                 WindowsOpen.Add(alert, new TimerVal(2));
                                 alert.Show();
-                            }
-                            else
-                            {
-                                var alert = new Alert_Dialog("Client Checkin", "Failed Check In.\n" + success.Body, AlertType.Failure);
-                                WindowsOpen.Add(alert, new TimerVal(2));
-                                alert.Show();
-
                             }
                         }));
                     }
@@ -551,7 +560,17 @@ namespace cwssWpf
                     {
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
-                            Db.dataBase.AddUser((User)messageObject);
+                            var newUser = Helpers.TryAddUser((User)messageObject);
+                            if(newUser != null)
+                            {
+                                var packet = new CommPacket(Sender.Server, newUser.GetUserId().ToString());
+                                Comms.SendMessage(packet);
+                            }
+                            else
+                            {
+                                var packet = new CommPacket(Sender.Server, "failed");
+                                Comms.SendMessage(packet);
+                            }
                         }));
                     }
 
@@ -628,15 +647,16 @@ namespace cwssWpf
         #region TESTING
         private void TestSomething(object sender, RoutedEventArgs e)
         {
-            var alert = new Alert_Dialog("TESTING AUTO", "This should auto destruct in 3 seconds..", AlertType.Success);
+            var alert = new Alert_Dialog("Debug Message", "Server Ping Count: " + Comms.ServerPingCount.ToString() + "\n" + "Client Ping Count: " + Comms.ClientPingCount.ToString(), AlertType.Notice);
             WindowsOpen.Add(alert, new TimerVal(3));
             alert.Show();
-
-            //if (CheckinCanvas.IsVisible)
-            //    CheckinCanvas.Visibility = Visibility.Hidden;
-            //else
-            //    CheckinCanvas.Visibility = Visibility.Visible;
         }
         #endregion
+
+        private void remoteNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            var packet = new CommPacket(Sender.Server, new User());
+            Comms.SendMessage(packet);
+        }
     }
 }
