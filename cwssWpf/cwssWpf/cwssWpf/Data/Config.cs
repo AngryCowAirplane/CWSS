@@ -45,11 +45,15 @@ namespace cwssWpf.Data
     {
         public EmailSettings Email { get; set; }
         public GeneralSettings General { get; set; }
+        public DataSettings Data { get; set; }
+        public BackupSettings Backup { get; set; }
 
         public ConfigData()
         {
             Email = new EmailSettings();
             General = new GeneralSettings();
+            Data = new DataSettings();
+            Backup = new BackupSettings();
         }
     }
 
@@ -57,6 +61,7 @@ namespace cwssWpf.Data
     {
         public bool StartMaximized = false;
         public bool StartClientMode = false;
+        public bool GetSignature = false;
     }
 
     public class EmailSettings
@@ -69,6 +74,18 @@ namespace cwssWpf.Data
         public string EmailAddress = "";
         public string Password = "";
         public bool StoreCreds = false;
+    }
+
+    public class DataSettings
+    {
+        public int MinPasswordLength = 4;
+        public int DaysWaiverExpires = 90;
+    }
+
+    public class BackupSettings
+    {
+        public int DaysBetweenBackup = 7;
+        public DateTime LastBackup = DateTime.MinValue;
     }
 
     public enum EmailClient

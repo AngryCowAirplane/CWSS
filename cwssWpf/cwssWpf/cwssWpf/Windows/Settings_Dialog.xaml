@@ -10,8 +10,9 @@
         Opacity="0.95"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
         Title="Settings" Height="400" Width="300">
-    <Grid Name="SettingsGrid">
+    <Grid>
         <Grid.Resources>
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="Yellow"/>
@@ -31,22 +32,8 @@
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
         <DockPanel  Grid.ColumnSpan="3" HorizontalAlignment="Stretch">
             <Menu DockPanel.Dock="Top" Background="Goldenrod" Name="MainMenu">
@@ -56,23 +43,132 @@
             <StackPanel></StackPanel>
         </DockPanel>
 
-        <Label Content="Settings" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="20"/>
-        <Label Content="Email Settings" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
-        <Label Content="Client Type" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
-        <Label Content="Server" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"/>
-        <Label Content="Port" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right"/>
-        <Label Content="Use Ssl" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right"/>
-        <Label Content="Default Creds" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right"/>
-        <Label Content="Store Creds" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Right"/>
-        <ComboBox x:Name="cbClient" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"/>
-        <TextBox x:Name="tbServer" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"/>
-        <TextBox x:Name="tbPort" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"/>
+        <TabControl Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="11" Background="Black" Foreground="Goldenrod">
+            <TabItem Header="General">
+                <StackPanel Grid.RowSpan="20" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1">
+                    <Grid  Name="General">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="General Settings" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+                        <Label Content="Start Maximized" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"/>
+                        <CheckBox x:Name="cbMaximized" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"/>
+                        <Label Content="Start As Client" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
+                        <CheckBox x:Name="cbIsClient" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5" IsChecked="False"/>
+                        <Label Content="Get Signature Image" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"/>
+                        <CheckBox x:Name="cbGetSignature" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5" IsChecked="False"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            
+            <TabItem Header="Email">
+                <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="20" Grid.Column="0" Grid.Row="1">
+                    <Grid Name="Email">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Email Settings" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+                        <Label Content="Client Type" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
+                        <Label Content="Server" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"/>
+                        <Label Content="Port" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right"/>
+                        <Label Content="Use Ssl" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right"/>
+                        <Label Content="Default Creds" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right"/>
+                        <Label Content="Store Creds" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Right"/>
+                        <ComboBox x:Name="cbClient" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"/>
+                        <TextBox x:Name="tbServer" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"/>
+                        <TextBox x:Name="tbPort" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
 
+            <TabItem Header="Backup">
+                <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="20" Grid.Column="0" Grid.Row="1">
+                    <Grid Name="Backup">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Backup Settings" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+                        <Label Content="Days Between Backup" Grid.Row="1" Grid.Column="0" Margin="2,2,2,2"></Label>
+                        <TextBox Name="tbBackupDays" Grid.Row="1" Grid.Column="1" Margin="2,2,2,2"></TextBox>
+                        <Label Name="lblLastBackup" Content="Last: " Grid.Column="0" Grid.Row="2"></Label>
+                        <Button Name="btnBackupNow" Content="Backup Now" Grid.Column="1" Grid.Row="2" Margin="2,2,2,2" Click="btnBackupNow_Click"></Button>
+                        <Button Name="btnRestore" Content="Restore from Backup" Grid.Column="1" Grid.Row="3" Margin="2,2,2,2" Click="btnRestore_Click"></Button>
+                        <Separator Grid.Row="4" Height="10" Grid.ColumnSpan="2"></Separator>
+                        <!--<Label Content="Log Files" Grid.Row="5" Grid.Column="0" FontWeight="Bold" FontSize="14"></Label>
+                        <Button Name="btnSaveLogs" Content="Save Log Files" Grid.Row="6" Grid.Column="1" Click="btnSaveLogs_Click"></Button>
+                        <Separator Grid.Row="7" Height="10" Grid.ColumnSpan="2"></Separator>-->
+                    </Grid>
+                </StackPanel>
+            </TabItem>
 
-        <Label Content="General Settings" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
-        <Label Content="Start Maximized" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Right"/>
-        <CheckBox x:Name="cbMaximized" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5"/>
-        <Label Content="Start As Client" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Right"/>
-        <CheckBox x:Name="cbIsClient" Grid.Column="1" Grid.Row="11" Margin="5,5,5,5" IsChecked="False"/>
+            <TabItem Header="Data">
+                <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="20" Grid.Column="0" Grid.Row="1">
+                    <Grid Name="Data">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Data Settings" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+                        <Label Content="Min PassWord Length" Grid.Row="1" Grid.Column="0" Margin="2,2,2,2"></Label>
+                        <TextBox Name="tbMinPwdLength" Grid.Row="1" Grid.Column="1" Margin="2,2,2,2"></TextBox>
+                        <Label Content="Waiver Expires (days)" Grid.Row="2" Grid.Column="0" Margin="2,2,2,2"></Label>
+                        <TextBox Name="tbWaiverExpireDays" Grid.Row="2" Grid.Column="1" Margin="2,2,2,2"></TextBox>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+
+        </TabControl>
     </Grid>
 </Window>

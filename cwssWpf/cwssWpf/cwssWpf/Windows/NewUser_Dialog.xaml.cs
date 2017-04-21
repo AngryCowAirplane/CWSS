@@ -36,6 +36,7 @@ namespace cwssWpf.Windows
             cbGender.ItemsSource = (Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList());
             FocusManager.SetFocusedElement(this, tbFirstName);
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            tbPassword.ToolTip = "Min Length = " + Config.Data.Data.MinPasswordLength.ToString() + " Characters.";
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -147,7 +148,7 @@ namespace cwssWpf.Windows
                 tbLastName.Background = Brushes.LightPink;
             }
 
-            if(tbPassword.Password != tbPassword2.Password || (tbPassword.Password.Length < StaticValues.MinPasswordLength || tbPassword2.Password.Length < StaticValues.MinPasswordLength))
+            if(tbPassword.Password != tbPassword2.Password || (tbPassword.Password.Length < Config.Data.Data.MinPasswordLength || tbPassword2.Password.Length < Config.Data.Data.MinPasswordLength))
             {
                 valid = false;
                 tbPassword2.Background = Brushes.LightPink;
@@ -192,7 +193,7 @@ namespace cwssWpf.Windows
                 tbAddress.Background = Brushes.LightPink;
             }
 
-            if (string.IsNullOrEmpty(tbState.Text))
+            if (string.IsNullOrEmpty(tbState.Text) || tbState.Text.Length != 2)
             {
                 valid = false;
                 tbState.Background = Brushes.LightPink;

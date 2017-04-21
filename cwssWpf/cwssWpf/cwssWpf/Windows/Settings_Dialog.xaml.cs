@@ -1,7 +1,9 @@
 ﻿using cwssWpf.CustomControls;
 using cwssWpf.Data;
+using cwssWpf.DataBase;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +48,11 @@ namespace cwssWpf.Windows
             cbStoreCreds.SelectedItem = Config.Data.Email.StoreCreds;
             cbMaximized.IsChecked = Config.Data.General.StartMaximized;
             cbIsClient.IsChecked = Config.Data.General.StartClientMode;
+            tbMinPwdLength.Text = Config.Data.Data.MinPasswordLength.ToString();
+            tbWaiverExpireDays.Text = Config.Data.Data.DaysWaiverExpires.ToString();
+            tbBackupDays.Text = Config.Data.Backup.DaysBetweenBackup.ToString();
+            cbGetSignature.IsChecked = Config.Data.General.GetSignature;
+            lblLastBackup.Content = lblLastBackup.Content + Config.Data.Backup.LastBackup.ToShortDateString();
         }
 
         private void addControls()
@@ -54,26 +61,26 @@ namespace cwssWpf.Windows
             cbSsl.Name = "cbSsl";
             cbSsl.HorizontalAlignment = HorizontalAlignment.Stretch;
             cbSsl.Margin = new Thickness(5, 5, 5, 5);
-            Grid.SetRow(cbSsl, 5);
+            Grid.SetRow(cbSsl, 6);
             Grid.SetColumn(cbSsl, 1);
 
             cbDefaultCreds = new ComboBool();
             cbDefaultCreds.Name = "cbDefaultCreds";
             cbDefaultCreds.HorizontalAlignment = HorizontalAlignment.Stretch;
             cbDefaultCreds.Margin = new Thickness(5, 5, 5, 5);
-            Grid.SetRow(cbDefaultCreds, 6);
+            Grid.SetRow(cbDefaultCreds, 7);
             Grid.SetColumn(cbDefaultCreds, 1);
 
             cbStoreCreds = new ComboBool();
             cbStoreCreds.Name = "cbStoreCreds";
             cbStoreCreds.HorizontalAlignment = HorizontalAlignment.Stretch;
             cbStoreCreds.Margin = new Thickness(5, 5, 5, 5);
-            Grid.SetRow(cbStoreCreds, 7);
+            Grid.SetRow(cbStoreCreds, 8);
             Grid.SetColumn(cbStoreCreds, 1);
 
-            SettingsGrid.Children.Add(cbSsl);
-            SettingsGrid.Children.Add(cbDefaultCreds);
-            SettingsGrid.Children.Add(cbStoreCreds);
+            Email.Children.Add(cbSsl);
+            Email.Children.Add(cbDefaultCreds);
+            Email.Children.Add(cbStoreCreds);
         }
 
         private void saveConfig()
@@ -87,6 +94,12 @@ namespace cwssWpf.Windows
 
             Config.Data.General.StartMaximized = (bool)cbMaximized.IsChecked;
             Config.Data.General.StartClientMode = (bool)cbIsClient.IsChecked;
+            Config.Data.General.GetSignature = (bool)cbGetSignature.IsChecked;
+
+            Config.Data.Backup.DaysBetweenBackup = int.Parse(tbBackupDays.Text);
+
+            Config.Data.Data.MinPasswordLength = int.Parse(tbMinPwdLength.Text);
+            Config.Data.Data.DaysWaiverExpires = int.Parse(tbWaiverExpireDays.Text);
 
             if (!Config.Data.Email.StoreCreds)
             {
@@ -125,6 +138,60 @@ namespace cwssWpf.Windows
                 cbSsl.IsEnabled = true;
                 cbStoreCreds.IsEnabled = true;
             }
+        }
+
+        private void btnBackupNow_Click(object sender, RoutedEventArgs e)
+        {
+            var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"AppData\Backup", @"CwssDataBase " + DateTime.Now.ToShortDateString().Replace('/','_') + ".cwdb");
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+
+            saveDialog.FileName = System.IO.Path.GetFileName(dbPath);
+            saveDialog.InitialDirectory = System.IO.Path.GetDirectoryName(dbPath);
+            saveDialog.DefaultExt = ".cwdb";
+            saveDialog.Filter = "Climbing Wall DataBase (.cwdb)|*.cwdb";
+
+            var result = saveDialog.ShowDialog();
+            if (result == true)
+            {
+                string fileName = saveDialog.FileName;
+                Db.SaveDatabase(fileName);
+
+                Config.Data.Backup.LastBackup = DateTime.Now;
+                Config.SaveConfigToFile();
+            }
+        }
+
+        private void btnRestore_Click(object sender, RoutedEventArgs e)
+        {
+            var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"AppData\Backup", @"CwssDataBase " + DateTime.Now.ToShortDateString().Replace('/', '_') + ".cwdb");
+            Microsoft.Win32.OpenFileDialog openDialog = new Microsoft.Win32.OpenFileDialog();
+
+            openDialog.FileName = System.IO.Path.GetFileName(dbPath);
+            openDialog.InitialDirectory = System.IO.Path.GetDirectoryName(dbPath);
+            openDialog.DefaultExt = ".cwdb";
+            openDialog.Filter = "Climbing Wall DataBase (.cwdb)|*.cwdb";
+
+            var result = openDialog.ShowDialog();
+            if (result == true)
+            {
+                var confirm = new Confirm_Dialog(this, "Replace/Restore DB?");
+                confirm.ShowDialog();
+
+                if (confirm.Confirmed)
+                {
+                    var path = openDialog.FileName;
+                    Db.LoadDatabase(path);
+
+                    var alert = new Alert_Dialog("DataBase Restored", "DataBase was restored with: " + System.IO.Path.GetFileName(path).ToString(), AlertType.Success);
+                    MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
+                    alert.Show();
+                }
+            }
+        }
+
+        private void btnSaveLogs_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

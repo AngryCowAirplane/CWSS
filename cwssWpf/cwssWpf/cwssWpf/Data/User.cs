@@ -39,13 +39,20 @@ namespace cwssWpf.Data
                 var waivers = Documents.Where(t => t.DocumentType == DocType.Waiver);
                 var waiver = waivers.Where(t=>t.UserId == LoginId).First();
                 if (waiver.Expires > DateTime.Now)
+                {
+                    var daysLeft = DateTime.Now - waiver.Expires;
+                    //if(daysLeft < TimeSpan.FromDays(7))
+                    //{
+                    //    var alert = new Alert_Dialog("Waiver Expires Soon!", "Your Waiver Expires in " + daysLeft.ToString() + ".\n  Please Re-Read and Sign the Waiver Form.", AlertType.Notice);
+                    //    MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
+                    //    alert.ShowDialog();
+                    //    Helpers.ShowWaiver(this);
+                    //}
                     return true;
+                }
             }
             catch (Exception e)
             {
-                // TODO:
-                // throw exception up instead of MessageBox
-                //MessageBox.Show("Waiver Not Found!");
                 return false;
             }
             return false;
@@ -106,13 +113,36 @@ namespace cwssWpf.Data
             var waiverDoc = new Document();
             waiverDoc.DocumentType = DocType.Waiver;
             waiverDoc.Date = DateTime.Now;
-            waiverDoc.Expires = DateTime.Now + TimeSpan.FromDays(90);
+            waiverDoc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysWaiverExpires);
             waiverDoc.FileLocation = "not yet implemented";
             waiverDoc.UserId = LoginId;
 
             Documents.Add(waiverDoc);
             Logger.Log(LoginId, LogType.Waiver, GetName() + " Signed Waiver.");
             return true;
+        }
+
+        public Document GetWaiver()
+        {
+            try
+            {
+                var waivers = Documents.Where(t => t.DocumentType == DocType.Waiver);
+                var waiver = waivers.Where(t => t.UserId == LoginId).First();
+                return waiver;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public DateTime GetWaiverDate()
+        {
+            var waiver = GetWaiver();
+            if (waiver != null)
+                return waiver.Date;
+            else
+                return DateTime.MinValue;
         }
 
         public Uri GetEmailUri()

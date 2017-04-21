@@ -87,6 +87,7 @@ namespace cwssWpf
             StatusText.Text = "Ready";
 
             checkClientStart(args);
+            CurrentUser = null;
             //--------------------------------------------------------------
 
 
@@ -132,17 +133,8 @@ namespace cwssWpf
 
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
-            //if(ClientMode)  // can send new user form to client screen
-            if(false)
-            {
-                var packet = new CommPacket(Sender.Server, new User());
-                Comms.SendMessage(packet);
-            }
-            else
-            {
-                var newUser = new NewUser_Dialog(this);
-                newUser.ShowDialog();
-            }
+            var newUser = new NewUser_Dialog(this);
+            newUser.ShowDialog();
         }
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
@@ -395,13 +387,11 @@ namespace cwssWpf
                     var message = user.Info.FirstName + " " + user.Info.LastName + " Checked In.";
                     result.Alert = new Alert_Dialog("Check In", message, AlertType.Success);
                     result.Success = true;
-                    //Helpers.PlayLogin();
                 }
                 else
                 {
                     if (!hasWaiver)
                     {
-                        //Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
                     }
                     if (!canClimb)
@@ -415,7 +405,6 @@ namespace cwssWpf
             {
                 var message = "Failed Checkin By " + tbLoginId.Text;
                 Logger.Log(int.Parse(tbLoginId.Text), LogType.Error, message);
-                //Helpers.PlayFail();
                 result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }
 

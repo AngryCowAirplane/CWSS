@@ -23,11 +23,11 @@
         <Label Content="Name: " Grid.Row="1" Margin="10,4,4,4" VerticalAlignment="Top"></Label>
         <TextBox x:Name="tbName" Text="" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="4,4,10,4" Height="25"></TextBox>
         <Label Content="Date: " Grid.Row="1" Grid.Column="1" Margin="10,4,4,4" VerticalAlignment="Top" ></Label>
-        <TextBox x:Name="tbDate" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="4,4,10,4" Height="25"></TextBox>
+        <TextBox x:Name="tbDate" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="4,4,10,4" Height="25" IsEnabled="False"></TextBox>
         <Label Content="I Agree To All Of The Above:" Grid.Row="2" Grid.Column="0" Margin="10,4,4,4"></Label>
         <CheckBox x:Name="cbAgree" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="cbAgree_Checked" Unchecked="cbAgree_UnChecked"></CheckBox>
         <Button x:Name="btnCancel" Content="Cancel" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="4,4,4,4" Width="80" VerticalAlignment="Center" Click="btnCancel_Click"/>
         <Button x:Name="btnSignForm" Content="Upload Signature" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="4,4,4,4" Width="100" VerticalAlignment="Center" Click="btnSignForm_Click" IsEnabled="False"/>
-        <Button x:Name="btnNoSignForm" Content="Complete Waiver" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="4,4,10,4" VerticalAlignment="Center" Click="btnNoSignForm_Click" IsEnabled="False"/>
+        <Button x:Name="btnNoSignForm" Content="Sign Waiver" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="4,4,10,4" VerticalAlignment="Center" Click="btnNoSignForm_Click" IsEnabled="False"/>
     </Grid>
 </Window>

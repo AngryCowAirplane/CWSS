@@ -95,6 +95,12 @@ namespace cwssWpf.Data
                 path = dbPath;
             var data = JsonConvert.SerializeObject(Data);
             var encryptedData = Helpers.EncryptString(data);
+
+            FileInfo fileinfo = new FileInfo(path);
+            if (!fileinfo.Directory.Exists)
+            {
+                System.IO.Directory.CreateDirectory(fileinfo.DirectoryName);
+            }
             File.WriteAllText(path, encryptedData);
 
             return true;

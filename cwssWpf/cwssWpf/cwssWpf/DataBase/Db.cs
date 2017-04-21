@@ -17,6 +17,13 @@ namespace cwssWpf.DataBase
         public static void Initialize()
         {
             LoadDatabase();
+
+            // Check Auto Backup
+            if (DateTime.Now - Config.Data.Backup.LastBackup > TimeSpan.FromDays(Config.Data.Backup.DaysBetweenBackup))
+            {
+                var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"AppData\Backup", @"CwssDataBase " + DateTime.Now.ToShortDateString().Replace('/', '_') + ".cwdb");
+                Db.SaveDatabase(dbPath);
+            }
         }
 
         public static void LoadDatabase()

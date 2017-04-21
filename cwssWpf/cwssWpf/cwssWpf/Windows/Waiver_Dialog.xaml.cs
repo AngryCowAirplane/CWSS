@@ -40,6 +40,9 @@ namespace cwssWpf.Windows
             this.Focus();
             this.Activate();
             this.Topmost = true;
+
+            if (!Config.Data.General.GetSignature)
+                btnSignForm.Visibility = Visibility.Hidden;
         }
 
         private void btnSignForm_Click(object sender, RoutedEventArgs e)

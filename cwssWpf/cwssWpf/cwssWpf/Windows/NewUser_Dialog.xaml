@@ -56,7 +56,7 @@
         <TextBox x:Name="tbLastName" Grid.Column="3" Grid.Row="0" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
         
         <Label Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" Content="Student ID Number" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
-        <TextBox x:Name="tbIdNumber" Grid.Column="1" Grid.Row="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="tbIdNumber" Grid.Column="1" Grid.Row="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" ToolTip="7 Digit Integer"/>
         
         <Label Grid.Column="2" Grid.Row="1" Margin="5,5,5,5" Content="Password" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
         <PasswordBox x:Name="tbPassword" Grid.Column="3" Grid.Row="1" Height="23" Margin="5,5,5,5"  VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
@@ -74,10 +74,10 @@
         <Label Grid.Column="0" Grid.Row="5" Margin="5,5,5,5" Content="City/State/Zip" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
         <TextBox x:Name="tbCity" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
         <TextBox x:Name="tbState" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-        <TextBox x:Name="tbZip" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="tbZip" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" ToolTip="5 Digit Integer"/>
 
         <Label Grid.Column="0" Grid.Row="6" Margin="5,5,5,5" Content="Phone Number" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
-        <TextBox x:Name="tbPhone" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <TextBox x:Name="tbPhone" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" ToolTip="###-###-####"/>
 
         <Label Grid.Column="2" Grid.Row="6" Margin="5,5,5,5" Content="Gender" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
         <ComboBox x:Name="cbGender" Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="1" Height="23" Margin="5,5,5,5"  Text="" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
