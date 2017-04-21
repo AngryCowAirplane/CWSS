@@ -21,7 +21,7 @@ namespace cwssWpf.DataBaseTests
             var DB = Db.GetNewDatabase(dbPath);
 
             var user = new User();
-            user.UserId = 1023542;
+            user.LoginId = 1023542;
             user.Info.FirstName = "Derek";
             user.UserType = UserType.Admin;
             DB.AddUser(user);

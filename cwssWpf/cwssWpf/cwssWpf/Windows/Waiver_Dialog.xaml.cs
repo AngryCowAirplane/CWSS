@@ -55,6 +55,7 @@ namespace cwssWpf.Windows
             ImageProgram.Main(args);
             alert.Close();
             this.Close();
+            btnNoSignForm.IsEnabled = true;
         }
 
         private void btnNoSignForm_Click(object sender, RoutedEventArgs e)
@@ -76,7 +77,8 @@ namespace cwssWpf.Windows
             if (tbName.Text.Length > 1 && success && (bool)cbAgree.IsChecked)
             {
                 btnSignForm.IsEnabled = true;
-                btnNoSignForm.IsEnabled = true;
+                if(!Config.Data.General.GetSignature)
+                    btnNoSignForm.IsEnabled = true;
             }
             else
             {

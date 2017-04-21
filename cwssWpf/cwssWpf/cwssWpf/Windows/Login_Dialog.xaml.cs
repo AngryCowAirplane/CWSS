@@ -57,7 +57,7 @@ namespace cwssWpf.Windows
 
                     Success = true;
                     var message = user.GetName() + " Logged In"; 
-                    Logger.Log(user.UserId, LogType.LogIn, message);
+                    Logger.Log(user.LoginId, LogType.LogIn, message);
                 }
                 else
                 {

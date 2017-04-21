@@ -167,7 +167,7 @@ namespace cwssWpf
             {
                 Helpers.PlayLogOff();
                 var message = CurrentUser.GetName() + " Logged Off";
-                Logger.Log(CurrentUser.UserId, LogType.LogOut, message);
+                Logger.Log(CurrentUser.LoginId, LogType.LogOut, message);
             }
 
             foreach (var wnd in WindowsOpen)
@@ -476,13 +476,15 @@ namespace cwssWpf
             ConnectionImage.Source = b;
         }
 
-        private User getUserFromCheckInText()
+        private User getUserFromCheckInText(string text = "")
         {
-            if (tbLoginId.Text[0] == StaticValues.CardReaderStartChar)
-                tbLoginId.Text = Helpers.TryGetCardId(tbLoginId.Text);
+            //if (tbLoginId.Text[0] == StaticValues.CardReaderStartChar)
+            //    tbLoginId.Text = Helpers.TryGetCardId(tbLoginId.Text);
 
-            var loginId = int.Parse(tbLoginId.Text);
-            var user = Db.dataBase.GetUser(loginId);
+            //var loginId = int.Parse(tbLoginId.Text);
+            //var user = Db.dataBase.GetUser(loginId);
+            var user = Helpers.getUserFromCheckInText(tbLoginId.Text);
+
             return user;
         }
 

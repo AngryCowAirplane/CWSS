@@ -220,19 +220,47 @@ namespace cwssWpf
         // Validate Field Methods
         internal static bool ValidateIdInput(string idString)
         {
-            bool isGood = true;
+            var cardIds = Db.dataBase.Users.Select(x => x.CardId);
             try
             {
-                var integerValue = int.Parse(idString);
-                if (integerValue < StaticValues.StartNonStudentIdNumber || integerValue > StaticValues.EndStudentIdNumber)
-                    isGood = false;
-            }
-            catch
-            {
-                isGood = false;
+                var match = cardIds.Where(id => id == idString).First();
+
+                if (cardIds.Contains(idString))
+                    return true;
             }
 
-            return isGood;
+            catch{}
+
+            {
+                bool isGood = true;
+                try
+                {
+                    var integerValue = int.Parse(idString);
+                    if (integerValue < StaticValues.StartNonStudentIdNumber || integerValue > StaticValues.EndStudentIdNumber)
+                        isGood = false;
+                }
+                catch
+                {
+                    isGood = false;
+                }
+
+                return isGood;
+            }
+        }
+
+        public static User getUserFromCheckInText(string text = "")
+        {
+            if(text.Length > StaticValues.StudentIdLength)
+            {
+                var user = Db.dataBase.GetUser(text);
+                return user;
+            }
+            else
+            {
+                var loginId = int.Parse(text);
+                var user = Db.dataBase.GetUser(loginId);
+                return user;
+            }
         }
 
         public static bool ShowWaiver(User user)

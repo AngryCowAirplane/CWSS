@@ -29,7 +29,7 @@ namespace cwssWpf.Data
 
         public void AddDefaultAdminUser(int DefaultAdminId, string DefaultAdminPassword)
         {
-            AddUser("Admin", "User", DefaultAdminId, DefaultAdminPassword, DefaultAdminPassword, "admin@admin.com", "local admin", "noCity", "ZZ", 12345, "123-456-7890", GenderType.Female, UserType.Admin);
+            AddUser("Admin", "User", DefaultAdminId, DefaultAdminPassword, DefaultAdminPassword, "admin@admin.com", "local admin", "noCity", "ZZ", 12345, "123-456-7890", GenderType.Female, DateTime.MinValue ,"12345678901234567890", UserType.Admin);
         }
 
         public User GetUser(int loginId)
@@ -44,8 +44,20 @@ namespace cwssWpf.Data
             }
         }
 
+        public User GetUser(string CardId)
+        {
+            try
+            {
+                return Users.Where(user => user.CardId == CardId).First();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public bool AddUser(string firstName, string LastName, int userId, string password1, string password2,
-            string email, string address, string city, string state, int zip, string phone, GenderType gender, UserType userType = UserType.Patron)
+            string email, string address, string city, string state, int zip, string phone, GenderType gender, DateTime dob, string cardID, UserType userType = UserType.Patron)
         {
             try
             {
@@ -69,6 +81,8 @@ namespace cwssWpf.Data
                     user.Info.Zip = zip.ToString();
                     user.Info.Phone = phone;
                     user.Info.Gender = gender;
+                    user.Info.DateOfBirth = dob;
+                    user.CardId = cardID;
 
                     user.CheckedIn = false;
                     user.CanClimb = true;
@@ -92,14 +106,14 @@ namespace cwssWpf.Data
         }
 
         public bool AddUser(string firstName, string LastName, string userId, string password1, string password2,
-            string email, string address, string city, string state, string zip, string phone, GenderType gender)
+            string email, string address, string city, string state, string zip, string phone, GenderType gender, DateTime dob, string cardID)
         {
             try
             {
                 var Id = int.Parse(userId);
                 var Zip = int.Parse(zip);
 
-                AddUser(firstName, LastName, Id, password1, password2, email, address, city, state, Zip, phone, gender);
+                AddUser(firstName, LastName, Id, password1, password2, email, address, city, state, Zip, phone, gender, dob, cardID);
             }
             catch
             {
@@ -109,13 +123,13 @@ namespace cwssWpf.Data
         }
 
         public bool AddUser(TextBox firstName, TextBox LastName, TextBox userId, PasswordBox password1, PasswordBox password2,
-            TextBox email, TextBox address, TextBox city, TextBox state, TextBox zip, TextBox phone, ComboBox gender)
+            TextBox email, TextBox address, TextBox city, TextBox state, TextBox zip, TextBox phone, ComboBox gender, DatePicker dob, TextBox cardID)
         {
             return AddUser(
                 firstName.Text, LastName.Text,
                 userId.Text, password1.Password, password2.Password,
                 email.Text, address.Text, city.Text, state.Text, zip.Text,
-                phone.Text, (GenderType)gender.SelectedItem
+                phone.Text, (GenderType)gender.SelectedItem, (DateTime)dob.SelectedDate, cardID.Text
                 );
         }
 

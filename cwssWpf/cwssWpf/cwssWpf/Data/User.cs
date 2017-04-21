@@ -12,7 +12,7 @@ namespace cwssWpf.Data
 {
     public class User
     {
-        public int UserId { get; set; }
+        public string CardId { get; set; }
         public int LoginId { get; set; }
         public string Password { get; set; }
         public UserType UserType { get; set; }
@@ -100,7 +100,7 @@ namespace cwssWpf.Data
                 TimeStamp = DateTime.Now;
                 var message = Info.FirstName + " " + Info.LastName + " Checked In.";
                 Helpers.PlayCheckIn();
-                Logger.Log(UserId, LogType.CheckIn, message);
+                Logger.Log(LoginId, LogType.CheckIn, message);
                 CheckedIn = true;
                 return true;
             }
@@ -210,6 +210,7 @@ namespace cwssWpf.Data
         public string City { get; set; }
         public string State { get; set; }
         public string Zip { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 
     public enum UserType

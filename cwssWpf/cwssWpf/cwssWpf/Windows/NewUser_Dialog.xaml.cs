@@ -27,6 +27,7 @@ namespace cwssWpf.Windows
 
         public User NewUser;
         public bool Success = false;
+        private DateTime timeDiff;
 
         public NewUser_Dialog(Window mainWindow)
         {
@@ -36,6 +37,7 @@ namespace cwssWpf.Windows
             cbGender.ItemsSource = (Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList());
             FocusManager.SetFocusedElement(this, tbFirstName);
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            tbIdCardID.TextChanged += cardText_Changed;
             tbPassword.ToolTip = "Min Length = " + Config.Data.Data.MinPasswordLength.ToString() + " Characters.";
         }
 
@@ -54,6 +56,8 @@ namespace cwssWpf.Windows
             tbZip.Background = Brushes.LightGoldenrodYellow;
             tbPhone.Background = Brushes.LightGoldenrodYellow;
             cbGender.Background = Brushes.LightGoldenrodYellow;
+            dpDOB.Background = Brushes.LightGoldenrodYellow;
+
 
             if (validateFields())
             {
@@ -61,7 +65,7 @@ namespace cwssWpf.Windows
                     tbFirstName, tbLastName,
                     tbIdNumber, tbPassword, tbPassword2,
                     tbEmail, tbAddress, tbCity, tbState, tbZip,
-                    tbPhone, cbGender
+                    tbPhone, cbGender, dpDOB, tbIdCardID
                     );
 
                 if (success)
@@ -69,7 +73,7 @@ namespace cwssWpf.Windows
                     if (MainWindow.CurrentUser == null)
                         MainWindow.CurrentUser = new Data.User();
 
-                    Logger.Log(MainWindow.CurrentUser.UserId, LogType.AddUser,
+                    Logger.Log(MainWindow.CurrentUser.LoginId, LogType.AddUser,
                         MainWindow.CurrentUser.GetName() + " Added User: " +
                         tbFirstName.Text + " " + tbLastName.Text);
 
@@ -83,7 +87,7 @@ namespace cwssWpf.Windows
                     if (MainWindow.CurrentUser == null)
                         MainWindow.CurrentUser = new Data.User();
 
-                    Logger.Log(MainWindow.CurrentUser.UserId, LogType.Error,
+                    Logger.Log(MainWindow.CurrentUser.LoginId, LogType.Error,
                         MainWindow.CurrentUser.GetName() + " Failed Add User: " +
                         tbFirstName.Text + " " + tbLastName.Text);
 
@@ -205,7 +209,37 @@ namespace cwssWpf.Windows
                 tbCity.Background = Brushes.LightPink;
             }
 
+            if (string.IsNullOrEmpty(dpDOB.Text))
+            {
+                valid = false;
+                dpDOB.Background = Brushes.LightPink;
+            }
+
             return valid;
+        }
+
+        private void btnGetCardID_Click(object sender, RoutedEventArgs e)
+        {
+            btnGetCardID.IsEnabled = false;
+            btnGetCardID.Visibility = Visibility.Hidden;
+            tbIdCardID.Visibility = Visibility.Visible;
+            tbIdCardID.IsEnabled = true;
+            tbIdCardID.Focus();
+
+            var alert = new Alert_Dialog("Swipe Card", "Please swipe your ID card that will be used to check into the climbing wall.", AlertType.Notice);
+            alert.Show();
+            tbIdCardID.Focus();
+        }
+
+        private void cardText_Changed(object sender, RoutedEventArgs e)
+        {
+            if (timeDiff == DateTime.MinValue)
+                timeDiff = DateTime.Now;
+
+            if (DateTime.Now - timeDiff > TimeSpan.FromSeconds(1))
+                tbIdCardID.IsEnabled = false;
+
+            timeDiff = DateTime.Now;
         }
     }
 }
