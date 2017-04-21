@@ -15,15 +15,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Globalization;
+using System.IO;
 
 namespace cwssWpf.Windows
 {
     /// <summary>
     /// Interaction logic for UserManager.xaml
     /// </summary>
-    public partial class ListServ_Dialog : Window
+    public partial class ListServ_Dialog : System.Windows.Window
     {
-        public List<DataGridTextColumn> Columns = new List<DataGridTextColumn>();
+        public List<DataGridColumn> Columns = new List<DataGridColumn>();
         public ListServ_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
@@ -130,12 +131,6 @@ namespace cwssWpf.Windows
             textColumn.IsReadOnly = true;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
-
-            var cbColumn = new DataGridCheckBoxColumn();
-            cbColumn.Header = "CanClimb";
-            cbColumn.Binding = new Binding("CanClimb");
-            cbColumn.IsReadOnly = true;
-            dataGrid.Columns.Add(cbColumn);
         }
 
         private void cmSendMessage_Click(object sender, RoutedEventArgs e)
@@ -227,7 +222,14 @@ namespace cwssWpf.Windows
 
         private void menuSave_Click(object sender, RoutedEventArgs e)
         {
+            dataGrid.SelectAllCells();
 
+            dataGrid.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+            ApplicationCommands.Copy.Execute(null, dataGrid);
+
+            dataGrid.UnselectAllCells();
+
+            saveDataGridToFile();
         }
 
         private void State_Click(object sender, RoutedEventArgs e)
@@ -347,38 +349,31 @@ namespace cwssWpf.Windows
                 col.Visibility = Visibility.Visible;
         }
 
-        private void CanClimb_Click(object sender, RoutedEventArgs e)
-        {
-            var col = Columns.Where(c => c.Header.ToString() == "CanClimb").First();
-            if (col.Visibility == Visibility.Visible)
-                col.Visibility = Visibility.Hidden;
-            else
-                col.Visibility = Visibility.Visible;
-        }
-
         private void menuSaveSelected_Click(object sender, RoutedEventArgs e)
         {
-            var cells = dataGrid.SelectedCells;
-            var items = dataGrid.SelectedItems;
-            var test = items.Count;
+            dataGrid.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+            ApplicationCommands.Copy.Execute(null, dataGrid);
 
-        }
-    }
-
-
-    public class AgeCalcConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var dob = (DateTime)value;
-            var age = DateTime.Now - dob;
-
-            return ((int)(age.TotalDays / 365));
+            saveDataGridToFile();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        private void saveDataGridToFile()
         {
-            return DependencyProperty.UnsetValue;
+            string result = (string)System.Windows.Clipboard.GetData(System.Windows.DataFormats.CommaSeparatedValue);
+            result.Replace(',', ';');
+
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+
+            saveDialog.FileName = "list.csv";
+            saveDialog.DefaultExt = ".csv";
+            saveDialog.Filter = "Comma Seperated Values (.csv)|*.csv";
+
+            var success = (bool)saveDialog.ShowDialog();
+
+            if (success)
+            {
+                File.WriteAllText(saveDialog.FileName, result, UnicodeEncoding.UTF8);
+            }
         }
     }
 }

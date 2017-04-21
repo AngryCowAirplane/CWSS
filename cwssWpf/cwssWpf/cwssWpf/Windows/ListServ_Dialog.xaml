@@ -40,7 +40,7 @@
             <Menu DockPanel.Dock="Top" Name="MainMenu" Background="Goldenrod">
                 <MenuItem Header="Menu">
                     <!--<MenuItem Header= "_Print" Name="menuPrint" Click="menuPrint_Click"></MenuItem>-->
-                    <MenuItem Header= "_Save" Name="menuSave" Click="menuSave_Click"></MenuItem>
+                    <MenuItem Header= "_Save All" Name="menuSave" Click="menuSave_Click"></MenuItem>
                     <MenuItem Header= "_Save Selected" Name="menuSaveSelected" Click="menuSaveSelected_Click"></MenuItem>
                     <MenuItem Header= ""></MenuItem>
                     <MenuItem Header= "Exit" Name="menuExit" Click="menuExit_Click"></MenuItem>
@@ -59,7 +59,6 @@
                     <MenuItem Name="Gender" Header="Gender" Click="Gender_Click"></MenuItem>
                     <MenuItem Name="DOB" Header="DateOfBirth" Click="DOB_Click"></MenuItem>
                     <MenuItem Name="Created" Header="Created" Click="Created_Click"></MenuItem>
-                    <MenuItem Name="CanClimb" Header="CanClimb" Click="CanClimb_Click"></MenuItem>
                 </MenuItem>
             </Menu>
             <StackPanel></StackPanel>
