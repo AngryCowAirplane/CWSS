@@ -24,6 +24,7 @@ namespace cwssWpf
     {
         public static Dictionary<Window, TimerVal> WindowsOpen = new Dictionary<Window, TimerVal>();
         public static DispatcherTimer DasTimer = new DispatcherTimer();
+        public static DispatcherTimer MidTimer = new DispatcherTimer();
         private bool serverConnected = false;
 
         public ClientWindow()
@@ -44,8 +45,18 @@ namespace cwssWpf
             DasTimer.Tick += OnTimerTick;
             DasTimer.Start();
 
+            MidTimer.Interval = TimeSpan.FromMinutes(2);
+            MidTimer.Tick += OnMidTimertick;
+            MidTimer.Start();
+
             FocusManager.SetFocusedElement(this, tbLoginId);
             tbLoginId.Focus();
+        }
+
+        private void OnMidTimertick(object sender, EventArgs e)
+        {
+            if (!serverConnected)
+                Comms.ResetConnection();
         }
 
         private void OnTimerTick(object sender, EventArgs e)

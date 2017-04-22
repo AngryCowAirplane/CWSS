@@ -103,7 +103,8 @@ namespace cwssWpf
 
         private void OnMidTimertick(object sender, EventArgs e)
         {
-            //Comms.ResetConnection();
+            if(ClientConnected == false)
+                Comms.ResetConnection();
         }
 
         #region UI Click Event Handlers  (Click Events)
