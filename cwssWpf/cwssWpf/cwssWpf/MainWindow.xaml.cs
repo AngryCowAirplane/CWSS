@@ -249,6 +249,7 @@ namespace cwssWpf
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
             var climberView = new ClimberView_Dialog(this);
+            WindowsOpen.Add(climberView, new TimerVal(-1));
             climberView.Show();
         }
 

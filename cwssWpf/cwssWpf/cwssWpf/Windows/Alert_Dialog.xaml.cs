@@ -53,6 +53,7 @@ namespace cwssWpf.Windows
             {
                 Answer.IsEnabled = true;
                 Answer.Visibility = Visibility.Visible;
+                Close.Content = "No";
             }
         }
 

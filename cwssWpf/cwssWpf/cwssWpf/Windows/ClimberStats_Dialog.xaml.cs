@@ -35,6 +35,7 @@ namespace cwssWpf.Windows
         {
             if(SelectedUser != null)
             {
+                lblName.Content = SelectedUser.GetName();
                 // Member Since
                 lblUserCreated.Content = lblUserCreated.Content + SelectedUser.DateCreated.ToShortDateString();
                 lblLastCheckIn.Content = lblLastCheckIn.Content + SelectedUser.LastCheckIn.ToShortDateString() + "-" + SelectedUser.LastCheckIn.ToShortTimeString();

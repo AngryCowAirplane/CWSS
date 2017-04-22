@@ -80,28 +80,31 @@ namespace cwssWpf.Windows
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var message = "Delete " + selectedUser.GetName();
-            var confirm = new Confirm_Dialog(this, message);
-            confirm.ShowDialog();
-
-            if (confirm.Confirmed)
+            if(selectedUser != null)
             {
-                if(selectedUser.UserType != UserType.Admin || selectedUser.LoginId == MainWindow.CurrentUser.LoginId)
-                {
-                    Db.dataBase.DeleteUser(selectedUser);
-                }
-                else
-                {
-                    var alert = new Alert_Dialog("Failed", "Admins may only delete their own account.");
-                    MainWindow.WindowsOpen.Add(alert, new TimerVal(4));
-                    alert.Show();
-                }
-            }
+                var message = "Delete " + selectedUser.GetName();
+                var confirm = new Confirm_Dialog(this, message);
+                confirm.ShowDialog();
 
-            lvUsers.ItemsSource = Db.dataBase.Users;
-            lvUsers.Items.Refresh();
-            lvUsers.SelectedItem = null;
-            tbSearch_Changed(this, null);
+                if (confirm.Confirmed)
+                {
+                    if(selectedUser.UserType != UserType.Admin || selectedUser.LoginId == MainWindow.CurrentUser.LoginId)
+                    {
+                        Db.dataBase.DeleteUser(selectedUser);
+                    }
+                    else
+                    {
+                        var alert = new Alert_Dialog("Failed", "Admins may only delete their own account.");
+                        MainWindow.WindowsOpen.Add(alert, new TimerVal(4));
+                        alert.Show();
+                    }
+                }
+
+                lvUsers.ItemsSource = Db.dataBase.Users;
+                lvUsers.Items.Refresh();
+                lvUsers.SelectedItem = null;
+                tbSearch_Changed(this, null);
+            }
         }
 
         private void addUser_Click(object sender, RoutedEventArgs e)
@@ -168,31 +171,40 @@ namespace cwssWpf.Windows
 
         private void documents_Click(object sender, RoutedEventArgs e)
         {
-            var stats = new ClimberStats_Dialog(selectedUser);
-            stats.Show();
+            if(selectedUser != null)
+            {
+                var stats = new ClimberStats_Dialog(selectedUser);
+                stats.Show();
+            }
         }
 
         private void viewWaiver_Click(object sender, RoutedEventArgs e)
         {
-            var WaiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", "Waivers");
-            var Waiver = selectedUser.GetWaiver();
-            var Name = selectedUser.GetName();
-            var filePath = System.IO.Path.Combine(WaiverPath, Name + " " + DateTime.Now.ToShortDateString().Replace('/', '-') + ".pdf");
-            if(System.IO.File.Exists(filePath))
+            if(selectedUser != null)
             {
-                System.Diagnostics.Process.Start(filePath);
+                var WaiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", "Waivers");
+                var Waiver = selectedUser.GetWaiver();
+                var Name = selectedUser.GetName();
+                var filePath = System.IO.Path.Combine(WaiverPath, Name + " " + DateTime.Now.ToShortDateString().Replace('/', '-') + ".pdf");
+                if(System.IO.File.Exists(filePath))
+                {
+                    System.Diagnostics.Process.Start(filePath);
+                }
             }
         }
 
         private void clearDocs_Click(object sender, RoutedEventArgs e)
         {
-            if(MainWindow.CurrentUser.UserType >= UserType.Admin)
+            if(selectedUser != null)
             {
-                var confirm = new Confirm_Dialog(this, "Delete All Docs?");
-                confirm.ShowDialog();
-                if(confirm.Confirmed)
+                if(MainWindow.CurrentUser.UserType >= UserType.Admin)
                 {
-                    selectedUser.Documents.Clear();
+                    var alert = new Alert_Dialog("Delete Docs?", "Delete All Documents including Waivers for " + selectedUser.GetName() + "?", AlertType.Notice, returnResult: true);
+                    alert.ShowDialog();
+                    if((bool)alert.DialogResult)
+                    {
+                        selectedUser.Documents.Clear();
+                    }
                 }
             }
         }
