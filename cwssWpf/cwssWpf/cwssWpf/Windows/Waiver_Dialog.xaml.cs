@@ -22,17 +22,20 @@ namespace cwssWpf.Windows
     public partial class Waiver_Dialog : Window
     {
         public User CurrentUser;
+        public bool SignatureAdded = false;
+        public bool Signed = false;
+
         public Waiver_Dialog(User user = null)
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             CurrentUser = user;
             var waiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CW Acknowledgement of Risk and Sign-In Sheet.pdf");
-            
+
             InitializeComponent();
             tbName.Width = (this.Width / 2) - 100;
             tbDate.Width = (this.Width / 2) - 100;
 
-            if (user != null) 
+            if (user != null)
                 tbName.Text = user.GetName();
             tbDate.Text = DateTime.Now.ToShortDateString();
 
@@ -49,22 +52,28 @@ namespace cwssWpf.Windows
 
         private void btnSignForm_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            var alert = new Alert_Dialog("Waiting For Signature", "Please Capture Signature Image.", AlertType.Notice);
-            MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
-            alert.Show();
-
-            StartSigWaiter(null, null);
-
-            Dispatcher.BeginInvoke((Action)(() =>
+            if (!MainWindow.ClientWindowOpen)
             {
-                var camera = new Camera(CurrentUser);
-                camera.Show();
-            }));
+                StartSigWaiter(null, null);
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    var camera = new Camera(CurrentUser);
+                    camera.ShowDialog();
+                }));
 
-            alert.Close();
-            this.Close();
-            btnNoSignForm.IsEnabled = true;
+                DialogResult = true;
+                SignatureAdded = true;
+                Signed = true;
+                this.Close();
+            }
+            else
+            {
+                var alert = new Alert_Dialog("Notice!", "Signature capture not currently capable on remote machine.", AlertType.Notice);
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
+                alert.Show();
+                btnSignForm.IsEnabled = false;
+                btnNoSignForm.IsEnabled = true;
+            }
         }
 
         private async void StartSigWaiter(object sender, RoutedEventArgs e)
@@ -102,7 +111,7 @@ namespace cwssWpf.Windows
             if (tbName.Text.Length > 1 && success && (bool)cbAgree.IsChecked)
             {
                 btnSignForm.IsEnabled = true;
-                if(!Config.Data.General.GetSignature)
+                if (!Config.Data.General.GetSignature)
                     btnNoSignForm.IsEnabled = true;
             }
             else
@@ -110,7 +119,7 @@ namespace cwssWpf.Windows
                 btnSignForm.IsEnabled = false;
                 btnNoSignForm.IsEnabled = false;
                 cbAgree.IsChecked = false;
-                var alert = new Alert_Dialog("Accept Failed", "Missing Name or Incorrect Date Format", AlertType.Failure, autoClose:true);
+                var alert = new Alert_Dialog("Accept Failed", "Missing Name or Incorrect Date Format", AlertType.Failure, autoClose: true);
                 alert.ShowDialog();
             }
         }

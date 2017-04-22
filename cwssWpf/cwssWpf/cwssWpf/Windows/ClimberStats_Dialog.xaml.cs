@@ -36,20 +36,32 @@ namespace cwssWpf.Windows
             lblUserCreated.Content = lblUserCreated.Content + SelectedUser.DateCreated.ToShortDateString();
 
             // Waiver
-            var waiver = SelectedUser.Documents.Where(doc => doc.DocumentType == DocType.Waiver).Last();
-            lblWavier.Content = lblWavier.Content + waiver.Date.ToShortDateString();
-            lblWaiverExpires.Content = lblWaiverExpires.Content + waiver.Expires.ToShortDateString();
+            try
+            {
+                var waiver = SelectedUser.Documents.Where(doc => doc.DocumentType == DocType.Waiver).Last();
+                lblWavier.Content = lblWavier.Content + waiver.Date.ToShortDateString();
+                lblWaiverExpires.Content = lblWaiverExpires.Content + waiver.Expires.ToShortDateString();
+            }
+            catch
+            { }
 
             // Requests
             if (Db.dataBase.Notes.Requests.Count > 0)
             {
-                var req = Db.dataBase.Notes.Requests.Where(request => request.Patron.LoginId == SelectedUser.LoginId).First();
-
-                if (req != null)
+                try
                 {
-                    var expires = req.TimeStamp + TimeSpan.FromDays((int)req.SuspensionLength * 7);
-                    lblRevoked.Content = lblRevoked.Content + "YES - Expires: " + expires.ToShortDateString();
-                    lblReason.Content = req.Reason;
+                    var req = Db.dataBase.Notes.Requests.Where(request => request.Patron.LoginId == SelectedUser.LoginId).First();
+
+                    if (req != null)
+                    {
+                        var expires = req.TimeStamp + TimeSpan.FromDays((int)req.SuspensionLength * 7);
+                        lblRevoked.Content = lblRevoked.Content + "YES - Expires: " + expires.ToShortDateString();
+                        lblReason.Content = req.Reason;
+                    }
+                }
+                catch
+                {
+
                 }
             }
             else if(SelectedUser.CanClimb == false)
