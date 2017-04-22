@@ -64,11 +64,19 @@ namespace cwssWpf.Windows
                     btnSignForm.IsEnabled = false;
                     if (Config.Data.General.GetSignature)
                     {
-                        var alert = new Alert_Dialog("No Imager", "Webcam not found. Enable waiver without signature?", AlertType.Notice, returnResult: true);
-                        alert.ShowDialog();
-                        if ((bool)alert.DialogResult)
+                        if(MainWindow.CurrentUser != null && MainWindow.CurrentUser.UserType > 0)
                         {
-                            btnNoSignForm.IsEnabled = true;
+                            var alert = new Alert_Dialog("No Imager", "Webcam not found. Enable waiver without signature?", AlertType.Notice, returnResult: true);
+                            alert.ShowDialog();
+                            if ((bool)alert.DialogResult)
+                            {
+                                btnNoSignForm.IsEnabled = true;
+                            }
+                        }
+                        else
+                        {
+                            var alert = new Alert_Dialog("No Imager", "See employee for assistance.", AlertType.Notice);
+                            alert.ShowDialog();
                         }
                     }
                 }

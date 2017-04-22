@@ -47,7 +47,7 @@ namespace cwssWpf.Windows
             AlertText.Text = alertText;
             MouseLeftButtonDown += Window_MouseDown;
             PreviewKeyDown += Helpers.HandleEsc;
-            KeyUp += EnterPressed;
+            KeyDown += EnterPressed;
 
             if (returnResult)
             {

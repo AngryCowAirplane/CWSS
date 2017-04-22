@@ -685,8 +685,8 @@ namespace cwssWpf
             //var alert = new Alert_Dialog("Debug Message", "Server Ping Count: " + Comms.ServerPingCount.ToString() + "\n" + "Client Ping Count: " + Comms.ClientPingCount.ToString(), AlertType.Notice);
             //WindowsOpen.Add(alert, new TimerVal(3));
             //alert.Show();
-            var waiver = new Waiver_Dialog(CurrentUser);
-            waiver.ShowDialog();
+            //var waiver = new Waiver_Dialog(CurrentUser);
+            //waiver.ShowDialog();
         }
         #endregion
 

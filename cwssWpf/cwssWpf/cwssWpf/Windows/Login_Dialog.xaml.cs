@@ -39,7 +39,7 @@ namespace cwssWpf.Windows
 
         private void enterPress(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 if (((Control)sender).Name == "tbPassword")
                     btnSubmit_Click(null, null);
@@ -55,39 +55,42 @@ namespace cwssWpf.Windows
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if(Helpers.ValidateIdInput(tbUserId.Text))
+            if (tbUserId.Text.Length > 1 || tbPassword.Password.Length > 0)
             {
-                var loginId = int.Parse(tbUserId.Text);
-                var user = Db.dataBase.GetUser(loginId);
-                if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
+                if (Helpers.ValidateIdInput(tbUserId.Text))
                 {
-                    MainWindow.CurrentUser = user;
-                    mainWindow.MainMenu.Background = Brushes.OrangeRed;
-                    mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
-                    if ((int)user.UserType > 1)
-                        mainWindow.ManagerMenu.Visibility = Visibility.Visible;
-                    if ((int)user.UserType > 2)
-                        mainWindow.AdminMenu.Visibility = Visibility.Visible;
+                    var loginId = int.Parse(tbUserId.Text);
+                    var user = Db.dataBase.GetUser(loginId);
+                    if ((user != null) && ((int)user.UserType > 0) && (tbPassword.Password == user.Password))
+                    {
+                        MainWindow.CurrentUser = user;
+                        mainWindow.MainMenu.Background = Brushes.OrangeRed;
+                        mainWindow.EmployeeMenu.Visibility = Visibility.Visible;
+                        if ((int)user.UserType > 1)
+                            mainWindow.ManagerMenu.Visibility = Visibility.Visible;
+                        if ((int)user.UserType > 2)
+                            mainWindow.AdminMenu.Visibility = Visibility.Visible;
 
-                    Success = true;
-                    var message = user.GetName() + " Logged In"; 
-                    Logger.Log(user.LoginId, LogType.LogIn, message);
+                        Success = true;
+                        var message = user.GetName() + " Logged In";
+                        Logger.Log(user.LoginId, LogType.LogIn, message);
+                    }
+                    else
+                    {
+                        var message = "Failed Login By " + loginId;
+                        Logger.Log(loginId, LogType.Error, message);
+                        var alert = new Alert_Dialog("Login Failed", "Employee ID or Password Incorrect!");
+                        alert.ShowDialog();
+                    }
+                    this.Close();
                 }
                 else
                 {
-                    var message = "Failed Login By " + loginId;
-                    Logger.Log(loginId, LogType.Error, message);
-                    var alert = new Alert_Dialog("Login Failed", "Employee ID or Password Incorrect!");
+                    var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
+                    MainWindow.WindowsOpen.Add(alert, new TimerVal(6));
                     alert.ShowDialog();
+                    tbUserId.Text = string.Empty;
                 }
-                this.Close();
-            }
-            else
-            {
-                var alert = new Alert_Dialog("Invalid ID", "The ID entered is not a valid integer ID within account range.");
-                MainWindow.WindowsOpen.Add(alert, new TimerVal(6));
-                alert.ShowDialog();
-                tbUserId.Text = string.Empty;
             }
         }
     }
