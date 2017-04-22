@@ -77,6 +77,12 @@ namespace cwssWpf.Network
                 }
 
                 commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
+
+                if (commPacket.sender == Sender.Server)
+                    ClientPingCount = 0;
+                if (commPacket.sender == Sender.Client)
+                    ServerPingCount = 0;
+
                 CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
             }
             catch
