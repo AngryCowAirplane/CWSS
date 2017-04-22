@@ -54,6 +54,8 @@ namespace cwssWpf.Windows
             cbGetSignature.IsChecked = Config.Data.General.GetSignature;
             lblLastBackup.Content = lblLastBackup.Content + Config.Data.Backup.LastBackup.ToShortDateString();
             tbSigDelay.Text = Config.Data.General.SignatureWaitDelay.ToString();
+            tbBelayCertExpireDays.Text = Config.Data.Data.DaysBelayCertExpires.ToString();
+            tbLeadClimbExpireDays.Text = Config.Data.Data.DaysLeadClimbExpires.ToString();
         }
 
         private void addControls()
@@ -102,6 +104,8 @@ namespace cwssWpf.Windows
 
             Config.Data.Data.MinPasswordLength = int.Parse(tbMinPwdLength.Text);
             Config.Data.Data.DaysWaiverExpires = int.Parse(tbWaiverExpireDays.Text);
+            Config.Data.Data.DaysLeadClimbExpires = int.Parse(tbLeadClimbExpireDays.Text);
+            Config.Data.Data.DaysBelayCertExpires = int.Parse(tbBelayCertExpireDays.Text);
 
             if (!Config.Data.Email.StoreCreds)
             {

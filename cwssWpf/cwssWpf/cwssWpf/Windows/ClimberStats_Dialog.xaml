@@ -12,16 +12,36 @@
         Opacity="0.8"
         Title="ClimberStats_Dialog" Height="300" Width="300">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Yellow"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.ColumnSpan="2">
@@ -31,9 +51,13 @@
         </DockPanel>
 
         <Label Name="lblUserCreated" Content="Patron Since: " Grid.Row="1" Foreground="Yellow" FontWeight="Bold" FontSize="12"></Label>
-        <Label Name="lblWavier" Content="Most Recent Waiver: " Grid.Row="2" Foreground="Yellow" FontWeight="Bold" FontSize="12"></Label>
-        <Label Name="lblWaiverExpires" Content="Waiver Expires: " Grid.Row="3" Foreground="Yellow" FontWeight="Bold" FontSize="12"></Label>
-        <Label Name="lblRevoked" Content="Privelege Revoked: " Grid.Row="4" Foreground="Yellow" FontWeight="Bold" FontSize="12"></Label>
+        <Label Name="lblWavier" Content="Most Recent Waiver: " Grid.Row="2" Foreground="Yellow" FontSize="12"></Label>
+        <Label Name="lblWaiverExpires" Content="Waiver Expires: " Grid.Row="3" Foreground="Yellow" FontSize="12"></Label>
+        <Label Name="lblRevoked" Content="Privelege Revoked: " Grid.Row="4" Foreground="Yellow" FontSize="12"></Label>
         <Label Name="lblReason" Grid.Row="5" Foreground="Yellow" FontSize="12" HorizontalAlignment="Right"></Label>
+        <Separator Grid.Row="6"></Separator>
+        <Label Content="Certifications: " Grid.Row="7" FontWeight="Bold"></Label>
+        <Label Name="lblLead" Content="-none- " Grid.Row="8" HorizontalAlignment="Right"></Label>
+        <Label Name="lblBelay" Content=" " Grid.Row="9" HorizontalAlignment="Right"></Label>
     </Grid>
 </Window>

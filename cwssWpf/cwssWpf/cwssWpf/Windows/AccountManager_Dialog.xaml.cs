@@ -38,6 +38,12 @@ namespace cwssWpf.Windows
                 UserTypeMenu.IsEnabled = false;
 
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+
+            if(MainWindow.CurrentUser.UserType < UserType.Admin)
+            {
+                UserTypeMenu.IsEnabled = false;
+                ClearDocs.IsEnabled = false;
+            }
         }
 
         private void updateUser(UserType type)
@@ -174,6 +180,19 @@ namespace cwssWpf.Windows
             if(System.IO.File.Exists(filePath))
             {
                 System.Diagnostics.Process.Start(filePath);
+            }
+        }
+
+        private void clearDocs_Click(object sender, RoutedEventArgs e)
+        {
+            if(MainWindow.CurrentUser.UserType >= UserType.Admin)
+            {
+                var confirm = new Confirm_Dialog(this, "Delete All Docs?");
+                confirm.ShowDialog();
+                if(confirm.Confirmed)
+                {
+                    selectedUser.Documents.Clear();
+                }
             }
         }
     }

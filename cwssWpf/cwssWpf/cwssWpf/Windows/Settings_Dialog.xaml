@@ -160,14 +160,18 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Data Settings" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
                         <Label Content="Min PassWord Length" Grid.Row="1" Grid.Column="0" Margin="2,2,2,2"></Label>
                         <TextBox Name="tbMinPwdLength" Grid.Row="1" Grid.Column="1" Margin="2,2,2,2"></TextBox>
                         <Label Content="Waiver Expires (days)" Grid.Row="2" Grid.Column="0" Margin="2,2,2,2"></Label>
+                        <Label Content="Lead Climb Expires (days)" Grid.Row="3" Grid.Column="0" Margin="2,2,2,2"></Label>
+                        <Label Content="Belay Cert Expires (days)" Grid.Row="4" Grid.Column="0" Margin="2,2,2,2"></Label>
                         <TextBox Name="tbWaiverExpireDays" Grid.Row="2" Grid.Column="1" Margin="2,2,2,2"></TextBox>
+                        <TextBox Name="tbLeadClimbExpireDays" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2"></TextBox>
+                        <TextBox Name="tbBelayCertExpireDays" Grid.Row="4" Grid.Column="1" Margin="2,2,2,2"></TextBox>
                     </Grid>
                 </StackPanel>
             </TabItem>

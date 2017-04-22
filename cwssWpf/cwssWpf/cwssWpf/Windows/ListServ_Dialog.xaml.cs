@@ -226,7 +226,7 @@ namespace cwssWpf.Windows
 
             dataGrid.UnselectAllCells();
 
-            saveDataGridToFile();
+            SaveClipboardToCSVFile();
         }
 
         private void State_Click(object sender, RoutedEventArgs e)
@@ -351,10 +351,11 @@ namespace cwssWpf.Windows
             dataGrid.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
             ApplicationCommands.Copy.Execute(null, dataGrid);
 
-            saveDataGridToFile();
+            SaveClipboardToCSVFile();
         }
 
-        private void saveDataGridToFile()
+
+        public static void SaveClipboardToCSVFile()
         {
             string result = (string)System.Windows.Clipboard.GetData(System.Windows.DataFormats.CommaSeparatedValue);
             result.Replace(',', ';');

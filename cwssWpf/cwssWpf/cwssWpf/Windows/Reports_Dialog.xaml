@@ -8,10 +8,31 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Black"
-        ResizeMode="NoResize"
+        ResizeMode="CanResizeWithGrip"
         Opacity="0.8"
         Title="Reports_Dialog" Height="300" Width="300">
-    <Grid>
+    <Grid Name="MainGrid">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Yellow"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="MenuItem">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+                <Setter Property="BorderBrush" Value="Goldenrod"></Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
@@ -26,16 +47,22 @@
 
         <DockPanel Grid.ColumnSpan="2">
             <Menu DockPanel.Dock="Top" Background="Goldenrod">
-                <MenuItem Header="_Exit" Name="exit" Click="exit_Click"></MenuItem>
+                <MenuItem Header="Menu">
+                    <MenuItem Header="_Export" Name="export" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Exit" Name="exit" Click="exit_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Reports">
+                    <MenuItem Header="Revocations Report" Click="Revocations_Click"></MenuItem>
+                    <MenuItem Header="Waivers Expiring" Click="Waivers_Click"></MenuItem>
+                    <MenuItem Header="Lead Climber" Click="LeadClimb_Click"></MenuItem>
+                    <MenuItem Header="Belay Certifications" Click="Belay_Click"></MenuItem>
+                    <!--<Separator></Separator>
+                    <MenuItem Header="User Stats" Click="Stats_Click"></MenuItem>-->
+                </MenuItem>
             </Menu>
         </DockPanel>
-
-        <Label Name="TotalUsers" Content="Total Users: " Grid.Row="1" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
-        <Label Name="TotalEmployees" Content="Total Employees: " Grid.Row="2" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
-        <Label Name="TotalCheckins" Content="Total Checkins: " Grid.Row="3" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
-        <Label Name="UniqueClimbers" Content="Unique Climbers: " Grid.Row="4" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
-        <Label Name="ClimbersRevoked" Content="Climbers Revoked: " Grid.Row="5" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
-        <Label Name="WaiversExpired" Content="Waivers Expired: " Grid.Row="6" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
-        <Label Name="WaiversExpireSoon" Content="Waivers Expiring Soon: " Grid.Row="7" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
+        <Label Name="lblTotalUsers" Content="Total Users: " Grid.Row="1" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
+        <Label Name="lblTotalEmployees" Content="Total Employees: " Grid.Row="2" Foreground="Yellow" FontWeight="Bold" FontSize="10"></Label>
+        
     </Grid>
 </Window>

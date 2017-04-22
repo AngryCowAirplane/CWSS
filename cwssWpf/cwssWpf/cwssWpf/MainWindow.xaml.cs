@@ -249,7 +249,7 @@ namespace cwssWpf
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
             var climberView = new ClimberView_Dialog(this);
-            climberView.ShowDialog();
+            climberView.Show();
         }
 
         private void menuMessage_Click(object sender, RoutedEventArgs e)
@@ -286,7 +286,7 @@ namespace cwssWpf
             Db.SaveDatabase(Db.DbPath);
 
             // Periodic Update Docs
-            Db.CheckUserRequests();
+            Db.CheckRequests();
         }
 
         private void OnQuickTimerTick(object sender, EventArgs e)
@@ -405,6 +405,7 @@ namespace cwssWpf
 
             if (user != null)
             {
+                Db.CheckUserDocs(user);
                 checkMessages(user, remote);
 
                 var hasWaiver = user.HasWaiver();

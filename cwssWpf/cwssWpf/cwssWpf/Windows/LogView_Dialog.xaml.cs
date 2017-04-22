@@ -100,7 +100,7 @@ namespace cwssWpf.Windows
         {
             Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
 
-            saveDialog.FileName = "cwLogger " + dpFrom.SelectedDate.Value.ToShortDateString().Replace('/','_') + " - " + dpTo.SelectedDate.Value.ToShortDateString().Replace('/', '_');
+            saveDialog.FileName = "cwLogger " + dpFrom.SelectedDate.Value.ToShortDateString().Replace('/', '_') + " - " + dpTo.SelectedDate.Value.ToShortDateString().Replace('/', '_');
             saveDialog.DefaultExt = ".text";
             saveDialog.Filter = "Text documents (.txt)|*.txt";
 
@@ -116,6 +116,42 @@ namespace cwssWpf.Windows
 
                 File.WriteAllLines(fileName, list.ToArray<string>());
             }
+        }
+
+        private void btnSaveData_Click(object sender, RoutedEventArgs e)
+        {
+            lvLogs.SelectAll();
+
+            saveSelectedToFile();
+        }
+
+        private void saveSelectedToFile()
+        {
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+
+            saveDialog.FileName = "cwLogger " + dpFrom.SelectedDate.Value.ToShortDateString().Replace('/', '_') + " - " + dpTo.SelectedDate.Value.ToShortDateString().Replace('/', '_');
+            saveDialog.DefaultExt = ".csv";
+            saveDialog.Filter = "Comma Seperated Values (.csv)|*.csv";
+
+            var success = (bool)saveDialog.ShowDialog();
+
+            if (success)
+            {
+                CSVtoFile(saveDialog.FileName);
+            }
+        }
+
+        private void CSVtoFile(string fileName)
+        {
+            string data = string.Empty;
+
+            data = Log.GetCsvHeader();
+            foreach (var item in lvLogs.SelectedItems)
+            {
+                data = data + ((Log)item).ToCSV();
+            }
+
+            File.WriteAllText(fileName, data, UnicodeEncoding.UTF8);
         }
 
         private void updateScreen(object sender, EventArgs e)

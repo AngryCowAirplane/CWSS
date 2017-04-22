@@ -81,6 +81,8 @@ namespace cwssWpf.Data
     {
         public int MinPasswordLength = 4;
         public int DaysWaiverExpires = 90;
+        public int DaysLeadClimbExpires = 90;
+        public int DaysBelayCertExpires = 90;
     }
 
     public class BackupSettings

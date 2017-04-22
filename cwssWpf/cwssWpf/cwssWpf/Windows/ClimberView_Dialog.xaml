@@ -44,6 +44,8 @@
                 <ContextMenu Name="userMenu" Opacity="0.9" Foreground="Black">
                     <MenuItem Header="Stats" Name="cmStats" Click="cmStats_Click"></MenuItem>
                     <MenuItem Header="Request Revoke" Name="cmRevoke" Click="cmRevoke_Click"></MenuItem>
+                    <MenuItem Header="Promote Lead Climb" Name="cmPromote" Click="cmPromote_Click"></MenuItem>
+                    <MenuItem Header="Add Belay Cert." Name="cmBelayCert" Click="cmBelayCert_Click"></MenuItem>
                     <!--<MenuItem Header="CheckOut" Name="cmCheckOut" Click="cmCheckOut_Click"></MenuItem>-->
                 </ContextMenu>
             </ListView.ContextMenu>

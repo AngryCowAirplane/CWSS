@@ -147,6 +147,16 @@ namespace cwssWpf.Data
             //Console.WriteLine(logData);
             return logData;
         }
+
+        public string ToCSV()
+        {
+            return (UserId.ToString() + "," + TimeStamp.ToString() + "," + Action.ToString() + "," + Comment + "\n");
+        }
+
+        public static string GetCsvHeader()
+        {
+            return ("UserId,TimeStamp,ActionType,Comment,\n");
+        }
     }
 
     // Could expand to track employee actions

@@ -20,7 +20,7 @@ namespace cwssWpf.DataBase
             DbPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CwssDataBase.cwdb");
             LoadDatabase();
 
-            CheckUserRequests();
+            CheckRequests();
 
             // Check Auto Backup
             if (DateTime.Now - Config.Data.Backup.LastBackup > TimeSpan.FromDays(Config.Data.Backup.DaysBetweenBackup))
@@ -30,8 +30,9 @@ namespace cwssWpf.DataBase
             }
         }
 
-        public static void CheckUserRequests()
+        public static void CheckRequests()
         {
+            // Requests
             var reqToRelease = new List<Request>();
             foreach (var req in Db.dataBase.Notes.Requests)
             {
@@ -45,6 +46,35 @@ namespace cwssWpf.DataBase
             foreach (var req in reqToRelease)
             {
                 req.ReleaseRequest();
+            }
+        }
+
+        public static void CheckUserDocs(User user)
+        {
+            var docs = user.Documents;
+            var lead = docs.Where(d => d.DocumentType == DocType.LeadClimb);//.First();
+            var belay = docs.Where(d => d.DocumentType == DocType.BelayCert);//.First();
+            var waiver = docs.Where(d => d.DocumentType == DocType.Waiver);//.First();
+
+            //// Leads
+            //if(lead != null)
+            //{
+            //    if (DateTime.Now > lead.Expires)
+            //        user.Documents.Remove(lead);
+            //}
+
+            //// Belay
+            //if(belay != null)
+            //{
+            //    if (DateTime.Now > belay.Expires)
+            //        user.Documents.Remove(belay);
+            //}
+
+            // Wiaver
+            if (waiver != null)
+            {
+                if (DateTime.Now > waiver.Last().Expires)
+                    user.CanClimb = false;
             }
         }
 

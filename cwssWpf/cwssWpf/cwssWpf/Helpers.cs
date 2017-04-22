@@ -19,6 +19,7 @@ using cwssWpf.Windows;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Windows.Controls;
+using System.IO;
 
 namespace cwssWpf
 {
@@ -37,6 +38,15 @@ namespace cwssWpf
         public static string DecryptString(string str)
         {
             return RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(str, passPhrase, saltValue, "SHA1");
+        }
+
+        public static IEnumerable<DateTime> AllDatesInMonth(int year, int month)
+        {
+            int days = DateTime.DaysInMonth(year, month);
+            for (int day = 1; day <= days; day++)
+            {
+                yield return new DateTime(year, month, day);
+            }
         }
 
         public static void PlaySuccess()

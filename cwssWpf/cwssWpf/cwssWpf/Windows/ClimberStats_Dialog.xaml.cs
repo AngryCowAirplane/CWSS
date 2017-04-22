@@ -71,6 +71,28 @@ namespace cwssWpf.Windows
             }
             else
                 lblRevoked.Content = lblRevoked.Content + "NO";
+
+            // CERTS
+            var docs = SelectedUser.Documents;
+            if(docs.Count > 0)
+            {
+                var lead = docs.Where(d => d.DocumentType == DocType.LeadClimb).ToList();
+                var belay = docs.Where(d => d.DocumentType == DocType.BelayCert).ToList();
+                if(lead != null && lead.Count > 0)
+                {
+                    var cert = lead.First();
+                    lblLead.Content = "Lead Climber - " + cert.Expires.ToShortDateString();
+                    if (DateTime.Now > cert.Expires)
+                        lblLead.Foreground = Brushes.Red;
+                }
+                if(belay != null && belay.Count > 0)
+                {
+                    var cert = belay.First();
+                    lblBelay.Content = "Belay Cert. - " + cert.Expires.ToShortTimeString();
+                    if (cert.Expires > cert.Expires)
+                        lblBelay.Foreground = Brushes.Red;
+                }
+            }
         }
 
         private void exit_Click(object sender, RoutedEventArgs e)
