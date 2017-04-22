@@ -1,0 +1,22 @@
+﻿<Window x:Class="cwssWpf.Windows.Camera"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:cwssWpf.Windows"
+        mc:Ignorable="d"
+        Title="Camera" Height="300" Width="400">
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Name="Start" Grid.Row="1" Grid.Column="0" Content="Start / Stop" Margin="4,4,4,4" Click="Start_Click"/>
+        <Button Name="Capture" Grid.Row="1" Grid.Column="1" Content="Capture" Margin="4,4,4,4" Click="Capture_Click"/>
+    </Grid>
+</Window>

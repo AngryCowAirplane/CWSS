@@ -676,6 +676,9 @@ namespace cwssWpf
             var alert = new Alert_Dialog("Debug Message", "Server Ping Count: " + Comms.ServerPingCount.ToString() + "\n" + "Client Ping Count: " + Comms.ClientPingCount.ToString(), AlertType.Notice);
             WindowsOpen.Add(alert, new TimerVal(3));
             alert.Show();
+
+            var camera = new Camera();
+            camera.Show();
         }
         #endregion
 
