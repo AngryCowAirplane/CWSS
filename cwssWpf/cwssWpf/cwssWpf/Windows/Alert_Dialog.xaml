@@ -39,5 +39,11 @@
             </Button.Background>
         </Button>
 
+        <Button Name="Answer" Grid.Row="2" Grid.Column="0" Content="Yes" Margin="5,5,5,5" Foreground="Gold" FontWeight="Heavy" Click="Answer_Click" Visibility="Hidden" IsEnabled="False">
+            <Button.Background>
+                <SolidColorBrush Opacity="0.25" Color="DarkGray"></SolidColorBrush>
+            </Button.Background>
+        </Button>
+
     </Grid>
 </Window>

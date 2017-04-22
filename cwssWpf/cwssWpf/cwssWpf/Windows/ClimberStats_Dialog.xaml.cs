@@ -33,66 +33,69 @@ namespace cwssWpf.Windows
 
         private void doStats()
         {
-            // Member Since
-            lblUserCreated.Content = lblUserCreated.Content + SelectedUser.DateCreated.ToShortDateString();
-            lblLastCheckIn.Content = lblLastCheckIn.Content + SelectedUser.LastCheckIn.ToShortDateString() + "-" + SelectedUser.LastCheckIn.ToShortTimeString();
-
-            // Waiver
-            try
+            if(SelectedUser != null)
             {
-                var waiver = SelectedUser.Documents.Where(doc => doc.DocumentType == DocType.Waiver).Last();
-                lblWavier.Content = lblWavier.Content + waiver.Date.ToShortDateString();
-                lblWaiverExpires.Content = lblWaiverExpires.Content + waiver.Expires.ToShortDateString();
-            }
-            catch
-            { }
+                // Member Since
+                lblUserCreated.Content = lblUserCreated.Content + SelectedUser.DateCreated.ToShortDateString();
+                lblLastCheckIn.Content = lblLastCheckIn.Content + SelectedUser.LastCheckIn.ToShortDateString() + "-" + SelectedUser.LastCheckIn.ToShortTimeString();
 
-            // Requests
-            if (Db.dataBase.Notes.Requests.Count > 0)
-            {
+                // Waiver
                 try
                 {
-                    var req = Db.dataBase.Notes.Requests.Where(request => request.Patron.LoginId == SelectedUser.LoginId).First();
-
-                    if (req != null)
-                    {
-                        var expires = req.TimeStamp + TimeSpan.FromDays((int)req.SuspensionLength * 7);
-                        lblRevoked.Content = lblRevoked.Content + "YES - Expires: " + expires.ToShortDateString();
-                        lblReason.Content = req.Reason;
-                    }
+                    var waiver = SelectedUser.Documents.Where(doc => doc.DocumentType == DocType.Waiver).Last();
+                    lblWavier.Content = lblWavier.Content + waiver.Date.ToShortDateString();
+                    lblWaiverExpires.Content = lblWaiverExpires.Content + waiver.Expires.ToShortDateString();
                 }
                 catch
-                {
+                { }
 
-                }
-            }
-            else if(SelectedUser.CanClimb == false)
-            {
-                lblRevoked.Content = lblRevoked.Content + "YES";
-                lblReason.Content = "Hard Revoked.";
-            }
-            else
-                lblRevoked.Content = lblRevoked.Content + "NO";
+                // Requests
+                if (Db.dataBase.Notes.Requests.Count > 0)
+                {
+                    try
+                    {
+                        var req = Db.dataBase.Notes.Requests.Where(request => request.Patron.LoginId == SelectedUser.LoginId).First();
 
-            // CERTS
-            var docs = SelectedUser.Documents;
-            if(docs.Count > 0)
-            {
-                var lead = docs.Where(d => d.DocumentType == DocType.LeadClimb).ToList();
-                var belay = docs.Where(d => d.DocumentType == DocType.BelayCert).ToList();
-                if(lead != null && lead.Count > 0)
-                {
-                    var cert = lead.First();
-                    lblLead.Content = "Lead Climber - " + cert.Expires.ToShortDateString();
-                    if (DateTime.Now > cert.Expires)
-                        lblLead.Foreground = Brushes.Red;
+                        if (req != null)
+                        {
+                            var expires = req.TimeStamp + TimeSpan.FromDays((int)req.SuspensionLength * 7);
+                            lblRevoked.Content = lblRevoked.Content + "YES - Expires: " + expires.ToShortDateString();
+                            lblReason.Content = req.Reason;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
                 }
-                if(belay != null && belay.Count > 0)
+                else if(SelectedUser.CanClimb == false)
                 {
-                    var cert = belay.First();
-                    lblBelay.Content = "Belay Cert. - " + cert.Expires.ToShortDateString();
-                    if (cert.Expires > cert.Expires)
-                        lblBelay.Foreground = Brushes.Red;
+                    lblRevoked.Content = lblRevoked.Content + "YES";
+                    lblReason.Content = "Hard Revoked.";
+                }
+                else
+                    lblRevoked.Content = lblRevoked.Content + "NO";
+
+                // CERTS
+                var docs = SelectedUser.Documents;
+                if(docs.Count > 0)
+                {
+                    var lead = docs.Where(d => d.DocumentType == DocType.LeadClimb).ToList();
+                    var belay = docs.Where(d => d.DocumentType == DocType.BelayCert).ToList();
+                    if(lead != null && lead.Count > 0)
+                    {
+                        var cert = lead.First();
+                        lblLead.Content = "Lead Climber - " + cert.Expires.ToShortDateString();
+                        if (DateTime.Now > cert.Expires)
+                            lblLead.Foreground = Brushes.Red;
+                    }
+                    if(belay != null && belay.Count > 0)
+                    {
+                        var cert = belay.First();
+                        lblBelay.Content = "Belay Cert. - " + cert.Expires.ToShortDateString();
+                        if (cert.Expires > cert.Expires)
+                            lblBelay.Foreground = Brushes.Red;
+                    }
                 }
             }
         }

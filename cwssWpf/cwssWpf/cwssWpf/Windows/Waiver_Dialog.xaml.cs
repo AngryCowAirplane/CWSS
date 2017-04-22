@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WebEye.Controls.Wpf;
 
 namespace cwssWpf.Windows
 {
@@ -55,17 +56,36 @@ namespace cwssWpf.Windows
         {
             if (!MainWindow.ClientWindowOpen)
             {
-                StartSigWaiter(null, null);
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    var camera = new Camera(CurrentUser);
-                    camera.ShowDialog();
-                }));
 
-                DialogResult = true;
-                SignatureAdded = true;
-                Signed = true;
-                this.Close();
+                WebCameraControl WebCam = new WebCameraControl();
+                var Cameras = new List<WebCameraId>(WebCam.GetVideoCaptureDevices());
+                if (Cameras.Count < 1)
+                {
+                    btnSignForm.IsEnabled = false;
+                    if (Config.Data.General.GetSignature)
+                    {
+                        var alert = new Alert_Dialog("No Imager", "Webcam not found. Enable waiver without signature?", AlertType.Notice, returnResult: true);
+                        alert.ShowDialog();
+                        if ((bool)alert.DialogResult)
+                        {
+                            btnNoSignForm.IsEnabled = true;
+                        }
+                    }
+                }
+                else
+                {
+                    StartSigWaiter(null, null);
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        var camera = new Camera(CurrentUser);
+                        camera.ShowDialog();
+                    }));
+
+                    DialogResult = true;
+                    SignatureAdded = true;
+                    Signed = true;
+                    this.Close();
+                }
             }
             else
             {

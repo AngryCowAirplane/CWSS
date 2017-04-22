@@ -65,12 +65,15 @@ namespace cwssWpf.Windows
 
         private void cmCheckOut_Click(object sender, RoutedEventArgs e)
         {
-            userMenu.IsOpen = false;
+            if (selectedUser != null)
+            {
+                userMenu.IsOpen = false;
 
-            selectedUser.CheckOut();
-            mainWindow.UpdateClimberStats();
-            lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
-            updateList();
+                selectedUser.CheckOut();
+                mainWindow.UpdateClimberStats();
+                lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
+                updateList();
+            }
         }
 
         private void cmRevoke_Click(object sender, RoutedEventArgs e)
@@ -84,8 +87,11 @@ namespace cwssWpf.Windows
 
         private void cmStats_Click(object sender, RoutedEventArgs e)
         {
-            var stats = new ClimberStats_Dialog(selectedUser);
-            stats.Show();
+            if (selectedUser != null)
+            {
+                var stats = new ClimberStats_Dialog(selectedUser);
+                stats.Show();
+            }
         }
 
         private void rightMouseButtonClicked(object sender, MouseEventArgs e)
@@ -107,20 +113,26 @@ namespace cwssWpf.Windows
 
         private void cmPromote_Click(object sender, RoutedEventArgs e)
         {
-            var doc = new Document();
-            doc.DocumentType = DocType.LeadClimb;
-            doc.UserId = selectedUser.LoginId;
-            doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysLeadClimbExpires);
-            selectedUser.Documents.Add(doc);
+            if (selectedUser != null)
+            {
+                var doc = new Document();
+                doc.DocumentType = DocType.LeadClimb;
+                doc.UserId = selectedUser.LoginId;
+                doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysLeadClimbExpires);
+                selectedUser.Documents.Add(doc);
+            }
         }
 
         private void cmBelayCert_Click(object sender, RoutedEventArgs e)
         {
-            var doc = new Document();
-            doc.DocumentType = DocType.BelayCert;
-            doc.UserId = selectedUser.LoginId;
-            doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysBelayCertExpires);
-            selectedUser.Documents.Add(doc);
+            if (selectedUser != null)
+            {
+                var doc = new Document();
+                doc.DocumentType = DocType.BelayCert;
+                doc.UserId = selectedUser.LoginId;
+                doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysBelayCertExpires);
+                selectedUser.Documents.Add(doc);
+            }
         }
     }
 }

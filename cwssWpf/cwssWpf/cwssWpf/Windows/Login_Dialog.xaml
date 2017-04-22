@@ -29,7 +29,7 @@
         <Label x:Name="Label2" Grid.Column="0" Grid.Row="1" Height="23" Margin="5,5,5,5" Content="Password" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Yellow"></Label>
 
         <TextBox x:Name="tbUserId" Grid.Column="1" Grid.Row="0" Height="23" Margin="5,5,5,5"  Text="" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="LightGoldenrodYellow"/>
-        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="1" Height="23" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="LightGoldenrodYellow" KeyUp="EnterPressed"/>
+        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="1" Height="23" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="LightGoldenrodYellow"/>
 
         <Button x:Name="btnCancel" Grid.Column="0" Grid.Row="2" Height="20" Margin="5,5,5,5" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnCancel_Click" Background="Goldenrod"></Button>
         <Button x:Name="btnSubmit" Grid.Column="1" Grid.Row="2" Height="20" Margin="5,5,5,5" Content="Log In" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="btnSubmit_Click" Background="Goldenrod"></Button>

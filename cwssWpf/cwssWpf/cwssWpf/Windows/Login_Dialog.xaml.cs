@@ -41,10 +41,10 @@ namespace cwssWpf.Windows
         {
             if(e.Key == Key.Enter)
             {
-                if (((Control)sender).Name == "tbUserId")
-                    tbPassword.Focus();
                 if (((Control)sender).Name == "tbPassword")
                     btnSubmit_Click(null, null);
+                else if (((Control)sender).Name == "tbUserId")
+                    tbPassword.Focus();
             }
         }
 
@@ -89,13 +89,6 @@ namespace cwssWpf.Windows
                 alert.ShowDialog();
                 tbUserId.Text = string.Empty;
             }
-        }
-
-        private void EnterPressed(object sender, KeyEventArgs e)
-        {
-            if (e.Key != Key.Enter) return;
-
-            btnSubmit_Click(null, null);
         }
     }
 }

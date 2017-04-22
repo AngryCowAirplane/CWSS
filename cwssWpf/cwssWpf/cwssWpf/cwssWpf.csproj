@@ -110,7 +110,6 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Network\Comms.cs" />
     <Compile Include="Network\MulticastUdpClient.cs" />
-    <Compile Include="Reports\Report.cs" />
     <Compile Include="StaticValues.cs" />
     <Compile Include="WaiverSaver.cs" />
     <Compile Include="Windows\AccountManager_Dialog.xaml.cs">
@@ -316,13 +315,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppData\cwssWpf.Context.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="AppData\cwssWpf.Context_log.ldf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>cwssWpf.Context.mdf</DependentUpon>
-    </Content>
     <Content Include="UserManual.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

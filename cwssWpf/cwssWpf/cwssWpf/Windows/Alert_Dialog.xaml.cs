@@ -22,7 +22,7 @@ namespace cwssWpf.Windows
     {
         public AlertType Alert_Type;
 
-        public Alert_Dialog(string alertTitle, string alertText = "", AlertType alertType = AlertType.Failure, Vector? screenCoords = null, bool autoClose = false)
+        public Alert_Dialog(string alertTitle, string alertText = "", AlertType alertType = AlertType.Failure, Vector? screenCoords = null, bool autoClose = false, bool returnResult = false)
         {
             Alert_Type = alertType;
             if(screenCoords == null)
@@ -48,6 +48,12 @@ namespace cwssWpf.Windows
             MouseLeftButtonDown += Window_MouseDown;
             PreviewKeyDown += Helpers.HandleEsc;
             KeyUp += EnterPressed;
+
+            if (returnResult)
+            {
+                Answer.IsEnabled = true;
+                Answer.Visibility = Visibility.Visible;
+            }
         }
 
         private void EnterPressed(object sender, KeyEventArgs e)
@@ -95,6 +101,12 @@ namespace cwssWpf.Windows
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void Answer_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
             this.Close();
         }
     }

@@ -438,7 +438,9 @@ namespace cwssWpf
                 result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }
 
-            user.LastCheckIn = DateTime.Now;
+            if(user!=null)
+                user.LastCheckIn = DateTime.Now;
+
             tbLoginId.Text = "";
             UpdateClimberStats();
 

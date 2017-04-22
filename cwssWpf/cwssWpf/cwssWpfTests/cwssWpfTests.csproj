@@ -67,7 +67,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DataBaseTests\BasicCreateSaveLoadDb.cs" />
-    <Compile Include="DataBaseTests\TestReporting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendEmailTest.cs" />
     <Compile Include="UnitTest1.cs" />
