@@ -272,6 +272,11 @@ namespace cwssWpf
                 Comms.SendMessage(packet);
             }
         }
+        private void remoteNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            var packet = new CommPacket(Sender.Server, new User());
+            Comms.SendMessage(packet);
+        }
         #endregion
 
         #region Other Event Handlers
@@ -676,13 +681,11 @@ namespace cwssWpf
             var alert = new Alert_Dialog("Debug Message", "Server Ping Count: " + Comms.ServerPingCount.ToString() + "\n" + "Client Ping Count: " + Comms.ClientPingCount.ToString(), AlertType.Notice);
             WindowsOpen.Add(alert, new TimerVal(3));
             alert.Show();
+
+            var camera = new Camera();
+            camera.Show();
         }
         #endregion
 
-        private void remoteNewUser_Click(object sender, RoutedEventArgs e)
-        {
-            var packet = new CommPacket(Sender.Server, new User());
-            Comms.SendMessage(packet);
-        }
     }
 }
