@@ -43,6 +43,13 @@ namespace cwssWpf.Network
             udpClientWrapper.SendMulticast(buffer);
         }
 
+        public static void ResetConnection()
+        {
+            var message = "resetPingPackets";
+            byte[] buffer = Encoding.Unicode.GetBytes(message);
+            udpClientWrapper.SendMulticast(buffer);
+        }
+
         public static CommPacket GetMessage(Sender sender)
         {
             if (sender != commPacket.sender)
@@ -62,6 +69,13 @@ namespace cwssWpf.Network
             {
                 string receivedText = ASCIIEncoding.Unicode.GetString(e.Buffer);
                 var decryptedString = Helpers.DecryptString(receivedText);
+
+                if(decryptedString == "resetPingPackets")
+                {
+                    ClientPingCount = 0;
+                    ServerPingCount = 0;
+                }
+
                 commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
                 CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
             }

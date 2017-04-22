@@ -61,6 +61,7 @@
                 <ContextMenu Name="userMenu" Opacity="0.95">
                     <!--<MenuItem Header="Reset Client Mode" Name="resetClientMode" Click="resetClientMode_Click"></MenuItem>-->
                     <MenuItem Header="Open New User Form" Name="remoteNewUser" Click="remoteNewUser_Click"></MenuItem>
+                    <MenuItem Header="Reset Connection" Name="resetConnection" Click="resetConnection_Click"></MenuItem>
                 </ContextMenu>
             </Image.ContextMenu>
         </Image>

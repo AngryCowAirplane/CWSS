@@ -32,6 +32,7 @@ namespace cwssWpf
         public static bool ClientMode = false;
         public static bool ClientConnected = false;
         public static DispatcherTimer QuickTimer = new DispatcherTimer();
+        public static DispatcherTimer MidTimer = new DispatcherTimer();
         public static DispatcherTimer LongTimer = new DispatcherTimer();
 
         public MainWindow()
@@ -71,6 +72,9 @@ namespace cwssWpf
             QuickTimer.Interval = TimeSpan.FromSeconds(1);
             QuickTimer.Tick += OnQuickTimerTick;
             QuickTimer.Start();
+            MidTimer.Interval = TimeSpan.FromMinutes(2);
+            MidTimer.Tick += OnMidTimertick;
+            MidTimer.Start();
             LongTimer.Interval = TimeSpan.FromHours(1);
             LongTimer.Tick += OnLongTimertick;
             LongTimer.Start();
@@ -95,6 +99,11 @@ namespace cwssWpf
 
             //TESTING ACTIONS - REMOVE LATER
             //Db.dataBase.Notes.Requests = new List<Request>();
+        }
+
+        private void OnMidTimertick(object sender, EventArgs e)
+        {
+            //Comms.ResetConnection();
         }
 
         #region UI Click Event Handlers  (Click Events)
@@ -691,5 +700,9 @@ namespace cwssWpf
         }
         #endregion
 
+        private void resetConnection_Click(object sender, RoutedEventArgs e)
+        {
+            Comms.ResetConnection();
+        }
     }
 }
