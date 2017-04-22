@@ -41,7 +41,7 @@ namespace cwssWpf
             StartNetworkListen(null, null);
 
             Comms.CommPacketReceived += Comms_CommPacketReceived;
-            DasTimer.Interval = TimeSpan.FromSeconds(1);
+            DasTimer.Interval = TimeSpan.FromMilliseconds(1666);
             DasTimer.Tick += OnTimerTick;
             DasTimer.Start();
 
@@ -97,12 +97,15 @@ namespace cwssWpf
             }
 
             // Check Client Connection
-            Dispatcher.BeginInvoke((Action)(() =>
+            if(serverConnected)
             {
-                var packet = new CommPacket(Sender.Client);
-                Comms.SendMessage(packet);
-                Comms.ClientPingCount++;
-            }));
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    var packet = new CommPacket(Sender.Client);
+                    Comms.SendMessage(packet);
+                    Comms.ClientPingCount++;
+                }));
+            }
 
             if (Comms.ClientPingCount > 5)
                 serverConnected = false;
