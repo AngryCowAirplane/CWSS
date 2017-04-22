@@ -22,6 +22,7 @@ namespace cwssWpf.Windows
         private MainWindow mainWindow;
         private User selectedUser;
         public static DispatcherTimer QuickTimer = new DispatcherTimer();
+        public List<User> UsersCheckedIn = new List<User>();
 
         public ClimberView_Dialog(MainWindow mainWindow)
         {
@@ -29,10 +30,13 @@ namespace cwssWpf.Windows
             this.mainWindow = mainWindow;
             Top = mainWindow.Top + 50;
             Left = mainWindow.Left + 50;
-            lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
+            UsersCheckedIn = Db.dataBase.Users.Where(user => user.CheckedIn == true).ToList();
+            UsersCheckedIn.OrderByDescending(x => x.LastCheckIn);
+            lvClimbers.ItemsSource = UsersCheckedIn;
             updateList();
             lvClimbers.PreviewMouseRightButtonDown += rightMouseButtonClicked;
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
             QuickTimer.Interval = TimeSpan.FromSeconds(1);
             QuickTimer.Tick += OnQuickTimerTick;
             QuickTimer.Start();
@@ -47,9 +51,10 @@ namespace cwssWpf.Windows
 
         private void OnQuickTimerTick(object sender, EventArgs e)
         {
+            UsersCheckedIn = Db.dataBase.Users.Where(user => user.CheckedIn == true).ToList();
             lvClimbers.ItemsSource = null;
             lvClimbers.Items.Refresh();
-            lvClimbers.ItemsSource = Db.dataBase.Users.Where(user => user.CheckedIn == true);
+            lvClimbers.ItemsSource = UsersCheckedIn.OrderByDescending(x => x.LastCheckIn);
             lvClimbers.Items.Refresh();
         }
 

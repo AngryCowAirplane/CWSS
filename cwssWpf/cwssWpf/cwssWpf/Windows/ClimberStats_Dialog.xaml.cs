@@ -28,12 +28,14 @@ namespace cwssWpf.Windows
             SelectedUser = user;
             doStats();
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
         }
 
         private void doStats()
         {
             // Member Since
             lblUserCreated.Content = lblUserCreated.Content + SelectedUser.DateCreated.ToShortDateString();
+            lblLastCheckIn.Content = lblLastCheckIn.Content + SelectedUser.LastCheckIn.ToShortDateString() + "-" + SelectedUser.LastCheckIn.ToShortTimeString();
 
             // Waiver
             try
@@ -88,7 +90,7 @@ namespace cwssWpf.Windows
                 if(belay != null && belay.Count > 0)
                 {
                     var cert = belay.First();
-                    lblBelay.Content = "Belay Cert. - " + cert.Expires.ToShortTimeString();
+                    lblBelay.Content = "Belay Cert. - " + cert.Expires.ToShortDateString();
                     if (cert.Expires > cert.Expires)
                         lblBelay.Foreground = Brushes.Red;
                 }

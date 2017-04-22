@@ -40,6 +40,7 @@ namespace cwssWpf.Windows
             tbDate.Text = DateTime.Now.ToShortDateString();
 
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
 
             webBrowser.Navigate("file:///" + waiverPath);
             this.Focus();

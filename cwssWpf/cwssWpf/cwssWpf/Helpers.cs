@@ -40,6 +40,12 @@ namespace cwssWpf
             return RijndaelEncryptDecrypt.EncryptDecryptUtils.Decrypt(str, passPhrase, saltValue, "SHA1");
         }
 
+        public static void HandleEsc(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                ((Window)sender).Close();
+        }
+
         public static IEnumerable<DateTime> AllDatesInMonth(int year, int month)
         {
             int days = DateTime.DaysInMonth(year, month);

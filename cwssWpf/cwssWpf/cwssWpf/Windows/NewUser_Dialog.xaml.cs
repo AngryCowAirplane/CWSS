@@ -38,6 +38,7 @@ namespace cwssWpf.Windows
             cbGender.ItemsSource = (Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList());
             FocusManager.SetFocusedElement(this, tbFirstName);
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
             tbIdCardID.TextChanged += cardText_Changed;
             tbPassword.ToolTip = "Min Length = " + Config.Data.Data.MinPasswordLength.ToString() + " Characters.";
         }

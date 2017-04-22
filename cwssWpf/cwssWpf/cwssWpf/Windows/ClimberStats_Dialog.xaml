@@ -51,13 +51,14 @@
         </DockPanel>
 
         <Label Name="lblUserCreated" Content="Patron Since: " Grid.Row="1" Foreground="Yellow" FontWeight="Bold" FontSize="12"></Label>
-        <Label Name="lblWavier" Content="Most Recent Waiver: " Grid.Row="2" Foreground="Yellow" FontSize="12"></Label>
-        <Label Name="lblWaiverExpires" Content="Waiver Expires: " Grid.Row="3" Foreground="Yellow" FontSize="12"></Label>
-        <Label Name="lblRevoked" Content="Privelege Revoked: " Grid.Row="4" Foreground="Yellow" FontSize="12"></Label>
-        <Label Name="lblReason" Grid.Row="5" Foreground="Yellow" FontSize="12" HorizontalAlignment="Right"></Label>
-        <Separator Grid.Row="6"></Separator>
-        <Label Content="Certifications: " Grid.Row="7" FontWeight="Bold"></Label>
-        <Label Name="lblLead" Content="-none- " Grid.Row="8" HorizontalAlignment="Right"></Label>
-        <Label Name="lblBelay" Content=" " Grid.Row="9" HorizontalAlignment="Right"></Label>
+        <Label Name="lblLastCheckIn" Content="Last Check In: " Grid.Row="2" Foreground="Yellow" FontWeight="Bold" FontSize="12"></Label>
+        <Label Name="lblWavier" Content="Most Recent Waiver: " Grid.Row="3" Foreground="Yellow" FontSize="12"></Label>
+        <Label Name="lblWaiverExpires" Content="Waiver Expires: " Grid.Row="4" Foreground="Yellow" FontSize="12"></Label>
+        <Label Name="lblRevoked" Content="Privelege Revoked: " Grid.Row="5" Foreground="Yellow" FontSize="12"></Label>
+        <Label Name="lblReason" Grid.Row="6" Foreground="Yellow" FontSize="12" HorizontalAlignment="Right"></Label>
+        <Separator Grid.Row="7"></Separator>
+        <Label Content="Certifications: " Grid.Row="8" FontWeight="Bold"></Label>
+        <Label Name="lblLead" Content="-none- " Grid.Row="9" HorizontalAlignment="Right"></Label>
+        <Label Name="lblBelay" Content=" " Grid.Row="10" HorizontalAlignment="Right"></Label>
     </Grid>
 </Window>

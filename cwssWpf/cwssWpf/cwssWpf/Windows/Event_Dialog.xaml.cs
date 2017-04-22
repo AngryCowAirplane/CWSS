@@ -26,6 +26,7 @@ namespace cwssWpf.Windows
             InitializeComponent();
             cbUsers.ItemsSource = Db.dataBase.Users;
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
             if (date != null)
             {
                 StartDate.SelectedDate = date;

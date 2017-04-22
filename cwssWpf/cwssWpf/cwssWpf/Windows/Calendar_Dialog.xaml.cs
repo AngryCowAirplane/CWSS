@@ -32,6 +32,7 @@ namespace cwssWpf.Windows
 
             this.SizeChanged += sizeChanged;
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
         }
 
         private void sizeChanged(object sender, RoutedEventArgs e)

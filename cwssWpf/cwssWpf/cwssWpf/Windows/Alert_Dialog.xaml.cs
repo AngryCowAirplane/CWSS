@@ -22,7 +22,7 @@ namespace cwssWpf.Windows
     {
         public AlertType Alert_Type;
 
-        public Alert_Dialog(string alertTitle, string alertText, AlertType alertType = AlertType.Failure, Vector? screenCoords = null, bool autoClose = false)
+        public Alert_Dialog(string alertTitle, string alertText = "", AlertType alertType = AlertType.Failure, Vector? screenCoords = null, bool autoClose = false)
         {
             Alert_Type = alertType;
             if(screenCoords == null)
@@ -46,6 +46,7 @@ namespace cwssWpf.Windows
             Title.Content = alertTitle;
             AlertText.Text = alertText;
             MouseLeftButtonDown += Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
             KeyUp += EnterPressed;
         }
 

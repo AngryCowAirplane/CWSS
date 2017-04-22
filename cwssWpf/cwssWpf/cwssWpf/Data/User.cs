@@ -21,6 +21,7 @@ namespace cwssWpf.Data
         public bool CanClimb { get; set; }
         public bool CheckedIn { get; set; }
         public DateTime DateCreated { get; set; }
+        public DateTime LastCheckIn { get; set; }
 
         public List<int> Items;
         public List<Document> Documents;
@@ -30,6 +31,7 @@ namespace cwssWpf.Data
             Info = new PersonalInfo();
             Items = new List<int>();
             Documents = new List<Document>();
+            LastCheckIn = DateTime.MinValue;
         }
 
         public bool HasWaiver()

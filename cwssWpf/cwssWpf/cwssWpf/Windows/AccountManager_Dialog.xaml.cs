@@ -38,8 +38,9 @@ namespace cwssWpf.Windows
                 UserTypeMenu.IsEnabled = false;
 
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
 
-            if(MainWindow.CurrentUser.UserType < UserType.Admin)
+            if (MainWindow.CurrentUser.UserType < UserType.Admin)
             {
                 UserTypeMenu.IsEnabled = false;
                 ClearDocs.IsEnabled = false;

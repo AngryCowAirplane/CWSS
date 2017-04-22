@@ -52,26 +52,26 @@ namespace cwssWpf.DataBase
         public static void CheckUserDocs(User user)
         {
             var docs = user.Documents;
-            var lead = docs.Where(d => d.DocumentType == DocType.LeadClimb);//.First();
-            var belay = docs.Where(d => d.DocumentType == DocType.BelayCert);//.First();
-            var waiver = docs.Where(d => d.DocumentType == DocType.Waiver);//.First();
+            var lead = docs.Where(d => d.DocumentType == DocType.LeadClimb).ToList();//.First();
+            var belay = docs.Where(d => d.DocumentType == DocType.BelayCert).ToList();//.First();
+            var waiver = docs.Where(d => d.DocumentType == DocType.Waiver).ToList();//.First();
 
             //// Leads
-            //if(lead != null)
+            //if(lead != null && lead.Count > 0)
             //{
             //    if (DateTime.Now > lead.Expires)
             //        user.Documents.Remove(lead);
             //}
 
             //// Belay
-            //if(belay != null)
+            //if(belay != null && belay.Count > 0)
             //{
             //    if (DateTime.Now > belay.Expires)
             //        user.Documents.Remove(belay);
             //}
 
             // Wiaver
-            if (waiver != null)
+            if (waiver != null && waiver.Count > 0)
             {
                 if (DateTime.Now > waiver.Last().Expires)
                     user.CanClimb = false;

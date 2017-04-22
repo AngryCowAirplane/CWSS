@@ -32,6 +32,7 @@ namespace cwssWpf.Windows
 
             dataGrid.SelectionMode = DataGridSelectionMode.Extended;
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
 
             setupColumns();
         }

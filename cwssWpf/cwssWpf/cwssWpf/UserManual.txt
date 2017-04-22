@@ -11,7 +11,7 @@ Keyboard ShortCuts:
 	Ctrl + N:		New User
 	Ctrl + P:		Postit Note
 	Ctrl + F1:		Enter Client Mode
-	Ctrl + V:		View Climbers
+	Ctrl + W:		View Climbers
 	Ctrl + C:		Calendar
 	Ctrl + A:		Account Viewer
 	Ctrl + R:		Reports

@@ -34,6 +34,7 @@ namespace cwssWpf.Windows
             cbClient.ItemsSource = (Enum.GetValues(typeof(EmailClient)).Cast<EmailClient>().ToList());
             cbClient.SelectionChanged += clientChanged;
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
             addControls();
             setControls();
         }

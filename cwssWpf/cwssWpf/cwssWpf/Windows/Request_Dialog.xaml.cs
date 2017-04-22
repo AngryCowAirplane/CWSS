@@ -35,6 +35,7 @@ namespace cwssWpf.Windows
             cbTime.ItemsSource = (Enum.GetValues(typeof(Suspension)).Cast<Suspension>().ToList());
             cbTime.SelectedIndex = 0;
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
             requestMode = mode.Request;
         }
 

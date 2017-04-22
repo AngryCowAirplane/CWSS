@@ -32,6 +32,20 @@ namespace cwssWpf.Windows
             this.Top = mainWindow.Top + 50;
             FocusManager.SetFocusedElement(this, tbUserId);
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
+            tbUserId.PreviewKeyDown += enterPress;
+            tbPassword.PreviewKeyDown += enterPress;
+        }
+
+        private void enterPress(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                if (((Control)sender).Name == "tbUserId")
+                    tbPassword.Focus();
+                if (((Control)sender).Name == "tbPassword")
+                    btnSubmit_Click(null, null);
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

@@ -24,6 +24,7 @@ namespace cwssWpf.Windows
         {
             InitializeComponent();
             MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
             KeyUp += EnterPressed;
             Message.Focus();
         }

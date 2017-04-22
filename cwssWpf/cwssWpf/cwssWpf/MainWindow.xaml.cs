@@ -140,7 +140,7 @@ namespace cwssWpf
 
             if(newUser.Success)
             {
-                var alert = new Alert_Dialog("User Created!", newUser.NewUser.GetName(), AlertType.Success);
+                var alert = new Alert_Dialog("User Created!", "", AlertType.Success);
                 MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
                 alert.Show();
             }
@@ -372,7 +372,7 @@ namespace cwssWpf
                         menuNotes_Click(null, null);
                     if (e.Key == Key.F1)
                         menuClient_Click(null, null);
-                    if (e.Key == Key.V)
+                    if (e.Key == Key.W)
                         menuUsers_Click(null, null);
                     if (e.Key == Key.C)
                         menuCalendar_Click(null, null);
@@ -438,6 +438,7 @@ namespace cwssWpf
                 result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }
 
+            user.LastCheckIn = DateTime.Now;
             tbLoginId.Text = "";
             UpdateClimberStats();
 
