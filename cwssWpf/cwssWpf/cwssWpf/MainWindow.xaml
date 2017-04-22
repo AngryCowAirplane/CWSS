@@ -58,7 +58,7 @@
 
         <Image Name="ConnectionImage" Grid.Row="0" Grid.Column="3" Margin="0,0,2,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
             <Image.ContextMenu>
-                <ContextMenu Name="userMenu" Opacity="0.95">
+                <ContextMenu Name="userMenu" Opacity="0.95" IsEnabled="false">
                     <!--<MenuItem Header="Reset Client Mode" Name="resetClientMode" Click="resetClientMode_Click"></MenuItem>-->
                     <MenuItem Header="Open New User Form" Name="remoteNewUser" Click="remoteNewUser_Click"></MenuItem>
                     <MenuItem Header="Reset Connection" Name="resetConnection" Click="resetConnection_Click"></MenuItem>

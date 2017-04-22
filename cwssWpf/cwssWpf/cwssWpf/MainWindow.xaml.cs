@@ -153,12 +153,12 @@ namespace cwssWpf
                 MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
                 alert.Show();
             }
-            else
-            {
-                var alert = new Alert_Dialog("Add User Failed", "");
-                MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
-                alert.Show();
-            }
+            //else
+            //{
+            //    var alert = new Alert_Dialog("Add User Failed", "");
+            //    MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
+            //    alert.Show();
+            //}
         }
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
@@ -171,6 +171,8 @@ namespace cwssWpf
                 checkMessages(CurrentUser);
                 loadNotes();
                 menuEmployeeLogIn.IsEnabled = false;
+                userMenu.IsEnabled = true;
+                userMenu.Visibility = Visibility.Visible;
             }
         }
 
@@ -186,6 +188,8 @@ namespace cwssWpf
             ManagerMenu.Visibility = Visibility.Hidden;
             AdminMenu.Visibility = Visibility.Hidden;
             menuEmployeeLogIn.IsEnabled = true;
+            userMenu.IsEnabled = false;
+            userMenu.Visibility = Visibility.Hidden;
 
             if (CurrentUser != null)
             {
