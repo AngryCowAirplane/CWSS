@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
+                WindowStyle="None"
+        AllowsTransparency="False"
+        Background="Black"
+        ResizeMode="CanResizeWithGrip"
+
         Title="Camera" Height="300" Width="400">
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" Margin="10,10,10,10">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Yellow"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Goldenrod"></Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
@@ -16,7 +38,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Button Name="Start" Grid.Row="1" Grid.Column="0" Content="Start / Stop" Margin="4,4,4,4" Click="Start_Click"/>
+        <Button Name="Start" Grid.Row="1" Grid.Column="0" Content="Start / Stop" Margin="4,4,4,4" Click="Start_Click" Visibility="Hidden"/>
         <Button Name="Capture" Grid.Row="1" Grid.Column="1" Content="Capture" Margin="4,4,4,4" Click="Capture_Click"/>
     </Grid>
 </Window>

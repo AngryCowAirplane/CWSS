@@ -21,9 +21,11 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class Waiver_Dialog : Window
     {
+        public User CurrentUser;
         public Waiver_Dialog(User user = null)
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            CurrentUser = user;
             var waiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", @"CW Acknowledgement of Risk and Sign-In Sheet.pdf");
             
             InitializeComponent();
@@ -48,14 +50,37 @@ namespace cwssWpf.Windows
         private void btnSignForm_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
-            var alert = new Alert_Dialog("Waiting For Signature", "Please upload signature using the mobile device and photoshare.", AlertType.Notice);
-            alert.Close.IsEnabled = false;
+            var alert = new Alert_Dialog("Waiting For Signature", "Please Capture Signature Image.", AlertType.Notice);
+            MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
             alert.Show();
-            string[] args = new string[] { tbName.Text };
-            ImageProgram.Main(args);
+
+            StartSigWaiter(null, null);
+
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                var camera = new Camera(CurrentUser);
+                camera.Show();
+            }));
+
             alert.Close();
             this.Close();
             btnNoSignForm.IsEnabled = true;
+        }
+
+        private async void StartSigWaiter(object sender, RoutedEventArgs e)
+        {
+            string[] args = new string[] { tbName.Text };
+            try
+            {
+                await Task.Run(() =>
+                {
+                    WaiverSaver.Start(args);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnNoSignForm_Click(object sender, RoutedEventArgs e)

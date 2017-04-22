@@ -62,6 +62,7 @@ namespace cwssWpf.Data
         public bool StartMaximized = false;
         public bool StartClientMode = false;
         public bool GetSignature = false;
+        public int SignatureWaitDelay = 2;
     }
 
     public class EmailSettings

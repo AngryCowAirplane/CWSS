@@ -53,6 +53,7 @@ namespace cwssWpf.Windows
             tbBackupDays.Text = Config.Data.Backup.DaysBetweenBackup.ToString();
             cbGetSignature.IsChecked = Config.Data.General.GetSignature;
             lblLastBackup.Content = lblLastBackup.Content + Config.Data.Backup.LastBackup.ToShortDateString();
+            tbSigDelay.Text = Config.Data.General.SignatureWaitDelay.ToString();
         }
 
         private void addControls()
@@ -95,6 +96,7 @@ namespace cwssWpf.Windows
             Config.Data.General.StartMaximized = (bool)cbMaximized.IsChecked;
             Config.Data.General.StartClientMode = (bool)cbIsClient.IsChecked;
             Config.Data.General.GetSignature = (bool)cbGetSignature.IsChecked;
+            Config.Data.General.SignatureWaitDelay = int.Parse(tbSigDelay.Text);
 
             Config.Data.Backup.DaysBetweenBackup = int.Parse(tbBackupDays.Text);
 

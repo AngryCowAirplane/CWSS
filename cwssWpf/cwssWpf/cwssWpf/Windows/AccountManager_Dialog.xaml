@@ -54,6 +54,7 @@
                     </MenuItem>
                     <MenuItem Header="Toggle/Enforce Privilege" Name="toggleCanClimb" Click="toggleCanClimb_Click"></MenuItem>
                     <MenuItem Header="Stats" Name="documents" Click="documents_Click"></MenuItem>
+                    <MenuItem Header="ViewWiaver" Name="ViewWaiver" Click="viewWaiver_Click"></MenuItem>
                     <MenuItem Header=""></MenuItem>
                     <MenuItem Header="Add User" Name="btnAdd" Click="addUser_Click"></MenuItem>
                     <MenuItem Header="Delete User" Name="btnDelete" Click="btnDelete_Click"></MenuItem>

@@ -164,6 +164,18 @@ namespace cwssWpf.Windows
             var stats = new ClimberStats_Dialog(selectedUser);
             stats.Show();
         }
+
+        private void viewWaiver_Click(object sender, RoutedEventArgs e)
+        {
+            var WaiverPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", "Waivers");
+            var Waiver = selectedUser.GetWaiver();
+            var Name = selectedUser.GetName();
+            var filePath = System.IO.Path.Combine(WaiverPath, Name + " " + DateTime.Now.ToShortDateString().Replace('/', '-') + ".pdf");
+            if(System.IO.File.Exists(filePath))
+            {
+                System.Diagnostics.Process.Start(filePath);
+            }
+        }
     }
 
     public class MyUserManagerColorConverter : IValueConverter

@@ -53,8 +53,8 @@
     <ApplicationIcon>cwss_R0L_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ImageProcessor, Version=2.5.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ImageProcessor.2.5.2\lib\net45\ImageProcessor.dll</HintPath>
+    <Reference Include="ImageProcessor, Version=2.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.2.5.3\lib\net45\ImageProcessor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
@@ -112,6 +112,7 @@
     <Compile Include="Network\MulticastUdpClient.cs" />
     <Compile Include="Reports\Report.cs" />
     <Compile Include="StaticValues.cs" />
+    <Compile Include="WaiverSaver.cs" />
     <Compile Include="Windows\AccountManager_Dialog.xaml.cs">
       <DependentUpon>AccountManager_Dialog.xaml</DependentUpon>
     </Compile>
@@ -338,9 +339,9 @@
     <Content Include="Images\Success.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\Waiver.png">
+    <Content Include="Images\Waiver.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Content Include="Sounds\CheckIn.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
