@@ -11,9 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Globalization;
 using System.IO;
 
@@ -22,7 +19,7 @@ namespace cwssWpf.Windows
     /// <summary>
     /// Interaction logic for UserManager.xaml
     /// </summary>
-    public partial class ListServ_Dialog : System.Windows.Window
+    public partial class ListServ_Dialog : Window
     {
         public List<DataGridColumn> Columns = new List<DataGridColumn>();
         public ListServ_Dialog()

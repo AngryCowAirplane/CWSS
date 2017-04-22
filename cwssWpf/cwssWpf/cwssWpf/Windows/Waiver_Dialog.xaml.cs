@@ -30,7 +30,7 @@ namespace cwssWpf.Windows
             tbName.Width = (this.Width / 2) - 100;
             tbDate.Width = (this.Width / 2) - 100;
 
-            if (user != null)
+            if (user != null) 
                 tbName.Text = user.GetName();
             tbDate.Text = DateTime.Now.ToShortDateString();
 

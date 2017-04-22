@@ -39,7 +39,6 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top" Name="MainMenu" Background="Goldenrod">
                 <MenuItem Header="Menu">
-                    <!--<MenuItem Header= "_Print" Name="menuPrint" Click="menuPrint_Click"></MenuItem>-->
                     <MenuItem Header= "_Save All" Name="menuSave" Click="menuSave_Click"></MenuItem>
                     <MenuItem Header= "_Save Selected" Name="menuSaveSelected" Click="menuSaveSelected_Click"></MenuItem>
                     <MenuItem Header= ""></MenuItem>
@@ -61,10 +60,9 @@
                     <MenuItem Name="Created" Header="Created" Click="Created_Click"></MenuItem>
                 </MenuItem>
             </Menu>
-            <StackPanel></StackPanel>
         </DockPanel>
 
-        <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="6,6,6,6" Background="LightGoldenrodYellow">
+        <DataGrid x:Name="dataGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="6,20,6,6" Background="LightGoldenrodYellow">
 
             <DataGrid.ContextMenu>
                 <ContextMenu Name="userMenu">
