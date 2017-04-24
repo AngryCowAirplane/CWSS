@@ -293,7 +293,7 @@ namespace cwssWpf
         }
 
         public static User TryAddUser(TextBox firstName, TextBox LastName, TextBox userId, PasswordBox password1, PasswordBox password2,
-            TextBox email, TextBox address, TextBox city, TextBox state, TextBox zip, TextBox phone, ComboBox gender, DatePicker dob, TextBox cardID)
+            TextBox email, TextBox address, TextBox city, TextBox state, TextBox zip, TextBox phone, ComboBox gender, DatePicker dob, TextBox cardID, TextBox guardianID)
         {
             User NewUser = null;
 
@@ -301,7 +301,7 @@ namespace cwssWpf
                 firstName, LastName,
                 userId, password1, password2,
                 email, address, city, state, zip,
-                phone, gender, dob, cardID
+                phone, gender, dob, cardID, guardianID
             );
 
             if (success)
@@ -342,7 +342,7 @@ namespace cwssWpf
                     user.Info.FirstName, user.Info.LastName,
                     user.LoginId, user.Password, user.Password,
                     user.Info.Email, user.Info.Address, user.Info.City, user.Info.State, int.Parse(user.Info.Zip),
-                    user.Info.Phone, user.Info.Gender, user.Info.DateOfBirth, user.CardId
+                    user.Info.Phone, user.Info.Gender, user.Info.DateOfBirth, user.CardId, user.Info.Guardian
                 );
             }
 

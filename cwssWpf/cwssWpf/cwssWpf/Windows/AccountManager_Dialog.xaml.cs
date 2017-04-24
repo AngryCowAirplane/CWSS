@@ -260,7 +260,12 @@ namespace cwssWpf.Windows
         {
             if(selectedUser !=null)
             {
-                selectedUser.ResetPassword();
+                var confirm = new Confirm_Dialog(this, "Reset PW?");
+                if(confirm.Confirmed)
+                {
+                    selectedUser.ResetPassword();
+                    Helpers.PlaySuccess();
+                }
             }
         }
     }

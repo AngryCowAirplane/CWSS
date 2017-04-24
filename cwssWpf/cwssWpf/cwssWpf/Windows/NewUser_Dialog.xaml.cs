@@ -59,6 +59,7 @@ namespace cwssWpf.Windows
             tbPhone.Background = Brushes.LightGoldenrodYellow;
             cbGender.Background = Brushes.LightGoldenrodYellow;
             dpDOB.Background = Brushes.LightGoldenrodYellow;
+            tbGuardianID.Background = Brushes.LightGoldenrodYellow;
 
 
             if (validateFields())
@@ -69,7 +70,7 @@ namespace cwssWpf.Windows
                         tbFirstName, tbLastName,
                         tbIdNumber, tbPassword, tbPassword2,
                         tbEmail, tbAddress, tbCity, tbState, tbZip,
-                        tbPhone, cbGender, dpDOB, tbIdCardID
+                        tbPhone, cbGender, dpDOB, tbIdCardID, tbGuardianID
                     );
 
                     if (user != null)
@@ -93,6 +94,7 @@ namespace cwssWpf.Windows
                     user.Info.Zip = tbZip.Text;
                     user.Info.Phone = tbPhone.Text;
                     user.Info.DateOfBirth = (DateTime)dpDOB.SelectedDate;
+                    user.Info.Guardian = tbGuardianID.Text;
 
                     NewUser = user;
                     this.Close();
@@ -213,6 +215,35 @@ namespace cwssWpf.Windows
             {
                 valid = false;
                 dpDOB.Background = Brushes.LightPink;
+            }
+
+            if (DateTime.Now - dpDOB.SelectedDate < TimeSpan.FromDays(365 * 18))
+            {
+                tbGuardianID.Visibility = Visibility.Visible;
+                lblGuardian.Visibility = Visibility.Visible;
+                int guardianID = 0;
+                var success = int.TryParse(tbGuardianID.Text, out guardianID);
+                if (success)
+                {
+                    var user = Db.dataBase.GetUser(guardianID);
+                    if (user == null || (DateTime.Now - user.Info.DateOfBirth < TimeSpan.FromDays(365 * 18)))
+                    {
+                        valid = false;
+                        tbGuardianID.Background = Brushes.LightPink;
+                        var alert = new Alert_Dialog("Invalid Parent/Guardian", "Parent/Guardian not found or not old enough.", AlertType.Failure);
+                        alert.ShowDialog();
+                    }
+                }
+                else
+                {
+                    valid = false;
+                    tbGuardianID.Background = Brushes.LightPink;
+                }
+            }
+            else
+            {
+                tbGuardianID.Visibility = Visibility.Hidden;
+                lblGuardian.Visibility = Visibility.Hidden;
             }
 
             return valid;

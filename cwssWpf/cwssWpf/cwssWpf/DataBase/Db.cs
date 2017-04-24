@@ -93,6 +93,9 @@ namespace cwssWpf.DataBase
                     Logger.Log(user.LoginId, LogType.Waiver, message);
                 }
             }
+
+            if (DateTime.Now - user.Info.DateOfBirth > TimeSpan.FromDays(365 * 18))
+                user.Info.Guardian = null;
         }
 
         public static void LoadDatabase()

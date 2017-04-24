@@ -262,6 +262,8 @@ namespace cwssWpf.Data
         public string State { get; set; }
         public string Zip { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string Guardian { get; set; }
+
     }
 
     public enum UserType

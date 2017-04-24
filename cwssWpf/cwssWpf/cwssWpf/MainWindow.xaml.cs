@@ -446,20 +446,24 @@ namespace cwssWpf
                 }
                 else
                 {
+                    var message = "Failed Checkin By " + tbLoginId.Text;
                     if (!hasWaiver)
                     {
                         result.Alert = new Alert_Dialog("Missing Waiver!", "Please read and sign the electronic waiver.");
+                        message = message + ", missing waiver.";
                     }
                     if (!canClimb)
                     {
                         Helpers.PlayFail();
                         result.Alert = new Alert_Dialog("Climbing Priveleges Revoked", "Sorry, your climbing priveleges have been revoked.  Check with a staff member for more information.");
+                        message = message + ", priveleges revoked.";
                     }
+                    Logger.Log(int.Parse(tbLoginId.Text), LogType.CheckIn, message);
                 }
             }
             else
             {
-                var message = "Failed Checkin By " + tbLoginId.Text;
+                var message = "Failed Checkin By " + tbLoginId.Text + ", User does not exist";
                 Logger.Log(int.Parse(tbLoginId.Text), LogType.Error, message);
                 result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }

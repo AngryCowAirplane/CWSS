@@ -54,6 +54,5 @@
         <Button x:Name="btnCancel" Content="Cancel" Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnCancel_Click"/>
         <Button x:Name="btnSend" Content="Send" Grid.Row="4" Grid.Column="2" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="btnSend_Click"/>
 
-        <Label x:Name="ProgressLabel" Content="" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3"></Label>
     </Grid>
 </Window>

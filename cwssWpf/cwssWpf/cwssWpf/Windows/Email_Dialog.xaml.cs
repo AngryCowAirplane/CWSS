@@ -42,7 +42,6 @@ namespace cwssWpf.Windows
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
-            ProgressLabel.Content = "sending.................................";
 
             if (Config.Data.Email.StoreCreds)
             {
@@ -56,7 +55,7 @@ namespace cwssWpf.Windows
             }
 
             this.Close();
-            MessageBox.Show("Email Sent!");
+            Helpers.PlaySuccess();
         }
 
         private string listToString(List<string> list)

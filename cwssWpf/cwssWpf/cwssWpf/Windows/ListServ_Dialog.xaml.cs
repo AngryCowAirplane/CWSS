@@ -124,6 +124,13 @@ namespace cwssWpf.Windows
             Columns.Add(textColumn);
 
             textColumn = new DataGridTextColumn();
+            textColumn.Header = "Guardian";
+            textColumn.Binding = new Binding("Info.Guardian");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
             textColumn.Header = "Created";
             textColumn.Binding = new Binding("DateCreated");
             textColumn.IsReadOnly = true;
