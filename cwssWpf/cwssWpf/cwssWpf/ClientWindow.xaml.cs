@@ -215,8 +215,8 @@ namespace cwssWpf
                             var user = messagePacket.MessageUser;
                             var messages = messagePacket.Messages;
 
-                            var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
-                            alert.ShowDialog();
+                            //var alert = new Alert_Dialog("Unread Messages!", "You have " + messages.Count + " messages.");
+                            //alert.ShowDialog();
 
                             foreach (var msg in messages)
                             {
@@ -228,7 +228,7 @@ namespace cwssWpf
                             var packet = new CommPacket(Sender.Client, newMessagePacket);
                             Comms.SendMessage(packet);
 
-                            alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
+                            var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
                             WindowsOpen.Add(alert, new TimerVal(2));
                             alert.Show();
                         }));
