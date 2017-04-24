@@ -655,10 +655,15 @@ namespace cwssWpf
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
                             List<Message> msgs = Db.dataBase.GetMessages(messagePacket.MessageUser).ToList();
-                            foreach (var item in msgs)
+                            //foreach (var item in msgs)
+                            //{
+                            //    if (item.RecipientId.Contains(messagePacket.MessageUser.LoginId))
+                            //        msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(messagePacket.MessageUser);
+                            //}
+                            foreach (var msg in messagePacket.Messages)
                             {
-                                if (item.RecipientId.Contains(messagePacket.MessageUser.LoginId))
-                                    msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(messagePacket.MessageUser);
+                                if (msg.RecipientId == null)
+                                    msgs.Where(m => m.RecipientId == msg.RecipientId && m.Subject == msg.Subject).First().ReadMessage(messagePacket.MessageUser);
                             }
                         }));
                     }
