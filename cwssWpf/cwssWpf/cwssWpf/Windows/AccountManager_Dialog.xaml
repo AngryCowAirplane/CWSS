@@ -54,8 +54,8 @@
                     </MenuItem>
                     <MenuItem Header="Toggle/Enforce Privilege" Name="toggleCanClimb" Click="toggleCanClimb_Click"></MenuItem>
                     <MenuItem Header="Stats" Name="documents" Click="documents_Click"></MenuItem>
-                    <MenuItem Header="View Wiaver" Name="ViewWaiver" Click="viewWaiver_Click"></MenuItem>
                     <MenuItem Header="Documents" Name="Documents">
+                        <MenuItem Header="View Wiaver" Name="ViewWaiver" Click="viewWaiver_Click"></MenuItem>
                         <MenuItem Header="Promote/Demote Leade Climber" Name="PromoteLead" Click="promoteLead_Click"></MenuItem>
                         <MenuItem Header="Add/Remove Belay Certification" Name="AddBelay" Click="addBelay_Click"></MenuItem>
                         <MenuItem Header="Clear Documents" Name="ClearDocs" Click="clearDocs_Click"></MenuItem>

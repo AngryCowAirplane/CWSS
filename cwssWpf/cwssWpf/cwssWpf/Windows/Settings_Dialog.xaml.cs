@@ -37,6 +37,7 @@ namespace cwssWpf.Windows
             PreviewKeyDown += Helpers.HandleEsc;
             addControls();
             setControls();
+            resetColors();
         }
 
         private void setControls()
@@ -121,9 +122,19 @@ namespace cwssWpf.Windows
 
         private void MenuSave_Click(object sender, RoutedEventArgs e)
         {
-            saveConfig();
-            Config.SaveConfigToFile();
-            this.Close();
+            resetColors();
+            if (validateSettings())
+            {
+                saveConfig();
+                Config.SaveConfigToFile();
+                this.Close();
+            }
+            else
+            {
+                var alert = new Alert_Dialog("Form Error/s", "Please fix highlighted fields.");
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(6));
+                alert.Show();
+            }
         }
 
         private void MenuExit_Click(object sender, RoutedEventArgs e)
@@ -133,7 +144,7 @@ namespace cwssWpf.Windows
 
         private void clientChanged(object sender, RoutedEventArgs e)
         {
-            if((EmailClient)cbClient.SelectedItem == EmailClient.LocalClient)
+            if ((EmailClient)cbClient.SelectedItem == EmailClient.LocalClient)
             {
                 tbServer.IsEnabled = false;
                 tbPort.IsEnabled = false;
@@ -153,7 +164,7 @@ namespace cwssWpf.Windows
 
         private void btnBackupNow_Click(object sender, RoutedEventArgs e)
         {
-            var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"AppData\Backup", @"CwssDataBase " + DateTime.Now.ToShortDateString().Replace('/','_') + ".cwdb");
+            var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"AppData\Backup", @"CwssDataBase " + DateTime.Now.ToShortDateString().Replace('/', '_') + ".cwdb");
             Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
 
             saveDialog.FileName = System.IO.Path.GetFileName(dbPath);
@@ -208,7 +219,7 @@ namespace cwssWpf.Windows
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var climberWindows = MainWindow.WindowsOpen.Where(t => t.Key.Title == "Climber View");
-            if(climberWindows != null)
+            if (climberWindows != null)
             {
                 var window = climberWindows.First().Key;
                 Config.Data.Misc.ClimberView.Top = window.Top;
@@ -216,6 +227,74 @@ namespace cwssWpf.Windows
                 Config.Data.Misc.ClimberView.Height = window.Height;
                 Config.Data.Misc.ClimberView.Width = window.Width;
             }
+        }
+
+        private void resetColors()
+        {
+            tbSigDelay.Background = Brushes.LightGoldenrodYellow;
+            tbWebCamNum.Background = Brushes.LightGoldenrodYellow;
+            tbPort.Background = Brushes.LightGoldenrodYellow;
+            tbBackupDays.Background = Brushes.LightGoldenrodYellow;
+            tbMinPwdLength.Background = Brushes.LightGoldenrodYellow;
+            tbWaiverExpireDays.Background = Brushes.LightGoldenrodYellow;
+            tbLeadClimbExpireDays.Background = Brushes.LightGoldenrodYellow;
+            tbBelayCertExpireDays.Background = Brushes.LightGoldenrodYellow;
+            tbServer.Background = Brushes.LightGoldenrodYellow;
+        }
+
+        private bool validateSettings()
+        {
+            bool valid = true;
+
+            var testInt = 0;
+            if (!int.TryParse(tbSigDelay.Text, out testInt))
+            {
+                valid = false;
+                tbSigDelay.Background = Brushes.LightPink;
+            }
+            if (!int.TryParse(tbWebCamNum.Text, out testInt))
+            {
+                valid = false;
+                tbWebCamNum.Background = Brushes.LightPink;
+            }
+            if (!int.TryParse(tbPort.Text, out testInt))
+            {
+                valid = false;
+                tbPort.Background = Brushes.LightPink;
+            }
+            if (!int.TryParse(tbBackupDays.Text, out testInt))
+            {
+                valid = false;
+                tbBackupDays.Background = Brushes.LightPink;
+            }
+            if (!int.TryParse(tbMinPwdLength.Text, out testInt))
+            {
+                valid = false;
+                tbMinPwdLength.Background = Brushes.LightPink;
+            }
+            if (!int.TryParse(tbWaiverExpireDays.Text, out testInt))
+            {
+                valid = false;
+                tbWaiverExpireDays.Background = Brushes.LightPink;
+            }
+            if (!int.TryParse(tbLeadClimbExpireDays.Text, out testInt))
+            {
+                valid = false;
+                tbLeadClimbExpireDays.Background = Brushes.LightPink;
+            }
+            if (!int.TryParse(tbBelayCertExpireDays.Text, out testInt))
+            {
+                valid = false;
+                tbBelayCertExpireDays.Background = Brushes.LightPink;
+            }
+            Uri testUri;
+            if (!Uri.TryCreate(tbMinPwdLength.Text, UriKind.RelativeOrAbsolute, out testUri))
+            {
+                valid = false;
+                tbMinPwdLength.Background = Brushes.LightPink;
+            }
+
+            return valid;
         }
     }
 }
