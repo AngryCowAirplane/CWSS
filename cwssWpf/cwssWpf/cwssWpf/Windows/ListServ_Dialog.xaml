@@ -58,6 +58,8 @@
                     <MenuItem Name="Gender" Header="Gender" Click="Gender_Click"></MenuItem>
                     <MenuItem Name="DOB" Header="DateOfBirth" Click="DOB_Click"></MenuItem>
                     <MenuItem Name="Created" Header="Created" Click="Created_Click"></MenuItem>
+                    <MenuItem Name="IsLead" Header="Is Lead" Click="IsLead_Click"></MenuItem>
+                    <MenuItem Name="IsBelay" Header="Is Belay" Click="IsBelay_Click"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>

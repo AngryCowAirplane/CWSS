@@ -129,6 +129,20 @@ namespace cwssWpf.Windows
             textColumn.IsReadOnly = true;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
+
+            var checkColumn = new DataGridCheckBoxColumn();
+            checkColumn.Header = "IsLead";
+            checkColumn.Binding = new Binding("IsLead");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(checkColumn);
+            Columns.Add(checkColumn);
+
+            checkColumn = new DataGridCheckBoxColumn();
+            checkColumn.Header = "IsBelay";
+            checkColumn.Binding = new Binding("IsBelay");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(checkColumn);
+            Columns.Add(checkColumn);
         }
 
         private void cmSendMessage_Click(object sender, RoutedEventArgs e)
@@ -341,6 +355,24 @@ namespace cwssWpf.Windows
         private void Created_Click(object sender, RoutedEventArgs e)
         {
             var col = Columns.Where(c => c.Header.ToString() == "Created").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void IsBelay_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "IsBelay").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void IsLead_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "IsLead").First();
             if (col.Visibility == Visibility.Visible)
                 col.Visibility = Visibility.Hidden;
             else

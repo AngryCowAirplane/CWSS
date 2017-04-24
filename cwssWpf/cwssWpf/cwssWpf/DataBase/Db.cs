@@ -1,6 +1,7 @@
 ﻿using cwssWpf.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace cwssWpf.DataBase
             {
                 var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"AppData\Backup", @"CwssDataBase " + DateTime.Now.ToShortDateString().Replace('/', '_') + ".cwdb");
                 Db.SaveDatabase(dbPath);
+                var message = "DataBase Auto Backup: " + Path.GetFileName(dbPath);
+                Logger.Log(0, LogType.DataBase, message);
             }
         }
 
@@ -46,6 +49,8 @@ namespace cwssWpf.DataBase
             foreach (var req in reqToRelease)
             {
                 req.ReleaseRequest();
+                var message = req.Patron.GetName() + " Climbing Priveleges Auto Restored (expired).";
+                Logger.Log(req.Patron.LoginId, LogType.Privilege, message);
             }
         }
 
@@ -56,25 +61,37 @@ namespace cwssWpf.DataBase
             var belay = docs.Where(d => d.DocumentType == DocType.BelayCert).ToList();//.First();
             var waiver = docs.Where(d => d.DocumentType == DocType.Waiver).ToList();//.First();
 
-            //// Leads
-            //if(lead != null && lead.Count > 0)
-            //{
-            //    if (DateTime.Now > lead.Expires)
-            //        user.Documents.Remove(lead);
-            //}
+            // Leads
+            if (lead != null && lead.Count > 0)
+            {
+                if (DateTime.Now > lead.Last().Expires)
+                {
+                    user.IsLead = false;
+                    var message =  user.GetName() + " is no longer Lead Climber (expired).";
+                    Logger.Log(user.LoginId, LogType.Certification, message);
+                }
+            }
 
-            //// Belay
-            //if(belay != null && belay.Count > 0)
-            //{
-            //    if (DateTime.Now > belay.Expires)
-            //        user.Documents.Remove(belay);
-            //}
+            // Belay
+            if (belay != null && belay.Count > 0)
+            {
+                if (DateTime.Now > belay.Last().Expires)
+                {
+                    user.IsBelay = false;
+                    var message = user.GetName() + " is no longer Belay Certified (expired).";
+                    Logger.Log(user.LoginId, LogType.Certification, message);
+                }
+            }
 
             // Wiaver
             if (waiver != null && waiver.Count > 0)
             {
                 if (DateTime.Now > waiver.Last().Expires)
+                {
                     user.CanClimb = false;
+                    var message = user.GetName() + " waiver expired.";
+                    Logger.Log(user.LoginId, LogType.Waiver, message);
+                }
             }
         }
 

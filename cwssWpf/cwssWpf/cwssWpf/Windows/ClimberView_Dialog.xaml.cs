@@ -41,6 +41,7 @@ namespace cwssWpf.Windows
             QuickTimer.Tick += OnQuickTimerTick;
             QuickTimer.Start();
             this.Topmost = true;
+            Config.Data.Misc.ClimberView.Open = true;
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
@@ -60,6 +61,7 @@ namespace cwssWpf.Windows
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
+            Config.Data.Misc.ClimberView.Open = false;
             this.Close();
         }
 
@@ -90,7 +92,7 @@ namespace cwssWpf.Windows
             if (selectedUser != null)
             {
                 var stats = new ClimberStats_Dialog(selectedUser);
-                stats.Show();
+                stats.ShowDialog();
             }
         }
 
@@ -115,11 +117,7 @@ namespace cwssWpf.Windows
         {
             if (selectedUser != null)
             {
-                var doc = new Document();
-                doc.DocumentType = DocType.LeadClimb;
-                doc.UserId = selectedUser.LoginId;
-                doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysLeadClimbExpires);
-                selectedUser.Documents.Add(doc);
+                selectedUser.PromoteLead();
             }
         }
 
@@ -127,11 +125,7 @@ namespace cwssWpf.Windows
         {
             if (selectedUser != null)
             {
-                var doc = new Document();
-                doc.DocumentType = DocType.BelayCert;
-                doc.UserId = selectedUser.LoginId;
-                doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysBelayCertExpires);
-                selectedUser.Documents.Add(doc);
+                selectedUser.AddBelayCert();
             }
         }
     }

@@ -57,6 +57,8 @@ namespace cwssWpf.Windows
             tbSigDelay.Text = Config.Data.General.SignatureWaitDelay.ToString();
             tbBelayCertExpireDays.Text = Config.Data.Data.DaysBelayCertExpires.ToString();
             tbLeadClimbExpireDays.Text = Config.Data.Data.DaysLeadClimbExpires.ToString();
+            tbWebCamNum.Text = Config.Data.General.WebCamDeviceNum.ToString();
+            cbSaveClimber.IsChecked = Config.Data.Misc.ClimberView.Open;
         }
 
         private void addControls()
@@ -100,6 +102,8 @@ namespace cwssWpf.Windows
             Config.Data.General.StartClientMode = (bool)cbIsClient.IsChecked;
             Config.Data.General.GetSignature = (bool)cbGetSignature.IsChecked;
             Config.Data.General.SignatureWaitDelay = int.Parse(tbSigDelay.Text);
+            Config.Data.General.WebCamDeviceNum = int.Parse(tbWebCamNum.Text);
+            Config.Data.Misc.ClimberView.Open = (bool)cbSaveClimber.IsChecked;
 
             Config.Data.Backup.DaysBetweenBackup = int.Parse(tbBackupDays.Text);
 
@@ -199,6 +203,19 @@ namespace cwssWpf.Windows
         private void btnSaveLogs_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var climberWindows = MainWindow.WindowsOpen.Where(t => t.Key.Title == "Climber View");
+            if(climberWindows != null)
+            {
+                var window = climberWindows.First().Key;
+                Config.Data.Misc.ClimberView.Top = window.Top;
+                Config.Data.Misc.ClimberView.Left = window.Left;
+                Config.Data.Misc.ClimberView.Height = window.Height;
+                Config.Data.Misc.ClimberView.Width = window.Width;
+            }
         }
     }
 }

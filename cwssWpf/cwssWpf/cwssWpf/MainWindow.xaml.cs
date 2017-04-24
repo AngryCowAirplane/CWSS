@@ -174,6 +174,10 @@ namespace cwssWpf
                 menuEmployeeLogIn.IsEnabled = false;
                 userMenu.IsEnabled = true;
                 userMenu.Visibility = Visibility.Visible;
+                if(Config.Data.Misc.ClimberView.Open)
+                {
+                    menuUsers_Click(null, null);
+                }
             }
         }
 
@@ -263,6 +267,13 @@ namespace cwssWpf
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
             var climberView = new ClimberView_Dialog(this);
+            if(Config.Data.Misc.ClimberView.Open)
+            {
+                climberView.Left = Config.Data.Misc.ClimberView.Left;
+                climberView.Top = Config.Data.Misc.ClimberView.Top;
+                climberView.Height = Config.Data.Misc.ClimberView.Height;
+                climberView.Width = Config.Data.Misc.ClimberView.Width;
+            }
             WindowsOpen.Add(climberView, new TimerVal(-1));
             climberView.Show();
         }

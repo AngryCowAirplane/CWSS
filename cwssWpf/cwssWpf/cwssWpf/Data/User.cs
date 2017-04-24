@@ -20,6 +20,8 @@ namespace cwssWpf.Data
 
         public bool CanClimb { get; set; }
         public bool CheckedIn { get; set; }
+        public bool IsLead { get; set; }
+        public bool IsBelay { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime LastCheckIn { get; set; }
 
@@ -68,19 +70,68 @@ namespace cwssWpf.Data
             return CheckedIn;
         }
 
+        public void PromoteLead()
+        {
+            var doc = new Document();
+            doc.DocumentType = DocType.LeadClimb;
+            doc.UserId = LoginId;
+            doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysLeadClimbExpires);
+            Documents.Add(doc);
+            IsLead = true;
+
+            var message = Info.FirstName + " " + Info.LastName + " Promoted to Lead.";
+            Logger.Log(LoginId, LogType.Certification, message);
+        }
+
+        public void AddBelayCert()
+        {
+            var doc = new Document();
+            doc.DocumentType = DocType.BelayCert;
+            doc.UserId = LoginId;
+            doc.Expires = DateTime.Now + TimeSpan.FromDays(Config.Data.Data.DaysBelayCertExpires);
+            Documents.Add(doc);
+            IsBelay = true;
+
+            var message = Info.FirstName + " " + Info.LastName + " Added Belay Certification.";
+            Logger.Log(LoginId, LogType.Certification, message);
+        }
+
+        public void RemoveLead()
+        {
+            var lead = Documents.Where(d => d.DocumentType == DocType.BelayCert).ToList();
+            if(lead != null)
+            {
+                foreach (var item in lead)
+                {
+                    Documents.Remove(item);
+                }
+            }
+            IsLead = false;
+
+            var message = Info.FirstName + " " + Info.LastName + " Demoted from Lead.";
+            Logger.Log(LoginId, LogType.Certification, message);
+        }
+
+        public void RemoveBelay()
+        {
+            var belay = Documents.Where(d => d.DocumentType == DocType.BelayCert).ToList();
+            if (belay != null)
+            {
+                foreach (var item in belay)
+                {
+                    Documents.Remove(item);
+                }
+            }
+            IsBelay = false;
+
+            var message = Info.FirstName + " " + Info.LastName + " Removed Belay Certification.";
+            Logger.Log(LoginId, LogType.Certification, message);
+        }
+
         public bool CheckOut()
         {
             if (CheckedIn)
             {
-                //var length = DateTime.Now - TimeStamp;
-                //var message = Info.FirstName + " " + Info.LastName + " Checked Out.";
-                //Logger.Log(UserId, LogType.CheckOut, message);
-                //message = message + "\nDuration: " + length.TotalMinutes.ToString() + " minutes.";
-                //Helpers.PlayCheckOut();
-                //var alert = new Alert_Dialog("Checked Out", message);
-                //alert.ShowDialog();
-                //CheckedIn = false;
-                //return true;
                 CheckedIn = false;
                 return true;
             }
@@ -92,7 +143,7 @@ namespace cwssWpf.Data
         {
             if (!CheckedIn)
             {
-                //TimeStamp = DateTime.Now;
+                LastCheckIn = DateTime.Now;
                 var message = Info.FirstName + " " + Info.LastName + " Checked In.";
                 Helpers.PlayCheckIn();
                 Logger.Log(LoginId, LogType.CheckIn, message);
@@ -191,6 +242,11 @@ namespace cwssWpf.Data
         public override string ToString()
         {
             return (GetName() + " (" + LoginId + ")");
+        }
+
+        public void ResetPassword()
+        {
+            Password = StaticValues.DefaultAdminPassword;
         }
     }
 

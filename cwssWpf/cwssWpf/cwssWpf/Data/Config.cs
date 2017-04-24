@@ -47,6 +47,7 @@ namespace cwssWpf.Data
         public GeneralSettings General { get; set; }
         public DataSettings Data { get; set; }
         public BackupSettings Backup { get; set; }
+        public MiscSettings Misc { get; set; }
 
         public ConfigData()
         {
@@ -54,6 +55,7 @@ namespace cwssWpf.Data
             General = new GeneralSettings();
             Data = new DataSettings();
             Backup = new BackupSettings();
+            Misc = new MiscSettings();
         }
     }
 
@@ -63,6 +65,7 @@ namespace cwssWpf.Data
         public bool StartClientMode = false;
         public bool GetSignature = false;
         public int SignatureWaitDelay = 2;
+        public int WebCamDeviceNum = 0;
     }
 
     public class EmailSettings
@@ -89,6 +92,25 @@ namespace cwssWpf.Data
     {
         public int DaysBetweenBackup = 7;
         public DateTime LastBackup = DateTime.MinValue;
+    }
+
+    public class MiscSettings
+    {
+        public ClimberViewSetting ClimberView;
+
+        public MiscSettings()
+        {
+            ClimberView = new ClimberViewSetting();
+        }
+    }
+
+    public class ClimberViewSetting
+    {
+        public bool Open = false;
+        public double Left = 10;
+        public double Top = 10;
+        public double Height = 200;
+        public double Width = 100;
     }
 
     public enum EmailClient

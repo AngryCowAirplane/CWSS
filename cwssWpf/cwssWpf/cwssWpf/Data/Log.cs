@@ -163,7 +163,6 @@ namespace cwssWpf.Data
     public enum LogType
     {
         CheckIn = 0,
-        CheckOut = 1,
         LogIn = 2,
         LogOut = 3,
         AddUser = 4,

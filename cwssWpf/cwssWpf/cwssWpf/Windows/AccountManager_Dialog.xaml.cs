@@ -33,18 +33,19 @@ namespace cwssWpf.Windows
             lvUsers.PreviewMouseRightButtonDown += rightButtonDown;
 
             if (MainWindow.CurrentUser.UserType == UserType.Admin)
+            {
                 UserTypeMenu.IsEnabled = true;
+                btnResetPass.IsEnabled = true;
+            }
             else
-                UserTypeMenu.IsEnabled = false;
-
-            MouseLeftButtonDown += Helpers.Window_MouseDown;
-            PreviewKeyDown += Helpers.HandleEsc;
-
-            if (MainWindow.CurrentUser.UserType < UserType.Admin)
             {
                 UserTypeMenu.IsEnabled = false;
                 ClearDocs.IsEnabled = false;
+                btnResetPass.IsEnabled = false;
             }
+
+            MouseLeftButtonDown += Helpers.Window_MouseDown;
+            PreviewKeyDown += Helpers.HandleEsc;
         }
 
         private void updateUser(UserType type)
@@ -174,7 +175,7 @@ namespace cwssWpf.Windows
             if(selectedUser != null)
             {
                 var stats = new ClimberStats_Dialog(selectedUser);
-                stats.Show();
+                stats.ShowDialog();
             }
         }
 
@@ -206,6 +207,60 @@ namespace cwssWpf.Windows
                         selectedUser.Documents.Clear();
                     }
                 }
+            }
+        }
+
+        private void promoteLead_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedUser != null)
+            {
+                if(selectedUser.IsLead)
+                {
+                    if (MainWindow.CurrentUser.UserType >= UserType.Manager)
+                    {
+                        selectedUser.RemoveLead();
+                    }
+                    else
+                    {
+                        // needs manager
+                        PromoteLead.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    selectedUser.PromoteLead();
+                }
+            }
+        }
+
+        private void addBelay_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedUser != null)
+            {
+                if (selectedUser.IsLead)
+                {
+                    if (MainWindow.CurrentUser.UserType >= UserType.Manager)
+                    {
+                        selectedUser.RemoveBelay();
+                    }
+                    else
+                    {
+                        // needs manager
+                        AddBelay.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    selectedUser.AddBelayCert();
+                }
+            }
+        }
+
+        private void resetPass_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedUser !=null)
+            {
+                selectedUser.ResetPassword();
             }
         }
     }
