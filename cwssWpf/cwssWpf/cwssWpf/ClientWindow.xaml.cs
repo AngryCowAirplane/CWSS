@@ -187,7 +187,7 @@ namespace cwssWpf
                             Dispatcher.BeginInvoke((Action)(() =>
                             {
                                 var alert = new Alert_Dialog(result.Heading, result.Body, AlertType.Failure);
-                                WindowsOpen.Add(alert, new TimerVal(6));
+                                WindowsOpen.Add(alert, new TimerVal(3));
                                 alert.Show();
                             }));
                         }

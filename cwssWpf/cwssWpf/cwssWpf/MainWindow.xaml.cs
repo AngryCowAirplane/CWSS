@@ -50,9 +50,9 @@ namespace cwssWpf
             setCurrentUserApplication();
 
             // Static Class Initializations
+            Logger.Initialize();
             Config.Initialize();
             Db.Initialize();
-            Logger.Initialize();
             Comms.Initialize();
 
             if ((Db.dataBase.Users.Where(u => u.UserType == UserType.Admin)).Count() < 1)
