@@ -60,7 +60,7 @@ namespace cwssWpf
 
             if (Logger.GetTodaysLog().Logs.Count == 0)
             {
-                foreach (var user in Db.dataBase.Users.Where(u => u.CheckedIn == true)) 
+                foreach (var user in Db.dataBase.Users.Where(u => u.CheckedIn == true))
                 {
                     user.CheckOut();
                 }
@@ -103,7 +103,7 @@ namespace cwssWpf
 
         private void OnMidTimertick(object sender, EventArgs e)
         {
-            if(ClientConnected == false)
+            if (ClientConnected == false)
                 Comms.ResetConnection();
         }
 
@@ -119,7 +119,7 @@ namespace cwssWpf
                     WindowsOpen.Add(result.Alert, new TimerVal(3));
                     result.Alert.ShowDialog();
 
-                    if(result.Alert.Title.ToString().ToLower().Contains("waiver"))
+                    if (result.Alert.Title.ToString().ToLower().Contains("waiver"))
                     {
                         var signed = Helpers.ShowWaiver(user);
                         if (signed)
@@ -148,7 +148,7 @@ namespace cwssWpf
             var newUser = new NewUser_Dialog(this);
             newUser.ShowDialog();
 
-            if(newUser.Success)
+            if (newUser.Success)
             {
                 var alert = new Alert_Dialog("User Created!", "", AlertType.Success);
                 MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
@@ -174,7 +174,7 @@ namespace cwssWpf
                 menuEmployeeLogIn.IsEnabled = false;
                 userMenu.IsEnabled = true;
                 userMenu.Visibility = Visibility.Visible;
-                if(Config.Data.Misc.ClimberView.Open)
+                if (Config.Data.Misc.ClimberView.Open)
                 {
                     menuUsers_Click(null, null);
                 }
@@ -205,7 +205,7 @@ namespace cwssWpf
 
             foreach (var wnd in WindowsOpen)
             {
-                if(wnd.Value.time == -1)
+                if (wnd.Value.time == -1)
                     wnd.Key.Close();
             }
 
@@ -267,7 +267,7 @@ namespace cwssWpf
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
             var climberView = new ClimberView_Dialog(this);
-            if(Config.Data.Misc.ClimberView.Open)
+            if (Config.Data.Misc.ClimberView.Open)
             {
                 climberView.Left = Config.Data.Misc.ClimberView.Left;
                 climberView.Top = Config.Data.Misc.ClimberView.Top;
@@ -321,11 +321,11 @@ namespace cwssWpf
             var wndList = new List<Window>();
             foreach (var wnd in WindowsOpen)
             {
-                if(wnd.Value.time > 0)
+                if (wnd.Value.time > 0)
                 {
                     wnd.Value.time--;
                 }
-                else if(wnd.Value.time == 0)
+                else if (wnd.Value.time == 0)
                 {
                     wnd.Key.Close();
                     wndList.Add(wnd.Key);
@@ -468,7 +468,7 @@ namespace cwssWpf
                 result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }
 
-            if(user!=null)
+            if (user != null)
                 user.LastCheckIn = DateTime.Now;
 
             tbLoginId.Text = "";
@@ -571,7 +571,7 @@ namespace cwssWpf
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
                             tbLoginId.Text = messageObject;
-                            if(Helpers.ValidateIdInput(tbLoginId.Text))
+                            if (Helpers.ValidateIdInput(tbLoginId.Text))
                             {
                                 var user = getUserFromCheckInText();
                                 var success = tryCheckinUser(user);
@@ -586,8 +586,18 @@ namespace cwssWpf
                                 }
                                 else
                                 {
-                                    var packet = new CommPacket(Sender.Server, success);
-                                    Comms.SendMessage(packet);
+                                    List<Message> messages = Db.dataBase.GetMessages(user).ToList();
+                                    if (messages.Count > 0)
+                                    {
+                                        var msgPack = new MessagesPacket(messages, user);
+                                        var packet = new CommPacket(Sender.Server, msgPack);
+                                        Comms.SendMessage(packet);
+                                    }
+                                    else
+                                    {
+                                        var packet = new CommPacket(Sender.Server, success);
+                                        Comms.SendMessage(packet);
+                                    }
                                 }
 
                                 if (success.Success)
@@ -626,7 +636,7 @@ namespace cwssWpf
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
                             var newUser = Helpers.TryAddUser((User)messageObject);
-                            if(newUser != null)
+                            if (newUser != null)
                             {
                                 var packet = new CommPacket(Sender.Server, newUser.GetUserId().ToString());
                                 Comms.SendMessage(packet);

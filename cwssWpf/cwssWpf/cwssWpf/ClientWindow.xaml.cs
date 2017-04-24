@@ -227,6 +227,10 @@ namespace cwssWpf
                             var newMessagePacket = new MessagesPacket(messages, user);
                             var packet = new CommPacket(Sender.Client, newMessagePacket);
                             Comms.SendMessage(packet);
+
+                            alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
+                            WindowsOpen.Add(alert, new TimerVal(2));
+                            alert.Show();
                         }));
                     }
                     else if (message.messageType == MessageType.Waiver)
