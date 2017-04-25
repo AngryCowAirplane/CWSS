@@ -164,7 +164,7 @@ namespace cwssWpf
 
         private void Comms_CommPacketReceived(object sender, CustomCommArgs args)
         {
-            if (args.senderWindow == Sender.Server)
+            if (args != null && args.senderWindow == Sender.Server)
             {
                 var message = Comms.GetMessage(Sender.Client);
                 if(message != null)

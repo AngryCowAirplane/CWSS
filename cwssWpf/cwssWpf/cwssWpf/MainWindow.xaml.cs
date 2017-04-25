@@ -554,7 +554,7 @@ namespace cwssWpf
             {
                 var message = Comms.GetMessage(Sender.Server);
 
-                if (message.sender == Sender.Client)
+                if (message != null && message.sender == Sender.Client)
                 {
                     var messageObject = Comms.GetObject(message);
 
@@ -662,16 +662,6 @@ namespace cwssWpf
                         {
                             var user = Db.dataBase.Users.Where(u => u.LoginId == waiverDoc.user.LoginId).First();
                             user.AddWaiver();
-                            //var success = tryCheckinUser(user);
-                            //var packet = new CommPacket(Sender.Server, success);
-                            //Comms.SendMessage(packet);
-
-                            //if (success.Success)
-                            //{
-                            //    var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
-                            //    WindowsOpen.Add(alert, new TimerVal(2));
-                            //    alert.Show();
-                            //}
                         }));
                     }
 

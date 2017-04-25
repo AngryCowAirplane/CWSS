@@ -23,8 +23,6 @@ namespace cwssWpf.Network
         public static int ClientPingCount = 0;
         public static int ServerPingCount = 0;
 
-        //private static CommPacket commPacket;
-
         public static void Initialize()
         {
             StartNetworkListen();
@@ -73,16 +71,6 @@ namespace cwssWpf.Network
 
         public static CommPacket GetMessage(Sender sender)
         {
-            //if (sender != commPacket.sender)
-            //{
-            //    var packet = new CommPacket();
-            //    packet = commPacket;
-            //    commPacket = null;
-            //    return packet;
-            //}
-            //else
-            //    return null;
-
             if (sender == Sender.Client)
             {
                 if (clientMessages.Count > 0)
@@ -139,8 +127,6 @@ namespace cwssWpf.Network
                     if(commPacket.messageType != MessageType.Ping)
                         serverMessages.Add(commPacket);
                 }
-
-                //CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
             }
             catch
             {
