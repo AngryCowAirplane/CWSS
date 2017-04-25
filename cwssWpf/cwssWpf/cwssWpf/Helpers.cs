@@ -306,6 +306,7 @@ namespace cwssWpf
 
             if (success)
             {
+                var oldUser = MainWindow.CurrentUser;
                 if (MainWindow.CurrentUser == null)
                     MainWindow.CurrentUser = new User();
 
@@ -315,6 +316,7 @@ namespace cwssWpf
 
                 NewUser = Db.dataBase.GetUser(int.Parse(userId.Text));
 
+                MainWindow.CurrentUser = oldUser;
                 return NewUser;
             }
             else
