@@ -505,9 +505,12 @@ namespace cwssWpf
                 {
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        var messagesPacket = new MessagesPacket(messages, user);
-                        var packet = new CommPacket(Sender.Server, messagesPacket);
-                        Comms.SendMessage(packet);
+                        if(user.HasWaiver())
+                        {
+                            var messagesPacket = new MessagesPacket(messages, user);
+                            var packet = new CommPacket(Sender.Server, messagesPacket);
+                            Comms.SendMessage(packet);
+                        }
                     }));
                 }
             }
