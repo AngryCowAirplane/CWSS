@@ -29,6 +29,7 @@ namespace cwssWpf.Windows
         public User NewUser;
         public bool Success = false;
         private DateTime timeDiff;
+        private string oldIdText;
 
         public NewUser_Dialog(Window mainWindow)
         {
@@ -265,13 +266,17 @@ namespace cwssWpf.Windows
 
         private void cardText_Changed(object sender, RoutedEventArgs e)
         {
+
             if (timeDiff == DateTime.MinValue)
                 timeDiff = DateTime.Now;
 
             if (DateTime.Now - timeDiff > TimeSpan.FromSeconds(1))
+            {
+                tbIdCardID.Text = oldIdText;
                 tbIdCardID.IsEnabled = false;
-
+            }
             timeDiff = DateTime.Now;
+            oldIdText = tbIdCardID.Text;
         }
     }
 }

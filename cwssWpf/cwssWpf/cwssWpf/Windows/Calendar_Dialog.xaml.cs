@@ -92,7 +92,14 @@ namespace cwssWpf.Windows
             if(lbEvents.SelectedItem != null)
             {
                 var ev = (Event)lbEvents.SelectedItem;
-                var alert = new Alert_Dialog(ev.EventName, ev.EventComment);
+
+                var message = ev.EventStart.ToShortDateString() + " - " + ev.EventComment + "\nUsers: ";
+                foreach (var item in ev.EventMembers)
+                {
+                    message = message + item.GetName() + ", ";
+                }
+                message.Remove(message.LastIndexOf(", "), 2);
+                var alert = new Alert_Dialog(ev.EventName, message);
                 alert.ShowDialog();
             }
         }

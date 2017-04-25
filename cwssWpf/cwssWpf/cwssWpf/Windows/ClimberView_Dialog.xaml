@@ -9,6 +9,7 @@
         Opacity="0.8"
         WindowStyle="None"
         AllowsTransparency="True"
+        WindowStartupLocation="CenterOwner"
         ResizeMode="CanResizeWithGrip"
         Title="Climber View" Height="300" Width="300">
     <Grid>

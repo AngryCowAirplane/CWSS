@@ -28,8 +28,8 @@ namespace cwssWpf.Windows
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            Top = mainWindow.Top + 50;
-            Left = mainWindow.Left + 50;
+            //Top = mainWindow.Top + 50;
+            //Left = mainWindow.Left + 50;
             UsersCheckedIn = Db.dataBase.Users.Where(user => user.CheckedIn == true).ToList();
             UsersCheckedIn.OrderByDescending(x => x.LastCheckIn);
             lvClimbers.ItemsSource = UsersCheckedIn;
@@ -41,7 +41,6 @@ namespace cwssWpf.Windows
             QuickTimer.Tick += OnQuickTimerTick;
             QuickTimer.Start();
             this.Topmost = true;
-            Config.Data.Misc.ClimberView.Open = true;
         }
 
         private void Window_Deactivated(object sender, EventArgs e)

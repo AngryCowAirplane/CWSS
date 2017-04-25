@@ -78,6 +78,7 @@ namespace cwssWpf.Windows
             textColumn.Header = "Address";
             textColumn.Binding = new Binding("Info.Address");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
@@ -85,6 +86,7 @@ namespace cwssWpf.Windows
             textColumn.Header = "City";
             textColumn.Binding = new Binding("Info.City");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
@@ -92,6 +94,7 @@ namespace cwssWpf.Windows
             textColumn.Header = "State";
             textColumn.Binding = new Binding("Info.State");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
@@ -99,6 +102,7 @@ namespace cwssWpf.Windows
             textColumn.Header = "Zip";
             textColumn.Binding = new Binding("Info.Zip");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
@@ -113,6 +117,7 @@ namespace cwssWpf.Windows
             textColumn.Header = "Gender";
             textColumn.Binding = new Binding("Info.Gender");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
@@ -120,6 +125,7 @@ namespace cwssWpf.Windows
             textColumn.Header = "DateOfBirth";
             textColumn.Binding = new Binding("Info.DateOfBirth");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
@@ -127,6 +133,7 @@ namespace cwssWpf.Windows
             textColumn.Header = "Guardian";
             textColumn.Binding = new Binding("Info.Guardian");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
@@ -134,20 +141,23 @@ namespace cwssWpf.Windows
             textColumn.Header = "Created";
             textColumn.Binding = new Binding("DateCreated");
             textColumn.IsReadOnly = true;
+            textColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(textColumn);
             Columns.Add(textColumn);
 
             var checkColumn = new DataGridCheckBoxColumn();
             checkColumn.Header = "IsLead";
             checkColumn.Binding = new Binding("IsLead");
-            textColumn.IsReadOnly = true;
+            checkColumn.IsReadOnly = true;
+            checkColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(checkColumn);
             Columns.Add(checkColumn);
 
             checkColumn = new DataGridCheckBoxColumn();
             checkColumn.Header = "IsBelay";
             checkColumn.Binding = new Binding("IsBelay");
-            textColumn.IsReadOnly = true;
+            checkColumn.IsReadOnly = true;
+            checkColumn.Visibility = Visibility.Hidden;
             dataGrid.Columns.Add(checkColumn);
             Columns.Add(checkColumn);
         }
@@ -412,6 +422,15 @@ namespace cwssWpf.Windows
             {
                 File.WriteAllText(saveDialog.FileName, result, UnicodeEncoding.UTF8);
             }
+        }
+
+        private void Guardian_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Guardian").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
         }
     }
 }
