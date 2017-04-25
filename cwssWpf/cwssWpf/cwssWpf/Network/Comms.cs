@@ -129,13 +129,15 @@ namespace cwssWpf.Network
                 if (commPacket.sender == Sender.Server)
                 {
                     ClientPingCount = 0;
-                    clientMessages.Add(commPacket);
+                    if (commPacket.messageType != MessageType.Ping)
+                        clientMessages.Add(commPacket);
 
                 }
                 if (commPacket.sender == Sender.Client)
                 {
                     ServerPingCount = 0;
-                    serverMessages.Add(commPacket);
+                    if(commPacket.messageType != MessageType.Ping)
+                        serverMessages.Add(commPacket);
                 }
 
                 //CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
