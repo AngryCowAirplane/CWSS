@@ -103,7 +103,7 @@ namespace cwssWpf.Data
             {
                 return false;
             }
-
+            _DataBase.Save();
             return true;
         }
 

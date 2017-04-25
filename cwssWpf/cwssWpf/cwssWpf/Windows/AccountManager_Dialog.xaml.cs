@@ -142,7 +142,16 @@ namespace cwssWpf.Windows
 
         private void admin_Click(object sender, RoutedEventArgs e)
         {
-            updateUser(UserType.Admin);
+            if (selectedUser.UserType != UserType.Admin || selectedUser.LoginId == MainWindow.CurrentUser.LoginId)
+            {
+                updateUser(UserType.Admin);
+            }
+            else
+            {
+                var alert = new Alert_Dialog("Failed", "Admins may only demote their own account.");
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(4));
+                alert.Show();
+            }
         }
 
         private void rightButtonDown(object sender, MouseEventArgs e)
