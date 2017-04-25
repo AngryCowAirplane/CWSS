@@ -586,18 +586,18 @@ namespace cwssWpf
                                 }
                                 else
                                 {
-                                    List<Message> messages = Db.dataBase.GetMessages(user).ToList();
-                                    if (messages.Count > 0)
-                                    {
-                                        var msgPack = new MessagesPacket(messages, user);
-                                        var packet = new CommPacket(Sender.Server, msgPack);
-                                        Comms.SendMessage(packet);
-                                    }
-                                    else
-                                    {
+                                    //List<Message> messages = Db.dataBase.GetMessages(user).ToList();
+                                    //if (messages.Count > 0)
+                                    //{
+                                    //    var msgPack = new MessagesPacket(messages, user);
+                                    //    var packet = new CommPacket(Sender.Server, msgPack);
+                                    //    Comms.SendMessage(packet);
+                                    //}
+                                    //else
+                                    //{
                                         var packet = new CommPacket(Sender.Server, success);
                                         Comms.SendMessage(packet);
-                                    }
+                                    //}
                                 }
 
                                 if (success.Success)
@@ -675,16 +675,16 @@ namespace cwssWpf
                         {
                             var user = Db.dataBase.Users.Where(u => u.LoginId == waiverDoc.user.LoginId).First();
                             user.AddWaiver();
-                            var success = tryCheckinUser(user);
-                            var packet = new CommPacket(Sender.Server, success);
-                            Comms.SendMessage(packet);
+                            //var success = tryCheckinUser(user);
+                            //var packet = new CommPacket(Sender.Server, success);
+                            //Comms.SendMessage(packet);
 
-                            if (success.Success)
-                            {
-                                var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
-                                WindowsOpen.Add(alert, new TimerVal(2));
-                                alert.Show();
-                            }
+                            //if (success.Success)
+                            //{
+                            //    var alert = new Alert_Dialog("Client Checkin", user.GetName() + " Checked In.", AlertType.Success);
+                            //    WindowsOpen.Add(alert, new TimerVal(2));
+                            //    alert.Show();
+                            //}
                         }));
                     }
 
