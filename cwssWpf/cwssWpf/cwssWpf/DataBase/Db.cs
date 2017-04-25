@@ -23,12 +23,17 @@ namespace cwssWpf.DataBase
 
             CheckRequests();
 
+            var diff = DateTime.Now - Config.Data.Backup.LastBackup;
+            var sep = TimeSpan.FromDays(Config.Data.Backup.DaysBetweenBackup);
+
             // Check Auto Backup
-            if (DateTime.Now - Config.Data.Backup.LastBackup > TimeSpan.FromDays(Config.Data.Backup.DaysBetweenBackup))
+            if (diff > sep)
             {
                 var dbPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"AppData\Backup", @"CwssDataBase " + DateTime.Now.ToShortDateString().Replace('/', '_') + ".cwdb");
                 Db.SaveDatabase(dbPath);
                 var message = "DataBase Auto Backup: " + Path.GetFileName(dbPath);
+                Config.Data.Backup.LastBackup = DateTime.Now;
+                Config.SaveConfigToFile();
                 Logger.Log(0, LogType.DataBase, message);
             }
         }

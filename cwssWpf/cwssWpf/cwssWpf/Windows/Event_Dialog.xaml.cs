@@ -81,8 +81,10 @@ namespace cwssWpf.Windows
             }
 
             this.Close();
-            var alert = new Alert_Dialog("Event Created", "Your event has been created.");
-            alert.ShowDialog();
+            var alert = new Alert_Dialog("Event Created", "Your event has been created.", AlertType.Success);
+            Logger.Log(MainWindow.CurrentUser.LoginId, LogType.Calendar, "Added event to the calendar: " + newEvent.EventStart.ToShortDateString() + newEvent.EventName);
+            MainWindow.WindowsOpen.Add(alert, new cwssWpf.TimerVal(2));
+            alert.Show();
         }
     }
 }
