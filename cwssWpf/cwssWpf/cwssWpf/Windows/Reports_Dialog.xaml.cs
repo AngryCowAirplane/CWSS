@@ -102,15 +102,15 @@ namespace cwssWpf.Windows
                 }
             }
 
-            var waiversExp = waivers.Where(w => (DateTime.Now - w.Expires) < TimeSpan.FromDays(7)).ToList();
+            var waiversExp = waivers.Where(w => (w.Expires) - DateTime.Now < TimeSpan.FromDays(7)).ToList();
 
-            if(waiversExp != null && waiversExp.Count > 0)
+            var label = new Label();
+            label.Content = "Waivers Expiring (7 days): " + waiversExp.Count.ToString();
+            Grid.SetRow(label, 1);
+            MainGrid.Children.Add(label);
+
+            if (waiversExp != null && waiversExp.Count > 0)
             {
-                var label = new Label();
-                label.Content = "Waivers Expiring (7 days): " + waiversExp.Count.ToString();
-                Grid.SetRow(label, 1);
-                MainGrid.Children.Add(label);
-
                 int x = 2;
                 foreach (var item in waiversExp)
                 {
@@ -129,12 +129,20 @@ namespace cwssWpf.Windows
 
         private void Belay_Click(object sender, RoutedEventArgs e)
         {
-
+            ClearLabels();
+            var label = new Label();
+            label.Content = "*Not Implemented";
+            Grid.SetRow(label, 1);
+            MainGrid.Children.Add(label);
         }
 
         private void LeadClimb_Click(object sender, RoutedEventArgs e)
         {
-
+            ClearLabels();
+            var label = new Label();
+            label.Content = "*Not Implemented";
+            Grid.SetRow(label, 1);
+            MainGrid.Children.Add(label);
         }
 
         #region notUsed
