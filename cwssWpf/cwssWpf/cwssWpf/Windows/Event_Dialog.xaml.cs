@@ -67,6 +67,19 @@ namespace cwssWpf.Windows
             if (!Db.dataBase.Events.Contains(newEvent))
                 Db.dataBase.Events.Add(newEvent);
 
+            if((bool)cbNotify.IsChecked)
+            {
+                var message = new Message();
+                message.SetSender(MainWindow.CurrentUser);
+                message.SetRecipients(newEvent.EventMembers);
+                message.Subject = "You have been added to an event: " + newEvent.EventName + " on " + newEvent.EventStart.ToShortDateString();
+                message.Contents = newEvent.EventStart.ToShortTimeString() + " : " + newEvent.EventComment;
+                message.ExpireDate = DateTime.Now + TimeSpan.FromDays(45);
+                message.TimeStamp = DateTime.Now;
+                Db.dataBase.AddMessage(message);
+                this.Close();
+            }
+
             this.Close();
             var alert = new Alert_Dialog("Event Created", "Your event has been created.");
             alert.ShowDialog();

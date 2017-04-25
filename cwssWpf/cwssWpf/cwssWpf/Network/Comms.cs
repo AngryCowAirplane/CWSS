@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace cwssWpf.Network
 {
@@ -14,6 +15,11 @@ namespace cwssWpf.Network
     {
         public static MulticastUdpClient udpClientWrapper;
         public static event EventHandler <CustomCommArgs> CommPacketReceived;
+        public static List<CommPacket> serverMessages = new List<CommPacket>();
+        public static List<CommPacket> clientMessages = new List<CommPacket>();
+
+        public static DispatcherTimer QuickTimer = new DispatcherTimer();
+
         public static int ClientPingCount = 0;
         public static int ServerPingCount = 0;
 
@@ -22,6 +28,21 @@ namespace cwssWpf.Network
         public static void Initialize()
         {
             StartNetworkListen();
+            QuickTimer.Interval = TimeSpan.FromMilliseconds(900);
+            QuickTimer.Tick += OnQuickTimerTick;
+            QuickTimer.Start();
+        }
+
+        private static void OnQuickTimerTick(object sender, EventArgs e)
+        {
+            if(serverMessages.Count > 0)
+            {
+                //notifyServer();
+            }
+            if(clientMessages.Count > 0)
+            {
+                //notifyClient();
+            }
         }
 
         private static void StartNetworkListen()

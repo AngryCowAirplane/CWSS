@@ -60,7 +60,14 @@ namespace cwssWpf.Windows
                         if (req != null)
                         {
                             var expires = req.TimeStamp + TimeSpan.FromDays((int)req.SuspensionLength * 7);
-                            lblRevoked.Content = lblRevoked.Content + "YES - Expires: " + expires.ToShortDateString();
+                            if(req.Enforced == false)
+                            {
+                                lblRevoked.Content = lblRevoked.Content + "*PENDING* - Expires: " + expires.ToShortDateString();
+                            }
+                            else
+                            {
+                                lblRevoked.Content = lblRevoked.Content + "YES - Expires: " + expires.ToShortDateString();
+                            }
                             lblReason.Content = req.Reason;
                         }
                     }

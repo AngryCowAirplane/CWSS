@@ -244,6 +244,7 @@ namespace cwssWpf
                                 var newPacket = new CommPacket(Sender.Client, waiverPac);
                                 Comms.SendMessage(newPacket);
 
+                                tbLoginId.Text = user.LoginId.ToString();
                                 btnCheckIn_Click(null, null);
                             }
                             else

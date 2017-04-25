@@ -68,7 +68,7 @@ namespace cwssWpf.Windows
             if(requestMode == mode.Request)
             {
                 Db.dataBase.Notes.AddRequest(selectedUser, tbReason.Text, (Suspension)cbTime.SelectedItem);
-                var alert = new Alert_Dialog("Revoked.", "Revoke Request Successful, " + selectedUser.GetName() + " - " + tbReason.Text, AlertType.Success);
+                var alert = new Alert_Dialog("Request Sent.", "Revoke Request Successful, " + selectedUser.GetName() + " - " + tbReason.Text, AlertType.Success);
                 MainWindow.WindowsOpen.Add(alert, new cwssWpf.TimerVal(4));
                 alert.Show();
                 this.Close();
