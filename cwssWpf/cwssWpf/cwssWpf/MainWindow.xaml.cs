@@ -267,16 +267,21 @@ namespace cwssWpf
 
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
-            var climberView = new ClimberView_Dialog(this);
-            if (Config.Data.Misc.ClimberView.Open)
+            var windows = WindowsOpen.Keys;
+            var climbingWindows = windows.Select(w => w.Name.Contains("climber")).ToList();
+            if(climbingWindows == null || climbingWindows.Count <= 0)
             {
-                climberView.Left = Config.Data.Misc.ClimberView.Left;
-                climberView.Top = Config.Data.Misc.ClimberView.Top;
-                climberView.Height = Config.Data.Misc.ClimberView.Height;
-                climberView.Width = Config.Data.Misc.ClimberView.Width;
+                var climberView = new ClimberView_Dialog(this);
+                if (Config.Data.Misc.ClimberView.Open)
+                {
+                    climberView.Left = Config.Data.Misc.ClimberView.Left;
+                    climberView.Top = Config.Data.Misc.ClimberView.Top;
+                    climberView.Height = Config.Data.Misc.ClimberView.Height;
+                    climberView.Width = Config.Data.Misc.ClimberView.Width;
+                }
+                WindowsOpen.Add(climberView, new TimerVal(-1));
+                climberView.Show();
             }
-            WindowsOpen.Add(climberView, new TimerVal(-1));
-            climberView.Show();
         }
 
         private void menuMessage_Click(object sender, RoutedEventArgs e)
