@@ -611,9 +611,9 @@ namespace cwssWpf
                                 }
                                 else
                                 {
-                                    //var alert = new Alert_Dialog("Client Checkin", "Failed Check In.\n" + success.Body, AlertType.Failure);
-                                    //WindowsOpen.Add(alert, new TimerVal(2));
-                                    //alert.Show();
+                                    var alert = new Alert_Dialog("Client Checkin", "Failed Check In.\n" + success.Body, AlertType.Failure);
+                                    WindowsOpen.Add(alert, new TimerVal(2));
+                                    alert.Show();
                                 }
                             }
                             else
