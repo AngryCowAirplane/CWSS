@@ -46,6 +46,20 @@ namespace cwssWpf.Data
 
             var log = new Log();
             log.Action = type;
+            log.UserId = userId.ToString();
+            log.Comment = comment;
+            log.TimeStamp = DateTime.Now;
+
+            todaysLog.Logs.Add(log);
+        }
+
+        public static void Log(string userId, LogType type, string comment = "")
+        {
+            // TODO:
+            // check to see if same day as todaysLog, if not save log and start a new one
+
+            var log = new Log();
+            log.Action = type;
             log.UserId = userId;
             log.Comment = comment;
             log.TimeStamp = DateTime.Now;
@@ -136,7 +150,7 @@ namespace cwssWpf.Data
     // Log everyday actions of users
     public class Log
     {
-        public int UserId;
+        public string UserId;
         public DateTime TimeStamp;
         public LogType Action;
         public string Comment;
