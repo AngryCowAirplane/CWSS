@@ -36,7 +36,7 @@ namespace cwssWpf.Windows
             updateList();
             lvClimbers.PreviewMouseRightButtonDown += rightMouseButtonClicked;
             MouseLeftButtonDown += Helpers.Window_MouseDown;
-            PreviewKeyDown += Helpers.HandleEsc;
+            //PreviewKeyDown += Helpers.HandleEsc;
             QuickTimer.Interval = TimeSpan.FromSeconds(1);
             QuickTimer.Tick += OnQuickTimerTick;
             QuickTimer.Start();

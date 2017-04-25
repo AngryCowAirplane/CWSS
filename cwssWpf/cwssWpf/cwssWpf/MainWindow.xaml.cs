@@ -268,7 +268,7 @@ namespace cwssWpf
         private void menuUsers_Click(object sender, RoutedEventArgs e)
         {
             var windows = WindowsOpen.Keys;
-            var climbingWindows = windows.Select(w => w.Name.Contains("climber")).ToList();
+            var climbingWindows = windows.Where(w => w.Name.ToLower().Contains("climber")).ToList();
             if(climbingWindows == null || climbingWindows.Count <= 0)
             {
                 var climberView = new ClimberView_Dialog(this);
@@ -281,6 +281,10 @@ namespace cwssWpf
                 }
                 WindowsOpen.Add(climberView, new TimerVal(-1));
                 climberView.Show();
+            }
+            else
+            {
+                climbingWindows.First().Focus();
             }
         }
 

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cwssWpf.Windows"
         mc:Ignorable="d"
+        Name="ClimberView"
         Background="Black"
         Opacity="0.8"
         WindowStyle="None"
