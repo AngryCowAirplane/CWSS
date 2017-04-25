@@ -243,6 +243,8 @@ namespace cwssWpf
                                 waiverPac.user = user;
                                 var newPacket = new CommPacket(Sender.Client, waiverPac);
                                 Comms.SendMessage(newPacket);
+
+                                btnCheckIn_Click(null, null);
                             }
                             else
                             {
