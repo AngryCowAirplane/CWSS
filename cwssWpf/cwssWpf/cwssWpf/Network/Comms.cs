@@ -26,7 +26,7 @@ namespace cwssWpf.Network
         public static void Initialize()
         {
             StartNetworkListen();
-            QuickTimer.Interval = TimeSpan.FromMilliseconds(900);
+            QuickTimer.Interval = TimeSpan.FromMilliseconds(633);
             QuickTimer.Tick += OnQuickTimerTick;
             QuickTimer.Start();
         }

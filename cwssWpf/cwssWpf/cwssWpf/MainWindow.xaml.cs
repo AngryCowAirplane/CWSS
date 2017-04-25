@@ -86,6 +86,7 @@ namespace cwssWpf
                 this.WindowStyle = WindowStyle.None;
             }
 
+            Db.CleanMessages();
             LoadConnectionImage();
             UpdateClimberStats();
             FocusManager.SetFocusedElement(this, tbLoginId);

@@ -54,6 +54,40 @@ namespace cwssWpf.DataBase
             }
         }
 
+        public static void CleanRequests()
+        {
+            var reqsToDelete = new List<Request>();
+
+            foreach (var req in Db.dataBase.Notes.Requests)
+            {
+                if(DateTime.Today - req.TimeStamp > TimeSpan.FromDays((int)req.SuspensionLength * 7))
+                {
+                    reqsToDelete.Add(req);
+                }
+            }
+
+            foreach (var req in reqsToDelete)
+            {
+                Db.dataBase.Notes.Requests.Remove(req);
+            }
+        }
+
+        public static void CleanMessages()
+        {
+            var messagesToDelete = new List<Message>();
+
+            foreach (var msg in Db.dataBase.Messages)
+            {
+                if (msg.RecipientId.Count <= 0)
+                    messagesToDelete.Add(msg);
+            }
+
+            foreach (var msg in messagesToDelete)
+            {
+                Db.dataBase.Messages.Remove(msg);
+            }
+        }
+
         public static void CheckUserDocs(User user)
         {
             var docs = user.Documents;

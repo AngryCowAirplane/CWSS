@@ -296,5 +296,10 @@ namespace cwssWpf.Windows
 
             return valid;
         }
+
+        private void btnCleanReqs_Click(object sender, RoutedEventArgs e)
+        {
+            Db.CleanRequests();
+        }
     }
 }

@@ -82,7 +82,7 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            
+
             <TabItem Header="Email">
                 <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="20" Grid.Column="0" Grid.Row="1">
                     <Grid Name="Email">
@@ -132,6 +132,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="140"/>
@@ -152,10 +153,9 @@
             </TabItem>
 
             <TabItem Header="Data">
-                <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="20" Grid.Column="0" Grid.Row="1">
-                    <Grid Name="Data">
+                <StackPanel Grid.ColumnSpan="2"  Grid.RowSpan="20" Grid.Column="0" Grid.Row="1">
+                    <Grid Name="Data" Grid.RowSpan="20" Height="332" >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -180,6 +180,7 @@
                         <TextBox Name="tbWaiverExpireDays" Grid.Row="2" Grid.Column="1" Margin="2,2,2,2"></TextBox>
                         <TextBox Name="tbLeadClimbExpireDays" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2"></TextBox>
                         <TextBox Name="tbBelayCertExpireDays" Grid.Row="4" Grid.Column="1" Margin="2,2,2,2"></TextBox>
+                        <Button Name="btnCleanReqs" Content="Clean Requests" Grid.Row="5" Grid.Column="1" Margin="2,2,2,2" ToolTip="Deletes expired Revoke Requests" Click="btnCleanReqs_Click"></Button>
                     </Grid>
                 </StackPanel>
             </TabItem>
