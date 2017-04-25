@@ -586,18 +586,8 @@ namespace cwssWpf
                                 }
                                 else
                                 {
-                                    //List<Message> messages = Db.dataBase.GetMessages(user).ToList();
-                                    //if (messages.Count > 0)
-                                    //{
-                                    //    var msgPack = new MessagesPacket(messages, user);
-                                    //    var packet = new CommPacket(Sender.Server, msgPack);
-                                    //    Comms.SendMessage(packet);
-                                    //}
-                                    //else
-                                    //{
-                                        var packet = new CommPacket(Sender.Server, success);
-                                        Comms.SendMessage(packet);
-                                    //}
+                                    var packet = new CommPacket(Sender.Server, success);
+                                    Comms.SendMessage(packet);
                                 }
 
                                 if (success.Success)
@@ -655,15 +645,9 @@ namespace cwssWpf
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
                             List<Message> msgs = Db.dataBase.GetMessages(messagePacket.MessageUser).ToList();
-                            //foreach (var item in msgs)
-                            //{
-                            //    if (item.RecipientId.Contains(messagePacket.MessageUser.LoginId))
-                            //        msgs.Where(msg => msg.TimeStamp == item.TimeStamp).First().ReadMessage(messagePacket.MessageUser);
-                            //}
-                            foreach (var msg in messagePacket.Messages)
+                            foreach (var item in messagePacket.Messages)
                             {
-                                if (msg.RecipientId == null)
-                                    msgs.Where(m => m.RecipientId == msg.RecipientId && m.Subject == msg.Subject).First().ReadMessage(messagePacket.MessageUser);
+                                msgs.Where(m => m.TimeStamp == item.TimeStamp).First().RecipientId = item.RecipientId;
                             }
                         }));
                     }
