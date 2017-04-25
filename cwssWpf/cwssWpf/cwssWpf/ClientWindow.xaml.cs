@@ -199,8 +199,9 @@ namespace cwssWpf
                             var newUser = new NewUser_Dialog(this);
                             newUser.ShowDialog();
 
-                            if (true/*newUser.Success*/)
+                            if (newUser.Success)
                             {
+                                newUser.Success = false;
                                 var user = newUser.NewUser;
                                 var packet = new CommPacket(Sender.Client, user);
                                 Comms.SendMessage(packet);

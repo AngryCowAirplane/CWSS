@@ -97,6 +97,7 @@ namespace cwssWpf.Windows
                     user.Info.Guardian = tbGuardianID.Text;
 
                     NewUser = user;
+                    Success = true;
                     this.Close();
                 }
             }
