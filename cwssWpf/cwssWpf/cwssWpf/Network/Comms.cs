@@ -86,14 +86,24 @@ namespace cwssWpf.Network
             if (sender == Sender.Client)
             {
                 if (clientMessages.Count > 0)
-                    return clientMessages.First();
+                {
+                    var message = new CommPacket();
+                    message = clientMessages.First();
+                    clientMessages.Remove(message);
+                    return message;
+                }
                 else
                     return null;
             }
             else if (sender == Sender.Server)
             {
                 if (clientMessages.Count > 0)
-                    return serverMessages.First();
+                {
+                    var message = new CommPacket();
+                    message = serverMessages.First();
+                    serverMessages.Remove(message);
+                    return message;
+                }
                 else
                     return null;
             }
