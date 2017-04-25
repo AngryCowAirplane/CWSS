@@ -23,7 +23,7 @@ namespace cwssWpf.Network
         public static int ClientPingCount = 0;
         public static int ServerPingCount = 0;
 
-        private static CommPacket commPacket;
+        //private static CommPacket commPacket;
 
         public static void Initialize()
         {
@@ -37,11 +37,11 @@ namespace cwssWpf.Network
         {
             if(serverMessages.Count > 0)
             {
-                //notifyServer();
+                CommPacketReceived(null, new CustomCommArgs(Sender.Client));
             }
-            if(clientMessages.Count > 0)
+            if (clientMessages.Count > 0)
             {
-                //notifyClient();
+                CommPacketReceived(null, new CustomCommArgs(Sender.Server));
             }
         }
 
@@ -73,12 +73,29 @@ namespace cwssWpf.Network
 
         public static CommPacket GetMessage(Sender sender)
         {
-            if (sender != commPacket.sender)
+            //if (sender != commPacket.sender)
+            //{
+            //    var packet = new CommPacket();
+            //    packet = commPacket;
+            //    commPacket = null;
+            //    return packet;
+            //}
+            //else
+            //    return null;
+
+            if (sender == Sender.Client)
             {
-                var packet = new CommPacket();
-                packet = commPacket;
-                commPacket = null;
-                return packet;
+                if (clientMessages.Count > 0)
+                    return clientMessages.First();
+                else
+                    return null;
+            }
+            else if (sender == Sender.Server)
+            {
+                if (clientMessages.Count > 0)
+                    return serverMessages.First();
+                else
+                    return null;
             }
             else
                 return null;
@@ -96,15 +113,22 @@ namespace cwssWpf.Network
                     ClientPingCount = 0;
                     ServerPingCount = 0;
                 }
-
-                commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
+                
+                var commPacket = JsonConvert.DeserializeObject<CommPacket>(decryptedString);
 
                 if (commPacket.sender == Sender.Server)
+                {
                     ClientPingCount = 0;
-                if (commPacket.sender == Sender.Client)
-                    ServerPingCount = 0;
+                    clientMessages.Add(commPacket);
 
-                CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
+                }
+                if (commPacket.sender == Sender.Client)
+                {
+                    ServerPingCount = 0;
+                    serverMessages.Add(commPacket);
+                }
+
+                //CommPacketReceived(null, new CustomCommArgs(commPacket.sender));
             }
             catch
             {
