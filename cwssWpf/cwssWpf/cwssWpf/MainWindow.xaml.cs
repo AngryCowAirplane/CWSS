@@ -474,7 +474,7 @@ namespace cwssWpf
             else
             {
                 var message = "Failed Checkin By " + tbLoginId.Text + ", User does not exist";
-                Logger.Log(int.Parse(tbLoginId.Text), LogType.Error, message);
+                Logger.Log(tbLoginId.Text, LogType.Error, message);
                 result.Alert = new Alert_Dialog("User Not Found!", "Please try again, or create a new account.");
             }
 
