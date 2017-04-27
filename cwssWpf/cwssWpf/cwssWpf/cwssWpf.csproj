@@ -318,6 +318,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppData\MSR Config\msr90Config_v220.exe" />
+    <Content Include="AppData\MSR Config\uicomm.dll" />
     <Content Include="InstallerScript.iss" />
     <Content Include="UserManual.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
