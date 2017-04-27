@@ -25,7 +25,8 @@ Source: "bin\Release\itextsharp.dll"; DestDir: "{app}"
 Source: "bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"
 Source: "bin\Release\RijndaelEncryptDecrypt.dll"; DestDir: "{app}"
 Source: "bin\Release\WebEye.Controls.Wpf.WebCameraControl.dll"; DestDir: "{app}"
-Source: "bin\Release\UserManual.txt"; DestDir: "{app}"; Flags: isreadme
+Source: "UserManual.doc"; DestDir: "{app}"; Flags: isreadme
+Source: "UserManual.pdf"; DestDir: "{app}"; Flags: isreadme
 
 Source: "bin\Release\AppData\ClientSetup.cfg"; DestDir: "{app}\AppData"; Components: client
 
@@ -51,4 +52,5 @@ Source: "bin\Release\AppData\CW Acknowledgement of Risk and Sign-In Sheet.pdf"; 
 Name: "{group}\CWSS System"; Filename: "{app}\cwssWpf.exe"
 
 [Run]
-Filename: "{app}\cwssWpf.exe"; Description: "{cm:LaunchProgram,CWSS System}"; Flags: runascurrentuser nowait postinstall skipifsilent
+Filename: "{app}\MSR Config\msr90Config_v220.exe"; Description: "{cm:LaunchProgram,Mag Strip Config}"; Flags: runascurrentuser nowait postinstall skipifsilent
+Filename: "{app}\cwssWpf.exe"; Description: "{cm:LaunchProgram,CWSS System}"; Flags: runascurrentuser nowait postinstall skipifsilent unchecked
