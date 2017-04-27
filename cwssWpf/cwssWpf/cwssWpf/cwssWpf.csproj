@@ -318,6 +318,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="InstallerScript.iss">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="UserManual.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

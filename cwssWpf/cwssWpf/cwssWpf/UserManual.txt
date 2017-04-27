@@ -2,9 +2,6 @@
 	user login id:		123456
 	password:		abc123
 
-Command Line Reset of "Start in Client Mode":
-	add " resetclient" to end of the .exe
-
 Keyboard ShortCuts:
 	Ctrl + L:		Login / Logout
 	Ctrl + X:		Exit Program
