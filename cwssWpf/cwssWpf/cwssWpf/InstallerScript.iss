@@ -6,41 +6,45 @@ DefaultGroupName=CWSS System
 UninstallDisplayIcon={app}\cwssWpf.exe
 Compression=lzma2
 SolidCompression=yes
-OutputDir=C:\Users\Derek\Source\Repos\CWSSv2\cwssWpf\cwssWpf\cwssWpf\bin\Release\Setup
+OutputDir=C:\Users\Derek\Source\Repos\CWSSv2\cwssWpf\cwssWpf\cwssWpf\SetupExe
 OutputBaseFilename=CWSS Setup
 PrivilegesRequired=admin
 
 [Components]
 Name: client; Description: Install for a remote client machine.; Flags: Dontinheritcheck
 
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; \
+    GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
 [Files]
-Source: "cwssWpf.exe"; DestDir: "{app}"
-Source: "ImageProcessor.dll"; DestDir: "{app}"
-Source: "itextsharp.dll"; DestDir: "{app}"
-Source: "Newtonsoft.Json.dll"; DestDir: "{app}"
-Source: "RijndaelEncryptDecrypt.dll"; DestDir: "{app}"
-Source: "WebEye.Controls.Wpf.WebCameraControl.dll"; DestDir: "{app}"
-Source: "UserManual.txt"; DestDir: "{app}"; Flags: isreadme
+Source: "bin\Release\cwssWpf.exe"; DestDir: "{app}"
+Source: "bin\Release\ImageProcessor.dll"; DestDir: "{app}"
+Source: "bin\Release\itextsharp.dll"; DestDir: "{app}"
+Source: "bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"
+Source: "bin\Release\RijndaelEncryptDecrypt.dll"; DestDir: "{app}"
+Source: "bin\Release\WebEye.Controls.Wpf.WebCameraControl.dll"; DestDir: "{app}"
+Source: "bin\Release\UserManual.txt"; DestDir: "{app}"; Flags: isreadme
 
-Source: "AppData\ClientSetup.cfg"; DestDir: "{app}\AppData"; Components: client
+Source: "bin\Release\AppData\ClientSetup.cfg"; DestDir: "{app}\AppData"; Components: client
 
-Source: "Sounds\CheckIn.wav"; DestDir: "{app}\Sounds"
-Source: "Sounds\CheckOut.wav"; DestDir: "{app}\Sounds"
-Source: "Sounds\Fail.wav"; DestDir: "{app}\Sounds"
-Source: "Sounds\LogIn.wav"; DestDir: "{app}\Sounds"
-Source: "Sounds\LogOff.wav"; DestDir: "{app}\Sounds"
-Source: "Sounds\Success.wav"; DestDir: "{app}\Sounds"
+Source: "bin\Release\Sounds\CheckIn.wav"; DestDir: "{app}\Sounds"
+Source: "bin\Release\Sounds\CheckOut.wav"; DestDir: "{app}\Sounds"
+Source: "bin\Release\Sounds\Fail.wav"; DestDir: "{app}\Sounds"
+Source: "bin\Release\Sounds\LogIn.wav"; DestDir: "{app}\Sounds"
+Source: "bin\Release\Sounds\LogOff.wav"; DestDir: "{app}\Sounds"
+Source: "bin\Release\Sounds\Success.wav"; DestDir: "{app}\Sounds"
 
-Source: "Images\Connect.png"; DestDir: "{app}\Images"
-Source: "Images\Disconnect.png"; DestDir: "{app}\Images"
-Source: "Images\Alert.png"; DestDir: "{app}\Images"
-Source: "Images\Success.png"; DestDir: "{app}\Images"
-Source: "Images\Waiver.png"; DestDir: "{app}\Images"
+Source: "bin\Release\Images\Connect.png"; DestDir: "{app}\Images"
+Source: "bin\Release\Images\Disconnect.png"; DestDir: "{app}\Images"
+Source: "bin\Release\Images\Alert.png"; DestDir: "{app}\Images"
+Source: "bin\Release\Images\Success.png"; DestDir: "{app}\Images"
+Source: "bin\Release\Images\Waiver.png"; DestDir: "{app}\Images"
 
-Source: "AppData\CW Acknowledgement of Risk and Sign-In Sheet.pdf"; DestDir: "{app}\AppData"
+Source: "bin\Release\AppData\CW Acknowledgement of Risk and Sign-In Sheet.pdf"; DestDir: "{app}\AppData"
 
 [Icons]
 Name: "{group}\CWSS System"; Filename: "{app}\cwssWpf.exe"
 
 [Run]
-Filename: "{app}\cwssWpf.exe"; Description: "{cm:LaunchProgram,MyApp}"; Flags: runascurrentuser nowait postinstall skipifsilent
+Filename: "{app}\cwssWpf.exe"; Description: "{cm:LaunchProgram,CWSS System}"; Flags: runascurrentuser nowait postinstall skipifsilent

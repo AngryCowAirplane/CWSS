@@ -318,9 +318,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="InstallerScript.iss">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="InstallerScript.iss" />
     <Content Include="UserManual.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -392,6 +390,9 @@
     </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>C:\Progra~2\InnoSe~1\ISCC.exe /q $(ProjectDir)InstallerScript.iss</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
