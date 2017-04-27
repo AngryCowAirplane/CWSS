@@ -95,11 +95,6 @@ namespace cwssWpf
 
             checkClientStart(args);
             CurrentUser = null;
-            //--------------------------------------------------------------
-
-
-            //TESTING ACTIONS - REMOVE LATER
-            //Db.dataBase.Notes.Requests = new List<Request>();
         }
 
         private void OnMidTimertick(object sender, EventArgs e)
@@ -688,6 +683,9 @@ namespace cwssWpf
 
         private void checkClientStart(string[] args)
         {
+            var startClientFilePath = System.IO.Path.Combine(Environment.CurrentDirectory, "AppData", "ClientSetup.cfg");
+            var startClientInstallFile = File.Exists(startClientFilePath);
+
             foreach (var arg in args)
             {
                 if (arg.ToLower().Contains("resetclient"))
@@ -697,7 +695,17 @@ namespace cwssWpf
                 }
             }
 
+            if(startClientInstallFile)
+            {
+                Config.Data.General.StartClientMode = true;
+                Config.Data.General.StartMaximized = true;
+                Config.SaveConfigToFile();
+
+                File.Delete(startClientFilePath);
+            }
+
             if (Config.Data.General.StartClientMode)
+
                 menuClient_Click(null, null);
         }
 
