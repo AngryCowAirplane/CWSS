@@ -29,8 +29,8 @@ Source: "bin\Release\UserManual.txt"; DestDir: "{app}"; Flags: isreadme
 
 Source: "bin\Release\AppData\ClientSetup.cfg"; DestDir: "{app}\AppData"; Components: client
 
-Source: "bin\Release\AppData\MSR Config\msr90Config_v220.exe"; DestDir: "{app}\MSR Config"; Components: msr
-Source: "bin\Release\AppData\MSR Config\uicomm.dll"; DestDir: "{app}\MSR Config"; Components: msr
+Source: "AppData\MSR Config\msr90Config_v220.exe"; DestDir: "{app}\MSR Config"; Components: msr
+Source: "AppData\MSR Config\uicomm.dll"; DestDir: "{app}\MSR Config"; Components: msr
 
 Source: "bin\Release\Sounds\CheckIn.wav"; DestDir: "{app}\Sounds"
 Source: "bin\Release\Sounds\CheckOut.wav"; DestDir: "{app}\Sounds"
