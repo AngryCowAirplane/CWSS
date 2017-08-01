@@ -59,7 +59,7 @@
         <Image Name="ConnectionImage" Grid.Row="0" Grid.Column="3" Margin="0,0,2,0" d:LayoutOverrides="Width" HorizontalAlignment="Right">
             <Image.ContextMenu>
                 <ContextMenu Name="userMenu" Opacity="0.95">
-                    <MenuItem Header="Reset Client Mode" Name="resetClientMode" Click="resetClientMode_Click"></MenuItem>
+                    <!--<MenuItem Header="Reset Client Mode" Name="resetClientMode" Click="resetClientMode_Click"></MenuItem>-->
                     <MenuItem Header="Open New User Form" Name="remoteNewUser" Click="remoteNewUser_Click"></MenuItem>
                 </ContextMenu>
             </Image.ContextMenu>
@@ -74,7 +74,7 @@
                     <DropShadowEffect ShadowDepth="2" Color="Yellow" Opacity="0.9" BlurRadius="6"/>
                 </Border.Effect>
             </Border>
-            <Label Name="tbClimbers" Content="54" Foreground="Yellow" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Width="75" HorizontalContentAlignment="Right" Margin="-5,0,0,0"></Label>
+            <Label Name="tbClimbers" Content="000" Foreground="Yellow" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="30" Width="75" HorizontalContentAlignment="Right" Margin="-5,0,0,0"></Label>
         </Canvas>
 
         <Canvas Name="CheckinCanvas" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="90" Visibility="Visible">

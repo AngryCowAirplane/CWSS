@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace cwssWpf.Windows
 {
@@ -22,6 +23,7 @@ namespace cwssWpf.Windows
     /// </summary>
     public partial class ListServ_Dialog : Window
     {
+        public List<DataGridTextColumn> Columns = new List<DataGridTextColumn>();
         public ListServ_Dialog()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
@@ -39,28 +41,95 @@ namespace cwssWpf.Windows
         private void setupColumns()
         {
             var textColumn = new DataGridTextColumn();
+            textColumn.Header = "Account";
+            textColumn.Binding = new Binding("UserType");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
             textColumn.Header = "First Name";
             textColumn.Binding = new Binding("Info.FirstName");
             textColumn.IsReadOnly = true;
             dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
 
             textColumn = new DataGridTextColumn();
             textColumn.Header = "Last Name";
             textColumn.Binding = new Binding("Info.LastName");
             textColumn.IsReadOnly = true;
             dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
 
             textColumn = new DataGridTextColumn();
             textColumn.Header = "User Id";
             textColumn.Binding = new Binding("LoginId");
             textColumn.IsReadOnly = true;
             dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
 
             var hyperColumn = new DataGridHyperlinkColumn();
             hyperColumn.Header = "Email";
             hyperColumn.Binding = new Binding("Info.Email");
             hyperColumn.IsReadOnly = true;
             dataGrid.Columns.Add(hyperColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "Address";
+            textColumn.Binding = new Binding("Info.Address");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "City";
+            textColumn.Binding = new Binding("Info.City");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "State";
+            textColumn.Binding = new Binding("Info.State");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "Zip";
+            textColumn.Binding = new Binding("Info.Zip");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "Phone";
+            textColumn.Binding = new Binding("Info.Phone");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "Gender";
+            textColumn.Binding = new Binding("Info.Gender");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "DateOfBirth";
+            textColumn.Binding = new Binding("Info.DateOfBirth");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
+
+            textColumn = new DataGridTextColumn();
+            textColumn.Header = "Created";
+            textColumn.Binding = new Binding("DateCreated");
+            textColumn.IsReadOnly = true;
+            dataGrid.Columns.Add(textColumn);
+            Columns.Add(textColumn);
 
             var cbColumn = new DataGridCheckBoxColumn();
             cbColumn.Header = "CanClimb";
@@ -159,6 +228,157 @@ namespace cwssWpf.Windows
         private void menuSave_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void State_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "State").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void DOB_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "DateOfBirth").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void Gender_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Gender").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void Phone_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Phone").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void Zip_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Zip").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void FirstName_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "First Name").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void LastName_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Last Name").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void UserId_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "User Id").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void Email_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Email").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void Address_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Address").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void City_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "City").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void Type_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Type").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void Created_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "Created").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void CanClimb_Click(object sender, RoutedEventArgs e)
+        {
+            var col = Columns.Where(c => c.Header.ToString() == "CanClimb").First();
+            if (col.Visibility == Visibility.Visible)
+                col.Visibility = Visibility.Hidden;
+            else
+                col.Visibility = Visibility.Visible;
+        }
+
+        private void menuSaveSelected_Click(object sender, RoutedEventArgs e)
+        {
+            var cells = dataGrid.SelectedCells;
+            var items = dataGrid.SelectedItems;
+            var test = items.Count;
+
+        }
+    }
+
+
+    public class AgeCalcConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var dob = (DateTime)value;
+            var age = DateTime.Now - dob;
+
+            return ((int)(age.TotalDays / 365));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DependencyProperty.UnsetValue;
         }
     }
 }

@@ -70,6 +70,10 @@ namespace cwssWpf.Windows
                         tbEmail, tbAddress, tbCity, tbState, tbZip,
                         tbPhone, cbGender, dpDOB, tbIdCardID
                     );
+
+                    if (user != null)
+                        Success = true;
+
                     this.Close();
                 }
                 else

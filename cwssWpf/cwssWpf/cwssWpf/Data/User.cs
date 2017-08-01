@@ -20,7 +20,7 @@ namespace cwssWpf.Data
 
         public bool CanClimb { get; set; }
         public bool CheckedIn { get; set; }
-        public DateTime TimeStamp { get; set; }
+        public DateTime DateCreated { get; set; }
 
         public List<int> Items;
         public List<Document> Documents;
@@ -37,17 +37,10 @@ namespace cwssWpf.Data
             try
             {
                 var waivers = Documents.Where(t => t.DocumentType == DocType.Waiver);
-                var waiver = waivers.Where(t=>t.UserId == LoginId).First();
+                var waiver = waivers.Where(t=>t.UserId == LoginId).Last();
                 if (waiver.Expires > DateTime.Now)
                 {
                     var daysLeft = DateTime.Now - waiver.Expires;
-                    //if(daysLeft < TimeSpan.FromDays(7))
-                    //{
-                    //    var alert = new Alert_Dialog("Waiver Expires Soon!", "Your Waiver Expires in " + daysLeft.ToString() + ".\n  Please Re-Read and Sign the Waiver Form.", AlertType.Notice);
-                    //    MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
-                    //    alert.ShowDialog();
-                    //    Helpers.ShowWaiver(this);
-                    //}
                     return true;
                 }
             }
@@ -97,7 +90,7 @@ namespace cwssWpf.Data
         {
             if (!CheckedIn)
             {
-                TimeStamp = DateTime.Now;
+                //TimeStamp = DateTime.Now;
                 var message = Info.FirstName + " " + Info.LastName + " Checked In.";
                 Helpers.PlayCheckIn();
                 Logger.Log(LoginId, LogType.CheckIn, message);

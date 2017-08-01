@@ -59,7 +59,8 @@ namespace cwssWpf.Windows
 
         private void cmStats_Click(object sender, RoutedEventArgs e)
         {
-
+            var stats = new ClimberStats_Dialog(selectedUser);
+            stats.Show();
         }
 
         private void rightMouseButtonClicked(object sender, MouseEventArgs e)

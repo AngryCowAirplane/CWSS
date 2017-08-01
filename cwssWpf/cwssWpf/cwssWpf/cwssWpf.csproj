@@ -117,6 +117,9 @@
     <Compile Include="Windows\Calendar_Dialog.xaml.cs">
       <DependentUpon>Calendar_Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ClimberStats_Dialog.xaml.cs">
+      <DependentUpon>ClimberStats_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ClimberView_Dialog.xaml.cs">
       <DependentUpon>ClimberView_Dialog.xaml</DependentUpon>
     </Compile>
@@ -197,6 +200,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\ClimberStats_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\ClimberView_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,8 +249,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Reports_Dialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Request_Dialog.xaml">
       <SubType>Designer</SubType>
@@ -362,6 +369,17 @@
       <Project>{0CFE6C43-6F3D-4205-8FEC-8B2AA020A4B5}</Project>
       <Name>ImageManipTesting</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

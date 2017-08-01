@@ -67,13 +67,18 @@ namespace cwssWpf.Windows
             if(requestMode == mode.Request)
             {
                 Db.dataBase.Notes.AddRequest(selectedUser, tbReason.Text, (Suspension)cbTime.SelectedItem);
-                MessageBox.Show("Revoke Request Successfull, " + selectedUser.GetName() + " - " + tbReason.Text);
+                var alert = new Alert_Dialog("Revoked.", "Revoke Request Successful, " + selectedUser.GetName() + " - " + tbReason.Text, AlertType.Success);
+                MainWindow.WindowsOpen.Add(alert, new cwssWpf.TimerVal(4));
+                alert.Show();
                 this.Close();
             }
             else
             {
+                request.SuspensionLength = (Suspension)cbTime.SelectedItem;
                 request.EnforceRequest();
-                MessageBox.Show("Revoke Request Enforced, Climbing Privileges Revoked for " + selectedUser.GetName());
+                var alert = new Alert_Dialog("Revoke Enforced.", "Revoke Request Enforced, Climbing Privileges Revoked for " + selectedUser.GetName(), AlertType.Success);
+                MainWindow.WindowsOpen.Add(alert, new cwssWpf.TimerVal(4));
+                alert.Show();
                 this.Close();
             }
         }
@@ -87,8 +92,9 @@ namespace cwssWpf.Windows
             else
             {
                 request.ReleaseRequest();
-                MessageBox.Show("Revoke Request Canceled.");
-                // need to send reason back to requester?
+                var alert = new Alert_Dialog("Canceled", "Revoke Request Canceled.", AlertType.Notice);
+                MainWindow.WindowsOpen.Add(alert, new cwssWpf.TimerVal(2));
+                alert.Show();
                 this.Close();
             }
         }

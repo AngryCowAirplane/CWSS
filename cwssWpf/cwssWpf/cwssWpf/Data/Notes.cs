@@ -57,7 +57,7 @@ namespace cwssWpf.Data
 
         public Request CheckRequest(User user)
         {
-            var request = Requests.Where(u => u.Patron == user);
+            var request = Requests.Where(u => u.Patron.LoginId == user.LoginId);
             if (request.Count() > 0)
                 return request.First();
             else
@@ -107,16 +107,17 @@ namespace cwssWpf.Data
 
         public void ReleaseRequest()
         {
-            Patron.CanClimb = true;
+            var patron = Db.dataBase.Users.Where(user => user.LoginId == Patron.LoginId).First();
+            patron.CanClimb = true;
             Db.dataBase.Notes.Requests.Remove(this);
         }
     }
 
     public enum Suspension
     {
-        Week = 0,
-        Month = 1,
-        Quarter = 2,
-        Year = 3
+        Week = 1,
+        Month = 4,
+        Quarter = 12,
+        Year = 56
     }
 }

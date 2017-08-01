@@ -86,7 +86,7 @@ namespace cwssWpf.Data
 
                     user.CheckedIn = false;
                     user.CanClimb = true;
-                    user.TimeStamp = DateTime.MinValue;
+                    user.DateCreated = DateTime.Now;
                     user.UserType = userType;
 
                     Users.Add(user);

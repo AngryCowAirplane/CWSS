@@ -299,10 +299,6 @@ namespace cwssWpf
 
                 NewUser = Db.dataBase.GetUser(int.Parse(userId.Text));
 
-                var alert = new Alert_Dialog("User Created!", NewUser.GetName(), AlertType.Success);
-                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
-                alert.Show();
-
                 return NewUser;
             }
             else
@@ -314,9 +310,6 @@ namespace cwssWpf
                     MainWindow.CurrentUser.GetName() + " Failed Add User: " +
                     firstName.Text + " " + LastName.Text);
 
-                var alert = new Alert_Dialog("Add User Failed", "");
-                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
-                alert.Show();
                 MainWindow.CurrentUser = null;
                 return null;
             }
@@ -349,9 +342,9 @@ namespace cwssWpf
 
                 NewUser = Db.dataBase.GetUser((user.LoginId));
 
-                var alert = new Alert_Dialog("User Created!", user.GetName(), AlertType.Success);
-                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
-                alert.Show();
+                //var alert = new Alert_Dialog("User Created!", user.GetName(), AlertType.Success);
+                //MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
+                //alert.Show();
 
                 return NewUser;
             }
@@ -364,9 +357,9 @@ namespace cwssWpf
                 Logger.Log(MainWindow.CurrentUser.LoginId, LogType.Error,
                     MainWindow.CurrentUser.GetName() + " Failed Add User");
 
-                var alert = new Alert_Dialog("Add User Failed", "");
-                MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
-                alert.Show();
+                //var alert = new Alert_Dialog("Add User Failed", "");
+                //MainWindow.WindowsOpen.Add(alert, new TimerVal(2));
+                //alert.Show();
                 return null;
             }
         }

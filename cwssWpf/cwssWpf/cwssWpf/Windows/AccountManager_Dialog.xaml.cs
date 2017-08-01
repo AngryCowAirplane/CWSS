@@ -161,7 +161,8 @@ namespace cwssWpf.Windows
 
         private void documents_Click(object sender, RoutedEventArgs e)
         {
-
+            var stats = new ClimberStats_Dialog(selectedUser);
+            stats.Show();
         }
     }
 

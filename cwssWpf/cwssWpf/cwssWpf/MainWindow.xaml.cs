@@ -31,7 +31,8 @@ namespace cwssWpf
         public static bool ClientWindowOpen = false;
         public static bool ClientMode = false;
         public static bool ClientConnected = false;
-        public static DispatcherTimer DasTimer = new DispatcherTimer(); 
+        public static DispatcherTimer QuickTimer = new DispatcherTimer();
+        public static DispatcherTimer LongTimer = new DispatcherTimer();
 
         public MainWindow()
         {
@@ -67,9 +68,12 @@ namespace cwssWpf
             // Event Subscriptions
             KeyUp += KeyPressed;
             Comms.CommPacketReceived += Comms_CommPacketReceived;
-            DasTimer.Interval = TimeSpan.FromSeconds(1);
-            DasTimer.Tick += OnTimerTick;
-            DasTimer.Start();
+            QuickTimer.Interval = TimeSpan.FromSeconds(1);
+            QuickTimer.Tick += OnQuickTimerTick;
+            QuickTimer.Start();
+            LongTimer.Interval = TimeSpan.FromHours(1);
+            LongTimer.Tick += OnLongTimertick;
+            LongTimer.Start();
 
             // Other
             if (Config.Data.General.StartMaximized)
@@ -132,7 +136,20 @@ namespace cwssWpf
         private void menuNewUser_Click(object sender, RoutedEventArgs e)
         {
             var newUser = new NewUser_Dialog(this);
-            var user = newUser.ShowDialog();
+            newUser.ShowDialog();
+
+            if(newUser.Success)
+            {
+                var alert = new Alert_Dialog("User Created!", newUser.NewUser.GetName(), AlertType.Success);
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
+                alert.Show();
+            }
+            else
+            {
+                var alert = new Alert_Dialog("Add User Failed", "");
+                MainWindow.WindowsOpen.Add(alert, new TimerVal(3));
+                alert.Show();
+            }
         }
 
         private void menuEmployeeLogIn_Click(object sender, RoutedEventArgs e)
@@ -258,7 +275,16 @@ namespace cwssWpf
         #endregion
 
         #region Other Event Handlers
-        private void OnTimerTick(object sender, EventArgs e)
+        private void OnLongTimertick(object sender, EventArgs e)
+        {
+            // Periodic Save Db
+            Db.SaveDatabase(Db.DbPath);
+
+            // Periodic Update Docs
+            Db.CheckUserRequests();
+        }
+
+        private void OnQuickTimerTick(object sender, EventArgs e)
         {
             // Check windows timing out.
             var wndList = new List<Window>();
@@ -310,7 +336,7 @@ namespace cwssWpf
             if (CurrentUser != null)
                 menuLogOut_Click(null, null);
 
-            DasTimer.Stop();
+            QuickTimer.Stop();
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
